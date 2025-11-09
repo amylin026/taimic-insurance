@@ -986,6 +986,50 @@
      </form>
    </section>
       
+            <!-- CONTACT -->
+      <section id="contact">
+        <div class="section-header">
+          <div>
+            <div class="mini-label">聯絡方式</div>
+            <div class="section-title">想收到 Taimic 正式版與更新？</div>
+          </div>
+          <div class="section-sub">
+            留下 Email、手機或 LINE ID，未來有正式上線或內測名額時，可以優先通知你。（目前僅為 Demo，不會實際發送訊息）
+          </div>
+        </div>
+
+        <form class="form" onsubmit="handleContactSubmit(event)">
+          <div class="form-row-inline">
+            <div class="form-row">
+              <label>你的名字（或暱稱）</label>
+              <input name="name" type="text" placeholder="例如：小芳、Taimic 用戶" />
+            </div>
+            <div class="form-row">
+              <label>Email</label>
+              <input name="email" type="email" placeholder="example@mail.com" />
+            </div>
+          </div>
+
+          <div class="form-row-inline">
+            <div class="form-row">
+              <label>手機（選填）</label>
+              <input name="phone" type="tel" placeholder="09xx-xxx-xxx" />
+            </div>
+            <div class="form-row">
+              <label>LINE ID（選填）</label>
+              <input name="line" type="text" placeholder="你的 LINE 帳號 ID" />
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary btn-form">
+            留下我的聯絡方式 <span>📩</span>
+          </button>
+          <div class="small-hint">
+            ⚠️ 目前為前端 Demo，資料只會停留在這個頁面裡，實際收集名單需要之後再串接後端或表單服務。
+          </div>
+        </form>
+      </section>
+      
     </main>
 
     <footer class="footer">
@@ -1045,6 +1089,27 @@
 
     form.reset();
   }
+        function handleContactSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const name = form.querySelector('input[name="name"]').value.trim() || "朋友";
+      const email = form.querySelector('input[name="email"]').value.trim();
+      const phone = form.querySelector('input[name="phone"]').value.trim();
+      const line = form.querySelector('input[name="line"]').value.trim();
+
+      alert(
+        "已收到你的聯絡資訊（Demo 版訊息）：\n\n" +
+        "名字／暱稱：" + name + "\n" +
+        "Email：" + (email || "未填") + "\n" +
+        "手機：" + (phone || "未填") + "\n" +
+        "LINE ID：" + (line || "未填") + "\n\n" +
+        "目前這個網站還沒有接上後端，所以資料不會真的被儲存或傳出去。\n" +
+        "之後如果你想正式收集名單，我們可以改成串 Google 表單或資料庫。"
+      );
+
+      form.reset();
+    }
+    
   </script>
 </body>
 </html>
