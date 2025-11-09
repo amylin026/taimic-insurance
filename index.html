@@ -943,7 +943,7 @@
         </div>
       </section>
 
-      <!-- CONTACT -->
+      <!-- CONTACT：嵌入 Google 表單 -->
       <section id="contact">
         <div class="section-header">
           <div>
@@ -951,23 +951,18 @@
             <div class="section-title">想收到 Taimic 正式版與更新？</div>
           </div>
           <div class="section-sub">
-            留下 Email、手機或 LINE ID，未來有正式上線或內測名額時，可以優先通知你。（目前僅為 Demo，不會實際發送訊息）
+            留下聯絡方式，未來有正式上線或內測名額時，我們會優先通知你。資料會直接紀錄在你的 Google 表單與試算表裡。
           </div>
         </div>
 
-               <div class="form" style="gap:0;">
-          <!-- 這裡貼你從 Google 表單複製來的 iframe -->
-          <iframe
-            src="https://docs.google.com/forms/d/e/<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfQdm8R3sdNpr3up9kGSQdbPXGbab5clpF_gDeaSmdzaxnUZg/viewform?embedded=true" width="640" height="920" frameborder="0" marginheight="0" marginwidth="0">載入中…</iframe>/formResponse?embedded=true"
-            width="100%"
-            height="720"
-            frameborder="0"
-            marginheight="0"
-            marginwidth="0">
+        <div class="form" style="gap:0;">
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfQdm8R3sdNpr3up9kGSQdbPXGbab5clpF_gDeaSmdzaxnUZg/viewform?embedded=true"
+                  width="100%" height="920" frameborder="0" marginheight="0" marginwidth="0">
             載入中…
           </iframe>
         </div>
       </section>
+
     </main>
 
     <footer class="footer">
@@ -987,7 +982,7 @@
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    // Demo 表單送出
+    // Demo 表單送出（目前只顯示提示，可之後改成真的邏輯）
     function handleDemoSubmit(e) {
       e.preventDefault();
       const preview = document.getElementById("resultPreview");
@@ -995,28 +990,6 @@
       void preview.offsetWidth; // reset animation
       preview.style.animation = "flash 0.6s ease-out";
       alert("目前為 Demo 版本，右側顯示的是示範建議。\n未來可以改成真正根據你填的資料產生客製化結果。");
-    }
-
-    // 聯絡表單送出（Demo）
-    function handleContactSubmit(e) {
-      e.preventDefault();
-      const form = e.target;
-      const name = form.querySelector('input[name="name"]').value.trim() || "朋友";
-      const email = form.querySelector('input[name="email"]').value.trim();
-      const phone = form.querySelector('input[name="phone"]').value.trim();
-      const line = form.querySelector('input[name="line"]').value.trim();
-
-      alert(
-        "已收到你的聯絡資訊（Demo 版訊息）：\n\n" +
-        "名字／暱稱：" + name + "\n" +
-        "Email：" + (email || "未填") + "\n" +
-        "手機：" + (phone || "未填") + "\n" +
-        "LINE ID：" + (line || "未填") + "\n\n" +
-        "目前這個網站還沒有接上後端，所以資料不會真的被儲存或傳出去。\n" +
-        "之後如果你想正式收集名單，我們可以改成串 Google 表單或資料庫。"
-      );
-
-      form.reset();
     }
 
     // 簡單動畫
