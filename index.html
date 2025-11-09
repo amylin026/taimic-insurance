@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI 保險 + 資產配置顧問｜Taimic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="用 AI 幫你一次搞定保險與資產配置，整合多家保險公司方案，搭配基金與債券配置，為你和家人打造專屬財務地圖。"
+  />
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-soft: #0b1020;
+      --card: #111827;
+      --accent: #3b82f6;
+      --accent-soft: rgba(59,130,246,0.12);
+      --text: #f9fafb;
+      --text-soft: #9ca3af;
+      --border: #1f2937;
+      --radius-lg: 18px;
+      --radius-xl: 26px;
+      --shadow-soft: 0 18px 45px rgba(0,0,0,0.55);
+      --max-width: 1040px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 40%, #000 100%);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      min-height: 100vh;
+      padding: 20px 16px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav {
+      width: 100%;
+      max-width: var(--max-width);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(15,23,42,0.96), rgba(15,23,42,0.88));
+      border: 1px solid rgba(148,163,184,0.25);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.8);
+      position: sticky;
+      top: 10px;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-circle {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 20% 0, #60a5fa, #4f46e5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      font-weight: 700;
+      box-shadow: 0 0 18px rgba(59,130,246,0.9);
+    }
+
+    .Taimic {
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+    }
+
+    .Taimic {
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+    }
+
+    .nav-link {
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: var(--text-soft);
+      cursor: pointer;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: rgba(31,41,55,0.9);
+    }
+
+    .nav-cta {
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 12px 25px rgba(37,99,235,0.55);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-cta span {
+      font-size: 15px;
+    }
+
+    main {
+      width: 100%;
+      max-width: var(--max-width);
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    /* HERO */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+      gap: 28px;
+      margin-top: 10px;
+      align-items: center;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.5);
+      padding: 4px 10px 4px 4px;
+      background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(15,23,42,0.7));
+      width: fit-content;
+    }
+
+    .hero-pill-badge {
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: radial-gradient(circle at 0 0, #22c55e, #16a34a);
+      font-weight: 600;
+    }
+
+    .hero-pill-text {
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .hero-title {
+      font-size: clamp(26px, 3.1vw, 34px);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, #60a5fa, #a855f7);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 14px;
+      color: var(--text-soft);
+      max-width: 520px;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .btn-primary {
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 0 0, #60a5fa, #3b82f6);
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 18px 40px rgba(37,99,235,0.55);
+    }
+
+    .btn-primary span {
+      font-size: 17px;
+    }
+
+    .btn-secondary {
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.45);
+      color: var(--text-soft);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-mini {
+      font-size: 11px;
+      color: var(--text-soft);
+      margin-top: 6px;
+    }
+
+    .hero-right {
+      background: radial-gradient(circle at 10% 0, rgba(59,130,246,0.3), rgba(15,23,42,0.96));
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(148,163,184,0.3);
+      padding: 16px 16px 18px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-right-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .hero-right-header strong {
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .badge-soft {
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.8);
+      border: 1px solid rgba(148,163,184,0.5);
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 10px;
+    }
+
+    .card {
+      background: radial-gradient(circle at top left, rgba(30,64,175,0.4), rgba(15,23,42,0.95));
+      border-radius: 18px;
+      border: 1px solid rgba(148,163,184,0.35);
+      padding: 10px 12px;
+    }
+
+    .card h3 {
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .card p {
+      font-size: 11px;
+      color: var(--text-soft);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .pill {
+      font-size: 10px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(148,163,184,0.4);
+      color: var(--text-soft);
+    }
+
+    .chart-pie {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 999px;
+      background:
+        conic-gradient(#2563eb 0 40%,
+                       #22c55e 40% 75%,
+                       #eab308 75% 100%);
+      border: 6px solid rgba(15,23,42,0.9);
+      position: relative;
+      margin-bottom: 6px;
+    }
+
+    .chart-pie::after {
+      content: "";
+      position: absolute;
+      inset: 22%;
+      border-radius: inherit;
+      background: radial-gradient(circle at top, #020617, #020617);
+    }
+
+    .chart-center-text {
+      position: absolute;
+      inset: 35% 20%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: var(--text-soft);
+      text-align: center;
+    }
+
+    .chart-center-text strong {
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: flex-start;
+      margin-top: 6px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      color: var(--text-soft);
+    }
+
+    .bullet {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+    }
+
+    .bullet.blue { background: #2563eb; }
+    .bullet.green { background: #22c55e; }
+    .bullet.amber { background: #eab308; }
+
+    .hero-chat {
+      margin-top: 10px;
+      padding: 8px 10px;
+      border-radius: 16px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(148,163,184,0.4);
+      font-size: 11px;
+    }
+
+    .chat-line {
+      margin-bottom: 4px;
+    }
+
+    .chat-tag {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-soft);
+      margin-bottom: 2px;
+    }
+
+    .chat-user {
+      color: #e5e7eb;
+    }
+
+    .chat-ai {
+      color: #a5b4fc;
+    }
+
+    /* SECTIONS */
+
+    section {
+      padding: 18px 18px;
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at top left, rgba(15,23,42,0.96), rgba(2,6,23,0.98));
+      border: 1px solid rgba(31,41,55,0.95);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .section-sub {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .step-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .step {
+      padding: 10px 11px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(140deg, rgba(15,23,42,0.95), rgba(15,23,42,0.9));
+      border: 1px solid rgba(55,65,81,0.9);
+    }
+
+    .step-num {
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 4px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .step h3 {
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .step p {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .mini-label {
+      font-size: 10px;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .disclaimer {
+      font-size: 11px;
+      color: var(--text-soft);
+      border-radius: 14px;
+      border: 1px dashed rgba(148,163,184,0.6);
+      padding: 10px 12px;
+      background: rgba(15,23,42,0.9);
+      margin-top: 8px;
+    }
+
+    /* FORM / CTA */
+
+    .cta-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    label {
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+
+    input, select, textarea {
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(75,85,99,0.9);
+      background: rgba(15,23,42,0.95);
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+    }
+
+    textarea {
+      border-radius: 16px;
+      min-height: 70px;
+      resize: vertical;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: rgba(148,163,184,0.7);
+    }
+
+    .form-row-inline {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .small-hint {
+      font-size: 11px;
+      color: var(--text-soft);
+      margin-top: 4px;
+    }
+
+    .btn-form {
+      margin-top: 4px;
+      width: fit-content;
+    }
+
+    .result-preview {
+      border-radius: var(--radius-lg);
+      background: linear-gradient(150deg, rgba(15,23,42,0.98), rgba(30,64,175,0.85));
+      border: 1px solid rgba(59,130,246,0.7);
+      padding: 10px 12px;
+      font-size: 12px;
+    }
+
+    .result-tag {
+      font-size: 10px;
+      color: #bfdbfe;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .result-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .result-line {
+      margin-bottom: 3px;
+    }
+
+    .result-highlight {
+      color: #fbbf24;
+      font-weight: 500;
+    }
+
+    .footer {
+      width: 100%;
+      max-width: var(--max-width);
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-soft);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 4px;
+    }
+
+    .footer a {
+      color: #60a5fa;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .hero-right {
+        order: -1;
+      }
+      .step-grid,
+      .cards-3 {
+        grid-template-columns: 1fr;
+      }
+      .cta-layout {
+        grid-template-columns: 1fr;
+      }
+      .nav {
+        padding-inline: 12px;
+      }
+      .nav-right {
+        display: none;
+      }
+      .page {
+        padding-inline: 12px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      section {
+        padding-inline: 14px;
+      }
+      .hero-right {
+        padding-inline: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- NAV -->
+    <header class="nav">
+      <div class="nav-left">
+        <div class="logo-circle">AI</div>
+        <div>
+          <div class="Taimic">Taimic</div>
+          <div class="Taimic">AI 保險 × 資產配置顧問</div>
+        </div>
+      </div>
+      <div class="nav-right">
+        <a href="#how" class="nav-link">如何運作</a>
+        <a href="#insurance" class="nav-link">保險規劃</a>
+        <a href="#invest" class="nav-link">資產配置</a>
+        <button class="nav-cta" onclick="scrollToId('assessment')">
+          開始免費評估 <span>➜</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-left">
+          <div class="hero-pill">
+            <div class="hero-pill-badge">New</div>
+            <div class="hero-pill-text">AI 幫你一次看懂保單＋資產配置</div>
+          </div>
+          <h1 class="hero-title">
+            用 <span>AI 顧問</span> 一次搞定<br />保險保障與投資配置
+          </h1>
+          <p class="hero-sub">
+            整合多家保險公司方案，搭配基金與債券配置，根據你的資產規模與家庭狀況，
+            為你客製化一張「最適合你」的財務安全地圖。
+          </p>
+          <div class="hero-cta-row">
+            <button class="btn-primary" onclick="scrollToId('assessment')">
+              開始 3 分鐘免費評估 <span>➜</span>
+            </button>
+            <button class="btn-secondary" onclick="scrollToId('demo-ai')">
+              先看看 AI 建議示範
+            </button>
+          </div>
+          <div class="hero-mini">
+            無需留下信用卡，目前為 Demo 版本，僅提供教育用途。
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="hero-right-header">
+            <div>
+              <div style="font-size:11px;color:var(--text-soft);">Demo 報告預覽</div>
+              <strong>你的家庭財務健檢摘要</strong>
+            </div>
+            <div class="badge-soft">3 分鐘生成</div>
+          </div>
+          <div class="dashboard-grid">
+            <div class="card">
+              <h3>保險保障現況</h3>
+              <p>醫療保障略低、壽險接近建議下限，癌症保障幾乎為空白。</p>
+              <div class="pill-row">
+                <div class="pill">實支實付不足</div>
+                <div class="pill">癌症一次給付缺口</div>
+                <div class="pill">壽險約年收入 7 倍</div>
+              </div>
+            </div>
+            <div class="card">
+              <h3>建議資產配置</h3>
+              <div class="chart-pie">
+                <div class="chart-center-text">
+                  <span style="font-size:9px;">風險等級：穩健型</span>
+                  <strong>成長中保守</strong>
+                </div>
+              </div>
+              <div class="legend">
+                <div class="legend-item">
+                  <span class="bullet blue"></span> 股票／基金 40%
+                </div>
+                <div class="legend-item">
+                  <span class="bullet green"></span> 債券／穩健型 40%
+                </div>
+                <div class="legend-item">
+                  <span class="bullet amber"></span> 現金／預備金 20%
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-chat" id="demo-ai">
+            <div class="chat-tag">AI 顧問對話示範</div>
+            <div class="chat-line chat-user">
+              你：我有一個小孩，實支實付需要多少才夠？
+            </div>
+            <div class="chat-line chat-ai">
+              AI：以你目前收入與居住地區醫療費用來看，我會建議把實支實付額度提升到
+              <strong>80–100 萬</strong> 以上，搭配住院日額，可以比較安心覆蓋一次大型手術的花費。
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOW IT WORKS -->
+      <section id="how">
+        <div class="section-header">
+          <div>
+            <div class="mini-label">流程介紹</div>
+            <div class="section-title">3 步驟，拿到你的專屬財務地圖</div>
+          </div>
+          <div class="section-sub">
+            不用懂專有名詞，用白話方式陪你一步一步看清楚自己的保障與資產。
+          </div>
+        </div>
+        <div class="step-grid">
+          <div class="step">
+            <div class="step-num">Step 1</div>
+            <h3>填寫基本與家庭資料</h3>
+            <p>年齡、收入、資產範圍、家庭成員、有無房貸與既有保單，約 3 分鐘即可完成。</p>
+          </div>
+          <div class="step">
+            <div class="step-num">Step 2</div>
+            <h3>AI 分析保障缺口與風險屬性</h3>
+            <p>幫你判斷目前保險是否過少或買錯重點，同時評估你的風險承受度。</p>
+          </div>
+          <div class="step">
+            <div class="step-num">Step 3</div>
+            <h3>產出保險＋投資配置建議</h3>
+            <p>整理出「保險要補哪裡、錢要怎麼分到基金／債券／現金」的清楚建議。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- INSURANCE -->
+      <section id="insurance">
+        <div class="section-header">
+          <div>
+            <div class="mini-label">保險規劃</div>
+            <div class="section-title">先看懂保單，才談得上好好投資</div>
+          </div>
+          <div class="section-sub">
+            我們幫你把晦澀條款變成「人話」，再幫你找到真的需要補的地方，而不是亂加保。
+          </div>
+        </div>
+        <div class="cards-3">
+          <div class="step">
+            <h3>保單總體檢</h3>
+            <p>整理你現有的壽險、醫療、癌症、意外等保障，畫出一張「保障雷達圖」。</p>
+          </div>
+          <div class="step">
+            <h3>缺口分析（白話版）</h3>
+            <p>例如：住院一晚自付額大概多少？如果癌症一次開刀，大概需要多少自備款？</p>
+          </div>
+          <div class="step">
+            <h3>跨公司方案比較（未來功能）</h3>
+            <p>未來將整合多家保險公司方案，用同一套標準直接幫你做並排比較。</p>
+          </div>
+        </div>
+        <div class="disclaimer">
+          提醒：目前平台仍在 Demo 階段，並未與任何保險公司正式串接，所顯示方案僅為示意，不構成實際商品推薦。
+        </div>
+      </section>
+
+      <!-- INVESTMENT -->
+      <section id="invest">
+        <div class="section-header">
+          <div>
+            <div class="mini-label">基金與債券配置</div>
+            <div class="section-title">不是只買保險，你也需要資產成長</div>
+          </div>
+          <div class="section-sub">
+            依你的年齡、風險屬性與資產規模，自動產生現金、基金、債券與股票的大方向比例。
+          </div>
+        </div>
+        <div class="cards-3">
+          <div class="step">
+            <h3>資產盤點</h3>
+            <p>了解你目前有多少現金、基金、股票、房產與負債，先知道「自己站在哪裡」。</p>
+          </div>
+          <div class="step">
+            <h3>風險屬性 → 配置邏輯</h3>
+            <p>保守型、穩健型、積極型，不是只看年齡，而是看你真的能承受多少波動。</p>
+          </div>
+          <div class="step">
+            <h3>簡單清楚的比例建議</h3>
+            <p>例如：現金 20％、穩健債券 40％、成長型基金 40％，讓你有具體方向可以參考。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ASSESSMENT & FORM -->
+      <section id="assessment">
+        <div class="section-header">
+          <div>
+            <div class="mini-label">免費 Demo 評估</div>
+            <div class="section-title">3 分鐘看看你的「財務安全指紋」</div>
+          </div>
+          <div class="section-sub">
+            目前為概念驗證版本，結果僅供參考，不會自動幫你下單任何商品。
+          </div>
+        </div>
+        <div class="cta-layout">
+          <form class="form" onsubmit="handleDemoSubmit(event)">
+            <div class="form-row-inline">
+              <div class="form-row">
+                <label>你的年齡</label>
+                <input type="number" placeholder="例如：32" required />
+              </div>
+              <div class="form-row">
+                <label>家庭狀況</label>
+                <select required>
+                  <option value="">請選擇</option>
+                  <option>單身</option>
+                  <option>已婚，無小孩</option>
+                  <option>已婚，有小孩</option>
+                  <option>其他／不方便透露</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row-inline">
+              <div class="form-row">
+                <label>大約月收入區間</label>
+                <select required>
+                  <option value="">請選擇</option>
+                  <option>5 萬以下</option>
+                  <option>5–10 萬</option>
+                  <option>10–20 萬</option>
+                  <option>20 萬以上</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label>大約可投資資產規模</label>
+                <select required>
+                  <option value="">請選擇</option>
+                  <option>50 萬以下</option>
+                  <option>50–200 萬</option>
+                  <option>200–500 萬</option>
+                  <option>500 萬以上</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row-inline">
+              <div class="form-row">
+                <label>你覺得自己屬於哪種風險屬性？</label>
+                <select required>
+                  <option value="">請選擇</option>
+                  <option>非常保守（不太能接受虧損）</option>
+                  <option>穩健（可以接受一些波動）</option>
+                  <option>積極（願意換波動換成長）</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label>目前有沒有保單？</label>
+                <select required>
+                  <option value="">請選擇</option>
+                  <option>幾乎沒有</option>
+                  <option>有一些，但看不太懂</option>
+                  <option>有，覺得還算夠</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <label>你最在意什麼？（選填）</label>
+              <textarea placeholder="例如：怕生病花很多錢、擔心小孩教育費、想 10 年內可以半退休⋯⋯"></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary btn-form">
+              產生 Demo 建議 <span>⚡</span>
+            </button>
+            <div class="small-hint">
+              送出後會在右側顯示一份示範建議，未來可改為寄送 Email 報告。
+            </div>
+          </form>
+
+          <div class="result-preview" id="resultPreview">
+            <div class="result-tag">DEMO 建議預覽</div>
+            <div class="result-title">你的初步財務安全掃描結果</div>
+            <p class="result-line">
+              ✅ 以你的年齡與家庭狀況來看，<span class="result-highlight">保障略顯不足</span>，
+              建議優先補強醫療與重大疾病險，其次再考慮壽險加額。
+            </p>
+            <p class="result-line">
+              💡 資產配置部分，可考慮：
+              <span class="result-highlight">現金 20％／穩健債券或平衡型基金 40％／成長型基金或股票 40％</span>，
+              用定期定額取代一次性 all-in。
+            </p>
+            <p class="result-line">
+              🔔 下一步，你可以把現有保單與投資部位整理出來，未來我們會開放「上傳保單／資產明細」功能，
+              讓 AI 幫你做更精準的客製化分析。
+            </p>
+          </div>
+        </div>
+
+        <div class="disclaimer">
+          法律聲明：本網站目前僅提供概念展示與一般性財務教育資訊，並非保險代理人、經紀人、投信、
+          投顧或證券商，亦不構成任何特定商品的買賣建議或招攬。實際投保與投資請務必諮詢具合法資格之專業人員。
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>© <span id="year"></span> Taimic. All rights reserved.</div>
+      <div>此網站為概念 Demo，如欲合作或洽談，請聯絡：<a href="mailto:founder@example.com">founder@example.com</a></div>
+    </footer>
+  </div>
+
+  <script>
+    // 年份
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // 捲動到區塊
+    function scrollToId(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    // Demo 表單送出（目前只顯示提示，可之後改成真的邏輯）
+    function handleDemoSubmit(e) {
+      e.preventDefault();
+      const preview = document.getElementById("resultPreview");
+      preview.style.animation = "none";
+      void preview.offsetWidth; // reset animation
+      preview.style.animation = "flash 0.6s ease-out";
+      alert("目前為 Demo 版本，右側顯示的是示範建議。\n未來可以改成真正根據你填的資料產生客製化結果。");
+    }
+
+    // 簡單動畫
+    const style = document.createElement("style");
+    style.textContent = `
+      @keyframes flash {
+        0% { box-shadow: 0 0 0 rgba(59,130,246,0.0); transform: scale(1); }
+        25% { box-shadow: 0 0 32px rgba(59,130,246,0.9); transform: scale(1.01); }
+        100% { box-shadow: 0 18px 40px rgba(37,99,235,0.55); transform: scale(1); }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
