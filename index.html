@@ -945,6 +945,7 @@
 
       <!-- CONTACT：嵌入 Google 表單 -->
                 <!-- CONTACT -->
+            <!-- CONTACT -->
       <section id="contact">
         <div class="section-header">
           <div>
@@ -956,20 +957,26 @@
           </div>
         </div>
 
-        <div style="border-radius:16px; overflow:hidden; background:#0b1020; padding:8px;">
-          <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLSfQdm8R3sdNpr3up9kGSQdbPXGbab5clpF_gDeaSmdzaxnUZg/viewform?embedded=true"
-            width="100%"
-            height="920"
-            frameborder="0"
-            marginheight="0"
-            marginwidth="0"
+        <div class="form" style="max-width: 720px; margin: 0 auto;">
+          <p class="small-hint">
+            點按下面按鈕，會在新分頁開啟 Google 表單，填寫完送出即可：
+          </p>
+
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfQdm8R3sdNpr3up9kGSQdbPXGbab5clpF_gDeaSmdzaxnUZg/viewform"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-primary btn-form"
+            style="display:inline-flex; align-items:center; gap:8px; text-decoration:none;"
           >
-            載入中…
-          </iframe>
+            開啟聯絡表單（Google 表單） <span>📩</span>
+          </a>
+
+          <div class="small-hint">
+            送出後資料會直接進到你的 Google 表單「回覆」裡，不會存到這個網站的伺服器。
+          </div>
         </div>
       </section>
-
     </main>
 
     <footer class="footer">
