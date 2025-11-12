@@ -85,18 +85,42 @@
       gap: 10px;
     }
 
-    .logo-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      border: 1px solid var(--brand-blue);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--brand-blue);
-    }
+    /* 共用：logo 外圈 */
+.logo-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1.5px solid var(--brand-blue);
+  position: relative;
+  background: radial-gradient(circle at 30% 30%, #e5f0ff 0, #ffffff 40%, #e5edf8 100%);
+  box-shadow: 0 0 0 1px rgba(0, 87, 184, 0.08);
+}
+
+/* 時鐘樣式 */
+.logo-clock::before,
+.logo-clock::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: var(--brand-blue);
+  transform-origin: bottom center;
+  border-radius: 999px;
+}
+
+/* 時針 */
+.logo-clock::before {
+  width: 2px;
+  height: 9px;
+  transform: translate(-50%, -100%) rotate(-40deg);
+}
+
+/* 分針 */
+.logo-clock::after {
+  width: 2px;
+  height: 12px;
+  transform: translate(-50%, -100%) rotate(90deg);
+}
 
     .logo-text-main {
       font-size: 16px;
@@ -647,13 +671,13 @@
     <div class="site-header-wrap">
       <header class="site-header">
   <!-- 左：LOGO 區 -->
-  <div class="header-left">
-    <div class="logo-mark">T</div>
-    <div>
-      <div class="logo-text-main">Taimic</div>
-      <div class="logo-text-sub">AI 保險 × 資產配置 </div>
-    </div>
+ <div class="header-left">
+  <div class="logo-mark logo-clock"></div>
+  <div>
+    <div class="logo-text-main">Taimic</div>
+    <div class="logo-text-sub">AI 保險 × 資產配置 Demo</div>
   </div>
+</div>
 
   <!-- 中：主選單（仿台積） -->
   <nav class="header-center">
