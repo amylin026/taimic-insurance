@@ -286,7 +286,7 @@
       border-radius: var(--radius-lg);
       border: 1px solid var(--border-soft);
       box-shadow: var(--shadow-soft);
-      padding: 20px 22px;
+      padding: 28px 40px;
     }
 
     .section-header {
@@ -538,19 +538,16 @@
 
     /* Demo 結果卡片閃一下 */
 
-    @keyframes flash {
-      0% {
-        box-shadow: 0 0 0 rgba(0, 87, 184, 0);
-        transform: scale(1);
-      }
-      25% {
-        box-shadow: 0 0 18px rgba(0, 87, 184, 0.4);
-        transform: scale(1.01);
-      }
-      100% {
-        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
-        transform: scale(1);
-      }
+        @keyframes flash {
+      ...
+    }
+
+    /* 調整首頁 HERO 區塊，讓整塊不要貼太左邊 */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+      gap: 32px;
+      padding: 32px 48px 28px;
     }
   </style>
 </head>
