@@ -117,22 +117,21 @@
       border-radius: 999px;
     }
 
-    /* 時針 */
-    .logo-clock::before {
-      width: 2px;
-      height: 9px;
-      transform: translate(-50%, -100%) rotate(0deg);
-      animation: clock-hour 30s linear infinite;
-    }
+    /* 時針：原本 30s -> 改 180s（3 分鐘轉一圈） */
+.logo-clock::before {
+  width: 2px;
+  height: 9px;
+  transform: translate(-50%, -100%) rotate(0deg);
+  animation: clock-hour 180s linear infinite;
+}
 
-    /* 分針 */
-    .logo-clock::after {
-      width: 2px;
-      height: 12px;
-      transform: translate(-50%, -100%) rotate(0deg);
-      animation: clock-minute 8s linear infinite;
-    }
-
+/* 分針：原本 8s -> 改 60s（1 分鐘轉一圈）*/
+.logo-clock::after {
+  width: 2px;
+  height: 12px;
+  transform: translate(-50%, -100%) rotate(0deg);
+  animation: clock-minute 60s linear infinite;
+}
     .logo-text-main {
       font-size: 16px;
       font-weight: 600;
