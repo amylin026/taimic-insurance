@@ -851,24 +851,25 @@
     const income = document.getElementById("income").value;
     const assets = document.getElementById("assets").value;
     const risk = document.getElementById("risk").value;
-    const insuranceRaw = document.getElementById("insurance").value || "";
-    const insurance = insuranceRaw.trim();
+    const insurance = document.getElementById("insurance").value;
     const focus = document.getElementById("focus").value.trim();
 
     // 1. 保險保障評語
     let protectLevel = "";
-    if (insurance.includes("幾乎沒有")) {
+
+    if (insurance === "幾乎沒有") {
       protectLevel =
-        "目前保險幾乎是空白，遇到大型醫療或意外時，開銷可能完全落在自己或家人身上，建議盡快補齊「醫療＋重大疾病＋壽險」三大基本防線。";
-    } else if (insurance.includes("有一些")) {
+        "保障缺口明顯，建議盡快補齊「醫療＋重大疾病＋壽險」三大基本防線。";
+    } else if (insurance === "有一些，但看不太懂") {
       protectLevel =
-        "你已經有一定保障，但內容可能不夠清楚或組合零碎，建議先做一次保單總體檢，確認沒有重複投保、也沒有重要缺口。";
-    } else if (insurance.includes("有，覺得還算夠")) {
+        "目前有一定保障，但內容可能不夠清楚，建議先做一次保單總體檢，確認沒有重複或缺角。";
+    } else if (insurance === "有，覺得還算夠") {
       protectLevel =
-        "整體保障大致還可以，再把醫療與收入中斷風險（失能、重大疾病）稍微補強，會更接近理想狀態。";
+        "整體保障看起來還可以，再把醫療與收入中斷風險稍微補強會更安心。";
     } else {
+      // 防呆：正常情況不應該看到這句
       protectLevel =
-        "暫時無法判斷你目前的保障程度，建議先把現有保單整理出來，再進一步檢查是否有重大缺口。";
+        "目前填寫的保單資訊不完整，建議先把現有保單整理出來，再進一步檢查是否有重要缺口。";
     }
 
     // 2. 投資風格 & 比例
@@ -885,29 +886,30 @@
       profile = "積極成長型";
       mix = "現金 10–15%，穩健債券 25–30%，成長型股票 / 基金 55–65%。";
     } else {
-      profile = "尚未明確分類";
-      mix = "先以現金＋穩健型標的為主，等風險屬性更清楚後再提高成長型資產比例。";
+      profile = "一般型";
+      mix = "現金 20%，穩健資產 40%，成長型資產 40%。";
     }
 
     // 3. 依資產規模給下一步建議
     let stepNext = "";
     if (assets === "50 萬以下") {
       stepNext =
-        "先把緊急預備金存到約 6 個月生活費，再開始做長期投資會比較舒服。";
+        "先把緊急預備金存到 6 個月生活費，再開始做長期投資會比較舒服。";
     } else if (assets === "50–200 萬") {
       stepNext =
-        "可以分批投入基金或 ETF，利用定期定額分散進場時間，降低一次性進場風險。";
+        "可以分批投入基金或 ETF，利用定期定額分散進場時間。";
     } else if (assets === "200–500 萬") {
       stepNext =
         "可以規劃一部分做長期成長，一部分做較穩的現金流（例如債券或配息型標的）。";
     } else if (assets === "500 萬以上") {
       stepNext =
-        "資產規模已經不小，建議搭配稅務、退休與財產傳承的角度，一起做中長期規劃。";
+        "資產規模已經不小，建議搭配稅務與財產傳承的思考，一起做中長期規劃。";
+    } else {
+      stepNext = "可以先整理清楚目前的資產分布，再來調整配置。";
     }
 
     if (family.includes("有小孩")) {
-      stepNext +=
-        " 另外，因為你有小孩，可以特別留意壽險保額與教育金準備是否足夠。";
+      stepNext += " 另外，因為你有小孩，可以特別留意壽險保額與教育金準備。";
     }
 
     // 4. 客製化關注點
@@ -925,7 +927,9 @@
     titleEl.textContent = "依照你目前填寫的初步分析摘要";
 
     lines[0].innerHTML =
-      "✅ 保險部分：" + `<span class="result-highlight">${protectLevel}</span>`;
+      "✅ 保險部分：<span class=\"result-highlight\">" +
+      protectLevel +
+      "</span>";
 
     lines[1].innerHTML =
       "💡 資產配置部分：依你的風險屬性，目前較接近 " +
@@ -934,7 +938,9 @@
       `<span class="result-highlight">${mix}</span>`;
 
     lines[2].innerHTML =
-      "🔔 下一步建議：" + stepNext + (focusLine ? "<br>" + focusLine : "");
+      "🔔 下一步建議：" +
+      stepNext +
+      (focusLine ? "<br>" + focusLine : "");
 
     // 讓卡片閃一下
     preview.style.animation = "none";
