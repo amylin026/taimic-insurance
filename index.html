@@ -115,6 +115,51 @@
       gap: 16px;
       font-size: 13px;
     }
+    /* 中間主選單：仿台積電 */
+.header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.top-nav-link {
+  position: relative;
+  padding: 4px 0;
+  color: #4b5563;
+}
+
+.top-nav-link:hover {
+  color: #111827;
+}
+
+/* 當前頁的底線（紅色 bar） */
+.top-nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 3px;
+  border-radius: 999px;
+  background: #b91c1c;
+}
+
+/* 右邊搜尋 icon */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 13px;
+}
+
+.header-search {
+  font-size: 18px;
+  color: #6b7280;
+  cursor: pointer;
+}
     /* --- 多語切換膠囊（模仿 TSMC 那種） --- */
 .lang-switch {
   display: inline-flex;
@@ -549,22 +594,27 @@
     /* -------- RWD -------- */
 
     @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: 1fr;
-        padding: 24px 18px 22px;
-      }
-      .assessment-layout {
-        grid-template-columns: 1fr;
-      }
-      .feature-grid,
-      .steps-grid {
-        grid-template-columns: 1fr;
-      }
-      .header-right {
-        display: none; /* 小螢幕先簡化，不顯示 nav 連結 */
-      }
-    }
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 24px 18px 22px;
+  }
 
+  .assessment-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-grid,
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header-center {
+    display: none;  /* 手機先隱藏主選單 */
+  }
+  .header-right {
+    display: none;  /* 目前手機版整個右邊一起藏掉（之後要再弄漢堡選單可以再改） */
+  }
+}
     @media (max-width: 640px) {
       .page-inner {
         padding: 0 14px 40px;
@@ -596,16 +646,27 @@
     <!-- HEADER -->
     <div class="site-header-wrap">
       <header class="site-header">
+  <!-- 左：LOGO 區 -->
   <div class="header-left">
     <div class="logo-mark">T</div>
     <div>
       <div class="logo-text-main">Taimic</div>
-      <div class="logo-text-sub">AI 保險 × 資產配置</div>
+      <div class="logo-text-sub">AI 保險 × 資產配置 Demo</div>
     </div>
   </div>
 
-  <nav class="header-right">
-    <!-- 多語切換膠囊 -->
+  <!-- 中：主選單（仿台積） -->
+  <nav class="header-center">
+    <a href="#overview" class="top-nav-link">服務說明</a>
+    <a href="#flow" class="top-nav-link active">流程</a>
+    <a href="#assessment" class="top-nav-link">免費健檢</a>
+    <a href="#contact" class="top-nav-link">聯絡</a>
+  </nav>
+
+  <!-- 右：搜尋 + 語言膠囊 -->
+  <div class="header-right">
+    <span class="header-search">🔍</span>
+
     <div class="lang-switch">
       <span class="lang-switch-icon">🌐</span>
       <button class="lang-item">English</button>
@@ -613,16 +674,7 @@
       <button class="lang-item">簡中</button>
       <button class="lang-item">日本語</button>
     </div>
-
-    <!-- 原本的導覽 -->
-    <a href="#overview" class="nav-link">服務說明</a>
-    <a href="#flow" class="nav-link">流程</a>
-    <a href="#assessment" class="nav-link">免費健檢</a>
-    <a href="#contact" class="nav-link">聯絡</a>
-    <button class="nav-cta" onclick="scrollToId('assessment')">
-      開始免費健檢
-    </button>
-  </nav>
+  </div>
 </header>
     </div>
 
