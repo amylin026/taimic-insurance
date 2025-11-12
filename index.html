@@ -1083,6 +1083,13 @@
   </div>
 
   <script>
+  // 一載入就捲到主畫面 HERO 區塊
+  window.addEventListener("load", function () {
+    const hero = document.getElementById("top");
+    if (hero) {
+      hero.scrollIntoView({ behavior: "auto", block: "start" });
+    }
+  });
     // 年份
     document.getElementById("year").textContent = new Date().getFullYear();
 
