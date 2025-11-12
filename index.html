@@ -139,6 +139,34 @@
       cursor: pointer;
     }
 
+    /* --- TSMC 風格次導航 / 麵包屑 --- */
+    .subnav {
+      width: 100%;
+      border-top: 1px solid #e5e7eb;
+      border-bottom: 1px solid #e5e7eb;
+      background: #f9fafb;
+    }
+
+    .subnav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 14px 20px;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .breadcrumb span {
+      margin-left: 4px;
+    }
+
+    .breadcrumb .current-page {
+      color: #111827;
+      font-weight: 500;
+    }
+
     /* -------- HERO：上方大區塊 -------- */
 
     .hero {
@@ -524,33 +552,6 @@
       }
     }
   </style>
-  /* --- TSMC 風格次導航 / 麵包屑 --- */
-.subnav {
-  width: 100%;
-  border-top: 1px solid #e5e7eb;
-  border-bottom: 1px solid #e5e7eb;
-  background: #f9fafb;
-}
-
-.subnav-inner {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 14px 16px;
-}
-
-.breadcrumb {
-  font-size: 13px;
-  color: #6b7280; /* 灰字 */
-}
-
-.breadcrumb span {
-  margin-left: 4px;
-}
-
-.breadcrumb .current-page {
-  color: #111827; /* 深一點，像 TSMC 把當前頁加重 */
-  font-weight: 500;
-}
 </head>
 <body>
   <div class="page">
@@ -573,7 +574,8 @@
             開始免費健檢
           </button>
         </nav>
-        </header>
+      </header>
+    </div>
 
     <!-- 次導航 / 麵包屑（學 TSMC） -->
     <div class="subnav">
@@ -584,10 +586,7 @@
       </div>
     </div>
 
-    <main>
-    </div>
-
-    <div class="page-inner">
+    <main class="page-inner">
       <!-- HERO -->
       <section class="hero" id="top">
         <div>
@@ -843,7 +842,7 @@
           </div>
         </div>
       </section>
-    </div>
+    </main>
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -868,7 +867,7 @@
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    // Demo 表單送出：依照填寫內容產生不同建議（沿用你剛剛那套邏輯）
+    // Demo 表單送出：依照填寫內容產生不同建議
     function handleDemoSubmit(e) {
       e.preventDefault();
 
