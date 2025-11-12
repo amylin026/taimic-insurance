@@ -524,6 +524,33 @@
       }
     }
   </style>
+  /* --- TSMC 風格次導航 / 麵包屑 --- */
+.subnav {
+  width: 100%;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.subnav-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 14px 16px;
+}
+
+.breadcrumb {
+  font-size: 13px;
+  color: #6b7280; /* 灰字 */
+}
+
+.breadcrumb span {
+  margin-left: 4px;
+}
+
+.breadcrumb .current-page {
+  color: #111827; /* 深一點，像 TSMC 把當前頁加重 */
+  font-weight: 500;
+}
 </head>
 <body>
   <div class="page">
@@ -546,7 +573,18 @@
             開始免費健檢
           </button>
         </nav>
-      </header>
+        </header>
+
+    <!-- 次導航 / 麵包屑（學 TSMC） -->
+    <div class="subnav">
+      <div class="subnav-inner">
+        <div class="breadcrumb">
+          首頁 <span>/</span> <span class="current-page">Taimic Demo</span>
+        </div>
+      </div>
+    </div>
+
+    <main>
     </div>
 
     <div class="page-inner">
