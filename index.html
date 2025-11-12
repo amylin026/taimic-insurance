@@ -2,13 +2,14 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>Taimic｜AI 保險與資產配置 Demo</title>
+  <title>Taimic｜AI 保險與資產配置顧問 Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
     content="用 Taimic 幫你快速檢視保險與資產配置的方向，根據年齡、家庭與資產規模，給出初步建議。"
   />
   <style>
+    /* -------- 基本樣式：走台積官網那種乾淨白底企業風 -------- */
     :root {
       --brand-blue: #0057b8;
       --brand-blue-light: #e6f0fb;
@@ -41,6 +42,8 @@
       text-decoration: none;
     }
 
+    /* -------- 整體版面 -------- */
+
     .page {
       min-height: 100vh;
       display: flex;
@@ -55,7 +58,7 @@
       flex: 1;
     }
 
-    /* HEADER */
+    /* -------- Header / 導覽列：白底、細邊 -------- */
 
     .site-header-wrap {
       width: 100%;
@@ -136,41 +139,13 @@
       cursor: pointer;
     }
 
-    /* 次導航 / 麵包屑 */
-
-    .subnav {
-      width: 100%;
-      border-top: 1px solid #e5e7eb;
-      border-bottom: 1px solid #e5e7eb;
-      background: #f9fafb;
-    }
-
-    .subnav-inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 14px 16px;
-    }
-
-    .breadcrumb {
-      font-size: 13px;
-      color: #6b7280;
-    }
-
-    .breadcrumb span {
-      margin-left: 4px;
-    }
-
-    .breadcrumb .current-page {
-      color: #111827;
-      font-weight: 500;
-    }
-
-    /* HERO */
+    /* -------- HERO：上方大區塊 -------- */
 
     .hero {
       display: grid;
       grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
       gap: 32px;
+      padding: 32px 0 28px;
     }
 
     .hero-left-title {
@@ -190,31 +165,14 @@
       max-width: 520px;
     }
 
-    .hero-info-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 12px;
-  color: var(--text-sub);
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: #f3f4f6;
-  margin-bottom: 12px;
-}
-
-.hero-info-pill {
-  padding: 2px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--brand-blue);
-  color: var(--brand-blue);
-  font-size: 11px;
-  font-weight: 500;
-  background: #fff;
-}
-
-.hero-info-text {
-  font-size: 12px;
-}
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      margin-bottom: 8px;
+      color: var(--brand-blue);
+    }
 
     .hero-tag-pill {
       padding: 2px 8px;
@@ -292,7 +250,7 @@
       font-size: 13px;
     }
 
-    /* 通用 section */
+    /* -------- 通用 section -------- */
 
     section {
       margin-bottom: 32px;
@@ -318,7 +276,7 @@
       color: var(--text-sub);
     }
 
-    /* 特色 / 三欄 */
+    /* -------- 特色 / 三欄 -------- */
 
     .feature-grid {
       display: grid;
@@ -345,7 +303,7 @@
       color: var(--text-sub);
     }
 
-    /* 三步驟流程 */
+    /* -------- 三步驟流程 -------- */
 
     .steps-grid {
       display: grid;
@@ -378,7 +336,7 @@
       color: var(--text-sub);
     }
 
-    /* Demo 表單區 */
+    /* -------- Demo 表單區 -------- */
 
     .assessment-layout {
       display: grid;
@@ -480,7 +438,7 @@
       padding-top: 8px;
     }
 
-    /* Contact / Google 表單 */
+    /* -------- Contact / Google 表單按鈕 -------- */
 
     .contact-wrapper {
       max-width: 720px;
@@ -498,7 +456,7 @@
       font-weight: 600;
     }
 
-    /* Footer */
+    /* -------- Footer -------- */
 
     .footer {
       border-top: 1px solid #e5e7eb;
@@ -523,7 +481,7 @@
       text-decoration-style: dotted;
     }
 
-    /* RWD */
+    /* -------- RWD -------- */
 
     @media (max-width: 900px) {
       .hero {
@@ -537,7 +495,7 @@
         grid-template-columns: 1fr;
       }
       .header-right {
-        display: none;
+        display: none; /* 小螢幕先簡化，不顯示 nav 連結 */
       }
     }
 
@@ -550,10 +508,20 @@
       }
     }
 
+    /* Demo 結果卡片閃爍動畫 */
     @keyframes flash {
-      0% { box-shadow: 0 0 0 rgba(0, 87, 184, 0); transform: scale(1); }
-      25% { box-shadow: 0 0 18px rgba(0, 87, 184, 0.4); transform: scale(1.01); }
-      100% { box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08); transform: scale(1); }
+      0% {
+        box-shadow: 0 0 0 rgba(0, 87, 184, 0);
+        transform: scale(1);
+      }
+      25% {
+        box-shadow: 0 0 18px rgba(0, 87, 184, 0.4);
+        transform: scale(1.01);
+      }
+      100% {
+        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+        transform: scale(1);
+      }
     }
   </style>
 </head>
@@ -566,7 +534,7 @@
           <div class="logo-mark">T</div>
           <div>
             <div class="logo-text-main">Taimic</div>
-            <div class="logo-text-sub">AI 保險 × 資產配置 Demo</div>
+            <div class="logo-text-sub">AI 保險 × 資產配置顧問 Demo</div>
           </div>
         </div>
         <nav class="header-right">
@@ -581,278 +549,263 @@
       </header>
     </div>
 
-    <!-- 次導航 -->
-    <div class="subnav">
-      <div class="subnav-inner">
-        <div class="breadcrumb">
-          首頁 <span>/</span> <span class="current-page">Taimic Demo</span>
+    <div class="page-inner">
+      <!-- HERO -->
+      <section class="hero" id="top">
+        <div>
+          <div class="hero-tag">
+            <span class="hero-tag-pill">概念驗證 Demo</span>
+            <span>尚未串接保險公司與真實商品</span>
+          </div>
+          <h1 class="hero-left-title">
+            給你一個<br />看得懂的 <span>保險＋資產配置方向</span>
+          </h1>
+          <p class="hero-left-sub">
+            Taimic 目前是一個用來和客戶溝通的 Demo 工具，透過幾個簡單問題，
+            初步幫你整理「保障是否太少」與「資產大方向怎麼分」。
+          </p>
+          <div class="hero-btn-row">
+            <button class="btn-primary" onclick="scrollToId('assessment')">
+              3 分鐘免費健檢
+            </button>
+            <button class="btn-secondary" onclick="scrollToId('overview')">
+              先了解服務內容
+            </button>
+          </div>
+          <div class="hero-note">
+            ※ 所有結果僅供教育與示意用途，實際投保與投資仍須與合法專業人員討論。
+          </div>
         </div>
-      </div>
-    </div>
 
-    <main>
-      <div class="page-inner">
-        <!-- HERO -->
-        <section class="hero" id="top">
-          <div>
-            <div>
-  <div class="hero-info-bar">
-    <span class="hero-info-pill">概念驗證 Demo</span>
-    <span class="hero-info-text">尚未串接保險公司與真實商品，僅供示意與教育用途</span>
-  </div>
-
-  <h1 class="hero-left-title">
-    給你一個<br />看得懂的 <span>保險＋資產配置方向</span>
-  </h1>
-            <p class="hero-left-sub">
-              Taimic 目前是一個用來和客戶溝通的 Demo 工具，透過幾個簡單問題，
-              初步幫你整理「保障是否太少」與「資產大方向怎麼分」。
-            </p>
-            <div class="hero-btn-row">
-              <button class="btn-primary" onclick="scrollToId('assessment')">
-                3 分鐘免費健檢
-              </button>
-              <button class="btn-secondary" onclick="scrollToId('overview')">
-                先了解服務內容
-              </button>
-            </div>
-            <div class="hero-note">
-              ※ 所有結果僅供教育與示意用途，實際投保與投資仍須與合法專業人員討論。
-            </div>
+        <aside class="hero-right">
+          <div class="hero-right-title">這個 Demo 可以做什麼？</div>
+          <div class="hero-right-sub">
+            目前版本不會幫你下單，也不會連動到任何帳戶，只是一個輔助對話用的小工具。
           </div>
 
-          <aside class="hero-right">
-            <div class="hero-right-title">這個 Demo 可以做什麼？</div>
-            <div class="hero-right-sub">
-              目前版本不會幫你下單，也不會連動到任何帳戶，只是一個輔助對話用的小工具。
-            </div>
+          <div class="hero-right-block">
+            <div class="hero-right-label">大概可以幫你：</div>
+            <ul class="hero-right-list">
+              <li>看一下目前保險大概是偏少、剛好或略多</li>
+              <li>根據風險屬性給出「現金 / 債券 / 成長」的比例方向</li>
+              <li>提示下一步可以準備哪些資料給專業顧問</li>
+            </ul>
+          </div>
 
-            <div class="hero-right-block">
-              <div class="hero-right-label">大概可以幫你：</div>
-              <ul class="hero-right-list">
-                <li>看一下目前保險大概是偏少、剛好或略多</li>
-                <li>根據風險屬性給出「現金 / 債券 / 成長」的比例方向</li>
-                <li>提示下一步可以準備哪些資料</li>
-              </ul>
-            </div>
+          <div class="hero-right-block">
+            <div class="hero-right-label">目前還做不到：</div>
+            <ul class="hero-right-list">
+              <li>實際串接保險公司商品</li>
+              <li>讀取你真實的保單與投資帳戶</li>
+              <li>取代合格的保險或投顧專業意見</li>
+            </ul>
+          </div>
+        </aside>
+      </section>
 
-            <div class="hero-right-block">
-              <div class="hero-right-label">目前還做不到：</div>
-              <ul class="hero-right-list">
-                <li>實際串接保險公司商品</li>
-                <li>讀取你真實的保單與投資帳戶</li>
-                <li>取代合格的保險或投顧專業意見</li>
-              </ul>
-            </div>
-          </aside>
-        </section>
+      <!-- 服務說明 -->
+      <section id="overview">
+        <div class="section-header">
+          <h2 class="section-title">Taimic 想解決的是什麼？</h2>
+          <p class="section-sub">
+            很多人同時有保險、基金、股票，但很少有人把「保障」和「資產配置」一起看。
+            Taimic 想先幫你有一張大方向的地圖，再來談細節。
+          </p>
+        </div>
 
-        <!-- 服務說明 -->
-        <section id="overview">
-          <div class="section-header">
-            <h2 class="section-title">Taimic 想解決的是什麼？</h2>
-            <p class="section-sub">
-              很多人同時有保險、基金、股票，但很少有人把「保障」和「資產配置」一起看。
-              Taimic 想先幫你有一張大方向的地圖，再來談細節。
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h3>把保險看成風險防護網</h3>
+            <p>
+              先看醫療、重大疾病、壽險有沒有大洞，避免一場意外或重病就把多年存款一次打掉。
             </p>
           </div>
-
-          <div class="feature-grid">
-            <div class="feature-card">
-              <h3>把保險看成風險防護網</h3>
-              <p>
-                先看醫療、重大疾病、壽險有沒有大洞，避免一場意外或重病就把多年存款一次打掉。
-              </p>
-            </div>
-            <div class="feature-card">
-              <h3>把資產配置看成長期地圖</h3>
-              <p>
-                依照你的年齡與風險屬性，先分出「安全層」與「成長層」，而不是只靠單一商品。
-              </p>
-            </div>
-            <div class="feature-card">
-              <h3>把 AI 當成對話起點</h3>
-              <p>
-                目前 Demo 用的是簡化規則，不是完整 AI 模型，但可以幫你更快對焦重點。
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <!-- 流程 -->
-        <section id="flow">
-          <div class="section-header">
-            <h2 class="section-title">使用流程（目前 Demo 版）</h2>
-            <p class="section-sub">
-              真正上線之後，會再加入「上傳保單」、「讀取投資部位」等功能；
-              目前先用簡化版陪你看方向。
+          <div class="feature-card">
+            <h3>把資產配置看成長期地圖</h3>
+            <p>
+              依照你的年齡與風險屬性，先分出「安全層」與「成長層」，而不是只靠單一商品。
             </p>
           </div>
-
-          <div class="steps-grid">
-            <div class="step-card">
-              <div class="step-tag">Step 1</div>
-              <h3>填寫基本資訊</h3>
-              <p>輸入年齡、家庭狀況、收入、可投資資產、風險屬性與目前保單概況。</p>
-            </div>
-            <div class="step-card">
-              <div class="step-tag">Step 2</div>
-              <h3>系統產生初步分析</h3>
-              <p>根據你填的條件，給出保障強度與資產配置方向，讓你知道自己大概在哪個位置。</p>
-            </div>
-            <div class="step-card">
-              <div class="step-tag">Step 3</div>
-              <h3>帶著結果討論</h3>
-              <p>把這份結果當成溝通起點，之後可以由專業人員進一步調整細節與商品選擇。</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Demo 評估 -->
-        <section id="assessment">
-          <div class="section-header">
-            <h2 class="section-title">3 分鐘試算你的「財務安全指紋」</h2>
-            <p class="section-sub">
-              這裡的結果只是 Demo 規則，不會幫你下單，也不會存任何個資；重整頁面資料就會消失。
+          <div class="feature-card">
+            <h3>把 AI 當成對話起點</h3>
+            <p>
+              目前 Demo 用的是簡化規則，不是完整 AI 模型，但可以幫你和顧問更快對焦重點。
             </p>
           </div>
+        </div>
+      </section>
 
-          <div class="assessment-layout">
-            <!-- 表單 -->
-            <form class="form" onsubmit="handleDemoSubmit(event)">
-              <div class="form-row-inline">
-                <div class="form-row">
-                  <label for="age">你的年齡</label>
-                  <input id="age" type="number" placeholder="例如：32" required />
-                </div>
-                <div class="form-row">
-                  <label for="family">家庭狀況</label>
-                  <select id="family" required>
-                    <option value="">請選擇</option>
-                    <option>單身</option>
-                    <option>已婚，無小孩</option>
-                    <option>已婚，有小孩</option>
-                    <option>其他／不方便透露</option>
-                  </select>
-                </div>
-              </div>
+      <!-- 流程 -->
+      <section id="flow">
+        <div class="section-header">
+          <h2 class="section-title">使用流程（目前 Demo 版）</h2>
+          <p class="section-sub">
+            真正上線之後，會再加入「上傳保單」、「讀取投資部位」等功能；
+            目前先用簡化版陪你看方向。
+          </p>
+        </div>
 
-              <div class="form-row-inline">
-                <div class="form-row">
-                  <label for="income">大約月收入區間</label>
-                  <select id="income" required>
-                    <option value="">請選擇</option>
-                    <option>5 萬以下</option>
-                    <option>5–10 萬</option>
-                    <option>10–20 萬</option>
-                    <option>20 萬以上</option>
-                  </select>
-                </div>
-                <div class="form-row">
-                  <label for="assets">大約可投資資產規模</label>
-                  <select id="assets" required>
-                    <option value="">請選擇</option>
-                    <option>50 萬以下</option>
-                    <option>50–200 萬</option>
-                    <option>200–500 萬</option>
-                    <option>500 萬以上</option>
-                  </select>
-                </div>
-              </div>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-tag">Step 1</div>
+            <h3>填寫基本資訊</h3>
+            <p>輸入年齡、家庭狀況、收入、可投資資產、風險屬性與目前保單概況。</p>
+          </div>
+          <div class="step-card">
+            <div class="step-tag">Step 2</div>
+            <h3>系統產生初步分析</h3>
+            <p>根據你填的條件，給出保障強度與資產配置方向，讓你知道自己大概在哪個位置。</p>
+          </div>
+          <div class="step-card">
+            <div class="step-tag">Step 3</div>
+            <h3>帶著結果和顧問討論</h3>
+            <p>把這份結果當成溝通起點，之後可以由專業人員進一步調整細節與商品選擇。</p>
+          </div>
+        </div>
+      </section>
 
-              <div class="form-row-inline">
-                <div class="form-row">
-                  <label for="risk">你覺得自己屬於哪種風險屬性？</label>
-                  <select id="risk" required>
-                    <option value="">請選擇</option>
-                    <option>非常保守（不太能接受虧損）</option>
-                    <option>穩健（可以接受一些波動）</option>
-                    <option>積極（願意換波動換成長）</option>
-                  </select>
-                </div>
-                <div class="form-row">
-                  <label for="insurance">目前有沒有保單？</label>
-                  <select id="insurance" required>
-                    <option value="">請選擇</option>
-                    <option>幾乎沒有</option>
-                    <option>有一些，但看不太懂</option>
-                    <option>有，覺得還算夠</option>
-                  </select>
-                </div>
-              </div>
+      <!-- Demo 評估 -->
+      <section id="assessment">
+        <div class="section-header">
+          <h2 class="section-title">3 分鐘試算你的「財務安全指紋」</h2>
+          <p class="section-sub">
+            這裡的結果只是 Demo 規則，不會幫你下單，也不會存任何個資；重整頁面資料就會消失。
+          </p>
+        </div>
 
+        <div class="assessment-layout">
+          <!-- 表單 -->
+          <form class="form" onsubmit="handleDemoSubmit(event)">
+            <div class="form-row-inline">
               <div class="form-row">
-                <label for="focus">你最在意什麼？（選填）</label>
-                <textarea
-                  id="focus"
-                  placeholder="例如：怕生病花很多錢、擔心小孩教育費、想 10 年內可以半退休⋯⋯"
-                ></textarea>
+                <label for="age">你的年齡</label>
+                <input id="age" type="number" placeholder="例如：32" required />
               </div>
-
-              <button type="submit" class="btn-primary">
-                產生 Demo 建議 ⚡
-              </button>
-              <div class="small-hint">
-                送出後右側會更新建議內容，不會寄信、不會儲存到任何伺服器。
+              <div class="form-row">
+                <label for="family">家庭狀況</label>
+                <select id="family" required>
+                  <option value="">請選擇</option>
+                  <option>單身</option>
+                  <option>已婚，無小孩</option>
+                  <option>已婚，有小孩</option>
+                  <option>其他／不方便透露</option>
+                </select>
               </div>
-            </form>
-
-            <!-- 結果預覽 -->
-            <div class="result-preview" id="resultPreview">
-              <div class="result-tag">Demo 建議預覽</div>
-              <div class="result-title">
-                請先左側填寫資料，再按下「產生 Demo 建議」。
-              </div>
-              <p class="result-line">
-                ✅ 保險部分的建議會出現在這裡。
-              </p>
-              <p class="result-line">
-                💡 資產配置比例與風險屬性會出現在這裡。
-              </p>
-              <p class="result-line">
-                🔔 下一步具體行動方向會出現在這裡。
-              </p>
             </div>
-          </div>
 
-          <div class="disclaimer">
-            法律聲明：本頁面為概念展示與一般性財務教育資訊，不構成任何保險、基金、債券、
-            股票等商品之招攬或建議。實際決策請務必與具合法資格之專業人員討論。
-          </div>
-        </section>
+            <div class="form-row-inline">
+              <div class="form-row">
+                <label for="income">大約月收入區間</label>
+                <select id="income" required>
+                  <option value="">請選擇</option>
+                  <option>5 萬以下</option>
+                  <option>5–10 萬</option>
+                  <option>10–20 萬</option>
+                  <option>20 萬以上</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label for="assets">大約可投資資產規模</label>
+                <select id="assets" required>
+                  <option value="">請選擇</option>
+                  <option>50 萬以下</option>
+                  <option>50–200 萬</option>
+                  <option>200–500 萬</option>
+                  <option>500 萬以上</option>
+                </select>
+              </div>
+            </div>
 
-        <!-- CONTACT / Google 表單 -->
-        <section id="contact">
-          <div class="section-header">
-            <h2 class="section-title">想知道 Taimic 之後的正式版本？</h2>
-            <p class="section-sub">
-              如果你願意收到未來 alpha / beta 版本的消息，或有合作想法，可以到 Google 表單簡單留個聯絡方式。
-            </p>
-          </div>
+            <div class="form-row-inline">
+              <div class="form-row">
+                <label for="risk">你覺得自己屬於哪種風險屬性？</label>
+                <select id="risk" required>
+                  <option value="">請選擇</option>
+                  <option>非常保守（不太能接受虧損）</option>
+                  <option>穩健（可以接受一些波動）</option>
+                  <option>積極（願意換波動換成長）</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label for="insurance">目前有沒有保單？</label>
+                <select id="insurance" required>
+                  <option value="">請選擇</option>
+                  <option>幾乎沒有</option>
+                  <option>有一些，但看不太懂</option>
+                  <option>有，覺得還算夠</option>
+                </select>
+              </div>
+            </div>
 
-          <div class="contact-wrapper">
-            <p class="small-hint">
-              按下面按鈕會在<span>新分頁</span>開啟 Google 表單，填寫完成送出即可。
-            </p>
+            <div class="form-row">
+              <label for="focus">你最在意什麼？（選填）</label>
+              <textarea
+                id="focus"
+                placeholder="例如：怕生病花很多錢、擔心小孩教育費、想 10 年內可以半退休⋯⋯"
+              ></textarea>
+            </div>
 
-            <p style="margin: 8px 0 12px;">
-              <a
-                class="btn-link"
-                href="https://docs.google.com/forms/d/e/1FAIpQLSfQdm8R3sdNpr3up9kGSQdbPXGbab5clpF_gDeaSmdzaxnUZg/viewform"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                開啟聯絡表單（Google 表單） 📩
-              </a>
-            </p>
-
+            <button type="submit" class="btn-primary">
+              產生 Demo 建議 ⚡
+            </button>
             <div class="small-hint">
-              表單回覆會直接進到你的 Google Form 後台，這個網站本身不會儲存任何資料。
+              送出後右側會更新建議內容，不會寄信、不會儲存到任何伺服器。
             </div>
+          </form>
+
+          <!-- 結果預覽 -->
+          <div class="result-preview" id="resultPreview">
+            <div class="result-tag">Demo 建議預覽</div>
+            <div class="result-title">請先左側填寫資料，再按下「產生 Demo 建議」。</div>
+            <p class="result-line">
+              ✅ 保險部分的建議會出現在這裡。
+            </p>
+            <p class="result-line">
+              💡 資產配置比例與風險屬性會出現在這裡。
+            </p>
+            <p class="result-line">
+              🔔 下一步具體行動方向會出現在這裡。
+            </p>
           </div>
-        </section>
-      </div>
-    </main>
+        </div>
+
+        <div class="disclaimer">
+          法律聲明：本頁面為概念展示與一般性財務教育資訊，不構成任何保險、基金、債券、
+          股票等商品之招攬或建議。實際決策請務必與具合法資格之專業人員討論。
+        </div>
+      </section>
+
+      <!-- CONTACT / Google 表單 -->
+      <section id="contact">
+        <div class="section-header">
+          <h2 class="section-title">想知道 Taimic 之後的正式版本？</h2>
+          <p class="section-sub">
+            如果你願意收到未來 alpha / beta 版本的消息，或有合作想法，可以到 Google 表單簡單留個聯絡方式。
+          </p>
+        </div>
+
+        <div class="contact-wrapper">
+          <p class="small-hint">
+            按下面按鈕會在<span>新分頁</span>開啟 Google 表單，填寫完成送出即可。
+          </p>
+
+          <p style="margin: 8px 0 12px;">
+            <a
+              class="btn-link"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfQdm8R3sdNpr3up9kGSQdbPXGbab5clpF_gDeaSmdzaxnUZg/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              開啟聯絡表單（Google 表單） 📩
+            </a>
+          </p>
+
+          <div class="small-hint">
+            表單回覆會直接進到你的 Google Form 後台，這個網站本身不會儲存任何資料。
+          </div>
+        </div>
+      </section>
+    </div>
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -867,14 +820,17 @@
   </div>
 
   <script>
+    // 年份
     document.getElementById("year").textContent = new Date().getFullYear();
 
+    // 捲動到區塊
     function scrollToId(id) {
       const el = document.getElementById(id);
       if (!el) return;
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
+    // Demo 表單送出：依照填寫內容產生不同建議（沿用你剛剛那套邏輯）
     function handleDemoSubmit(e) {
       e.preventDefault();
 
@@ -886,6 +842,7 @@
       const insurance = document.getElementById("insurance").value;
       const focus = document.getElementById("focus").value.trim();
 
+      // 1. 保險保障評語
       let protectLevel = "";
       if (insurance === "幾乎沒有") {
         protectLevel =
@@ -898,6 +855,7 @@
           "整體保障看起來還可以，再把醫療與收入中斷風險稍微補強會更安心。";
       }
 
+      // 2. 投資風格 & 比例
       let profile = "";
       let mix = "";
 
@@ -915,6 +873,7 @@
           "現金 10–15%，穩健債券 25–30%，成長型股票 / 基金 55–65%。";
       }
 
+      // 3. 依資產規模給下一步建議
       let stepNext = "";
       if (assets === "50 萬以下") {
         stepNext =
@@ -931,14 +890,17 @@
       }
 
       if (family.includes("有小孩")) {
-        stepNext += " 另外，因為你有小孩，可以特別留意壽險保額與教育金準備。";
+        stepNext +=
+          " 另外，因為你有小孩，可以特別留意壽險保額與教育金準備。";
       }
 
+      // 4. 客製化關注點
       let focusLine = "";
       if (focus) {
         focusLine = `你特別在意的重點是：「${focus}」，之後在調整保險與投資配置時，可以以這個目標當優先。`;
       }
 
+      // 把結果塞回畫面
       const preview = document.getElementById("resultPreview");
       const titleEl = preview.querySelector(".result-title");
       const lines = preview.querySelectorAll(".result-line");
@@ -956,8 +918,11 @@
         `<span class="result-highlight">${mix}</span>`;
 
       lines[2].innerHTML =
-        "🔔 下一步建議：" + stepNext + (focusLine ? "<br>" + focusLine : "");
+        "🔔 下一步建議：" +
+        stepNext +
+        (focusLine ? "<br>" + focusLine : "");
 
+      // 讓卡片閃一下
       preview.style.animation = "none";
       void preview.offsetWidth;
       preview.style.animation = "flash 0.6s ease-out";
