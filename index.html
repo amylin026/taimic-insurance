@@ -225,7 +225,20 @@
   color: #b91c1c;
   font-weight: 600;
 }
+/* 讓語言選項改成直式排列 */
+.lang-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
 
+.lang-item {
+  display: block;
+  padding: 1px 0;
+  text-align: left;
+}
+    
     .nav-link {
       padding: 6px 8px;
       border-radius: 999px;
@@ -719,12 +732,14 @@
     <span class="header-search">🔍</span>
 
     <div class="lang-switch">
-      <span class="lang-switch-icon">🌐</span>
-      <button class="lang-item">English</button>
-      <button class="lang-item active">繁中</button>
-      <button class="lang-item">簡中</button>
-      <button class="lang-item">日本語</button>
-    </div>
+  <span class="lang-switch-icon">🌐</span>
+  <div class="lang-column">
+    <button class="lang-item">English</button>
+    <button class="lang-item active">繁中</button>
+    <button class="lang-item">簡中</button>
+    <button class="lang-item">日本語</button>
+  </div>
+</div>
   </div>
 </header>
     </div>
