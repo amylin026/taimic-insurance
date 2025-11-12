@@ -194,28 +194,57 @@
   color: #6b7280;
   cursor: pointer;
 }
-    /* --- 多語切換膠囊（模仿 TSMC 那種） --- */
+/* --- 多語切換：點一下展開的直式選單 --- */
 .lang-switch {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 4px 12px;
-  border-radius: 999px;
-  background: #f3f4f6;
+  position: relative;
   margin-right: 12px;
   font-size: 12px;
 }
 
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: none;
+  background: #f3f4f6;
+  cursor: pointer;
+  color: #4b5563;
+}
+
+.lang-toggle:hover {
+  background: #e5e7eb;
+}
+
 .lang-switch-icon {
   font-size: 14px;
-  color: #4b5563;
+}
+
+.lang-menu {
+  position: absolute;
+  right: 0;
+  top: 110%;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(249, 250, 251, 0.98);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 110px;
+}
+
+.lang-switch.open .lang-menu {
+  display: flex;
 }
 
 .lang-item {
   border: none;
   background: transparent;
-  padding: 2px 4px;
-  font-size: 12px;
+  padding: 2px 0;
+  font-size: 13px;
+  text-align: left;
   color: #6b7280;
   cursor: pointer;
 }
@@ -728,15 +757,20 @@
 </nav>
   <!-- 右：搜尋 + 語言膠囊 -->
   <div class="header-right">
-    <span class="header-search">🔍</span>
+  <span class="header-search">🔍</span>
 
-    <div class="lang-switch">
-  <span class="lang-switch-icon">🌐</span>
-  <div class="lang-column">
-    <button class="lang-item">English</button>
-    <button class="lang-item active">繁中</button>
-    <button class="lang-item">簡中</button>
-    <button class="lang-item">日本語</button>
+  <div class="lang-switch" id="langSwitch">
+    <button class="lang-toggle" type="button">
+      <span class="lang-switch-icon">🌐</span>
+      <span id="currentLangLabel">繁中</span>
+    </button>
+
+    <div class="lang-menu">
+      <button class="lang-item" data-lang="en">English</button>
+      <button class="lang-item active" data-lang="zh-Hant">繁中</button>
+      <button class="lang-item" data-lang="zh-Hans">簡中</button>
+      <button class="lang-item" data-lang="ja">日本語</button>
+    </div>
   </div>
 </div>
   </div>
@@ -1148,6 +1182,40 @@
       preview.style.animation = "none";
       void preview.offsetWidth;
       preview.style.animation = "flash 0.6s ease-out";
+    } 
+
+        // 語言選單：點一下展開 / 收合
+    const langSwitch = document.getElementById("langSwitch");
+    if (langSwitch) {
+      const langToggle = langSwitch.querySelector(".lang-toggle");
+      const langMenu = langSwitch.querySelector(".lang-menu");
+      const langItems = langSwitch.querySelectorAll(".lang-item");
+      const currentLangLabel = document.getElementById("currentLangLabel");
+
+      // 開關下拉選單
+      langToggle.addEventListener("click", () => {
+        langSwitch.classList.toggle("open");
+      });
+
+      // 點選某個語言
+      langItems.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          langItems.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          currentLangLabel.textContent = btn.textContent;
+          langSwitch.classList.remove("open");
+
+          // TODO: 之後如果要真的切語系，可以在這裡接你的多語邏輯
+          // const langCode = btn.dataset.lang;
+        });
+      });
+
+      // 點外面關閉選單
+      document.addEventListener("click", (e) => {
+        if (!langSwitch.contains(e.target)) {
+          langSwitch.classList.remove("open");
+        }
+      });
     }
   </script>
 </body>
