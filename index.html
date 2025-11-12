@@ -9,7 +9,6 @@
     content="用 Taimic 幫你快速檢視保險與資產配置的方向，根據年齡、家庭與資產規模，給出初步建議。"
   />
   <style>
-    /* -------- 基本樣式：走台積官網那種乾淨白底企業風 -------- */
     :root {
       --brand-blue: #0057b8;
       --brand-blue-light: #e6f0fb;
@@ -42,8 +41,6 @@
       text-decoration: none;
     }
 
-    /* -------- 整體版面 -------- */
-
     .page {
       min-height: 100vh;
       display: flex;
@@ -58,7 +55,7 @@
       flex: 1;
     }
 
-    /* -------- Header / 導覽列：白底、細邊 -------- */
+    /* HEADER */
 
     .site-header-wrap {
       width: 100%;
@@ -139,7 +136,7 @@
       cursor: pointer;
     }
 
-    /* --- TSMC 風格次導航 / 麵包屑 --- */
+    /* 次導航 / 麵包屑 */
 
     .subnav {
       width: 100%;
@@ -168,7 +165,7 @@
       font-weight: 500;
     }
 
-    /* -------- HERO：上方大區塊 -------- */
+    /* HERO */
 
     .hero {
       display: grid;
@@ -279,7 +276,7 @@
       font-size: 13px;
     }
 
-    /* -------- 通用 section -------- */
+    /* 通用 section */
 
     section {
       margin-bottom: 32px;
@@ -305,7 +302,7 @@
       color: var(--text-sub);
     }
 
-    /* -------- 特色 / 三欄 -------- */
+    /* 特色 / 三欄 */
 
     .feature-grid {
       display: grid;
@@ -332,7 +329,7 @@
       color: var(--text-sub);
     }
 
-    /* -------- 三步驟流程 -------- */
+    /* 三步驟流程 */
 
     .steps-grid {
       display: grid;
@@ -365,7 +362,7 @@
       color: var(--text-sub);
     }
 
-    /* -------- Demo 表單區 -------- */
+    /* Demo 表單區 */
 
     .assessment-layout {
       display: grid;
@@ -467,7 +464,7 @@
       padding-top: 8px;
     }
 
-    /* -------- Contact / Google 表單按鈕 -------- */
+    /* Contact / Google 表單 */
 
     .contact-wrapper {
       max-width: 720px;
@@ -485,7 +482,7 @@
       font-weight: 600;
     }
 
-    /* -------- Footer -------- */
+    /* Footer */
 
     .footer {
       border-top: 1px solid #e5e7eb;
@@ -510,7 +507,7 @@
       text-decoration-style: dotted;
     }
 
-    /* -------- RWD -------- */
+    /* RWD */
 
     @media (max-width: 900px) {
       .hero {
@@ -524,7 +521,7 @@
         grid-template-columns: 1fr;
       }
       .header-right {
-        display: none; /* 小螢幕先簡化，不顯示 nav 連結 */
+        display: none;
       }
     }
 
@@ -537,20 +534,10 @@
       }
     }
 
-    /* Demo 結果卡片閃爍動畫 */
     @keyframes flash {
-      0% {
-        box-shadow: 0 0 0 rgba(0, 87, 184, 0);
-        transform: scale(1);
-      }
-      25% {
-        box-shadow: 0 0 18px rgba(0, 87, 184, 0.4);
-        transform: scale(1.01);
-      }
-      100% {
-        box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
-        transform: scale(1);
-      }
+      0% { box-shadow: 0 0 0 rgba(0, 87, 184, 0); transform: scale(1); }
+      25% { box-shadow: 0 0 18px rgba(0, 87, 184, 0.4); transform: scale(1.01); }
+      100% { box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08); transform: scale(1); }
     }
   </style>
 </head>
@@ -578,7 +565,7 @@
       </header>
     </div>
 
-    <!-- 次導航 / 麵包屑（學 TSMC） -->
+    <!-- 次導航 -->
     <div class="subnav">
       <div class="subnav-inner">
         <div class="breadcrumb">
@@ -862,17 +849,14 @@
   </div>
 
   <script>
-    // 年份
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // 捲動到區塊
     function scrollToId(id) {
       const el = document.getElementById(id);
       if (!el) return;
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    // Demo 表單送出：依照填寫內容產生不同建議
     function handleDemoSubmit(e) {
       e.preventDefault();
 
@@ -884,7 +868,6 @@
       const insurance = document.getElementById("insurance").value;
       const focus = document.getElementById("focus").value.trim();
 
-      // 1. 保險保障評語
       let protectLevel = "";
       if (insurance === "幾乎沒有") {
         protectLevel =
@@ -897,7 +880,6 @@
           "整體保障看起來還可以，再把醫療與收入中斷風險稍微補強會更安心。";
       }
 
-      // 2. 投資風格 & 比例
       let profile = "";
       let mix = "";
 
@@ -915,7 +897,6 @@
           "現金 10–15%，穩健債券 25–30%，成長型股票 / 基金 55–65%。";
       }
 
-      // 3. 依資產規模給下一步建議
       let stepNext = "";
       if (assets === "50 萬以下") {
         stepNext =
@@ -932,17 +913,14 @@
       }
 
       if (family.includes("有小孩")) {
-        stepNext +=
-          " 另外，因為你有小孩，可以特別留意壽險保額與教育金準備。";
+        stepNext += " 另外，因為你有小孩，可以特別留意壽險保額與教育金準備。";
       }
 
-      // 4. 客製化關注點
       let focusLine = "";
       if (focus) {
         focusLine = `你特別在意的重點是：「${focus}」，之後在調整保險與投資配置時，可以以這個目標當優先。`;
       }
 
-      // 把結果塞回畫面
       const preview = document.getElementById("resultPreview");
       const titleEl = preview.querySelector(".result-title");
       const lines = preview.querySelectorAll(".result-line");
@@ -960,11 +938,8 @@
         `<span class="result-highlight">${mix}</span>`;
 
       lines[2].innerHTML =
-        "🔔 下一步建議：" +
-        stepNext +
-        (focusLine ? "<br>" + focusLine : "");
+        "🔔 下一步建議：" + stepNext + (focusLine ? "<br>" + focusLine : "");
 
-      // 讓卡片閃一下
       preview.style.animation = "none";
       void preview.offsetWidth;
       preview.style.animation = "flash 0.6s ease-out";
