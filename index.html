@@ -24,11 +24,7 @@
       --max-width: 1040px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -38,10 +34,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
 
     .page {
       min-height: 100vh;
@@ -69,42 +62,21 @@
       backdrop-filter: blur(16px);
     }
 
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .nav-left { display: flex; align-items: center; gap: 10px; }
 
     .logo-circle {
       width: 30px;
       height: 30px;
       border-radius: 999px;
       background: radial-gradient(circle at 20% 0, #60a5fa, #4f46e5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 17px;
-      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; font-weight: 700;
       box-shadow: 0 0 18px rgba(59,130,246,0.9);
     }
 
-    .Taimic {
-      font-weight: 600;
-      font-size: 15px;
-      letter-spacing: 0.04em;
-    }
+    .Taimic { font-weight: 600; font-size: 11px; color: var(--text-soft); }
 
-    .Taimic {
-      font-size: 11px;
-      color: var(--text-soft);
-    }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
-    }
+    .nav-right { display: flex; align-items: center; gap: 10px; font-size: 12px; }
 
     .nav-link {
       padding: 4px 8px;
@@ -112,11 +84,7 @@
       color: var(--text-soft);
       cursor: pointer;
     }
-
-    .nav-link:hover {
-      color: var(--text);
-      background: rgba(31,41,55,0.9);
-    }
+    .nav-link:hover { color: var(--text); background: rgba(31,41,55,0.9); }
 
     .nav-cta {
       padding: 6px 14px;
@@ -132,10 +100,7 @@
       align-items: center;
       gap: 6px;
     }
-
-    .nav-cta span {
-      font-size: 15px;
-    }
+    .nav-cta span { font-size: 15px; }
 
     main {
       width: 100%;
@@ -155,11 +120,7 @@
       align-items: center;
     }
 
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
+    .hero-left { display: flex; flex-direction: column; gap: 14px; }
 
     .hero-pill {
       display: inline-flex;
@@ -180,10 +141,7 @@
       font-weight: 600;
     }
 
-    .hero-pill-text {
-      font-size: 11px;
-      color: var(--text-soft);
-    }
+    .hero-pill-text { font-size: 11px; color: var(--text-soft); }
 
     .hero-title {
       font-size: clamp(26px, 3.1vw, 34px);
@@ -197,18 +155,9 @@
       color: transparent;
     }
 
-    .hero-sub {
-      font-size: 14px;
-      color: var(--text-soft);
-      max-width: 520px;
-    }
+    .hero-sub { font-size: 14px; color: var(--text-soft); max-width: 520px; }
 
-    .hero-cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 8px;
-    }
+    .hero-cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
 
     .btn-primary {
       padding: 10px 18px;
@@ -224,10 +173,7 @@
       gap: 8px;
       box-shadow: 0 18px 40px rgba(37,99,235,0.55);
     }
-
-    .btn-primary span {
-      font-size: 17px;
-    }
+    .btn-primary span { font-size: 17px; }
 
     .btn-secondary {
       padding: 10px 16px;
@@ -243,11 +189,7 @@
       gap: 8px;
     }
 
-    .hero-mini {
-      font-size: 11px;
-      color: var(--text-soft);
-      margin-top: 6px;
-    }
+    .hero-mini { font-size: 11px; color: var(--text-soft); margin-top: 6px; }
 
     .hero-right {
       background: radial-gradient(circle at 10% 0, rgba(59,130,246,0.3), rgba(15,23,42,0.96));
@@ -267,11 +209,7 @@
       font-size: 11px;
       color: var(--text-soft);
     }
-
-    .hero-right-header strong {
-      font-size: 13px;
-      color: var(--text);
-    }
+    .hero-right-header strong { font-size: 13px; color: var(--text); }
 
     .badge-soft {
       padding: 3px 8px;
@@ -293,22 +231,10 @@
       padding: 10px 12px;
     }
 
-    .card h3 {
-      font-size: 12px;
-      margin-bottom: 6px;
-    }
+    .card h3 { font-size: 12px; margin-bottom: 6px; }
+    .card p { font-size: 11px; color: var(--text-soft); }
 
-    .card p {
-      font-size: 11px;
-      color: var(--text-soft);
-    }
-
-    .pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 6px;
-    }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
 
     .pill {
       font-size: 10px;
@@ -331,7 +257,6 @@
       position: relative;
       margin-bottom: 6px;
     }
-
     .chart-pie::after {
       content: "";
       position: absolute;
@@ -351,11 +276,7 @@
       color: var(--text-soft);
       text-align: center;
     }
-
-    .chart-center-text strong {
-      font-size: 13px;
-      color: var(--text);
-    }
+    .chart-center-text strong { font-size: 13px; color: var(--text); }
 
     .legend {
       display: flex;
@@ -373,12 +294,7 @@
       color: var(--text-soft);
     }
 
-    .bullet {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-    }
-
+    .bullet { width: 8px; height: 8px; border-radius: 999px; }
     .bullet.blue { background: #2563eb; }
     .bullet.green { background: #22c55e; }
     .bullet.amber { background: #eab308; }
@@ -392,10 +308,7 @@
       font-size: 11px;
     }
 
-    .chat-line {
-      margin-bottom: 4px;
-    }
-
+    .chat-line { margin-bottom: 4px; }
     .chat-tag {
       font-size: 9px;
       text-transform: uppercase;
@@ -403,14 +316,8 @@
       color: var(--text-soft);
       margin-bottom: 2px;
     }
-
-    .chat-user {
-      color: #e5e7eb;
-    }
-
-    .chat-ai {
-      color: #a5b4fc;
-    }
+    .chat-user { color: #e5e7eb; }
+    .chat-ai { color: #a5b4fc; }
 
     /* SECTIONS */
 
@@ -430,15 +337,8 @@
       margin-bottom: 12px;
     }
 
-    .section-title {
-      font-size: 18px;
-      font-weight: 600;
-    }
-
-    .section-sub {
-      font-size: 12px;
-      color: var(--text-soft);
-    }
+    .section-title { font-size: 18px; font-weight: 600; }
+    .section-sub { font-size: 12px; color: var(--text-soft); }
 
     .step-grid {
       display: grid;
@@ -463,15 +363,8 @@
       text-transform: uppercase;
     }
 
-    .step h3 {
-      font-size: 13px;
-      margin-bottom: 4px;
-    }
-
-    .step p {
-      font-size: 12px;
-      color: var(--text-soft);
-    }
+    .step h3 { font-size: 13px; margin-bottom: 4px; }
+    .step p { font-size: 12px; color: var(--text-soft); }
 
     .cards-3 {
       display: grid;
@@ -505,23 +398,11 @@
       gap: 18px;
     }
 
-    .form {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      font-size: 13px;
-    }
+    .form { display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
 
-    .form-row {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
+    .form-row { display: flex; flex-direction: column; gap: 4px; }
 
-    label {
-      font-size: 12px;
-      color: var(--text-soft);
-    }
+    label { font-size: 12px; color: var(--text-soft); }
 
     input, select, textarea {
       padding: 8px 10px;
@@ -549,16 +430,9 @@
       gap: 8px;
     }
 
-    .small-hint {
-      font-size: 11px;
-      color: var(--text-soft);
-      margin-top: 4px;
-    }
+    .small-hint { font-size: 11px; color: var(--text-soft); margin-top: 4px; }
 
-    .btn-form {
-      margin-top: 4px;
-      width: fit-content;
-    }
+    .btn-form { margin-top: 4px; width: fit-content; }
 
     .result-preview {
       border-radius: var(--radius-lg);
@@ -576,20 +450,11 @@
       margin-bottom: 4px;
     }
 
-    .result-title {
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
+    .result-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
 
-    .result-line {
-      margin-bottom: 3px;
-    }
+    .result-line { margin-bottom: 3px; }
 
-    .result-highlight {
-      color: #fbbf24;
-      font-weight: 500;
-    }
+    .result-highlight { color: #fbbf24; font-weight: 500; }
 
     .footer {
       width: 100%;
@@ -610,37 +475,19 @@
     }
 
     @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: 1fr;
-      }
-      .hero-right {
-        order: -1;
-      }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { order: -1; }
       .step-grid,
-      .cards-3 {
-        grid-template-columns: 1fr;
-      }
-      .cta-layout {
-        grid-template-columns: 1fr;
-      }
-      .nav {
-        padding-inline: 12px;
-      }
-      .nav-right {
-        display: none;
-      }
-      .page {
-        padding-inline: 12px;
-      }
+      .cards-3 { grid-template-columns: 1fr; }
+      .cta-layout { grid-template-columns: 1fr; }
+      .nav { padding-inline: 12px; }
+      .nav-right { display: none; }
+      .page { padding-inline: 12px; }
     }
 
     @media (max-width: 640px) {
-      section {
-        padding-inline: 14px;
-      }
-      .hero-right {
-        padding-inline: 12px;
-      }
+      section { padding-inline: 14px; }
+      .hero-right { padding-inline: 12px; }
     }
   </style>
 </head>
@@ -843,97 +690,98 @@
           </div>
         </div>
         <div class="cta-layout">
-         <form class="form" onsubmit="handleDemoSubmit(event)">
-  <div class="form-row-inline">
-    <div class="form-row">
-      <label>你的年齡</label>
-      <input id="age" type="number" placeholder="例如：32" required />
-    </div>
-    <div class="form-row">
-      <label>家庭狀況</label>
-      <select id="family" required>
-        <option value="">請選擇</option>
-        <option>單身</option>
-        <option>已婚，無小孩</option>
-        <option>已婚，有小孩</option>
-        <option>其他／不方便透露</option>
-      </select>
-    </div>
-  </div>
+          <form class="form" onsubmit="handleDemoSubmit(event)">
+            <div class="form-row-inline">
+              <div class="form-row">
+                <label>你的年齡</label>
+                <input id="age" type="number" placeholder="例如：32" required />
+              </div>
+              <div class="form-row">
+                <label>家庭狀況</label>
+                <select id="family" required>
+                  <option value="">請選擇</option>
+                  <option>單身</option>
+                  <option>已婚，無小孩</option>
+                  <option>已婚，有小孩</option>
+                  <option>其他／不方便透露</option>
+                </select>
+              </div>
+            </div>
 
-  <div class="form-row-inline">
-    <div class="form-row">
-      <label>大約月收入區間</label>
-      <select id="income" required>
-        <option value="">請選擇</option>
-        <option>5 萬以下</option>
-        <option>5–10 萬</option>
-        <option>10–20 萬</option>
-        <option>20 萬以上</option>
-      </select>
-    </div>
-    <div class="form-row">
-      <label>大約可投資資產規模</label>
-      <select id="assets" required>
-        <option value="">請選擇</option>
-        <option>50 萬以下</option>
-        <option>50–200 萬</option>
-        <option>200–500 萬</option>
-        <option>500 萬以上</option>
-      </select>
-    </div>
-  </div>
+            <div class="form-row-inline">
+              <div class="form-row">
+                <label>大約月收入區間</label>
+                <select id="income" required>
+                  <option value="">請選擇</option>
+                  <option>5 萬以下</option>
+                  <option>5–10 萬</option>
+                  <option>10–20 萬</option>
+                  <option>20 萬以上</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label>大約可投資資產規模</label>
+                <select id="assets" required>
+                  <option value="">請選擇</option>
+                  <option>50 萬以下</option>
+                  <option>50–200 萬</option>
+                  <option>200–500 萬</option>
+                  <option>500 萬以上</option>
+                </select>
+              </div>
+            </div>
 
-  <div class="form-row-inline">
-    <div class="form-row">
-      <label>你覺得自己屬於哪種風險屬性？</label>
-      <select id="risk" required>
-        <option value="">請選擇</option>
-        <option>非常保守（不太能接受虧損）</option>
-        <option>穩健（可以接受一些波動）</option>
-        <option>積極（願意換波動換成長）</option>
-      </select>
-    </div>
-    <div class="form-row">
-      <label>目前有沒有保單？</label>
-      <select id="insurance" required>
-        <option value="">請選擇</option>
-        <option>幾乎沒有</option>
-        <option>有一些，但看不太懂</option>
-        <option>有，覺得還算夠</option>
-      </select>
-    </div>
-  </div>
+            <div class="form-row-inline">
+              <div class="form-row">
+                <label>你覺得自己屬於哪種風險屬性？</label>
+                <select id="risk" required>
+                  <option value="">請選擇</option>
+                  <option>非常保守（不太能接受虧損）</option>
+                  <option>穩健（可以接受一些波動）</option>
+                  <option>積極（願意換波動換成長）</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <label>目前有沒有保單？</label>
+                <select id="insurance" required>
+                  <option value="">請選擇</option>
+                  <option>幾乎沒有</option>
+                  <option>有一些，但看不太懂</option>
+                  <option>有，覺得還算夠</option>
+                </select>
+              </div>
+            </div>
 
-  <div class="form-row">
-    <label>你最在意什麼？（選填）</label>
-    <textarea id="focus" placeholder="例如：怕生病花很多錢、擔心小孩教育費、想 10 年內可以半退休⋯⋯"></textarea>
-  </div>
+            <div class="form-row">
+              <label>你最在意什麼？（選填）</label>
+              <textarea id="focus" placeholder="例如：怕生病花很多錢、擔心小孩教育費、想 10 年內可以半退休⋯⋯"></textarea>
+            </div>
 
-  <button type="submit" class="btn-primary btn-form">
-    產生 Demo 建議 <span>⚡</span>
-  </button>
-  <div class="small-hint">
-    送出後會在右側顯示一份示範建議，未來可改為寄送 Email 報告。
-  </div>
-</form>
+            <button type="submit" class="btn-primary btn-form">
+              產生 Demo 建議 <span>⚡</span>
+            </button>
+            <div class="small-hint">
+              送出後會在右側顯示一份示範建議，未來可改為寄送 Email 報告。
+            </div>
+          </form>
+
           <div class="result-preview" id="resultPreview">
-  <div class="result-tag">DEMO 建議預覽</div>
-  <div class="result-title">你的初步財務安全掃描結果</div>
-  <p class="result-line">
-    ✅ 以你的年齡與家庭狀況來看，<span class="result-highlight">保障略顯不足</span>，
-    建議優先補強醫療與重大疾病險，其次再考慮壽險加額。
-  </p>
-  <p class="result-line">
-    💡 資產配置部分，可考慮：
-    <span class="result-highlight">現金 20％／穩健債券或平衡型基金 40％／成長型基金或股票 40％</span>，
-    用定期定額取代一次性 all-in。
-  </p>
-  <p class="result-line">
-    🔔 下一步，你可以把現有保單與投資部位整理出來，未來我們會開放「上傳保單／資產明細」功能，
-    讓 AI 幫你做更精準的客製化分析。
-  </p>
-</div>
+            <div class="result-tag">DEMO 建議預覽</div>
+            <div class="result-title">你的初步財務安全掃描結果</div>
+            <p class="result-line">
+              ✅ 以你的年齡與家庭狀況來看，<span class="result-highlight">保障略顯不足</span>，
+              建議優先補強醫療與重大疾病險，其次再考慮壽險加額。
+            </p>
+            <p class="result-line">
+              💡 資產配置部分，可考慮：
+              <span class="result-highlight">現金 20％／穩健債券或平衡型基金 40％／成長型基金或股票 40％</span>，
+              用定期定額取代一次性 all-in。
+            </p>
+            <p class="result-line">
+              🔔 下一步，你可以把現有保單與投資部位整理出來，未來我們會開放「上傳保單／資產明細」功能，
+              讓 AI 幫你做更精準的客製化分析。
+            </p>
+          </div>
         </div>
 
         <div class="disclaimer">
@@ -942,9 +790,7 @@
         </div>
       </section>
 
-      <!-- CONTACT：嵌入 Google 表單 -->
-                <!-- CONTACT -->
-            <!-- CONTACT -->
+      <!-- CONTACT：按鈕開 Google 表單 -->
       <section id="contact">
         <div class="section-header">
           <div>
@@ -976,6 +822,7 @@
           </div>
         </div>
       </section>
+
     </main>
 
     <footer class="footer">
@@ -984,7 +831,7 @@
     </footer>
   </div>
 
-    <script>
+  <script>
     // 年份
     document.getElementById("year").textContent = new Date().getFullYear();
 
