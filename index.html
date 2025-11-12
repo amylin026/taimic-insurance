@@ -41,13 +41,15 @@
       text-decoration: none;
     }
 
+    /* 整體版面 */
+
     .page {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    .page-inner {
+    main.page-inner {
       max-width: var(--max-width);
       width: 100%;
       margin: 0 auto;
@@ -55,7 +57,7 @@
       flex: 1;
     }
 
-    /* HEADER */
+    /* Header */
 
     .site-header-wrap {
       width: 100%;
@@ -136,35 +138,6 @@
       cursor: pointer;
     }
 
-    /* 語言切換 pill */
-
-    .lang-switch {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 12px;
-      border-radius: 999px;
-      background: #f3f4f6;
-      border: 1px solid #e5e7eb;
-      font-size: 13px;
-    }
-
-    .lang-icon {
-      font-size: 14px;
-      color: #4b5563;
-    }
-
-    .lang-link {
-      color: #6b7280;
-      cursor: pointer;
-    }
-
-    .lang-link.lang-active {
-      color: #b91c1c;
-      font-weight: 600;
-      cursor: default;
-    }
-
     /* 次導航 / 麵包屑 */
 
     .subnav {
@@ -177,7 +150,7 @@
     .subnav-inner {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 14px 20px;
+      padding: 12px 20px;
     }
 
     .breadcrumb {
@@ -198,7 +171,7 @@
 
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
       gap: 32px;
       padding: 32px 0 28px;
     }
@@ -305,7 +278,7 @@
       font-size: 13px;
     }
 
-    /* section 通用 */
+    /* 通用 section */
 
     section {
       margin-bottom: 32px;
@@ -331,7 +304,7 @@
       color: var(--text-sub);
     }
 
-    /* 特色 */
+    /* 特色卡片 */
 
     .feature-grid {
       display: grid;
@@ -358,7 +331,7 @@
       color: var(--text-sub);
     }
 
-    /* 流程 */
+    /* 三步驟流程 */
 
     .steps-grid {
       display: grid;
@@ -516,7 +489,7 @@
     .footer {
       border-top: 1px solid #e5e7eb;
       background: #fff;
-      margin-top: auto;
+      margin-top: 24px;
     }
 
     .footer-inner {
@@ -542,34 +515,28 @@
       .hero {
         grid-template-columns: 1fr;
       }
-
       .assessment-layout {
         grid-template-columns: 1fr;
       }
-
       .feature-grid,
       .steps-grid {
         grid-template-columns: 1fr;
       }
-
       .header-right {
         display: none;
-      }
-
-      .subnav-inner {
-        padding-inline: 14px;
       }
     }
 
     @media (max-width: 640px) {
-      .page-inner {
+      main.page-inner {
         padding: 0 14px 40px;
       }
-
       section {
         padding: 16px 14px;
       }
     }
+
+    /* Demo 結果卡片閃一下 */
 
     @keyframes flash {
       0% {
@@ -604,25 +571,18 @@
           <a href="#flow" class="nav-link">流程</a>
           <a href="#assessment" class="nav-link">免費健檢</a>
           <a href="#contact" class="nav-link">聯絡</a>
-
-          <div class="lang-switch">
-            <span class="lang-icon">🌐</span>
-            <span class="lang-link lang-active">繁中</span>
-            <span class="lang-link">English</span>
-          </div>
-
           <button class="nav-cta" onclick="scrollToId('assessment')">
             開始免費健檢
           </button>
         </nav>
       </header>
-    </div>
 
-    <!-- 次導航 -->
-    <div class="subnav">
-      <div class="subnav-inner">
-        <div class="breadcrumb">
-          首頁 <span>/</span> <span class="current-page">Taimic Demo</span>
+      <!-- 次導航 / 麵包屑 -->
+      <div class="subnav">
+        <div class="subnav-inner">
+          <div class="breadcrumb">
+            首頁 <span>/</span> <span class="current-page">Taimic Demo</span>
+          </div>
         </div>
       </div>
     </div>
@@ -835,16 +795,12 @@
           <!-- 結果預覽 -->
           <div class="result-preview" id="resultPreview">
             <div class="result-tag">Demo 建議預覽</div>
-            <div class="result-title">請先左側填寫資料，再按下「產生 Demo 建議」。</div>
-            <p class="result-line">
-              ✅ 保險部分的建議會出現在這裡。
-            </p>
-            <p class="result-line">
-              💡 資產配置比例與風險屬性會出現在這裡。
-            </p>
-            <p class="result-line">
-              🔔 下一步具體行動方向會出現在這裡。
-            </p>
+            <div class="result-title">
+              請先左側填寫資料，再按下「產生 Demo 建議」。
+            </div>
+            <p class="result-line">✅ 保險部分的建議會出現在這裡。</p>
+            <p class="result-line">💡 資產配置比例與風險屬性會出現在這裡。</p>
+            <p class="result-line">🔔 下一步具體行動方向會出現在這裡。</p>
           </div>
         </div>
 
