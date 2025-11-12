@@ -842,30 +842,98 @@
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-       // Demo 表單送出：先做超明顯測試版
+          // Demo 表單送出：依照填寫內容產生不同建議
     function handleDemoSubmit(e) {
       e.preventDefault();
 
-      alert("DEBUG：有跑進 handleDemoSubmit 這個 function");
+      const age = Number(document.getElementById("age").value);
+      const family = document.getElementById("family").value;
+      const income = document.getElementById("income").value;
+      const assets = document.getElementById("assets").value;
+      const risk = document.getElementById("risk").value;
+      const insurance = document.getElementById("insurance").value;
+      const focus = document.getElementById("focus").value.trim();
 
+      // 1. 保險保障評語
+      let protectLevel = "";
+      if (insurance === "幾乎沒有") {
+        protectLevel = "保障缺口明顯，建議盡快補齊「醫療＋重大疾病＋壽險」三大基本防線。";
+      } else if (insurance === "有一些，但看不太懂") {
+        protectLevel = "目前有一定保障，但內容可能不夠清楚，建議先做一次保單總體檢，確認沒有重複或缺角。";
+      } else {
+        protectLevel = "整體保障看起來還可以，再把醫療與收入中斷風險稍微補強會更安心。";
+      }
+
+      // 2. 投資風格 & 比例
+      let profile = "";
+      let mix = "";
+
+      if (risk.includes("非常保守")) {
+        profile = "偏保守型";
+        mix = "現金 / 活存預備金約 30%，穩健債券或保守型基金約 50%，成長型資產約 20%。";
+      } else if (risk.includes("穩健")) {
+        profile = "穩健成長型";
+        mix = "現金 20%，穩健債券或平衡型基金 40%，成長型基金或股票 40%。";
+      } else {
+        profile = "積極成長型";
+        mix = "現金 10–15%，穩健債券 25–30%，成長型股票 / 基金 55–65%。";
+      }
+
+      // 3. 依資產規模給下一步建議
+      let stepNext = "";
+      if (assets === "50 萬以下") {
+        stepNext = "先把緊急預備金存到 6 個月生活費，再開始做長期投資會比較舒服。";
+      } else if (assets === "50–200 萬") {
+        stepNext = "可以分批投入基金或 ETF，利用定期定額分散進場時間。";
+      } else if (assets === "200–500 萬") {
+        stepNext = "可以規劃一部分做長期成長，一部分做較穩的現金流（例如債券或配息型標的）。";
+      } else if (assets === "500 萬以上") {
+        stepNext = "資產規模已經不小，建議搭配稅務與財產傳承的思考，一起做中長期規劃。";
+      }
+
+      if (family.includes("有小孩")) {
+        stepNext += " 另外，因為你有小孩，可以特別留意壽險保額與教育金準備。";
+      }
+
+      // 4. 客製化關注點
+      let focusLine = "";
+      if (focus) {
+        focusLine = `你特別在意的重點是：「${focus}」，之後在調整保險與投資配置時，可以以這個目標當優先。`;
+      }
+
+      // 把結果塞回畫面
       const preview = document.getElementById("resultPreview");
       const titleEl = preview.querySelector(".result-title");
       const lines = preview.querySelectorAll(".result-line");
 
-      // 只要有跑進來，就把右邊整塊文字洗掉
-      titleEl.textContent = "（測試中）這是新的標題，不是原本那一句";
+      titleEl.textContent = "依照你目前填寫的初步分析摘要";
 
       if (lines[0]) {
-        lines[0].innerHTML = "✅ 這行是 <span class=\"result-highlight\">測試用文字 1</span>";
+        lines[0].innerHTML =
+          "✅ 保險部分：" +
+          `<span class="result-highlight">${protectLevel}</span>`;
       }
-      if (lines[1]) {
-        lines[1].innerHTML = "💡 這行是 <span class=\"result-highlight\">測試用文字 2</span>";
-      }
-      if (lines[2]) {
-        lines[2].innerHTML = "🔔 這行是 <span class=\"result-highlight\">測試用文字 3</span>";
-      }
-    }
 
+      if (lines[1]) {
+        lines[1].innerHTML =
+          "💡 資產配置部分：依你的風險屬性，目前較接近 " +
+          `<span class="result-highlight">${profile}</span>，` +
+          "可參考的比例為：" +
+          `<span class="result-highlight">${mix}</span>`;
+      }
+
+      if (lines[2]) {
+        lines[2].innerHTML =
+          "🔔 下一步建議：" +
+          stepNext +
+          (focusLine ? "<br>" + focusLine : "");
+      }
+
+      // 讓卡片閃一下
+      preview.style.animation = "none";
+      void preview.offsetWidth;
+      preview.style.animation = "flash 0.6s ease-out";
+    }
     // 簡單動畫
     const style = document.createElement("style");
     style.textContent = `
