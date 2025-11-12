@@ -843,81 +843,80 @@
           </div>
         </div>
         <div class="cta-layout">
-          <form class="form" onsubmit="handleDemoSubmit(event)">
-            <div class="form-row-inline">
-              <div class="form-row">
-                <label>你的年齡</label>
-                <input type="number" placeholder="例如：32" required />
-              </div>
-              <div class="form-row">
-                <label>家庭狀況</label>
-                <select required>
-                  <option value="">請選擇</option>
-                  <option>單身</option>
-                  <option>已婚，無小孩</option>
-                  <option>已婚，有小孩</option>
-                  <option>其他／不方便透露</option>
-                </select>
-              </div>
-            </div>
+         <form class="form" onsubmit="handleDemoSubmit(event)">
+  <div class="form-row-inline">
+    <div class="form-row">
+      <label>你的年齡</label>
+      <input id="age" type="number" placeholder="例如：32" required />
+    </div>
+    <div class="form-row">
+      <label>家庭狀況</label>
+      <select id="family" required>
+        <option value="">請選擇</option>
+        <option>單身</option>
+        <option>已婚，無小孩</option>
+        <option>已婚，有小孩</option>
+        <option>其他／不方便透露</option>
+      </select>
+    </div>
+  </div>
 
-            <div class="form-row-inline">
-              <div class="form-row">
-                <label>大約月收入區間</label>
-                <select required>
-                  <option value="">請選擇</option>
-                  <option>5 萬以下</option>
-                  <option>5–10 萬</option>
-                  <option>10–20 萬</option>
-                  <option>20 萬以上</option>
-                </select>
-              </div>
-              <div class="form-row">
-                <label>大約可投資資產規模</label>
-                <select required>
-                  <option value="">請選擇</option>
-                  <option>50 萬以下</option>
-                  <option>50–200 萬</option>
-                  <option>200–500 萬</option>
-                  <option>500 萬以上</option>
-                </select>
-              </div>
-            </div>
+  <div class="form-row-inline">
+    <div class="form-row">
+      <label>大約月收入區間</label>
+      <select id="income" required>
+        <option value="">請選擇</option>
+        <option>5 萬以下</option>
+        <option>5–10 萬</option>
+        <option>10–20 萬</option>
+        <option>20 萬以上</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>大約可投資資產規模</label>
+      <select id="assets" required>
+        <option value="">請選擇</option>
+        <option>50 萬以下</option>
+        <option>50–200 萬</option>
+        <option>200–500 萬</option>
+        <option>500 萬以上</option>
+      </select>
+    </div>
+  </div>
 
-            <div class="form-row-inline">
-              <div class="form-row">
-                <label>你覺得自己屬於哪種風險屬性？</label>
-                <select required>
-                  <option value="">請選擇</option>
-                  <option>非常保守（不太能接受虧損）</option>
-                  <option>穩健（可以接受一些波動）</option>
-                  <option>積極（願意換波動換成長）</option>
-                </select>
-              </div>
-              <div class="form-row">
-                <label>目前有沒有保單？</label>
-                <select required>
-                  <option value="">請選擇</option>
-                  <option>幾乎沒有</option>
-                  <option>有一些，但看不太懂</option>
-                  <option>有，覺得還算夠</option>
-                </select>
-              </div>
-            </div>
+  <div class="form-row-inline">
+    <div class="form-row">
+      <label>你覺得自己屬於哪種風險屬性？</label>
+      <select id="risk" required>
+        <option value="">請選擇</option>
+        <option>非常保守（不太能接受虧損）</option>
+        <option>穩健（可以接受一些波動）</option>
+        <option>積極（願意換波動換成長）</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>目前有沒有保單？</label>
+      <select id="insurance" required>
+        <option value="">請選擇</option>
+        <option>幾乎沒有</option>
+        <option>有一些，但看不太懂</option>
+        <option>有，覺得還算夠</option>
+      </select>
+    </div>
+  </div>
 
-            <div class="form-row">
-              <label>你最在意什麼？（選填）</label>
-              <textarea placeholder="例如：怕生病花很多錢、擔心小孩教育費、想 10 年內可以半退休⋯⋯"></textarea>
-            </div>
+  <div class="form-row">
+    <label>你最在意什麼？（選填）</label>
+    <textarea id="focus" placeholder="例如：怕生病花很多錢、擔心小孩教育費、想 10 年內可以半退休⋯⋯"></textarea>
+  </div>
 
-            <button type="submit" class="btn-primary btn-form">
-              產生 Demo 建議 <span>⚡</span>
-            </button>
-            <div class="small-hint">
-              送出後會在右側顯示一份示範建議，未來可改為寄送 Email 報告。
-            </div>
-          </form>
-
+  <button type="submit" class="btn-primary btn-form">
+    產生 Demo 建議 <span>⚡</span>
+  </button>
+  <div class="small-hint">
+    送出後會在右側顯示一份示範建議，未來可改為寄送 Email 報告。
+  </div>
+</form>
           <div class="result-preview" id="resultPreview">
             <div class="result-tag">DEMO 建議預覽</div>
             <div class="result-title">你的初步財務安全掃描結果</div>
@@ -998,13 +997,90 @@
 
     // Demo 表單送出（目前只顯示提示，可之後改成真的邏輯）
     function handleDemoSubmit(e) {
-      e.preventDefault();
-      const preview = document.getElementById("resultPreview");
-      preview.style.animation = "none";
-      void preview.offsetWidth; // reset animation
-      preview.style.animation = "flash 0.6s ease-out";
-      alert("目前為 Demo 版本，右側顯示的是示範建議。\n未來可以改成真正根據你填的資料產生客製化結果。");
-    }
+  e.preventDefault();
+
+  const age = Number(document.getElementById("age").value);
+  const family = document.getElementById("family").value;
+  const income = document.getElementById("income").value;
+  const assets = document.getElementById("assets").value;
+  const risk = document.getElementById("risk").value;
+  const insurance = document.getElementById("insurance").value;
+  const focus = document.getElementById("focus").value.trim();
+
+  // ==== 簡單規則 ====
+
+  // 1. 保障評語
+  let protectLevel = "";
+  if (insurance === "幾乎沒有") {
+    protectLevel = "保障缺口明顯，建議盡快補齊「醫療＋重大疾病＋壽險」三大基本防線。";
+  } else if (insurance === "有一些，但看不太懂") {
+    protectLevel = "目前有一定保障，但內容可能不夠清楚，建議先做一次保單總體檢，確認沒有重複或缺角。";
+  } else {
+    protectLevel = "整體保障看起來還可以，再把醫療與收入中斷風險稍微補強會更安心。";
+  }
+
+  // 2. 投資風格 & 比例
+  let profile = "";
+  let mix = "";
+
+  if (risk.includes("非常保守")) {
+    profile = "偏保守型";
+    mix = "現金 / 活存預備金約 30%，穩健債券或保守型基金約 50%，成長型資產約 20%。";
+  } else if (risk.includes("穩健")) {
+    profile = "穩健成長型";
+    mix = "現金 20%，穩健債券或平衡型基金 40%，成長型基金或股票 40%。";
+  } else {
+    profile = "積極成長型";
+    mix = "現金 10–15%，穩健債券 25–30%，成長型股票 / 基金 55–65%。";
+  }
+
+  // 3. 用收入 & 資產加一點味道
+  let stepNext = "";
+  if (assets === "50 萬以下") {
+    stepNext = "先把緊急預備金存到 6 個月生活費，再開始做長期投資會比較舒服。";
+  } else if (assets === "50–200 萬") {
+    stepNext = "可以分批投入基金或 ETF，利用定期定額分散進場時間。";
+  } else if (assets === "200–500 萬") {
+    stepNext = "可以規劃一部分做長期成長，一部分做較穩的現金流（例如債券或配息型標的）。";
+  } else {
+    stepNext = "資產規模已經不小，建議搭配稅務與財產傳承的思考，一起做中長期規劃。";
+  }
+
+  if (family.includes("有小孩")) {
+    stepNext += " 另外，因為你有小孩，可以特別留意壽險保額與教育金準備。";
+  }
+
+  // 4. 如果你有填「最在意什麼」，加一句客製話
+  let focusLine = "";
+  if (focus) {
+    focusLine = `你特別在意的重點是：「${focus}」，之後在調整保險與投資配置時，可以以這個目標當優先。`;
+  }
+
+  // ==== 把結果塞回畫面 ====
+
+  const preview = document.getElementById("resultPreview");
+  const titleEl = preview.querySelector(".result-title");
+  const lines = preview.querySelectorAll(".result-line");
+
+  titleEl.textContent = "依照你目前填寫的初步分析摘要";
+
+  lines[0].innerHTML = "✅ 保險部分：" +
+    `<span class="result-highlight">${protectLevel}</span>`;
+
+  lines[1].innerHTML = "💡 資產配置部分：依你的風險屬性，目前較接近 " +
+    `<span class="result-highlight">${profile}</span>，` +
+    "可參考的比例為：" +
+    `<span class="result-highlight">${mix}</span>`;
+
+  lines[2].innerHTML = "🔔 下一步建議：" +
+    stepNext +
+    (focusLine ? "<br>" + focusLine : "");
+
+  // 讓卡片閃一下，增加「有算過」的感覺
+  preview.style.animation = "none";
+  void preview.offsetWidth;
+  preview.style.animation = "flash 0.6s ease-out";
+}
 
     // 簡單動畫
     const style = document.createElement("style");
