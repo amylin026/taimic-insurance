@@ -85,48 +85,53 @@
       gap: 10px;
     }
 
-    /* 共用：logo 外圈 */
-.logo-mark {
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  border: 1.5px solid var(--brand-blue);
-  position: relative;
-  background: radial-gradient(circle at 30% 30%, #e5f0ff 0, #ffffff 40%, #e5edf8 100%);
-  box-shadow: 0 0 0 1px rgba(0, 87, 184, 0.08);
-}
+    /* 共用：logo 外圈（外圈的藍色圓） */
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1.5px solid var(--brand-blue);
+      position: relative;
+      background: radial-gradient(
+        circle at 30% 30%,
+        #e5f0ff 0,
+        #ffffff 40%,
+        #e5edf8 100%
+      );
+      box-shadow: 0 0 0 1px rgba(0, 87, 184, 0.08);
+    }
 
-/* 時鐘樣式 */
-/* 時針 */
-.logo-clock::before {
-  width: 2px;
-  height: 9px;
-  transform: translate(-50%, -100%) rotate(0deg);
-  animation: clock-hour 30s linear infinite;
-}
+    /* 讓它變成時鐘（指針會轉） */
+    .logo-clock {
+      position: relative;
+    }
 
-/* 分針 */
-.logo-clock::after {
-  width: 2px;
-  height: 12px;
-  transform: translate(-50%, -100%) rotate(0deg);
-  animation: clock-minute 8s linear infinite;
-}s: 999px;
-}
+    .logo-clock::before,
+    .logo-clock::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform-origin: 50% 100%;
+      background: #1f2933;
+      border-radius: 999px;
+    }
 
-/* 時針 */
-.logo-clock::before {
-  width: 2px;
-  height: 9px;
-  transform: translate(-50%, -100%) rotate(-40deg);
-}
+    /* 時針 */
+    .logo-clock::before {
+      width: 2px;
+      height: 9px;
+      transform: translate(-50%, -100%) rotate(0deg);
+      animation: clock-hour 30s linear infinite;
+    }
 
-/* 分針 */
-.logo-clock::after {
-  width: 2px;
-  height: 12px;
-  transform: translate(-50%, -100%) rotate(90deg);
-}
+    /* 分針 */
+    .logo-clock::after {
+      width: 2px;
+      height: 12px;
+      transform: translate(-50%, -100%) rotate(0deg);
+      animation: clock-minute 8s linear infinite;
+    }
 
     .logo-text-main {
       font-size: 16px;
