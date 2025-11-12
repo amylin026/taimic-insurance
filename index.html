@@ -846,22 +846,32 @@
     function handleDemoSubmit(e) {
       e.preventDefault();
 
-      const age = Number(document.getElementById("age").value);
+           const age = Number(document.getElementById("age").value);
       const family = document.getElementById("family").value;
       const income = document.getElementById("income").value;
       const assets = document.getElementById("assets").value;
       const risk = document.getElementById("risk").value;
-      const insurance = document.getElementById("insurance").value;
+
+      // 把保單欄位的字串先整理一下（去空白、用 includes 判斷）
+      const insuranceRaw = document.getElementById("insurance").value || "";
+      const insurance = insuranceRaw.trim();
       const focus = document.getElementById("focus").value.trim();
 
-      // 1. 保險保障評語
+      // 1. 保險保障評語（依照選項給不同強度）
       let protectLevel = "";
-      if (insurance === "幾乎沒有") {
-        protectLevel = "保障缺口明顯，建議盡快補齊「醫療＋重大疾病＋壽險」三大基本防線。";
-      } else if (insurance === "有一些，但看不太懂") {
-        protectLevel = "目前有一定保障，但內容可能不夠清楚，建議先做一次保單總體檢，確認沒有重複或缺角。";
+      if (insurance.includes("幾乎沒有")) {
+        protectLevel =
+          "目前保險幾乎是空白，遇到大型醫療或意外時，開銷可能完全落在自己或家人身上，建議盡快補齊「醫療＋重大疾病＋壽險」三大基本防線。";
+      } else if (insurance.includes("有一些")) {
+        protectLevel =
+          "你已經有一定保障，但內容可能不夠清楚或組合零碎，建議先做一次保單總體檢，確認沒有重複投保、也沒有重要缺口。";
+      } else if (insurance.includes("有，覺得還算夠")) {
+        protectLevel =
+          "整體保障大致還可以，再把醫療與收入中斷風險（失能、重大疾病）稍微補強，會更接近理想狀態。";
       } else {
-        protectLevel = "整體保障看起來還可以，再把醫療與收入中斷風險稍微補強會更安心。";
+        // 萬一抓不到值，就給一個安全版
+        protectLevel =
+          "暫時無法判斷你目前的保障程度，建議先把現有保單整理出來，再進一步檢查是否有重大缺口。";
       }
 
       // 2. 投資風格 & 比例
