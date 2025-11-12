@@ -10,20 +10,25 @@
   />
   <style>
     :root {
-      --primary: #0062b8;
-      --primary-dark: #004b8b;
+      --primary: #0052a3;       /* 主色：藍 */
+      --primary-light: #e6f1fb; /* 淺藍背景 */
+      --accent: #f37021;        /* 小重點橘色 */
       --text-main: #111827;
-      --text-soft: #6b7280;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
       --bg-page: #f3f4f6;
-      --bg-hero: #e5eff7;
       --card-bg: #ffffff;
-      --border-soft: #e5e7eb;
-      --radius-lg: 12px;
-      --radius-xl: 16px;
-      --max-width: 1120px;
+      --radius: 10px;
+      --radius-lg: 14px;
+      --shadow-soft: 0 8px 20px rgba(15, 23, 42, 0.08);
+      --max-width: 1100px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -33,65 +38,67 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    a { color: inherit; text-decoration: none; }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-    /* Layout */
+    /* 頂部 NAV：白底+細邊，像企業官網 */
 
     .page {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: stretch;
-      background: var(--bg-page);
+      align-items: center;
+      gap: 24px;
     }
 
-    .top-nav {
+    .nav {
+      width: 100%;
       background: #ffffff;
-      border-bottom: 1px solid var(--border-soft);
-      box-shadow: 0 2px 4px rgba(15,23,42,0.06);
+      border-bottom: 1px solid var(--border);
     }
 
-    .top-nav-inner {
+    .nav-inner {
       max-width: var(--max-width);
       margin: 0 auto;
       padding: 10px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
     }
 
-    .logo-block {
+    .nav-left {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .logo-square {
+    .logo-circle {
       width: 32px;
       height: 32px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #0f172a, #1d4ed8);
+      border-radius: 50%;
+      background: var(--primary);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 700;
       color: #ffffff;
     }
 
     .logo-text-main {
-      font-size: 15px;
-      font-weight: 600;
-      color: #111827;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
     }
 
     .logo-text-sub {
       font-size: 11px;
-      color: var(--text-soft);
+      color: var(--text-muted);
     }
 
-    .nav-links {
+    .nav-right {
       display: flex;
       align-items: center;
       gap: 16px;
@@ -99,269 +106,304 @@
     }
 
     .nav-link {
-      color: var(--text-soft);
       padding: 4px 0;
+      color: var(--text-muted);
       cursor: pointer;
     }
 
-    .nav-link:hover { color: var(--primary-dark); }
+    .nav-link:hover {
+      color: var(--primary);
+    }
 
     .nav-cta {
-      padding: 7px 14px;
+      padding: 6px 14px;
       border-radius: 999px;
-      background: var(--primary);
-      color: #ffffff;
-      font-size: 13px;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .nav-cta:hover { background: var(--primary-dark); }
-
-    .breadcrumb {
-      border-bottom: 1px solid var(--border-soft);
+      border: 1px solid var(--primary);
       background: #ffffff;
-    }
-
-    .breadcrumb-inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 8px 16px;
+      color: var(--primary);
       font-size: 12px;
-      color: var(--text-soft);
+      font-weight: 600;
+      cursor: pointer;
     }
 
-    .breadcrumb span {
-      color: var(--primary-dark);
-    }
+    /* 主內容容器 */
 
     main {
-      flex: 1;
-      max-width: var(--max-width);
       width: 100%;
-      margin: 0 auto;
-      padding: 20px 16px 40px;
+      max-width: var(--max-width);
+      padding: 12px 16px 40px;
       display: flex;
       flex-direction: column;
       gap: 24px;
     }
 
-    /* Hero */
+    /* HERO：白底、左文字右重點卡片，像 TSMC 首屏 */
 
     .hero {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      padding: 24px 24px 22px;
       display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.2fr);
       gap: 24px;
-      background: var(--bg-hero);
-      border-radius: 18px;
-      padding: 24px 24px 20px;
-      border: 1px solid #d1e2f3;
+      border: 1px solid var(--border);
     }
 
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .breadcrumb {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
     }
 
     .hero-tag {
-      font-size: 12px;
-      color: var(--primary-dark);
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--primary-light);
+      color: var(--primary);
+      margin-bottom: 6px;
     }
 
     .hero-title {
-      font-size: clamp(22px, 2.6vw, 30px);
+      font-size: 26px;
       font-weight: 700;
-      line-height: 1.4;
-      color: #111827;
+      margin-bottom: 8px;
     }
 
     .hero-sub {
       font-size: 14px;
-      color: var(--text-soft);
-      max-width: 520px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .hero-list {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .hero-list li {
+      margin-left: 1.2em;
+      margin-bottom: 4px;
     }
 
     .hero-cta-row {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 4px;
+      align-items: center;
+      margin-top: 2px;
     }
 
     .btn-primary {
-      padding: 9px 16px;
+      padding: 8px 16px;
       border-radius: 999px;
       border: none;
       background: var(--primary);
       color: #ffffff;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
     }
 
-    .btn-primary:hover { background: var(--primary-dark); }
-
     .btn-secondary {
-      padding: 9px 14px;
+      padding: 8px 14px;
       border-radius: 999px;
-      border: 1px solid var(--primary);
+      border: 1px solid var(--border);
       background: #ffffff;
-      color: var(--primary-dark);
+      color: var(--text-muted);
       font-size: 13px;
-      font-weight: 500;
       cursor: pointer;
     }
 
     .hero-note {
+      margin-top: 8px;
       font-size: 11px;
-      color: var(--text-soft);
-      margin-top: 2px;
+      color: var(--text-muted);
     }
 
     .hero-right {
-      background: #ffffff;
-      border-radius: 14px;
-      border: 1px solid #d1e2f3;
-      padding: 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      padding: 14px 14px 12px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .hero-right-title {
-      font-size: 14px;
+    .hero-right-header-title {
+      font-size: 13px;
       font-weight: 600;
       margin-bottom: 2px;
     }
 
-    .hero-right-sub {
-      font-size: 12px;
-      color: var(--text-soft);
-    }
-
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 4px;
-    }
-
-    .stat-item {
-      border-radius: 10px;
-      border: 1px solid var(--border-soft);
-      padding: 8px 10px;
-      background: #f9fafb;
+    .hero-right-header-sub {
       font-size: 11px;
+      color: var(--text-muted);
     }
 
-    .stat-label { color: var(--text-soft); margin-bottom: 2px; }
-    .stat-value { font-size: 14px; font-weight: 600; color: #111827; }
+    .hero-right-stat-row {
+      display: flex;
+      gap: 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hero-right-stat-item strong {
+      display: block;
+      font-size: 14px;
+      color: var(--primary);
+    }
+
+    .hero-right-split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    .hero-card {
+      background: #ffffff;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      font-size: 12px;
+    }
+
+    .hero-card-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 12px;
+    }
+
+    .hero-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 6px;
+    }
+
+    .hero-chip {
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: var(--text-muted);
+      border: 1px solid #e5e7eb;
+    }
 
     .hero-chat {
-      margin-top: 4px;
-      border-radius: 10px;
-      border: 1px solid var(--border-soft);
+      background: #ffffff;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
       padding: 8px 10px;
-      background: #f9fafb;
       font-size: 11px;
+      color: var(--text-muted);
     }
 
-    .chat-tag {
+    .hero-chat-tag {
       font-size: 10px;
-      color: var(--text-soft);
+      color: var(--text-muted);
       margin-bottom: 3px;
     }
 
-    /* Generic section */
+    .hero-chat-user {
+      margin-bottom: 2px;
+    }
 
-    .section {
-      background: #ffffff;
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--border-soft);
-      padding: 18px 20px;
+    .hero-chat-ai strong {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* 共用 SECTION 樣式：白底卡片 */
+
+    section {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 20px 18px;
     }
 
     .section-header {
       margin-bottom: 10px;
     }
 
+    .section-tag {
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
     .section-title {
       font-size: 18px;
-      font-weight: 600;
+      font-weight: 700;
       margin-bottom: 4px;
     }
 
     .section-sub {
       font-size: 13px;
-      color: var(--text-soft);
+      color: var(--text-muted);
     }
 
-    .cards-3 {
+    /* 三欄卡片、流程 */
+
+    .three-col {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
       margin-top: 10px;
+      font-size: 13px;
     }
 
-    .card {
-      background: #f9fafb;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border-soft);
+    .card-simple {
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: #ffffff;
       padding: 10px 12px;
-      font-size: 13px;
     }
 
-    .card h3 {
-      font-size: 14px;
+    .card-simple-label {
+      font-size: 11px;
+      color: var(--text-muted);
       margin-bottom: 4px;
-      color: #111827;
     }
 
-    .card p {
+    .card-simple-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .card-simple-text {
       font-size: 13px;
-      color: var(--text-soft);
+      color: var(--text-muted);
     }
 
     .disclaimer {
       margin-top: 10px;
-      padding: 9px 10px;
-      border-radius: 10px;
-      border: 1px dashed var(--border-soft);
-      background: #f9fafb;
       font-size: 11px;
-      color: var(--text-soft);
+      color: var(--text-muted);
+      border-radius: var(--radius);
+      border: 1px dashed var(--border);
+      background: #f9fafb;
+      padding: 8px 10px;
     }
 
-    /* Two-column content */
-
-    .two-col {
-      display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-      gap: 18px;
-      margin-top: 10px;
-    }
-
-    .bullet-list {
-      font-size: 13px;
-      color: var(--text-soft);
-      padding-left: 16px;
-    }
-
-    .bullet-list li { margin-bottom: 4px; }
-
-    /* Assessment / Form */
+    /* 表單區：左表單右結果 */
 
     .cta-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-      gap: 18px;
-      margin-top: 8px;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 16px;
+      margin-top: 10px;
+      align-items: flex-start;
     }
 
     .form {
@@ -385,15 +427,15 @@
 
     label {
       font-size: 12px;
-      color: var(--text-soft);
+      color: var(--text-muted);
     }
 
     input, select, textarea {
-      padding: 7px 9px;
+      padding: 8px 10px;
       border-radius: 6px;
-      border: 1px solid #d1d5db;
+      border: 1px solid var(--border);
       background: #ffffff;
-      color: #111827;
+      color: var(--text-main);
       font-size: 13px;
       outline: none;
     }
@@ -402,7 +444,7 @@
     select:focus,
     textarea:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 1px rgba(37,99,235,0.2);
+      box-shadow: 0 0 0 1px rgba(0, 82, 163, 0.1);
     }
 
     textarea {
@@ -417,27 +459,29 @@
 
     .small-hint {
       font-size: 11px;
-      color: var(--text-soft);
-      margin-top: 4px;
+      color: var(--text-muted);
+      margin-top: 2px;
     }
 
     .btn-form {
       margin-top: 4px;
+      width: fit-content;
     }
 
     .result-preview {
-      border-radius: var(--radius-lg);
-      border: 1px solid #d1e2f3;
-      background: #f1f5f9;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: #f9fafb;
       padding: 10px 12px;
       font-size: 13px;
     }
 
     .result-tag {
       font-size: 11px;
-      color: var(--primary-dark);
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
       margin-bottom: 4px;
-      font-weight: 600;
     }
 
     .result-title {
@@ -446,36 +490,53 @@
       margin-bottom: 6px;
     }
 
-    .result-line { margin-bottom: 4px; font-size: 13px; }
-    .result-highlight { color: #b45309; font-weight: 600; }
+    .result-line {
+      margin-bottom: 4px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
 
-    /* Contact */
+    .result-highlight {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* CONTACT 區塊（Google 表單按鈕） */
 
     .contact-inner {
       max-width: 720px;
       margin: 0 auto;
     }
 
+    .contact-inner .btn-primary {
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* FOOTER */
+
     .footer {
-      border-top: 1px solid var(--border-soft);
-      margin-top: 12px;
-      padding: 10px 16px 18px;
-      font-size: 11px;
-      color: var(--text-soft);
+      width: 100%;
+      border-top: 1px solid var(--border);
       background: #ffffff;
+      margin-top: auto;
     }
 
     .footer-inner {
       max-width: var(--max-width);
       margin: 0 auto;
+      padding: 10px 16px;
       display: flex;
       justify-content: space-between;
       gap: 10px;
-      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--text-muted);
     }
 
     .footer a {
-      color: var(--primary-dark);
+      color: var(--primary);
       text-decoration: underline;
       text-decoration-style: dotted;
     }
@@ -484,219 +545,273 @@
       .hero {
         grid-template-columns: 1fr;
       }
-      .hero-right {
-        order: -1;
-      }
-      .cards-3 {
-        grid-template-columns: 1fr;
-      }
-      .two-col,
+
       .cta-layout {
         grid-template-columns: 1fr;
       }
-      .top-nav-inner {
-        flex-wrap: wrap;
+
+      .three-col {
+        grid-template-columns: 1fr;
       }
-      .nav-links {
+
+      .nav-right {
         display: none;
       }
     }
 
     @media (max-width: 640px) {
-      main { padding-inline: 12px; }
-      .hero { padding-inline: 16px; }
-      .section { padding-inline: 14px; }
-    }
-
-    /* flash animation for result card */
-    @keyframes flash {
-      0% { box-shadow: 0 0 0 rgba(37,99,235,0.0); transform: scale(1); }
-      25% { box-shadow: 0 0 20px rgba(37,99,235,0.3); transform: scale(1.01); }
-      100% { box-shadow: 0 0 0 rgba(37,99,235,0.0); transform: scale(1); }
+      main {
+        padding-inline: 12px;
+      }
     }
   </style>
 </head>
 <body>
   <div class="page">
     <!-- NAV -->
-    <header class="top-nav">
-      <div class="top-nav-inner">
-        <div class="logo-block">
-          <div class="logo-square">AI</div>
+    <header class="nav">
+      <div class="nav-inner">
+        <div class="nav-left">
+          <div class="logo-circle">AI</div>
           <div>
             <div class="logo-text-main">Taimic</div>
             <div class="logo-text-sub">AI 保險 × 資產配置顧問</div>
           </div>
         </div>
-        <div class="nav-links">
-          <a href="#how" class="nav-link">服務流程</a>
+        <div class="nav-right">
+          <a href="#how" class="nav-link">方案流程</a>
           <a href="#insurance" class="nav-link">保險規劃</a>
           <a href="#invest" class="nav-link">資產配置</a>
-          <a href="#assessment" class="nav-link">免費評估</a>
-          <button class="nav-cta" onclick="scrollToId('contact')">留下聯絡方式</button>
+          <a href="#contact" class="nav-link">聯絡我們</a>
+          <button class="nav-cta" onclick="scrollToId('assessment')">
+            開始免費評估
+          </button>
         </div>
       </div>
     </header>
-
-    <!-- BREADCRUMB -->
-    <div class="breadcrumb">
-      <div class="breadcrumb-inner">
-        首頁 ＞ <span>Taimic 顧問 Demo</span>
-      </div>
-    </div>
 
     <main>
       <!-- HERO -->
       <section class="hero">
         <div class="hero-left">
-          <div class="hero-tag">TAIMIC 顧問 Demo</div>
+          <div class="breadcrumb">首頁 &gt; 服務 &gt; AI 保險與資產配置顧問</div>
+          <div class="hero-tag">概念驗證（POC）｜內部 Demo 用</div>
           <h1 class="hero-title">
             把你的保險與資產，<br />整理成一張看得懂的「財務地圖」
           </h1>
           <p class="hero-sub">
-            我們不是要你立刻買商品，而是先幫你看懂：現在保障夠不夠、錢放在哪裡、風險會不會太高，
-            再用 AI 協助整理出一份白話版的建議。
+            Taimic 幫你把晦澀的保單條款與零散的基金、債券、現金部位整理在一起，
+            用簡單的語言說明：哪裡該補保險、哪裡可以開始讓資產長大。
           </p>
+          <ul class="hero-list">
+            <li>一次輸入年齡、家庭狀況、收入與資產規模，就能拿到初步建議。</li>
+            <li>保險與投資一起看，不再只靠單一商品或單一業務的說法。</li>
+            <li>目前為 Demo 版本，不會自動幫你下單任何保險或金融商品。</li>
+          </ul>
           <div class="hero-cta-row">
             <button class="btn-primary" onclick="scrollToId('assessment')">
-              開始 3 分鐘初步評估
+              3 分鐘建立我的財務指紋
             </button>
             <button class="btn-secondary" onclick="scrollToId('contact')">
-              先留下聯絡方式
+              只想先留下聯絡方式
             </button>
           </div>
           <div class="hero-note">
-            本頁為概念 Demo，內容僅供理財與保險教育使用，不構成實際商品推薦。
+            ※ 本頁面僅供產品概念展示與教育用途，實際規劃請洽具合法資格之專業人員。
           </div>
         </div>
+
         <div class="hero-right">
           <div>
-            <div class="hero-right-title">你會拿到什麼？</div>
-            <div class="hero-right-sub">
-              一份整理過的「保障＋資產配置摘要」，用白話寫給一般人看得懂。
+            <div class="hero-right-header-title">你的家庭財務健檢摘要（示意）</div>
+            <div class="hero-right-header-sub">
+              以下內容會依你填寫的資料，產生不同版本的文字建議。
             </div>
           </div>
-          <div class="hero-stats">
-            <div class="stat-item">
-              <div class="stat-label">填寫時間</div>
-              <div class="stat-value">約 3 分鐘</div>
+
+          <div class="hero-right-stat-row">
+            <div class="hero-right-stat-item">
+              <strong>3 分鐘</strong>
+              初步了解保障與資產輪廓
             </div>
-            <div class="stat-item">
-              <div class="stat-label">評估面向</div>
-              <div class="stat-value">保障＋資產</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-label">目前版本</div>
-              <div class="stat-value">Demo / 教育用</div>
+            <div class="hero-right-stat-item">
+              <strong>2 面向</strong>
+              同時看保險與投資
             </div>
           </div>
-          <div class="hero-chat">
-            <div class="chat-tag">對話情境（範例）</div>
-            <div>你：我有一個小孩，目前保單夠嗎？</div>
-            <div>AI：我們會先看你的收入、負債與家庭結構，再幫你判斷保障缺口與建議補強方向。</div>
+
+          <div class="hero-right-split">
+            <div class="hero-card">
+              <div class="hero-card-title">保險保障概況</div>
+              <div class="card-simple-text">
+                目前醫療與重大疾病保障是否足夠？壽險保額大約在建議區間嗎？
+                有沒有重複保太多某一種險種？
+              </div>
+              <div class="hero-chip-row">
+                <span class="hero-chip">醫療保障</span>
+                <span class="hero-chip">重大疾病</span>
+                <span class="hero-chip">壽險保額</span>
+              </div>
+            </div>
+            <div class="hero-card">
+              <div class="hero-card-title">資產配置方向</div>
+              <div class="card-simple-text">
+                依照風險屬性，拆成現金、穩健型資產與成長型資產，
+                幫你抓出一個「大致合理」的比例起點。
+              </div>
+              <div class="hero-chip-row">
+                <span class="hero-chip">現金預備金</span>
+                <span class="hero-chip">穩健債券</span>
+                <span class="hero-chip">成長型基金／股票</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-chat" id="demo-ai">
+            <div class="hero-chat-tag">AI 顧問對話示範</div>
+            <div class="hero-chat-user">
+              你：家裡有一個小孩，如果我住院或失能，保險要準備到什麼程度才安心？
+            </div>
+            <div class="hero-chat-ai">
+              AI：會從你的收入與家庭結構出發，看目前醫療與壽險保額是否足以支撐
+              至少 <strong>3～5 年</strong> 的家庭開支，
+              再搭配緊急預備金與適度的資產成長部位，做整體規劃。
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- WHY SECTION：比較像「選擇台積」那種敘述 -->
-      <section class="section" id="how">
+      <!-- HOW IT WORKS -->
+      <section id="how">
         <div class="section-header">
-          <h2 class="section-title">為什麼需要先整理「保險＋資產」？</h2>
+          <div class="section-tag">流程說明</div>
+          <h2 class="section-title">3 個步驟，快速看清自己的保障與資產</h2>
           <p class="section-sub">
-            很多人同時有保單、基金、股票、房貸，卻從來沒有把整體風險和保障放在同一張圖裡看過。
+            不需要懂很多金融名詞，只要照著步驟填，就能拿到一份「先從哪裡開始動手」的建議。
           </p>
         </div>
-        <div class="cards-3">
-          <div class="card">
-            <h3>看清楚現在站在哪裡</h3>
-            <p>
-              先盤點保險、資產與負債，才知道自己是太保守、太積極，還是哪裡空一塊沒顧到。
-            </p>
+
+        <div class="three-col">
+          <div class="card-simple">
+            <div class="card-simple-label">Step 1</div>
+            <div class="card-simple-title">輸入基本與家庭資料</div>
+            <div class="card-simple-text">
+              包含年齡、家庭成員、收入區間、可投資資產規模，以及目前有沒有保單，大約 3 分鐘可完成。
+            </div>
           </div>
-          <div class="card">
-            <h3>把專有名詞翻成人話</h3>
-            <p>
-              不跟你比條款細節，而是用一般人聽得懂的方式解釋「這張保單在幹嘛」「這個投資風險大不大」。
-            </p>
+          <div class="card-simple">
+            <div class="card-simple-label">Step 2</div>
+            <div class="card-simple-title">估算保障缺口與風險屬性</div>
+            <div class="card-simple-text">
+              透過你的家庭狀況與主觀風險接受度，判斷目前保障是偏不足、剛好，還是有可能買超過。
+            </div>
           </div>
-          <div class="card">
-            <h3>為真正的客製化做準備</h3>
-            <p>
-              未來串上更多資料後，可以把你的保單與投資部位一起丟給 AI，看出更具體的調整方向。
-            </p>
+          <div class="card-simple">
+            <div class="card-simple-label">Step 3</div>
+            <div class="card-simple-title">給出保險＋投資配置方向</div>
+            <div class="card-simple-text">
+              用白話整理出：「保險先補哪幾塊」「資產要怎麼分到現金、穩健、成長」三個層次。
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- INSURANCE + INVESTMENT（兩欄） -->
-      <section class="section" id="insurance">
+      <!-- INSURANCE -->
+      <section id="insurance">
         <div class="section-header">
-          <h2 class="section-title">保險規劃：先補洞，再談加強</h2>
+          <div class="section-tag">保險規劃視角</div>
+          <h2 class="section-title">先把風險守好，再談怎麼讓錢長大</h2>
           <p class="section-sub">
-            我們會先看你現有的壽險、醫療、意外、重大疾病等，避免「買很多但買錯重點」。
+            我們會先從風險管理的角度出發，看看你的保險是否有明顯缺口，
+            再討論要不要加保或調整，而不是一開始就推商品。
           </p>
         </div>
-        <div class="two-col">
-          <div>
-            <ul class="bullet-list">
-              <li>整理現有保單，區分「真的必要」與「可以視情況調整」。</li>
-              <li>用金額與情境說明缺口，例如一場大手術大概需要準備多少自付額。</li>
-              <li>未來版本會試著幫你做跨公司方案的並排比較（目前先以教育說明為主）。</li>
-            </ul>
+
+        <div class="three-col">
+          <div class="card-simple">
+            <div class="card-simple-title">保單總整理</div>
+            <div class="card-simple-text">
+              用簡單的項目，把你現有的壽險、醫療、癌症、意外等保障整理成一張表，
+              讓你一眼就看出有沒有「空白地帶」。
+            </div>
           </div>
-          <div class="card">
-            <h3>你可以預期會看到的內容</h3>
-            <p>・整體保障大致屬於「過低／尚可／偏高」哪一類。</p>
-            <p>・建議優先補強的項目（例如醫療、癌症、收入中斷）。</p>
-            <p>・不急著處理，但之後可以調整的保單方向。</p>
+          <div class="card-simple">
+            <div class="card-simple-title">缺口分析（白話版）</div>
+            <div class="card-simple-text">
+              例如：住院一晚大概要自付多少？如果罹患重大疾病，需要準備多少可以安心治療？
+              不講艱深條款，只講對你生活的影響。
+            </div>
+          </div>
+          <div class="card-simple">
+            <div class="card-simple-title">跨公司比較（未來功能）</div>
+            <div class="card-simple-text">
+              未來規劃導入多家保險公司方案，以相同指標（保額、保障範圍、自付額等）做並排比較，
+              降低你被資訊淹沒的機會。
+            </div>
           </div>
         </div>
+
         <div class="disclaimer">
-          提醒：目前平台仍在 Demo 階段，尚未與任何保險公司正式串接，所有內容僅為教育性示意，不構成實際商品推薦。
+          提醒：目前平台仍在概念驗證階段，尚未與任何保險公司正式串接，頁面上的內容僅為示意說明，
+          不構成實際保險商品推薦或銷售行為。
         </div>
       </section>
 
-      <section class="section" id="invest">
+      <!-- INVESTMENT -->
+      <section id="invest">
         <div class="section-header">
-          <h2 class="section-title">資產配置：讓風險跟你的生活步調對得上</h2>
+          <div class="section-tag">基金與債券配置視角</div>
+          <h2 class="section-title">讓配置有邏輯，而不是只聽「大家都在買什麼」</h2>
           <p class="section-sub">
-            不是要你當天才投資人，而是幫你找到一個「睡得著覺，又不會完全沒成長」的配置。
+            依照你的年齡、風險屬性與資產規模，幫你把資產拆成現金、穩健型、成長型三大類，
+            抓出一個可以落地實行的比例。
           </p>
         </div>
-        <div class="two-col">
-          <div class="card">
-            <h3>我們會看的幾件事</h3>
-            <p>・你目前的可投資資產大約多大。</p>
-            <p>・你對虧損與波動的真實感受（而不是年齡）。</p>
-            <p>・你現在主要持有的是現金、基金、股票，還是房產。</p>
+
+        <div class="three-col">
+          <div class="card-simple">
+            <div class="card-simple-title">先盤點，再調整</div>
+            <div class="card-simple-text">
+              掌握目前有多少現金、基金、股票、房產與負債，
+              看看實際上「重心放在哪一塊」，再討論要不要移重心。
+            </div>
           </div>
-          <div>
-            <ul class="bullet-list">
-              <li>根據你選的風險屬性，給一個「現金／穩健／成長」的參考比例。</li>
-              <li>提醒哪些情況不適合一次把錢全丟進去（例如剛好在高點）。</li>
-              <li>之後可以再搭配實際持有標的，做更細的調整建議。</li>
-            </ul>
+          <div class="card-simple">
+            <div class="card-simple-title">風險屬性 → 配置邏輯</div>
+            <div class="card-simple-text">
+              不只是看年齡，而是看你面對帳面虧損時的壓力程度，
+              再決定要放多少在穩健、多少在成長資產。
+            </div>
+          </div>
+          <div class="card-simple">
+            <div class="card-simple-title">給你一個可以參考的比例</div>
+            <div class="card-simple-text">
+              例如：現金 20%、穩健債券／平衡型基金 40%、成長型基金／股票 40%，
+              讓你有實際可以討論與調整的起點，而不是一堆抽象形容詞。
+            </div>
           </div>
         </div>
       </section>
 
       <!-- ASSESSMENT & FORM -->
-      <section class="section" id="assessment">
+      <section id="assessment">
         <div class="section-header">
-          <h2 class="section-title">3 分鐘 Demo：看看你的「財務安全指紋」</h2>
+          <div class="section-tag">免費 Demo 評估</div>
+          <h2 class="section-title">填完這一頁，就能看到你的「財務安全指紋」雛型</h2>
           <p class="section-sub">
-            先用簡單的幾個問題，讓系統幫你分出「保障大方向」與「資產配置大方向」。
+            以下結果為示範性質，尚未接上真實保單或資產資料。正式上線後，才會依照實際明細做更精細的分析。
           </p>
         </div>
+
         <div class="cta-layout">
           <form class="form" onsubmit="handleDemoSubmit(event)">
             <div class="form-row-inline">
               <div class="form-row">
-                <label>你的年齡</label>
+                <label for="age">你的年齡</label>
                 <input id="age" type="number" placeholder="例如：32" required />
               </div>
               <div class="form-row">
-                <label>家庭狀況</label>
+                <label for="family">家庭狀況</label>
                 <select id="family" required>
                   <option value="">請選擇</option>
                   <option>單身</option>
@@ -709,7 +824,7 @@
 
             <div class="form-row-inline">
               <div class="form-row">
-                <label>大約月收入區間</label>
+                <label for="income">大約月收入區間</label>
                 <select id="income" required>
                   <option value="">請選擇</option>
                   <option>5 萬以下</option>
@@ -719,7 +834,7 @@
                 </select>
               </div>
               <div class="form-row">
-                <label>大約可投資資產規模</label>
+                <label for="assets">大約可投資資產規模</label>
                 <select id="assets" required>
                   <option value="">請選擇</option>
                   <option>50 萬以下</option>
@@ -732,7 +847,7 @@
 
             <div class="form-row-inline">
               <div class="form-row">
-                <label>你覺得自己屬於哪種風險屬性？</label>
+                <label for="risk">你覺得自己屬於哪種風險屬性？</label>
                 <select id="risk" required>
                   <option value="">請選擇</option>
                   <option>非常保守（不太能接受虧損）</option>
@@ -741,7 +856,7 @@
                 </select>
               </div>
               <div class="form-row">
-                <label>目前有沒有保單？</label>
+                <label for="insurance">目前有沒有保單？</label>
                 <select id="insurance" required>
                   <option value="">請選擇</option>
                   <option>幾乎沒有</option>
@@ -752,7 +867,7 @@
             </div>
 
             <div class="form-row">
-              <label>你最在意什麼？（選填）</label>
+              <label for="focus">你最在意什麼？（選填）</label>
               <textarea
                 id="focus"
                 placeholder="例如：怕生病花很多錢、擔心小孩教育費、想 10 年內可以半退休⋯⋯"
@@ -763,7 +878,7 @@
               產生 Demo 建議
             </button>
             <div class="small-hint">
-              這只是初步 Demo，未來可以改成寄送 Email 報告或產生 PDF。
+              送出後右側內容會依照你填寫的資料調整，用來示範未來真正 AI 顧問回報的樣子。
             </div>
           </form>
 
@@ -771,47 +886,62 @@
             <div class="result-tag">DEMO 建議預覽</div>
             <div class="result-title">依照你目前填寫的初步分析摘要</div>
             <p class="result-line">
-              ✅ 保險部分：<span class="result-highlight">目前資訊有限，請先完成左側問題。</span>
+              ✅ 保險部分：
+              <span class="result-highlight">
+                目前保障略顯不足，建議優先補強醫療與重大疾病險，其次再考慮壽險加額。
+              </span>
             </p>
             <p class="result-line">
               💡 資產配置部分：
-              <span class="result-highlight">尚未計算，送出表單後會根據你的風險屬性產生建議。</span>
+              依你的風險屬性，目前較接近
+              <span class="result-highlight">穩健成長型</span>，可參考的比例為：
+              <span class="result-highlight">
+                現金 20%、穩健債券或平衡型基金 40%、成長型基金或股票 40%
+              </span>
+              ，以定期定額方式分批投入。
             </p>
             <p class="result-line">
-              🔔 下一步建議：完成上方問題後，這裡會顯示適合你的下一步方向（例如先補醫療、還是先整理投資部位）。
+              🔔 下一步建議：
+              可以先整理現有保單與投資部位，未來開放「上傳保單／資產明細」功能後，
+              讓 AI 幫你做更精準的客製化分析。
             </p>
           </div>
         </div>
 
         <div class="disclaimer">
           法律聲明：本網站目前僅提供概念展示與一般性財務教育資訊，並非保險代理人、經紀人、投信、
-          投顧或證券商，亦不構成任何特定商品的買賣建議或招攬。實際投保與投資請務必諮詢具合法資格之專業人員。
+          投顧或證券商，亦不構成任何特定商品之買賣建議或招攬。實際投保與投資請務必諮詢具合法資格之專業人員。
         </div>
       </section>
 
-      <!-- CONTACT：Google 表單 -->
-      <section class="section" id="contact">
+      <!-- CONTACT：連到 Google 表單 -->
+      <section id="contact">
         <div class="section-header">
-          <h2 class="section-title">有興趣一起把這個產品做起來？</h2>
+          <div class="section-tag">聯絡方式</div>
+          <h2 class="section-title">想在正式版上線時收到通知？</h2>
           <p class="section-sub">
-            如果你是潛在使用者、合作夥伴或保險／財富管理相關從業人員，歡迎先留下你的聯絡方式。
+            如果你對這個概念有興趣，或想參加未來的內測計畫，可以先留下你的 Email 或聯絡方式。
+            目前我們透過 Google 表單收集名單。
           </p>
         </div>
+
         <div class="contact-inner">
           <p class="small-hint">
-            點按下面按鈕，會在新分頁開啟 Google 表單，填寫完送出即可：
+            點選下方按鈕，系統會在新分頁開啟 Google 表單，填寫並送出即可：
           </p>
+
           <a
             href="https://docs.google.com/forms/d/e/1FAIpQLSfQdm8R3sdNpr3up9kGSQdbPXGbab5clpF_gDeaSmdzaxnUZg/viewform"
             target="_blank"
             rel="noopener noreferrer"
             class="btn-primary btn-form"
-            style="display:inline-block; text-decoration:none;"
           >
-            開啟聯絡表單（Google 表單）
+            開啟聯絡表單（Google 表單） 📩
           </a>
-          <div class="small-hint" style="margin-top:6px;">
-            送出後資料會直接進到你的 Google 表單「回覆」裡，不會存到這個網站的伺服器。
+
+          <div class="small-hint" style="margin-top:8px;">
+            送出後資料會直接進到你的 Google 表單「回覆」裡，
+            不會存到這個 Demo 網站的伺服器。
           </div>
         </div>
       </section>
@@ -820,7 +950,10 @@
     <footer class="footer">
       <div class="footer-inner">
         <div>© <span id="year"></span> Taimic. All rights reserved.</div>
-        <div>如欲合作或洽談，請聯絡：<a href="mailto:founder@example.com">founder@example.com</a></div>
+        <div>
+          此網站為概念 Demo，如欲合作或洽談，請聯絡：
+          <a href="mailto:founder@example.com">founder@example.com</a>
+        </div>
       </div>
     </footer>
   </div>
@@ -829,7 +962,7 @@
     // 年份
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // 捲動到區塊
+    // 捲動到指定區塊
     function scrollToId(id) {
       const el = document.getElementById(id);
       if (!el) return;
@@ -851,14 +984,11 @@
       // 1. 保險保障評語
       let protectLevel = "";
       if (insurance === "幾乎沒有") {
-        protectLevel =
-          "保障缺口明顯，建議盡快補齊「醫療＋重大疾病＋壽險」三大基本防線。";
+        protectLevel = "保障缺口明顯，建議盡快補齊「醫療＋重大疾病＋壽險」三大基本防線。";
       } else if (insurance === "有一些，但看不太懂") {
-        protectLevel =
-          "目前有一定保障，但內容可能不夠清楚，建議先做一次保單總體檢，確認沒有重複或缺角。";
+        protectLevel = "目前有一定保障，但內容可能不夠清楚，建議先做一次保單總體檢，確認沒有重複或缺角。";
       } else {
-        protectLevel =
-          "整體保障看起來還可以，再把醫療與收入中斷風險稍微補強會更安心。";
+        protectLevel = "整體保障看起來還可以，再把醫療與收入中斷風險稍微補強會更安心。";
       }
 
       // 2. 投資風格 & 比例
@@ -879,17 +1009,13 @@
       // 3. 依資產規模給下一步建議
       let stepNext = "";
       if (assets === "50 萬以下") {
-        stepNext =
-          "先把緊急預備金存到 6 個月生活費，再開始做長期投資會比較舒服。";
+        stepNext = "先把緊急預備金存到 6 個月生活費，再開始做長期投資會比較舒服。";
       } else if (assets === "50–200 萬") {
-        stepNext =
-          "可以分批投入基金或 ETF，利用定期定額分散進場時間。";
+        stepNext = "可以分批投入基金或 ETF，利用定期定額分散進場時間。";
       } else if (assets === "200–500 萬") {
-        stepNext =
-          "可以規劃一部分做長期成長，一部分做較穩的現金流（例如債券或配息型標的）。";
-      } else {
-        stepNext =
-          "資產規模已經不小，建議搭配稅務與財產傳承的思考，一起做中長期規劃。";
+        stepNext = "可以規劃一部分做長期成長，一部分做較穩的現金流（例如債券或配息型標的）。";
+      } else if (assets === "500 萬以上") {
+        stepNext = "資產規模已經不小，建議搭配稅務與財產傳承的思考，一起做中長期規劃。";
       }
 
       if (family.includes("有小孩")) {
@@ -899,10 +1025,11 @@
       // 4. 客製化關注點
       let focusLine = "";
       if (focus) {
-        focusLine = `你特別在意的重點是：「${focus}」，之後在調整保險與投資配置時，可以以這個目標當優先。`;
+        focusLine =
+          `你特別在意的重點是：「${focus}」，之後在調整保險與投資配置時，可以以這個目標當優先。`;
       }
 
-      // 塞回畫面
+      // 5. 把結果塞回畫面
       const preview = document.getElementById("resultPreview");
       const titleEl = preview.querySelector(".result-title");
       const lines = preview.querySelectorAll(".result-line");
@@ -924,11 +1051,22 @@
         stepNext +
         (focusLine ? "<br>" + focusLine : "");
 
-      // 讓卡片閃一下
+      // 讓卡片有一點小動態（重新觸發動畫）
       preview.style.animation = "none";
       void preview.offsetWidth;
       preview.style.animation = "flash 0.6s ease-out";
     }
+
+    // 簡單動畫：結果卡片閃一下
+    const style = document.createElement("style");
+    style.textContent = `
+      @keyframes flash {
+        0% { box-shadow: 0 0 0 rgba(0,82,163,0.0); transform: scale(1); }
+        25% { box-shadow: 0 0 18px rgba(0,82,163,0.35); transform: scale(1.01); }
+        100% { box-shadow: 0 0 0 rgba(0,82,163,0.0); transform: scale(1); }
+      }
+    `;
+    document.head.appendChild(style);
   </script>
 </body>
 </html>
