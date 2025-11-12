@@ -669,10 +669,17 @@
 
     /* -------- RWD -------- */
 
-    @media (max-width: 900px) {
+   @media (max-width: 900px) {
+  /* 讓麵包屑區變薄一點，不要占太多高度 */
+  .subnav-inner {
+    padding: 6px 16px;
+  }
+
+  /* 手機版 HERO：拿掉大 margin-top，整塊往上拉 */
   .hero {
     grid-template-columns: 1fr;
-    padding: 24px 18px 22px;
+    padding: 18px 16px 18px;
+    margin-top: 4px;  /* 原本是 24px，這行是關鍵 */
   }
 
   .assessment-layout {
@@ -688,7 +695,7 @@
     display: none;  /* 手機先隱藏主選單 */
   }
   .header-right {
-    display: none;  /* 目前手機版整個右邊一起藏掉（之後要再弄漢堡選單可以再改） */
+    display: none;  /* 手機先藏右側區 */
   }
 }
     @media (max-width: 640px) {
