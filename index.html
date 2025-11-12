@@ -97,15 +97,21 @@
 }
 
 /* 時鐘樣式 */
-.logo-clock::before,
+/* 時針 */
+.logo-clock::before {
+  width: 2px;
+  height: 9px;
+  transform: translate(-50%, -100%) rotate(0deg);
+  animation: clock-hour 30s linear infinite;
+}
+
+/* 分針 */
 .logo-clock::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  background: var(--brand-blue);
-  transform-origin: bottom center;
-  border-radius: 999px;
+  width: 2px;
+  height: 12px;
+  transform: translate(-50%, -100%) rotate(0deg);
+  animation: clock-minute 8s linear infinite;
+}s: 999px;
 }
 
 /* 時針 */
