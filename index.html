@@ -1100,7 +1100,7 @@ body { min-height: -webkit-fill-available; }
   </div>
 
  <script>
-  // 只有偵測到頂部空白 > 80px 才幫你自動對齊到 HERO，避免怪異閃動
+  // 這裡是自動對齊 HERO 的那段…
   document.addEventListener("DOMContentLoaded", function () {
     const hero = document.getElementById("top");
     if (!hero) return;
@@ -1110,17 +1110,17 @@ body { min-height: -webkit-fill-available; }
     }
   });
 
-  // （你原本後面的年份 / 捲動 / 表單程式碼照舊放在這下面）
-</script>
-    // 年份
-    document.getElementById("year").textContent = new Date().getFullYear();
+  // 年份
+  document.getElementById("year").textContent = new Date().getFullYear();
 
-    // 捲動到區塊
-    function scrollToId(id) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+  // 捲動到區塊
+  function scrollToId(id) { /* ... */ }
+
+  // 表單送出
+  function handleDemoSubmit(e) { /* ... */ }
+</script>
+</body>
+</html>
 
     // Demo 表單送出：依照填寫內容產生不同建議
     function handleDemoSubmit(e) {
