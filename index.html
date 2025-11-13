@@ -4,237 +4,178 @@
   <meta charset="UTF-8" />
   <title>Taimic｜AI 保險與資產配置</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="description"
-    content="用 Taimic 幫你快速檢視保險與資產配置的方向，根據年齡、家庭與資產規模，給出初步建議。"
-  />
+  <meta name="description" content="用 Taimic 幫你快速檢視保險與資產配置的方向，根據年齡、家庭與資產規模，給出初步建議。" />
+
   <style>
-    /* -------- 變數 -------- */
-    :root {
-      --brand-blue: #0057b8;
-      --brand-blue-light: #e6f0fb;
-      --text-main: #1f2933;
-      --text-sub: #6b7280;
-      --bg-page: #f5f5f7;
-      --border-soft: #e5e7eb;
-      --radius-lg: 16px;
-      --shadow-soft: 0 6px 18px rgba(15, 23, 42, 0.08);
-      --max-width: 1120px;
+    /* -------- 基本樣式變數 -------- */
+    :root{
+      --brand-blue:#0057b8;
+      --brand-blue-light:#e6f0fb;
+      --text-main:#1f2933;
+      --text-sub:#6b7280;
+      --bg-page:#f5f5f7;
+      --border-soft:#e5e7eb;
+      --radius-lg:16px;
+      --shadow-soft:0 6px 18px rgba(15,23,42,.08);
+      --max-width:1120px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { height: -webkit-fill-available; }
-    body {
-      min-height: -webkit-fill-available;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC","PingFang TC", sans-serif;
-      background: var(--bg-page);
-      color: var(--text-main);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
+    /* -------- Reset -------- */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{margin:0 !important;padding:0 !important}
+    html{height:-webkit-fill-available}
+    body{
+      min-height:-webkit-fill-available;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC",sans-serif;
+      background:var(--bg-page);
+      color:var(--text-main);
+      line-height:1.6;
+      -webkit-font-smoothing:antialiased;
     }
+    a{color:inherit;text-decoration:none}
 
-    a { color: inherit; text-decoration: none; }
-
-    /* -------- 版面 -------- */
-    .page { min-height: 100vh; display: flex; flex-direction: column; }
-    .page-inner {
-      max-width: var(--max-width);
-      width: 100%;
-      margin: 0 auto;
-      padding: 0 20px 48px;
-      flex: 1;
-      padding-top: 0 !important;   /* 頂部貼齊 */
-    }
+    /* -------- 版面骨架 -------- */
+    .page{min-height:100vh;display:flex;flex-direction:column}
+    .page-inner{max-width:var(--max-width);width:100%;margin:0 auto;padding:0 20px 48px;flex:1}
 
     /* -------- Header -------- */
-    .site-header-wrap {
-      width: 100%;
-      border-bottom: 1px solid #e5e7eb;
-      background: #ffffffcc;
-      backdrop-filter: blur(16px);
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      margin-bottom: 0 !important;
+    .site-header-wrap{
+      width:100%;
+      border-bottom:1px solid var(--border-soft);
+      background:#ffffffcc; backdrop-filter:blur(16px);
+      position:sticky; top:0; z-index:20;
     }
+    .site-header{max-width:var(--max-width);margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between}
 
-    .site-header {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+    .header-left{display:flex;align-items:center;gap:10px}
+    .logo-mark{width:32px;height:32px;border-radius:999px;border:1.5px solid var(--brand-blue);position:relative;
+      background:radial-gradient(circle at 30% 30%,#e5f0ff 0,#fff 40%,#e5edf8 100%);box-shadow:0 0 0 1px rgba(0,87,184,.08)}
+    .logo-clock{position:relative}
+    .logo-clock::before,.logo-clock::after{content:"";position:absolute;left:50%;top:50%;transform-origin:50% 100%;background:#1f2933;border-radius:999px}
+    /* 時針 3 分鐘一圈；分針 1 分鐘一圈 */
+    .logo-clock::before{width:2px;height:9px;transform:translate(-50%,-100%) rotate(0);animation:clock-hour 180s linear infinite}
+    .logo-clock::after{width:2px;height:12px;transform:translate(-50%,-100%) rotate(0);animation:clock-minute 60s linear infinite}
+    .logo-text-main{font-size:16px;font-weight:600;letter-spacing:.04em}
+    .logo-text-sub{font-size:11px;color:var(--text-sub)}
+
+    /* 中間主選單（仿台積） */
+    .header-center{flex:1;display:flex;justify-content:center;gap:32px;font-size:15px;font-weight:500}
+    .top-nav-link{position:relative;padding:4px 0;color:#4b5563}
+    .top-nav-link:hover{color:#111827}
+    .top-nav-link.active::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:3px;border-radius:999px;background:#b91c1c}
+
+    /* 右：搜尋＋語言 */
+    .header-right{display:flex;align-items:center;gap:16px;font-size:13px}
+    .header-search{font-size:18px;color:#6b7280;cursor:pointer}
+
+    /* 語言選單 */
+    .site-header,.site-header-wrap{overflow:visible} /* 防止下拉被裁掉 */
+    .lang-switch{position:relative;z-index:50;font-size:12px}
+    .lang-toggle{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 12px;border:none;border-radius:999px;background:#f3f4f6;color:#4b5563;cursor:pointer;
     }
-
-    .header-left { display: flex; align-items: center; gap: 10px; }
-
-    /* LOGO 外圈 + 時鐘 */
-    .logo-mark {
-      width: 32px; height: 32px; border-radius: 999px;
-      border: 1.5px solid var(--brand-blue);
-      position: relative;
-      background: radial-gradient(circle at 30% 30%, #e5f0ff 0, #ffffff 40%, #e5edf8 100%);
-      box-shadow: 0 0 0 1px rgba(0, 87, 184, 0.08);
+    .lang-toggle:hover{background:#e5e7eb}
+    .lang-menu{
+      position:absolute;right:0;top:110%;
+      display:none;flex-direction:column;gap:4px;
+      padding:10px 18px;min-width:140px;border-radius:14px;
+      background:rgba(249,250,251,.98);box-shadow:0 10px 25px rgba(15,23,42,.12)
     }
-    .logo-clock { position: relative; }
-    .logo-clock::before, .logo-clock::after {
-      content: ""; position: absolute; left: 50%; top: 50%;
-      transform-origin: 50% 100%; background: #1f2933; border-radius: 999px;
-    }
-    /* 時針 180s、分針 60s */
-    .logo-clock::before { width: 2px; height: 9px; transform: translate(-50%,-100%) rotate(0deg); animation: clock-hour 180s linear infinite; }
-    .logo-clock::after  { width: 2px; height: 12px;transform: translate(-50%,-100%) rotate(0deg); animation: clock-minute 60s linear infinite; }
+    .lang-switch.open .lang-menu{display:flex}
+    .lang-item{border:none;background:transparent;padding:2px 0;font-size:13px;text-align:left;color:#6b7280;cursor:pointer}
+    .lang-item.active{color:#b91c1c;font-weight:600}
 
-    .logo-text-main { font-size: 16px; font-weight: 600; letter-spacing: .04em; }
-    .logo-text-sub { font-size: 11px; color: var(--text-sub); }
-
-    /* 中間主選單（桌機顯示） */
-    .header-center {
-      flex: 1; display: flex; justify-content: center; gap: 32px;
-      font-size: 15px; font-weight: 500;
-    }
-    .top-nav-link { position: relative; padding: 4px 0; color: #4b5563; }
-    .top-nav-link:hover { color: #111827; }
-    .top-nav-link.active::after {
-      content: ""; position: absolute; left: 0; right: 0; bottom: -10px;
-      height: 3px; border-radius: 999px; background: #b91c1c;
-    }
-
-    /* 右側：搜尋 + 語言 */
-    .header-right { display: flex; align-items: center; gap: 16px; font-size: 13px; }
-    .header-search { font-size: 18px; color: #6b7280; cursor: pointer; }
-
-    /* 語言膠囊 + 直式選單（長方形、圓角） */
-    .lang-switch { position: relative; }
-    .lang-pill {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 12px; border-radius: 999px; background:#eef1f4; cursor: pointer;
-    }
-    .lang-menu {
-      position: absolute; right: 0; top: calc(100% + 8px);
-      display: none; flex-direction: column; gap: 4px;
-      min-width: 140px; padding: 10px 12px; border-radius: 12px; background:#fff;
-      box-shadow: 0 10px 25px rgba(15,23,42,.12); z-index: 9999;
-    }
-    .lang-item { background: none; border: 0; text-align: left; padding: 8px 6px; font-size: 14px; color:#111827; cursor: pointer; }
-    .lang-item.active { color:#b91c1c; font-weight: 600; }
-    .lang-switch.open .lang-menu { display: flex; }
-
-    /* 次導航（你說要拿掉大白區，先關掉） */
-    .subnav { display: none; }
+    /* -------- 次導航（麵包屑）—直接隱藏避免頂部白塊 -------- */
+    .subnav{display:none !important}
 
     /* -------- HERO -------- */
-    .hero {
-      display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1.1fr); gap: 32px;
-      padding: 32px 48px 28px; background:#fff; border-radius: var(--radius-lg);
-      border: 1px solid var(--border-soft); box-shadow: var(--shadow-soft);
-      margin-top: 0 !important;  /* 頂部貼齊 */
+    .hero{
+      display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.1fr);gap:32px;
+      padding:32px 48px 28px;background:#fff;border-radius:var(--radius-lg);
+      border:1px solid var(--border-soft);box-shadow:var(--shadow-soft);
+      margin-top:0 !important; /* 頂部空白歸零 */
+    }
+    .hero-left-title{font-size:28px;font-weight:700;margin-bottom:8px}
+    .hero-left-title span{color:var(--brand-blue)}
+    .hero-left-sub{font-size:14px;color:var(--text-sub);margin-bottom:16px;max-width:520px}
+    .hero-tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;margin-bottom:8px;color:var(--brand-blue)}
+    .hero-tag-pill{padding:2px 8px;border-radius:999px;border:1px solid var(--brand-blue);font-size:11px}
+    .hero-btn-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+    .btn-primary{padding:9px 16px;border-radius:999px;background:var(--brand-blue);border:none;color:#fff;font-size:14px;font-weight:600;cursor:pointer}
+    .btn-secondary{padding:9px 16px;border-radius:999px;border:1px solid var(--border-soft);background:#fff;font-size:14px;color:var(--text-main);cursor:pointer}
+    .hero-note{font-size:12px;color:var(--text-sub);margin-top:6px}
+
+    .hero-right{background:#fff;border-radius:12px;box-shadow:var(--shadow-soft);border:1px solid var(--border-soft);padding:16px 18px;font-size:13px}
+    .hero-right-title{font-weight:600;margin-bottom:4px}
+    .hero-right-sub{font-size:12px;color:var(--text-sub);margin-bottom:12px}
+    .hero-right-block{padding:10px 0;border-top:1px solid #f2f2f2}
+    .hero-right-label{font-size:12px;color:var(--text-sub);margin-bottom:4px}
+    .hero-right-list{padding-left:16px;font-size:13px}
+
+    /* -------- 通用 section -------- */
+    section:not(.hero){
+      margin:32px 0;background:#fff;border-radius:var(--radius-lg);
+      border:1px solid var(--border-soft);box-shadow:var(--shadow-soft);padding:20px 22px
+    }
+    .section-header{margin-bottom:14px}
+    .section-title{font-size:18px;font-weight:600;margin-bottom:4px}
+    .section-sub{font-size:13px;color:var(--text-sub)}
+
+    /* 特色 */
+    .feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:10px}
+    .feature-card{border-radius:12px;border:1px solid #edf0f5;background:#fafbff;padding:12px;font-size:13px}
+    .feature-card h3{font-size:14px;margin-bottom:4px}
+    .feature-card p{font-size:13px;color:var(--text-sub)}
+
+    /* 三步驟 */
+    .steps-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:10px}
+    .step-card{border-radius:12px;border:1px solid #edf0f5;padding:12px;background:#fff;font-size:13px}
+    .step-tag{font-size:11px;color:var(--brand-blue);margin-bottom:4px}
+    .step-card h3{font-size:14px;margin-bottom:4px}
+    .step-card p{font-size:13px;color:var(--text-sub)}
+
+    /* Demo 表單 */
+    .assessment-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;margin-top:4px}
+    .form{display:flex;flex-direction:column;gap:8px;font-size:13px}
+    .form-row{display:flex;flex-direction:column;gap:4px}
+    .form-row-inline{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    label{font-size:12px;color:var(--text-sub)}
+    input,select,textarea{padding:7px 9px;border-radius:6px;border:1px solid #d1d5db;font-size:13px;outline:none;background:#fff;color:var(--text-main)}
+    input:focus,select:focus,textarea:focus{border-color:var(--brand-blue);box-shadow:0 0 0 1px rgba(0,87,184,.2)}
+    textarea{min-height:70px;resize:vertical}
+    .small-hint{font-size:11px;color:var(--text-sub);margin-top:2px}
+
+    .result-preview{border-radius:10px;border:1px solid #d6e1f5;background:var(--brand-blue-light);padding:10px 12px;font-size:13px}
+    .result-tag{font-size:11px;color:var(--brand-blue);margin-bottom:4px}
+    .result-title{font-size:14px;font-weight:600;margin-bottom:6px}
+    .result-line{margin-bottom:4px;font-size:13px;color:#111827}
+    .result-highlight{color:#c05621;font-weight:500}
+
+    /* Footer */
+    .footer{border-top:1px solid var(--border-soft);background:#fff;margin-top:24px}
+    .footer-inner{max-width:var(--max-width);margin:0 auto;padding:10px 20px 14px;font-size:11px;color:var(--text-sub);display:flex;justify-content:space-between;gap:12px}
+    .footer a{color:var(--brand-blue);text-decoration:underline;text-decoration-style:dotted}
+
+    /* RWD */
+    @media (max-width:900px){
+      .subnav-inner{padding:6px 16px}
+      .hero{grid-template-columns:1fr;padding:18px 16px 18px;margin-top:0}
+      .assessment-layout{grid-template-columns:1fr}
+      .feature-grid,.steps-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:640px){
+      .page-inner{padding:0 14px 40px}
+      section:not(.hero){padding:16px 14px}
     }
 
-    .hero-left-title { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
-    .hero-left-title span { color: var(--brand-blue); }
-    .hero-left-sub { font-size: 14px; color: var(--text-sub); margin-bottom: 16px; max-width: 520px; }
-    .hero-tag { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; margin-bottom: 8px; color: var(--brand-blue); }
-    .hero-tag-pill { padding: 2px 8px; border-radius: 999px; border:1px solid var(--brand-blue); font-size: 11px; }
-
-    .hero-btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
-    .btn-primary { padding: 9px 16px; border-radius: 999px; background: var(--brand-blue); border: none; color:#fff; font-size:14px; font-weight:600; cursor: pointer; }
-    .btn-secondary { padding: 9px 16px; border-radius: 999px; border:1px solid var(--border-soft); background:#fff; font-size:14px; cursor:pointer; color: var(--text-main); }
-    .hero-note { font-size: 12px; color: var(--text-sub); margin-top: 6px; }
-
-    .hero-right { background:#fff; border-radius:12px; box-shadow: var(--shadow-soft); border:1px solid var(--border-soft); padding:16px 18px; font-size:13px; }
-    .hero-right-title { font-weight: 600; margin-bottom: 4px; }
-    .hero-right-sub { font-size: 12px; color: var(--text-sub); margin-bottom: 12px; }
-    .hero-right-block { padding: 10px 0; border-top: 1px solid #f2f2f2; }
-    .hero-right-label { font-size: 12px; color: var(--text-sub); margin-bottom: 4px; }
-    .hero-right-list { padding-left: 16px; font-size: 13px; }
-
-    /* -------- 共用 section -------- */
-    section:not(.hero) {
-      margin-bottom: 32px; background:#fff; border-radius: var(--radius-lg);
-      border: 1px solid var(--border-soft); box-shadow: var(--shadow-soft); padding: 20px 22px;
-    }
-    .section-header { margin-bottom: 14px; }
-    .section-title { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
-    .section-sub { font-size: 13px; color: var(--text-sub); }
-
-    .feature-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 10px; }
-    .feature-card { border-radius: 12px; border:1px solid #edf0f5; background:#fafbff; padding: 12px; font-size: 13px; }
-    .feature-card h3 { font-size: 14px; margin-bottom: 4px; }
-    .feature-card p  { font-size: 13px; color: var(--text-sub); }
-
-    .steps-grid { display:grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 10px; }
-    .step-card { border-radius:12px; border:1px solid #edf0f5; padding:12px; font-size:13px; background:#fff; }
-    .step-tag { font-size: 11px; color: var(--brand-blue); margin-bottom: 4px; }
-    .step-card h3 { font-size: 14px; margin-bottom: 4px; }
-    .step-card p  { font-size: 13px; color: var(--text-sub); }
-
-    .assessment-layout { display:grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); gap:18px; margin-top: 4px; }
-    .form { display:flex; flex-direction:column; gap:8px; font-size:13px; }
-    .form-row { display:flex; flex-direction:column; gap:4px; }
-    .form-row-inline { display:grid; grid-template-columns: repeat(2,1fr); gap:10px; }
-    label { font-size:12px; color: var(--text-sub); }
-    input, select, textarea {
-      padding:7px 9px; border-radius:6px; border:1px solid #d1d5db; font-size:13px; outline:none; background:#fff; color: var(--text-main);
-    }
-    input:focus, select:focus, textarea:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 1px rgba(0,87,184,.2); }
-    textarea { min-height: 70px; resize: vertical; }
-
-    .small-hint { font-size:11px; color: var(--text-sub); margin-top: 2px; }
-    .result-preview { border-radius:10px; border:1px solid #d6e1f5; background: var(--brand-blue-light); padding: 10px 12px; font-size:13px; }
-    /* AI 輸出卡片 */
-.ai-output{
-  margin-top:10px;
-  border:1px solid #d6e1f5;
-  background:#fff;
-  border-radius:10px;
-  padding:10px 12px;
-  font-size:13px;
-  white-space:pre-wrap;
-  color:#111827;
-}
-    .result-tag { font-size:11px; color: var(--brand-blue); margin-bottom:4px; }
-    .result-title { font-size:14px; font-weight:600; margin-bottom:6px; }
-    .result-line { margin-bottom:4px; font-size:13px; color:#111827; }
-    .result-highlight { color:#c05621; font-weight:500; }
-
-    .disclaimer { margin-top:10px; font-size:11px; color: var(--text-sub); border-top:1px dashed #e5e7eb; padding-top:8px; }
-
-    /* -------- Footer -------- */
-    .footer { border-top:1px solid #e5e7eb; background:#fff; margin-top:24px; }
-    .footer-inner { max-width: var(--max-width); margin:0 auto; padding:10px 20px 14px; font-size:11px; color: var(--text-sub); display:flex; justify-content:space-between; gap:12px; }
-    .footer a { color: var(--brand-blue); text-decoration: underline; text-decoration-style: dotted; }
-
-    /* -------- RWD -------- */
-    @media (max-width: 900px) {
-      .header-center { display: none; }  /* 手機藏中間主選單，但保留右上語言膠囊 */
-      .hero {
-        grid-template-columns: 1fr;
-        padding: 18px 16px 18px;
-        margin-top: 0;
-      }
-      .assessment-layout { grid-template-columns: 1fr; }
-      .feature-grid, .steps-grid { grid-template-columns: 1fr; }
-    }
-
-    @keyframes clock-hour {
-      from { transform: translate(-50%, -100%) rotate(0deg); }
-      to   { transform: translate(-50%, -100%) rotate(360deg); }
-    }
-    @keyframes clock-minute {
-      from { transform: translate(-50%, -100%) rotate(0deg); }
-      to   { transform: translate(-50%, -100%) rotate(360deg); }
-    }
-    @keyframes flash {
-      0% { box-shadow: 0 0 0 rgba(0,87,184,0); transform: scale(1); }
-      25% { box-shadow: 0 0 18px rgba(0,87,184,.4); transform: scale(1.01); }
-      100% { box-shadow: var(--shadow-soft); transform: scale(1); }
-    }
+    /* 動畫 */
+    @keyframes clock-hour{from{transform:translate(-50%,-100%) rotate(0)}to{transform:translate(-50%,-100%) rotate(360deg)}}
+    @keyframes clock-minute{from{transform:translate(-50%,-100%) rotate(0)}to{transform:translate(-50%,-100%) rotate(360deg)}}
+    @keyframes flash{0%{box-shadow:0 0 0 rgba(0,87,184,0);transform:scale(1)}25%{box-shadow:0 0 18px rgba(0,87,184,.4);transform:scale(1.01)}100%{box-shadow:var(--shadow-soft);transform:scale(1)}}
   </style>
 </head>
+
 <body>
   <div class="page">
     <!-- HEADER -->
@@ -263,7 +204,9 @@
           <span class="header-search">🔍</span>
 
           <div class="lang-switch" id="langSwitch">
-            <span class="lang-pill" id="langToggle">🌐 <span id="langCurrent">繁中</span></span>
+            <button class="lang-toggle" id="langToggle" type="button">
+              🌐 <span id="currentLangLabel">繁中</span>
+            </button>
             <div class="lang-menu" id="langMenu" role="menu" aria-hidden="true">
               <button class="lang-item" data-lang="en">English</button>
               <button class="lang-item active" data-lang="zh-Hant">繁中</button>
@@ -275,8 +218,8 @@
       </header>
     </div>
 
-    <!-- 次導航 / 麵包屑（已關閉 .subnav） -->
-    <div class="subnav">
+    <!-- 次導航（關掉以免頂部白塊） -->
+    <div class="subnav" aria-hidden="true">
       <div class="subnav-inner">
         <div class="breadcrumb">首頁 <span>/</span> <span class="current-page">Taimic</span></div>
       </div>
@@ -333,13 +276,25 @@
         <section id="overview">
           <div class="section-header">
             <h2 class="section-title">Taimic 想解決的是什麼？</h2>
-            <p class="section-sub">很多人同時有保險、基金、股票，但很少有人把「保障」和「資產配置」一起看。Taimic 想先幫你有一張大方向的地圖，再來談細節。</p>
+            <p class="section-sub">
+              很多人同時有保險、基金、股票，但很少有人把「保障」和「資產配置」一起看。
+              Taimic 想先幫你有一張大方向的地圖，再來談細節。
+            </p>
           </div>
 
           <div class="feature-grid">
-            <div class="feature-card"><h3>把保險看成風險防護網</h3><p>先看醫療、重大疾病、壽險有沒有大洞，避免一場意外或重病就把多年存款一次打掉。</p></div>
-            <div class="feature-card"><h3>把資產配置看成長期地圖</h3><p>依照你的年齡與風險屬性，先分出「安全層」與「成長層」，而不是只靠單一商品。</p></div>
-            <div class="feature-card"><h3>把 AI 當成對話起點</h3><p>目前用的是簡化規則，不是完整 AI 模型，但可以幫你更快對焦重點。</p></div>
+            <div class="feature-card">
+              <h3>把保險看成風險防護網</h3>
+              <p>先看醫療、重大疾病、壽險有沒有大洞，避免一場意外或重病就把多年存款一次打掉。</p>
+            </div>
+            <div class="feature-card">
+              <h3>把資產配置看成長期地圖</h3>
+              <p>依照你的年齡與風險屬性，先分出「安全層」與「成長層」，而不是只靠單一商品。</p>
+            </div>
+            <div class="feature-card">
+              <h3>把 AI 當成對話起點</h3>
+              <p>目前用的是簡化規則，不是完整 AI 模型，但可以幫你更快對焦重點。</p>
+            </div>
           </div>
         </section>
 
@@ -351,9 +306,21 @@
           </div>
 
           <div class="steps-grid">
-            <div class="step-card"><div class="step-tag">Step 1</div><h3>填寫基本資訊</h3><p>輸入年齡、家庭狀況、收入、可投資資產、風險屬性與目前保單概況。</p></div>
-            <div class="step-card"><div class="step-tag">Step 2</div><h3>系統產生初步分析</h3><p>根據你填的條件，給出保障強度與資產配置方向，讓你知道自己大概在哪個位置。</p></div>
-            <div class="step-card"><div class="step-tag">Step 3</div><h3>帶著結果討論</h3><p>把這份結果當成溝通起點，之後可以由專業人員進一步調整細節與商品選擇。</p></div>
+            <div class="step-card">
+              <div class="step-tag">Step 1</div>
+              <h3>填寫基本資訊</h3>
+              <p>輸入年齡、家庭狀況、收入、可投資資產、風險屬性與目前保單概況。</p>
+            </div>
+            <div class="step-card">
+              <div class="step-tag">Step 2</div>
+              <h3>系統產生初步分析</h3>
+              <p>根據你填的條件，給出保障強度與資產配置方向，讓你知道自己大概在哪個位置。</p>
+            </div>
+            <div class="step-card">
+              <div class="step-tag">Step 3</div>
+              <h3>帶著結果討論</h3>
+              <p>把這份結果當成溝通起點，之後可以由專業人員進一步調整細節與商品選擇。</p>
+            </div>
           </div>
         </section>
 
@@ -433,12 +400,8 @@
                 <textarea id="focus" placeholder="例如：怕生病花很多錢、擔心小孩教育費、想 10 年內可以半退休⋯⋯"></textarea>
               </div>
 
-             <button type="submit" class="btn-primary">產生 Demo 建議 ⚡</button>
-
-<button type="button" id="aiGenBtn" class="btn-secondary">用 AI 產生建議</button>
-<div id="aiOutput" class="ai-output" style="display:none;"></div>
-
-<div class="small-hint">送出後右側會更新建議內容，不會寄信、不會儲存到任何伺服器。</div>
+              <button type="submit" class="btn-primary">產生 Demo 建議 ⚡</button>
+              <div class="small-hint">送出後右側會更新建議內容，不會寄信、 不會儲存到任何伺服器。</div>
             </form>
 
             <!-- 結果預覽 -->
@@ -457,17 +420,20 @@
           </div>
         </section>
 
-        <!-- 關於 -->
+        <!-- 關於 Taimic -->
         <section id="about">
           <div class="section-header">
             <h2 class="section-title">關於 Taimic</h2>
-            <p class="section-sub">Taimic 目前是個概念驗證中的小產品，用來探索「AI 能不能同時幫忙看保險與資產配置」，讓一般人更容易看懂自己的財務安全狀況。</p>
+            <p class="section-sub">
+              Taimic 目前是個概念驗證中的小產品，用來探索「AI 能不能同時幫忙看保險與資產配置」，
+              讓一般人更容易看懂自己的財務安全狀況。
+            </p>
           </div>
-          <p style="font-size:13px; color:#4b5563;">
-            未來正式版，會逐步加入：<br />
-            ・上傳保單與資產明細，讓系統做更精準分析<br />
-            ・與合格專業人員合作，提供後續一對一諮詢<br />
-            ・更多針對不同人生階段的情境規劃工具
+          <p style="font-size:13px;color:#4b5563">
+            未來正式版，會逐步加入：
+            <br>・上傳保單與資產明細，讓系統做更精準分析
+            <br>・與合格專業人員合作，提供後續一對一諮詢
+            <br>・更多針對不同人生階段的情境規劃工具
           </p>
         </section>
 
@@ -477,10 +443,13 @@
             <h2 class="section-title">想知道 Taimic 之後的正式版本？</h2>
             <p class="section-sub">如果你願意收到未來 alpha / beta 版本的消息，或有合作想法，可以到 Google 表單簡單留個聯絡方式。</p>
           </div>
-          <div class="contact-wrapper">
+
+          <div class="contact-wrapper" style="max-width:720px">
             <p class="small-hint">按下面按鈕會在<span>新分頁</span>開啟 Google 表單，填寫完成送出即可。</p>
-            <p style="margin: 8px 0 12px;">
-              <a class="btn-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfQdm8R3sdNpr3up9kGSQdbPXGbab5clpF_gDeaSmdzaxnUZg/viewform" target="_blank" rel="noopener noreferrer">開啟聯絡表單（Google 表單） 📩</a>
+            <p style="margin:8px 0 12px">
+              <a class="btn-link" href="https://docs.google.com/forms/d/e/1FAIpQLSfQdm8R3sdNpr3up9kGSQdbPXGbab5clpF_gDeaSmdzaxnUZg/viewform" target="_blank" rel="noopener noreferrer">
+                開啟聯絡表單（Google 表單） 📩
+              </a>
             </p>
             <div class="small-hint">表單回覆會直接進到你的 Google Form 後台，這個網站本身不會儲存任何資料。</div>
           </div>
@@ -492,94 +461,140 @@
     <footer class="footer">
       <div class="footer-inner">
         <div>© <span id="year"></span> Taimic. All rights reserved.</div>
-        <div>若有合作或想法，歡迎來信：<a href="mailto:founder@example.com">founder@example.com</a></div>
+        <div>若有合作或想法，歡迎來信： <a href="mailto:founder@example.com">founder@example.com</a></div>
       </div>
     </footer>
   </div>
 
   <script>
-    // 年份
-    document.getElementById("year").textContent = new Date().getFullYear();
-    const aiBtn = document.getElementById("aiGenBtn");
-if (aiBtn) aiBtn.addEventListener("click", aiSuggest);
+    /* 首載：如果偵測到頂部空白 > 80px 才自動對齊 HERO，避免怪閃 */
+    document.addEventListener("DOMContentLoaded", function(){
+      const hero = document.getElementById("top");
+      if(!hero) return;
+      const gap = hero.getBoundingClientRect().top;
+      if(gap > 80){
+        hero.scrollIntoView({behavior:"auto", block:"start"});
+      }
+    });
 
-    // 捲動到區塊
-    function scrollToId(id) {
+    /* 年份 */
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    /* 捲動到區塊 */
+    function scrollToId(id){
       const el = document.getElementById(id);
-      if (!el) return;
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      if(!el) return;
+      el.scrollIntoView({behavior:"smooth", block:"start"});
     }
 
-<script>
-const AI_ENDPOINT = "https://<你的-workers-子網域>.workers.dev/chat";  // ← 換成你的網址
+    /* Demo 表單送出：依照填寫內容產生不同建議 */
+    function handleDemoSubmit(e){
+      e.preventDefault();
 
-// 這裡是自動對齊 HERO 的那段…
-document.addEventListener("DOMContentLoaded", function () {
-  const aiBtn = document.getElementById("aiGenBtn");
-if (aiBtn) aiBtn.addEventListener("click", aiSuggest);
-  const switchEl = document.getElementById("langSwitch");
-  if (!switchEl) return;
+      const age = Number(document.getElementById("age").value);
+      const family = document.getElementById("family").value;
+      const income = document.getElementById("income").value;
+      const assets = document.getElementById("assets").value;
+      const risk = document.getElementById("risk").value;
+      const insurance = document.getElementById("insurance").value;
+      const focus = document.getElementById("focus").value.trim();
 
-  const toggleEl = document.getElementById("langToggle");
-  const menuEl   = document.getElementById("langMenu");
-  const items    = menuEl.querySelectorAll(".lang-item");
-  const current  = document.getElementById("langCurrent");
+      // 1) 保險保障評語
+      let protectLevel = "";
+      if(insurance === "幾乎沒有"){
+        protectLevel = "保障缺口明顯，建議盡快補齊「醫療＋重大疾病＋壽險」三大基本防線。";
+      }else if(insurance === "有一些，但看不太懂"){
+        protectLevel = "目前有一定保障，但內容可能不夠清楚，建議先做一次保單總體檢，確認沒有重複或缺角。";
+      }else{
+        protectLevel = "整體保障看起來還可以，再把醫療與收入中斷風險稍微補強會更安心。";
+      }
 
-  toggleEl.addEventListener("click", (e) => {
-    e.stopPropagation();
-    switchEl.classList.toggle("open");
-  });
-  ...
-});
-</script>
+      // 2) 投資風格與比例
+      let profile = "", mix = "";
+      if(risk.includes("非常保守")){
+        profile = "偏保守型";
+        mix = "現金 / 活存預備金約 30%，穩健債券或保守型基金約 50%，成長型資產約 20%。";
+      }else if(risk.includes("穩健")){
+        profile = "穩健成長型";
+        mix = "現金 20%，穩健債券或平衡型基金 40%，成長型基金或股票 40%。";
+      }else{
+        profile = "積極成長型";
+        mix = "現金 10–15%，穩健債券 25–30%，成長型股票 / 基金 55–65%。";
+      }
 
-      document.addEventListener("click", (e) => {
-        if (!switchEl.contains(e.target)) switchEl.classList.remove("open");
+      // 3) 依資產規模的下一步
+      let stepNext = "";
+      if(assets === "50 萬以下"){
+        stepNext = "先把緊急預備金存到 6 個月生活費，再開始做長期投資會比較舒服。";
+      }else if(assets === "50–200 萬"){
+        stepNext = "可以分批投入基金或 ETF，利用定期定額分散進場時間。";
+      }else if(assets === "200–500 萬"){
+        stepNext = "可以規劃一部分做長期成長，一部分做較穩的現金流（例如債券或配息型標的）。";
+      }else{
+        stepNext = "資產規模已經不小，建議搭配稅務與財產傳承的思考，一起做中長期規劃。";
+      }
+      if(family.includes("有小孩")){
+        stepNext += " 另外，因為你有小孩，可以特別留意壽險保額與教育金準備。";
+      }
+
+      // 4) 客製化關注
+      let focusLine = "";
+      if(focus){
+        focusLine = `你特別在意的重點是：「${focus}」，之後在調整保險與投資配置時，可以以這個目標當優先。`;
+      }
+
+      // 寫回畫面
+      const preview = document.getElementById("resultPreview");
+      const titleEl = preview.querySelector(".result-title");
+      const lines = preview.querySelectorAll(".result-line");
+
+      titleEl.textContent = "依照你目前填寫的初步分析摘要";
+      lines[0].innerHTML = "✅ 保險部分：<span class='result-highlight'>"+protectLevel+"</span>";
+      lines[1].innerHTML = "💡 資產配置部分：依你的風險屬性，目前較接近 <span class='result-highlight'>"+profile+"</span>，可參考的比例為：<span class='result-highlight'>"+mix+"</span>";
+      lines[2].innerHTML = "🔔 下一步建議：" + stepNext + (focusLine ? "<br>"+focusLine : "");
+
+      preview.style.animation = "none"; void preview.offsetWidth; preview.style.animation = "flash .6s ease-out";
+    }
+
+    /* 語言選單：開關 / 點選 / 點外面關閉 / ESC 關閉 */
+    (function(){
+      const switchEl = document.getElementById("langSwitch");
+      if(!switchEl) return;
+      const toggleEl = document.getElementById("langToggle");
+      const menuEl = document.getElementById("langMenu");
+      const items = menuEl.querySelectorAll(".lang-item");
+      const currentLabel = document.getElementById("currentLangLabel");
+
+      toggleEl.addEventListener("click", (e)=>{
+        e.stopPropagation();
+        const open = switchEl.classList.toggle("open");
+        menuEl.setAttribute("aria-hidden", open ? "false" : "true");
       });
-    });
-  async function aiSuggest(){
-  const btn=document.getElementById("aiGenBtn");
-  const out=document.getElementById("aiOutput");
-  if(!btn||!out) return;
 
-  const payload={
-    age:Number(document.getElementById("age")?.value||0),
-    family:document.getElementById("family")?.value||"",
-    income:document.getElementById("income")?.value||"",
-    assets:document.getElementById("assets")?.value||"",
-    risk:document.getElementById("risk")?.value||"",
-    insurance:document.getElementById("insurance")?.value||"",
-    focus:(document.getElementById("focus")?.value||"").trim(),
-    lang:(document.getElementById("currentLangLabel")?.textContent||"繁中")
-  };
+      items.forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          items.forEach(b=>b.classList.remove("active"));
+          btn.classList.add("active");
+          currentLabel.textContent = btn.textContent;
+          switchEl.classList.remove("open");
+          menuEl.setAttribute("aria-hidden","true");
+          // TODO：之後真的要切語系，在這裡接你的 i18n 邏輯（btn.dataset.lang）
+        });
+      });
 
-  if(!payload.family||!payload.income||!payload.assets||!payload.risk||!payload.insurance){
-    out.style.display="block";
-    out.textContent="請先把基本欄位選一選（家庭、收入、資產、風險、保單）。";
-    return;
-  }
-
-  btn.disabled=true; const old=btn.textContent; btn.textContent="AI 生成中…";
-  out.style.display="block"; out.textContent="正在分析…";
-
-  try{
-    const res=await fetch(AI_ENDPOINT,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify(payload)
-    });
-    if(!res.ok) throw new Error(await res.text()||`HTTP ${res.status}`);
-
-    const ct=res.headers.get("content-type")||"";
-    const text=ct.includes("application/json")?(await res.json()).text:await res.text();
-    out.innerHTML=String(text).replace(/\n/g,"<br>");
-  }catch(err){
-    out.textContent="AI 失敗："+(err?.message||err);
-  }finally{
-    btn.disabled=false; btn.textContent=old;
-  }
-}
-</script>
+      document.addEventListener("click",(e)=>{
+        if(!switchEl.contains(e.target)){
+          switchEl.classList.remove("open");
+          menuEl.setAttribute("aria-hidden","true");
+        }
+      });
+      document.addEventListener("keydown",(e)=>{
+        if(e.key === "Escape"){
+          switchEl.classList.remove("open");
+          menuEl.setAttribute("aria-hidden","true");
+        }
+      });
+    })();
   </script>
 </body>
 </html>
