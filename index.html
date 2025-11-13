@@ -732,6 +732,19 @@
         transform: scale(1);
       }
     }
+    /* === Kill all top gaps so the page opens at HERO immediately === */
+html, body { margin: 0 !important; padding: 0 !important; }
+
+/* 某些瀏覽器會有 margin-collapse，把上緣完全歸零 */
+main { margin-top: 0 !important; padding-top: 0 !important; }
+.page-inner { padding-top: 0 !important; margin-top: 0 !important; }
+.hero { margin-top: 0 !important; }
+
+/* 如果你現在不想顯示麵包屑，先關掉避免佔到高度 */
+.subnav { display: none !important; }
+
+/* header 跟內容之間也不要任何額外間距 */
+.site-header-wrap { margin-bottom: 0 !important; }
     /* === 頂部間距歸零：一打開就貼到主畫面 === */
 .page-inner { padding-top: 0 !important; }
 .hero { margin-top: 0 !important; }
