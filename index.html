@@ -442,7 +442,8 @@
               </div>
 
               <button type="submit" class="btn-primary">產生 Demo 建議 ⚡</button>
-              <button type="button" id="aiGenBtn" class="btn-secondary" onclick="aiSuggest()">用 AI 產生建議</button>
+              <button type="button" id="aiGenBtn" class="btn-secondary">用 AI 產生建議</button>
+<div id="aiOutput" class="result-preview" style="display:none; margin-top:8px;"></div>
               <div class="small-hint">送出後右側會更新建議內容；不會寄信、不會儲存到任何伺服器。</div>
             </form>
 
@@ -515,6 +516,54 @@
 
     /* === 2) 年份 === */
     document.getElementById("year").textContent = new Date().getFullYear();
+    // === Cloudflare Worker Endpoint（把下面換成你的 Worker 子網域）===
+const AI_ENDPOINT = "https://taimic-insurance.amy20060226.workers.dev/chat";
+
+// === 產生 AI 建議 ===
+async function aiSuggest() {
+  const btn = document.getElementById("aiGenBtn");
+  const out = document.getElementById("aiOutput");
+  if (!btn || !out) return;
+
+  // 讀表單值
+  const age       = Number(document.getElementById("age").value || 0);
+  const family    = document.getElementById("family").value || "";
+  const income    = document.getElementById("income").value || "";
+  const assets    = document.getElementById("assets").value || "";
+  const risk      = document.getElementById("risk").value || "";
+  const insurance = document.getElementById("insurance").value || "";
+  const focus     = (document.getElementById("focus").value || "").trim();
+
+  // UI 狀態
+  const old = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = "AI 產生中…";
+  out.style.display = "block";
+  out.innerHTML = "⌛ 正在向 AI 產生建議…";
+
+  try {
+    const res = await fetch(AI_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ age, family, income, assets, risk, insurance, focus }),
+    });
+
+    if (!res.ok) {
+      const t = await res.text();
+      throw new Error(`API ${res.status}: ${t}`);
+    }
+
+    const data = await res.json();
+    out.innerHTML = data.text
+      ? data.text.replaceAll("\n", "<br>")
+      : "（AI 沒回東西）";
+  } catch (err) {
+    out.innerHTML = `<span style="color:#b91c1c">發生錯誤：</span>${String(err).replaceAll("<","&lt;")}`;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = old;
+  }
+}
 
     /* === 3) 捲動到區塊 === */
     function scrollToId(id) {
@@ -544,7 +593,9 @@
       } else {
         protectLevel = "整體保障看起來還可以，再把醫療與收入中斷風險稍微補強會更安心。";
       }
-
+// 點擊「用 AI 產生建議」
+const aiBtn = document.getElementById("aiGenBtn");
+if (aiBtn) aiBtn.addEventListener("click", aiSuggest);
       // 2. 投資風格 & 比例
       let profile = "";
       let mix = "";
