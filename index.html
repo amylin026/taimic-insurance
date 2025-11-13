@@ -493,32 +493,27 @@
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    // 語言選單：展開/選取/點外收起
-    document.addEventListener("DOMContentLoaded", function () {
-      const switchEl = document.getElementById("langSwitch");
-      if (!switchEl) return;
+   <script>
+// === AI API 入口 ===
+const AI_ENDPOINT = "https://taimic-ai.<你的 workers 子網域>.workers.dev/chat";
 
-      const toggleEl = document.getElementById("langToggle");
-      const menuEl   = document.getElementById("langMenu");
-      const items    = menuEl.querySelectorAll(".lang-item");
-      const current  = document.getElementById("langCurrent");
+// 語言選單：展開／選取／點外收起
+document.addEventListener("DOMContentLoaded", function () {
+  const switchEl = document.getElementById("langSwitch");
+  if (!switchEl) return;
 
-      toggleEl.addEventListener("click", (e) => {
-        e.stopPropagation();
-        switchEl.classList.toggle("open");
-      });
+  const toggleEl = document.getElementById("langToggle");
+  const menuEl   = document.getElementById("langMenu");
+  const items    = menuEl.querySelectorAll(".lang-item");
+  const current  = document.getElementById("langCurrent");
 
-      items.forEach(btn => {
-        btn.addEventListener("click", (e) => {
-          items.forEach(b => b.classList.remove("active"));
-          btn.classList.add("active");
-          current.textContent = btn.textContent.trim();
-          switchEl.classList.remove("open");
-
-          // 之後要真的切語系，在這裡接
-          // const langCode = btn.dataset.lang;
-        });
-      });
+  toggleEl.addEventListener("click", (e) => {
+    e.stopPropagation();
+    switchEl.classList.toggle("open");
+  });
+  ...
+});
+</script>
 
       document.addEventListener("click", (e) => {
         if (!switchEl.contains(e.target)) switchEl.classList.remove("open");
