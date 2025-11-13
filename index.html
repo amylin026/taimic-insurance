@@ -185,6 +185,17 @@
 
     .small-hint { font-size:11px; color: var(--text-sub); margin-top: 2px; }
     .result-preview { border-radius:10px; border:1px solid #d6e1f5; background: var(--brand-blue-light); padding: 10px 12px; font-size:13px; }
+    /* AI 輸出卡片 */
+.ai-output{
+  margin-top:10px;
+  border:1px solid #d6e1f5;
+  background:#fff;
+  border-radius:10px;
+  padding:10px 12px;
+  font-size:13px;
+  white-space:pre-wrap;
+  color:#111827;
+}
     .result-tag { font-size:11px; color: var(--brand-blue); margin-bottom:4px; }
     .result-title { font-size:14px; font-weight:600; margin-bottom:6px; }
     .result-line { margin-bottom:4px; font-size:13px; color:#111827; }
@@ -423,6 +434,13 @@
               </div>
 
               <button type="submit" class="btn-primary">產生 Demo 建議 ⚡</button>
+              <button type="button" id="aiGenBtn" class="btn-secondary">用 AI 產生建議</button>
+<div id="aiOutput" class="ai-output" style="display:none;"></div>
+              <button type="button" id="aiGenBtn" class="btn-secondary">用 AI 產生建議</button>
+<div id="aiOutput" class="ai-output" style="display:none;"></div>
+              <button type="button" id="aiGenBtn" class="btn-secondary">用 AI 產生建議</button>
+<div id="aiOutput" class="ai-output" style="display:none;"></div>
+<div class="small-hint">
               <div class="small-hint">送出後右側會更新建議內容，不會寄信、不會儲存到任何伺服器。</div>
             </form>
 
@@ -485,6 +503,8 @@
   <script>
     // 年份
     document.getElementById("year").textContent = new Date().getFullYear();
+    const aiBtn = document.getElementById("aiGenBtn");
+if (aiBtn) aiBtn.addEventListener("click", aiSuggest);
 
     // 捲動到區塊
     function scrollToId(id) {
@@ -493,12 +513,13 @@
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
- <script>
-// === AI API 入口 ===
-const AI_ENDPOINT = "https://taimic-ai.<你的 workers 子網域>.workers.dev/chat";
+<script>
+const AI_ENDPOINT = "https://<你的-workers-子網域>.workers.dev/chat";  // ← 換成你的網址
 
-// 語言選單：展開／選取／點外收起
+// 這裡是自動對齊 HERO 的那段…
 document.addEventListener("DOMContentLoaded", function () {
+  const aiBtn = document.getElementById("aiGenBtn");
+if (aiBtn) aiBtn.addEventListener("click", aiSuggest);
   const switchEl = document.getElementById("langSwitch");
   if (!switchEl) return;
 
@@ -519,6 +540,49 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!switchEl.contains(e.target)) switchEl.classList.remove("open");
       });
     });
+  async function aiSuggest(){
+  const btn=document.getElementById("aiGenBtn");
+  const out=document.getElementById("aiOutput");
+  if(!btn||!out) return;
+
+  const payload={
+    age:Number(document.getElementById("age")?.value||0),
+    family:document.getElementById("family")?.value||"",
+    income:document.getElementById("income")?.value||"",
+    assets:document.getElementById("assets")?.value||"",
+    risk:document.getElementById("risk")?.value||"",
+    insurance:document.getElementById("insurance")?.value||"",
+    focus:(document.getElementById("focus")?.value||"").trim(),
+    lang:(document.getElementById("currentLangLabel")?.textContent||"繁中")
+  };
+
+  if(!payload.family||!payload.income||!payload.assets||!payload.risk||!payload.insurance){
+    out.style.display="block";
+    out.textContent="請先把基本欄位選一選（家庭、收入、資產、風險、保單）。";
+    return;
+  }
+
+  btn.disabled=true; const old=btn.textContent; btn.textContent="AI 生成中…";
+  out.style.display="block"; out.textContent="正在分析…";
+
+  try{
+    const res=await fetch(AI_ENDPOINT,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(payload)
+    });
+    if(!res.ok) throw new Error(await res.text()||`HTTP ${res.status}`);
+
+    const ct=res.headers.get("content-type")||"";
+    const text=ct.includes("application/json")?(await res.json()).text:await res.text();
+    out.innerHTML=String(text).replace(/\n/g,"<br>");
+  }catch(err){
+    out.textContent="AI 失敗："+(err?.message||err);
+  }finally{
+    btn.disabled=false; btn.textContent=old;
+  }
+}
+</script>
   </script>
 </body>
 </html>
