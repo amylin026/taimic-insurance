@@ -584,6 +584,56 @@ async function aiSuggest() {
       const insurance = document.getElementById("insurance").value;
       const focus = document.getElementById("focus").value.trim();
 
+      // === AI 端點 ===
+const AI_ENDPOINT = "https://cool-cell-b227.amy20060226.workers.dev/chat";
+
+// === 用 AI 產生建議 ===
+async function aiSuggest() {
+  const btn = document.getElementById("aiGenBtn");
+  const out = document.getElementById("aiOutput");
+  if (!btn || !out) return;
+
+  btn.disabled = true;
+  out.textContent = "AI 正在思考…";
+
+  const payload = {
+    age: Number(document.getElementById("age").value || 0),
+    family: document.getElementById("family").value,
+    income: document.getElementById("income").value,
+    assets: document.getElementById("assets").value,
+    risk: document.getElementById("risk").value,
+    insurance: document.getElementById("insurance").value,
+    focus: document.getElementById("focus").value.trim()
+  };
+
+  try {
+    const r = await fetch(AI_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const data = await r.json();
+
+    // Workers AI 範本回傳通常是陣列，挑聊天那筆
+    const chat = Array.isArray(data) ? data.find(x => x?.inputs?.messages) : data;
+    out.textContent =
+      chat?.response?.output_text ||
+      chat?.response?.result ||
+      JSON.stringify(data, null, 2);
+  } catch (err) {
+    out.textContent = `API 失敗：${err.message}`;
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// 綁定按鈕（就貼在 aiSuggest 後面）
+document.getElementById("aiGenBtn")?.addEventListener("click", (e) => {
+  e.preventDefault();
+  aiSuggest();
+});
+
       // 1. 保險保障評語
       let protectLevel = "";
       if (insurance === "幾乎沒有") {
