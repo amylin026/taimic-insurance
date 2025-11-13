@@ -738,6 +738,16 @@
         transform: scale(1);
       }
     }
+    /* === 頂部間距歸零：一打開就貼到主畫面 === */
+.page-inner { padding-top: 0 !important; }
+.hero { margin-top: 0 !important; }
+
+/* 不想要麵包屑就取消下一行註解： */
+/* .subnav { display: none !important; } */
+
+/* iOS/Safari 視窗高度修正，避免出現頂部空白 */
+html { height: -webkit-fill-available; }
+body { min-height: -webkit-fill-available; }
   </style>
 </head>
 <body>
@@ -1082,14 +1092,19 @@
     </footer>
   </div>
 
-  <script>
-  // 一載入就捲到主畫面 HERO 區塊
-  window.addEventListener("load", function () {
+ <script>
+  // 只有偵測到頂部空白 > 80px 才幫你自動對齊到 HERO，避免怪異閃動
+  document.addEventListener("DOMContentLoaded", function () {
     const hero = document.getElementById("top");
-    if (hero) {
+    if (!hero) return;
+    const gap = hero.getBoundingClientRect().top;
+    if (gap > 80) {
       hero.scrollIntoView({ behavior: "auto", block: "start" });
     }
   });
+
+  // （你原本後面的年份 / 捲動 / 表單程式碼照舊放在這下面）
+</script>
     // 年份
     document.getElementById("year").textContent = new Date().getFullYear();
 
