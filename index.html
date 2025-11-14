@@ -509,15 +509,33 @@
           body: JSON.stringify(payload)
         });
 
-        // Worker 多半回 text/plain；保險些就用 text() 接
-        const text = await res.text();
+       // 以 JSON 取回，只拿 data.text；若不是 JSON 也能容錯
+let normalized = "";
+try {
+  // 先用 JSON 解析
+  const data = await res.json();
+  normalized = (data?.text ?? "").toString();
+} catch {
+  // 不是 JSON 就先拿純文字，再嘗試解析一次；最後退回純文字
+  const raw = await res.text();
+  try {
+    const maybe = JSON.parse(raw);
+    normalized = (maybe?.text ?? raw).toString();
+  } catch {
+    normalized = raw;
+  }
+}
 
-        if (!res.ok) {
-          aiTitle.textContent = "AI 建議產生失敗";
-          aiText.textContent = `狀態 ${res.status}：${text || "未知錯誤"}`;
-        } else {
-          aiTitle.textContent = "依你的條件，AI 的建議摘要";
-          aiText.textContent = text.trim();
+// 把看得到的 \n 還原成真正的換行
+normalized = normalized.replace(/\\n/g, "\n");
+
+if (!res.ok) {
+  aiTitle.textContent = "AI 建議產生失敗";
+  aiText.textContent = `狀態 ${res.status}：${normalized || "未知錯誤"}`;
+} else {
+  aiTitle.textContent = "依你的條件，AI 的建議摘要";
+  aiText.textContent = normalized.trim();
+}
         }
       } catch (err) {
         aiTitle.textContent = "AI 建議產生失敗";
