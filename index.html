@@ -85,6 +85,54 @@
 
     .hint{font-size:12px;color:var(--sub);margin-top:10px}
 
+    /* 指數卡片 */
+    .score-card{
+      border-radius:14px;
+      border:1px solid var(--line);
+      padding:12px 14px;
+      margin-bottom:14px;
+      background:linear-gradient(135deg,#f3f6ff,#ffffff);
+    }
+    .score-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:13px;
+      color:var(--sub);
+      margin-bottom:6px;
+    }
+    .score-main{
+      display:flex;
+      align-items:baseline;
+      gap:8px;
+      margin-bottom:6px;
+    }
+    .score-value{
+      font-size:26px;
+      font-weight:700;
+    }
+    .score-max{
+      font-size:13px;
+      color:var(--sub);
+    }
+    .score-tag{
+      display:inline-flex;
+      align-items:center;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid var(--line);
+      background:#fff;
+      margin-bottom:4px;
+    }
+    .score-tag.ok{border-color:var(--ok);color:var(--ok);background:#e6fbf4;}
+    .score-tag.warn{border-color:var(--warn);color:var(--warn);background:#fff4e6;}
+    .score-tag.danger{border-color:var(--danger);color:var(--danger);background:#ffe3e3;}
+    .score-note{
+      font-size:12px;
+      color:var(--sub);
+    }
+
     /* 結果 */
     .result-title{font-weight:700;margin-bottom:6px}
     #resultPreview{white-space:pre-line}
@@ -184,6 +232,20 @@
 
       <!-- 右：輸出 -->
       <div class="card">
+        <!-- NEW: 財務安全指數 -->
+        <div class="score-card" id="scoreCard">
+          <div class="score-header">
+            <span>你的財務安全指數</span>
+            <span style="font-size:12px;color:var(--sub);">越高代表防禦越完整</span>
+          </div>
+          <div class="score-main">
+            <div class="score-value" id="scoreValue">--</div>
+            <div class="score-max">/ 100</div>
+          </div>
+          <div class="score-tag" id="scoreTag">請先在左側填寫基本資料</div>
+          <div class="score-note" id="scoreNote">這只是概略指數，不等同完整財務規劃喔。</div>
+        </div>
+
         <div class="result-title" data-i18n="preview">建議預覽</div>
         <div id="resultPreview" style="margin-bottom:14px;color:#222;"></div>
 
@@ -202,6 +264,10 @@
     const form = document.getElementById('mainForm');
     const resultPreview = document.getElementById('resultPreview');
 
+    const scoreValueEl = document.getElementById('scoreValue');
+    const scoreTagEl   = document.getElementById('scoreTag');
+    const scoreNoteEl  = document.getElementById('scoreNote');
+
     form.addEventListener('submit', handleDemoSubmit);
 
     function handleDemoSubmit(e){
@@ -214,6 +280,7 @@
       const insurance = document.getElementById('insurance').value;
       const focus = document.getElementById('focus').value.trim();
 
+      /* --- 保險文字建議 --- */
       let protectLevel = "";
       if (insurance === "幾乎沒有"){
         protectLevel = "保障缺口明顯，建議盡快補齊「醫療＋重大疾病＋壽險」三大基本防線。";
@@ -223,6 +290,7 @@
         protectLevel = "保障看起來完整，建議檢視保額是否與收入、家庭責任相符，每 1–2 年更新一次。";
       }
 
+      /* --- 資產配置文字建議 --- */
       let assetPlan = "";
       if (risk.includes("積極")){
         assetPlan = "資產配置偏向成長型：股票／高股息／新興市場等佔比可拉高，但需接受波動與調整週期。";
@@ -239,6 +307,67 @@
       ].filter(Boolean).join("\n\n");
 
       resultPreview.textContent = msg;
+
+      /* --- 簡易財務安全指數計算 --- */
+      let score = 50; // 基礎分
+
+      // 保單
+      if (insurance === "幾乎沒有") score -= 15;
+      else if (insurance === "有一些，但看不太懂") score -= 5;
+      else if (insurance === "很完整") score += 10;
+
+      // 資產規模
+      if (assets === "500 萬以上") score += 15;
+      else if (assets === "200–500 萬") score += 8;
+      else if (assets === "100–200 萬") score += 3;
+      else if (assets === "100 萬以下") score += 0;
+
+      // 收入區間
+      if (income === "20 萬以上") score += 10;
+      else if (income === "10–20 萬") score += 6;
+      else if (income === "5–10 萬") score += 3;
+      else if (income === "3–5 萬") score += 1;
+      else if (income === "3 萬以下") score -= 5;
+
+      // 家庭責任＋保單不足：稍微扣分
+      if (family === "已婚，有小孩" && (insurance === "幾乎沒有" || insurance === "有一些，但看不太懂")){
+        score -= 5;
+      }
+
+      // 風險屬性：太積極又資產不大，就小扣
+      if (risk.includes("積極") && (assets === "100 萬以下" || assets === "100–200 萬")){
+        score -= 3;
+      }
+
+      // 限制在 0–100
+      score = Math.max(0, Math.min(100, score));
+
+      // 根據分數給一個等級文字
+      let tagText = "";
+      let level = "";
+      if (score >= 80){
+        level = "ok";
+        tagText = "高安全區：防禦基礎不錯，可以思考如何優化報酬率與稅務規劃。";
+      }else if (score >= 60){
+        level = "warn";
+        tagText = "穩健區：大方向還可以，但某些環節（例如保險或緊急預備金）可以再補強。";
+      }else{
+        level = "danger";
+        tagText = "需補強區：建議優先處理風險轉移（保險）與現金流穩定，再談成長型投資。";
+      }
+
+      updateScoreUI(score, tagText, level);
+    }
+
+    function updateScoreUI(score, tagText, level){
+      scoreValueEl.textContent = score.toString();
+
+      // reset class
+      scoreTagEl.classList.remove("ok","warn","danger");
+      if (level) scoreTagEl.classList.add(level);
+
+      scoreTagEl.textContent = tagText;
+      scoreNoteEl.textContent = "此指數僅為 Demo 推估，實際仍需根據你完整財務與保單明細調整。";
     }
 
     /* === 3) AI 產生建議 === */
@@ -320,6 +449,7 @@
           current.textContent = btn.textContent.trim();
           switchEl.classList.remove("open");
           // 可在此呼叫 applyI18n(btn.dataset.lang)
+          applyI18n(btn.dataset.lang);
         });
       });
 
@@ -328,7 +458,7 @@
       });
     });
 
-    /* === 5)（可選）簡易 i18n 範例，若你要真的切換文案，填這段 === */
+    /* === 5) i18n === */
     const I18N = {
       "zh-Hant": {
         title:"3 分鐘試算你的「財務安全指數」",
@@ -370,7 +500,6 @@
         const key = el.getAttribute("data-i18n");
         if(dict[key]) el.textContent = dict[key];
       });
-      // 也可以在此記錄 localStorage 讓下次載入沿用
     }
   </script>
 </body>
