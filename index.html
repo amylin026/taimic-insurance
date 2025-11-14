@@ -6,6 +6,86 @@
   <title>Taimic｜AI 保險＆資產配置 Demo</title>
 
   <style>
+  :root{
+    --bg:#f5f7fb; --card:#fff; --text:#0f172a; --muted:#64748b;
+    --primary:#2563eb; --primary-600:#1d4ed8; --ring:rgba(37,99,235,.25);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+    color:var(--text); background:var(--bg);
+  }
+  .container{max-width:1100px; margin:24px auto; padding:0 16px; display:flex; gap:24px}
+  .left{flex:1 1 52%}
+  .right{flex:1 1 48%}
+  .card{
+    background:var(--card); border-radius:16px; box-shadow:0 10px 30px rgba(15,23,42,.06);
+    border:1px solid #e5e7eb; padding:18px 20px; margin-bottom:16px;
+  }
+  h2{margin:0 0 10px; font-size:20px}
+  label{display:block; font-size:13px; color:var(--muted); margin:10px 0 6px}
+  input,select,textarea{
+    width:100%; border:1px solid #e5e7eb; border-radius:10px; padding:10px 12px;
+    background:#fff; color:var(--text); outline:none; transition:box-shadow .15s,border-color .15s;
+  }
+  input:focus,select:focus,textarea:focus{border-color:var(--primary); box-shadow:0 0 0 4px var(--ring)}
+  textarea{min-height:84px; resize:vertical}
+  .row{display:flex; gap:12px}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    border-radius:999px; padding:10px 16px; cursor:pointer; user-select:none;
+    border:1px solid transparent; transition:.15s; font-weight:600;
+  }
+  .btn-primary{background:var(--primary); color:#fff}
+  .btn-primary:hover{background:var(--primary-600)}
+  .btn-secondary{background:#fff; color:var(--primary); border-color:var(--primary)}
+  .btn:disabled{opacity:.6; cursor:not-allowed}
+  .hint{font-size:12px; color:var(--muted)}
+  /* 右側輸出卡片 */
+  .result{white-space:pre-line; line-height:1.7}
+  .result h4{margin:0 0 8px}
+  /* 語言圓角切換 */
+  .header-right{display:flex; align-items:center; gap:10px}
+  .lang-switch{position:relative}
+  .lang-pill{
+    display:inline-flex; align-items:center; gap:8px; padding:8px 14px; background:#eef2ff; color:#0f172a;
+    border-radius:999px; cursor:pointer; border:1px solid #dbe3ff; font-weight:600;
+  }
+  .lang-menu{
+    position:absolute; top:44px; left:0; min-width:140px; background:#fff; border:1px solid #e5e7eb;
+    border-radius:12px; box-shadow:0 20px 40px rgba(15,23,42,.08); padding:6px; display:none; z-index:40;
+  }
+  .lang-switch.open .lang-menu{display:block}
+  .lang-item{
+    display:block; width:100%; text-align:left; background:#fff; border:0; padding:8px 10px; border-radius:8px;
+    cursor:pointer;
+  }
+  .lang-item:hover{background:#f1f5f9}
+  /* 讓 AI 文本換行正常 */
+  #aiOutput{white-space:pre-line}
+  /* 讓你說的「圓變橢圓」不再發生（如果是圓形圖示） */
+  .circle{width:24px; height:24px; border-radius:50%}
+</style>
+<script>
+  // 語言切換最小可用版：避免再度「不能點」
+  document.addEventListener('DOMContentLoaded', () => {
+    const switchEl = document.getElementById('langSwitch');
+    if(!switchEl) return;
+    const toggleEl = document.getElementById('langToggle');
+    const menuEl = document.getElementById('langMenu');
+    toggleEl?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      switchEl.classList.toggle('open');
+    });
+    menuEl?.querySelectorAll('.lang-item').forEach(btn=>{
+      btn.addEventListener('click', () => switchEl.classList.remove('open'));
+    });
+    document.addEventListener('click',()=>switchEl.classList.remove('open'));
+  });
+</script>
+
+  <style>
     :root{
       --brand:#1f6feb;
       --ink:#111;
