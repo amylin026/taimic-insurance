@@ -134,6 +134,17 @@
       100%{ box-shadow: var(--shadow-soft); transform: scale(1); }
     }
   </style>
+  <!-- 放在 </head> 正上方 -->
+<style>
+  /* ===== 語言選單樣式（Lang Switch） ===== */
+  .lang-switch { position: relative; z-index: 1000; }
+  .lang-pill   { cursor: pointer; user-select: none; }
+  .lang-menu   { position: absolute; top: 100%; right: 0; display: none; }
+  .lang-switch.open .lang-menu { display: block; }
+
+  /* 保險：避免被右側面板覆蓋 */
+  header, .header-right { position: relative; z-index: 1000; }
+</style>
 </head>
 
 <body>
@@ -157,24 +168,22 @@
           <a href="#contact" class="top-nav-link">聯絡</a>
         </nav>
 
-        <div class="header-right">
-          <span class="header-search">🔍</span>
+        <!-- 右：搜尋 + 語言 -->
+<div class="header-right">
+  <span class="header-search">🔎</span>
 
-          <!-- 語言切換（穩定版） -->
-          <div class="lang-switch" id="langSwitch">
-            <button class="lang-toggle" id="langToggle" type="button">
-              <span class="lang-switch-icon">🌐</span>
-              <span id="currentLangLabel">繁中</span>
-            </button>
-
-            <div class="lang-menu" id="langMenu" role="menu" aria-hidden="true">
-              <button class="lang-item" data-lang="en">English</button>
-              <button class="lang-item active" data-lang="zh-Hant">繁中</button>
-              <button class="lang-item" data-lang="zh-Hans">簡中</button>
-              <button class="lang-item" data-lang="ja">日本語</button>
-            </div>
-          </div>
-        </div>
+  <div class="lang-switch" id="langSwitch">
+    <span class="lang-pill" id="langToggle">
+      🌐 <span id="langCurrent">繁中</span>
+    </span>
+    <div class="lang-menu" id="langMenu" role="menu" aria-hidden="true">
+      <button class="lang-item" data-lang="en">English</button>
+      <button class="lang-item active" data-lang="zh-Hant">繁中</button>
+      <button class="lang-item" data-lang="zh-Hans">简中</button>
+      <button class="lang-item" data-lang="ja">日本語</button>
+    </div>
+  </div>
+</div>
       </header>
     </div>
 
