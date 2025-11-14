@@ -17,7 +17,6 @@
       --danger:#e03131;
       --pill:#eef3ff;
       --line:#e9eef5;
-      --radius:14px;
     }
     html,body{height:100%}
     body{
@@ -46,13 +45,12 @@
     }
     .lang-pill .globe{font-size:18px;opacity:.9}
     #langCurrent{font-weight:700}
-
     .lang-menu{
       position:absolute;top:44px;left:0;min-width:180px;
       background:var(--card);border-radius:12px;
       box-shadow:0 8px 24px rgba(18,38,63,.12);
       border:1px solid var(--line);
-      padding:8px;display:none;z-index:20;
+      padding:8px;display:none;z-index:50; /* 提高層級避免被其他元素擋到 */
     }
     .lang-switch.open .lang-menu{display:block}
     .lang-item{
@@ -88,9 +86,9 @@
     /* 結果 */
     .result-title{font-weight:700;margin-bottom:6px}
     #resultPreview{white-space:pre-line}
-    #aiOutput{white-space:pre-line} /* 很重要：AI 文字的換行 */
+    #aiOutput{white-space:pre-line} /* AI 文字換行一定要有 */
 
-    /* 保護時鐘／任意圓形圖示不被膠囊樣式拉扯 */
+    /* 保護時鐘/圓形圖示不要被擠成橢圓（若你 class 用 .clock 就會套用） */
     .clock{
       width:28px;aspect-ratio:1/1;border-radius:50% !important;
       padding:0 !important;display:grid;place-items:center;box-sizing:border-box;
@@ -110,7 +108,7 @@
       <div class="header-right">
         <img class="search-ico" alt="search" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24'%3E%3Cpath fill='%23555' d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5A6.5 6.5 0 1 0 9.5 16a6.471 6.471 0 0 0 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0A4.5 4.5 0 1 1 14 9.5A4.505 4.505 0 0 1 9.5 14'/%3E%3C/svg%3E">
         <div class="lang-switch" id="langSwitch">
-          <span class="lang-pill" id="langToggle">
+          <span class="lang-pill" id="langToggle" aria-expanded="false">
             <span class="globe">🌐</span>
             <span id="langCurrent">繁中</span>
           </span>
@@ -129,7 +127,7 @@
       <div class="card">
         <h2 data-i18n="title">3 分鐘試算你的「財務安全指數」</h2>
 
-        <form id="mainForm">
+        <form id="mainForm" autocomplete="off">
           <label for="age" data-i18n="age">你的年齡</label>
           <input id="age" type="number" min="0" placeholder="例如：30" />
 
@@ -151,8 +149,8 @@
 
           <label for="assets" data-i18n="assets">大約可投資資產規模</label>
           <select id="assets">
-            <option>200–500 萬</option>
             <option>500 萬以上</option>
+            <option>200–500 萬</option>
             <option>100–200 萬</option>
             <option>100 萬以下</option>
           </select>
@@ -194,14 +192,13 @@
   </div>
 
   <script>
-    /* === 1) 設定你的 Worker API === */
-    const AI_ENDPOINT = "https://cool-cell-b227.amy20060226.workers.dev/chat"; 
-    // 若你的 worker 名稱不同，改成你的 /chat 即可
+    /* === 把這個改成你的 Worker /chat === */
+    const AI_ENDPOINT = "https://cool-cell-b227.amy20060226.workers.dev/chat";
+    /* 例如：const AI_ENDPOINT = "https://你的worker名.你的帳號.workers.dev/chat"; */
 
-    /* === 2) Demo（本地不走 AI） === */
+    /* ===== 1) Demo 本地計算，不走 AI ===== */
     const form = document.getElementById('mainForm');
     const resultPreview = document.getElementById('resultPreview');
-
     form.addEventListener('submit', handleDemoSubmit);
 
     function handleDemoSubmit(e){
@@ -215,9 +212,9 @@
       const focus = document.getElementById('focus').value.trim();
 
       let protectLevel = "";
-      if (insurance === "幾乎沒有"){
+      if (insurance.includes("幾乎沒有")){
         protectLevel = "保障缺口明顯，建議盡快補齊「醫療＋重大疾病＋壽險」三大基本防線。";
-      } else if (insurance === "有一些，但看不太懂"){
+      } else if (insurance.includes("看不太懂")){
         protectLevel = "目前有一定保障，但內容可能不夠清楚，建議先做一次保單總體檢，確認沒有重複或缺角。";
       } else {
         protectLevel = "保障看起來完整，建議檢視保額是否與收入、家庭責任相符，每 1–2 年更新一次。";
@@ -225,23 +222,23 @@
 
       let assetPlan = "";
       if (risk.includes("積極")){
-        assetPlan = "資產配置偏向成長型：股票／高股息／新興市場等佔比可拉高，但需接受波動與調整週期。";
+        assetPlan = "資產配置偏向成長：股票／高股息／新興市場等佔比可拉高，但需接受波動並定期再平衡。";
       } else if (risk.includes("穩健")){
-        assetPlan = "資產配置偏向平衡：股債各半或 6:4，必要時加入現金部位維持流動性與心態穩定。";
+        assetPlan = "資產配置偏向平衡：股債約 6:4 或 5:5，保留部分現金以維持流動性與心態穩定。";
       } else {
-        assetPlan = "資產配置偏向防禦：提高債券與現金比重、定期定額進場、用時間換取複利。";
+        assetPlan = "資產配置偏向防禦：提高債券與現金比重、定期定額進場，用時間換取複利。";
       }
 
-      const msg = [
+      const lines = [
         `【保險概況】${protectLevel}`,
         `【資產配置】${assetPlan}`,
         focus ? `【你的焦點】${focus}` : ""
-      ].filter(Boolean).join("\n\n");
+      ].filter(Boolean);
 
-      resultPreview.textContent = msg;
+      resultPreview.textContent = lines.join("\n\n");
     }
 
-    /* === 3) AI 產生建議 === */
+    /* ===== 2) AI 產生建議 ===== */
     const aiBtn   = document.getElementById('aiGenBtn');
     const aiTitle = document.getElementById('aiTitle');
     const aiText  = document.getElementById('aiOutput');
@@ -250,12 +247,10 @@
 
     async function aiSuggest(){
       const btn = aiBtn;
-      const out = aiText;
-      out.style.display = "block";
+      aiText.style.display = "block";
       btn.disabled = true;
       btn.textContent = "產生中…";
 
-      // 收集 payload
       const payload = {
         age: Number(document.getElementById('age').value)||0,
         family: document.getElementById('family').value,
@@ -273,20 +268,23 @@
           body: JSON.stringify(payload)
         });
 
-        const raw = await res.text(); // Worker 多半回 text/plain
+        const raw = await res.text(); // Worker 可能回 text/plain
         if(!res.ok){
           aiTitle.textContent = "AI 建議產生失敗";
           aiText.textContent  = `狀態 ${res.status}：${raw || "未知錯誤"}`;
         }else{
-          // 嘗試解析成 JSON，若有 text 欄位就用，否則用原始文字
-          let text = raw;
+          let text = raw.trim();
+          // 若是 JSON（{"text":"..."}）就取 text；不是就當純文字
           try{
             const j = JSON.parse(raw);
-            if (j && typeof j === 'object' && j.text) text = j.text;
-          }catch(_){} // 不是 JSON 就直接用 raw
-
+            if (j && typeof j === 'object'){
+              if (Array.isArray(j)) text = j.join("\n");
+              else if (j.text)      text = String(j.text);
+              else                  text = JSON.stringify(j, null, 2);
+            }
+          }catch(_){/* 不是 JSON，保留 raw */}
           aiTitle.textContent = "依你的條件，AI 的建議摘要";
-          aiText.textContent  = text.trim();
+          aiText.textContent  = text;
         }
       }catch(err){
         aiTitle.textContent = "AI 建議產生失敗";
@@ -297,38 +295,54 @@
       }
     }
 
-    /* === 4) 語言切換（展開／收起／點選） === */
+    /* ===== 3) 語言切換：可點、可收合、記住選擇 ===== */
     document.addEventListener("DOMContentLoaded", () => {
       const switchEl = document.getElementById("langSwitch");
-      if(!switchEl) return;
-
       const toggleEl = document.getElementById("langToggle");
       const menuEl   = document.getElementById("langMenu");
       const items    = menuEl.querySelectorAll(".lang-item");
       const current  = document.getElementById("langCurrent");
 
+      const saved = localStorage.getItem("taimic_lang") || "zh-Hant";
+      activeLang(saved);
+
       toggleEl.addEventListener("click", (e) => {
         e.stopPropagation();
-        switchEl.classList.toggle("open");
+        const open = switchEl.classList.toggle("open");
+        toggleEl.setAttribute("aria-expanded", String(open));
       });
 
       items.forEach(btn=>{
         btn.addEventListener("click", (e)=>{
           e.stopPropagation();
-          items.forEach(b=>b.classList.remove("active"));
-          btn.classList.add("active");
-          current.textContent = btn.textContent.trim();
+          const lang = btn.dataset.lang;
+          activeLang(lang);
           switchEl.classList.remove("open");
-          // 可在此呼叫 applyI18n(btn.dataset.lang)
+          toggleEl.setAttribute("aria-expanded","false");
         });
       });
 
       document.addEventListener("click", (e)=>{
-        if(!switchEl.contains(e.target)) switchEl.classList.remove("open");
+        if(!switchEl.contains(e.target)){
+          switchEl.classList.remove("open");
+          toggleEl.setAttribute("aria-expanded","false");
+        }
       });
+
+      function activeLang(lang){
+        items.forEach(b=>{
+          b.classList.toggle("active", b.dataset.lang===lang);
+        });
+        current.textContent =
+          lang==="zh-Hant" ? "繁中" :
+          lang==="zh-Hans" ? "简中" :
+          lang==="ja"      ? "日本語" : "English";
+        localStorage.setItem("taimic_lang", lang);
+        applyI18n(lang);
+      }
     });
 
-    /* === 5)（可選）簡易 i18n 範例，若你要真的切換文案，填這段 === */
+    /* ===== 4)（可選）簡易 i18n 文案 ===== */
     const I18N = {
       "zh-Hant": {
         title:"3 分鐘試算你的「財務安全指數」",
@@ -370,7 +384,6 @@
         const key = el.getAttribute("data-i18n");
         if(dict[key]) el.textContent = dict[key];
       });
-      // 也可以在此記錄 localStorage 讓下次載入沿用
     }
   </script>
 </body>
