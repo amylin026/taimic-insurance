@@ -1,470 +1,534 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Taimic｜AI 保險＆資產配置 Demo</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Taimic｜AI 保險與資產配置</title>
+  <meta name="description" content="用 Taimic 幫你快速檢視保險與資產配置方向，根據年齡、家庭與資產規模，給出初步建議。" />
 
   <style>
-  :root{
-    --bg:#f5f7fb; --card:#fff; --text:#0f172a; --muted:#64748b;
-    --primary:#2563eb; --primary-600:#1d4ed8; --ring:rgba(37,99,235,.25);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial;
-    color:var(--text); background:var(--bg);
-  }
-  .container{max-width:1100px; margin:24px auto; padding:0 16px; display:flex; gap:24px}
-  .left{flex:1 1 52%}
-  .right{flex:1 1 48%}
-  .card{
-    background:var(--card); border-radius:16px; box-shadow:0 10px 30px rgba(15,23,42,.06);
-    border:1px solid #e5e7eb; padding:18px 20px; margin-bottom:16px;
-  }
-  h2{margin:0 0 10px; font-size:20px}
-  label{display:block; font-size:13px; color:var(--muted); margin:10px 0 6px}
-  input,select,textarea{
-    width:100%; border:1px solid #e5e7eb; border-radius:10px; padding:10px 12px;
-    background:#fff; color:var(--text); outline:none; transition:box-shadow .15s,border-color .15s;
-  }
-  input:focus,select:focus,textarea:focus{border-color:var(--primary); box-shadow:0 0 0 4px var(--ring)}
-  textarea{min-height:84px; resize:vertical}
-  .row{display:flex; gap:12px}
-  .btn{
-    display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    border-radius:999px; padding:10px 16px; cursor:pointer; user-select:none;
-    border:1px solid transparent; transition:.15s; font-weight:600;
-  }
-  .btn-primary{background:var(--primary); color:#fff}
-  .btn-primary:hover{background:var(--primary-600)}
-  .btn-secondary{background:#fff; color:var(--primary); border-color:var(--primary)}
-  .btn:disabled{opacity:.6; cursor:not-allowed}
-  .hint{font-size:12px; color:var(--muted)}
-  /* 右側輸出卡片 */
-  .result{white-space:pre-line; line-height:1.7}
-  .result h4{margin:0 0 8px}
-  /* 語言圓角切換 */
-  .header-right{display:flex; align-items:center; gap:10px}
-  .lang-switch{position:relative}
-  .lang-pill{
-    display:inline-flex; align-items:center; gap:8px; padding:8px 14px; background:#eef2ff; color:#0f172a;
-    border-radius:999px; cursor:pointer; border:1px solid #dbe3ff; font-weight:600;
-  }
-  .lang-menu{
-    position:absolute; top:44px; left:0; min-width:140px; background:#fff; border:1px solid #e5e7eb;
-    border-radius:12px; box-shadow:0 20px 40px rgba(15,23,42,.08); padding:6px; display:none; z-index:40;
-  }
-  .lang-switch.open .lang-menu{display:block}
-  .lang-item{
-    display:block; width:100%; text-align:left; background:#fff; border:0; padding:8px 10px; border-radius:8px;
-    cursor:pointer;
-  }
-  .lang-item:hover{background:#f1f5f9}
-  /* 讓 AI 文本換行正常 */
-  #aiOutput{white-space:pre-line}
-  /* 讓你說的「圓變橢圓」不再發生（如果是圓形圖示） */
-  .circle{width:24px; height:24px; border-radius:50%}
-</style>
-<script>
-  // 語言切換最小可用版：避免再度「不能點」
-  document.addEventListener('DOMContentLoaded', () => {
-    const switchEl = document.getElementById('langSwitch');
-    if(!switchEl) return;
-    const toggleEl = document.getElementById('langToggle');
-    const menuEl = document.getElementById('langMenu');
-    toggleEl?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      switchEl.classList.toggle('open');
-    });
-    menuEl?.querySelectorAll('.lang-item').forEach(btn=>{
-      btn.addEventListener('click', () => switchEl.classList.remove('open'));
-    });
-    document.addEventListener('click',()=>switchEl.classList.remove('open'));
-  });
-</script>
+    :root {
+      --brand-blue: #0057b8;
+      --brand-blue-light: #e6f0fb;
+      --text-main: #1f2933;
+      --text-sub: #6b7280;
+      --bg-page: #f5f5f7;
+      --border-soft: #e5e7eb;
+      --radius-lg: 16px;
+      --shadow-soft: 0 6px 18px rgba(15, 23, 42, 0.08);
+      --max-width: 1120px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", sans-serif;
+      background: var(--bg-page); color: var(--text-main); line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
+    .page-inner { max-width: var(--max-width); width: 100%; margin: 0 auto; padding: 0 20px 48px; flex: 1; }
 
-  <style>
-    :root{
-      --brand:#1f6feb;
-      --ink:#111;
-      --sub:#666;
-      --bg:#f7f8fb;
-      --card:#fff;
-      --ok:#12b886;
-      --warn:#f08c00;
-      --danger:#e03131;
-      --pill:#eef3ff;
-      --line:#e9eef5;
+    /* Header */
+    .site-header-wrap {
+      width: 100%; border-bottom: 1px solid #e5e7eb; background: #ffffffcc; backdrop-filter: blur(16px);
+      position: sticky; top: 0; z-index: 1000;
     }
-    html,body{height:100%}
-    body{
-      margin:0;
-      font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
-      color:var(--ink);
-      background:var(--bg);
+    .site-header {
+      max-width: var(--max-width); margin: 0 auto; padding: 10px 20px;
+      display: flex; align-items: center; justify-content: space-between;
     }
-    .wrap{max-width:1080px;margin:0 auto;padding:24px}
-    header{
-      display:flex;align-items:center;gap:12px;justify-content:space-between;margin-bottom:18px
+    .header-left { display: flex; align-items: center; gap: 10px; }
+    .logo-mark { width: 32px; height: 32px; border-radius: 999px; border: 1.5px solid var(--brand-blue); position: relative;
+      background: radial-gradient(circle at 30% 30%, #e5f0ff 0, #ffffff 40%, #e5edf8 100%); box-shadow: 0 0 0 1px rgba(0,87,184,.08); }
+    .logo-clock::before, .logo-clock::after {
+      content: ""; position: absolute; left: 50%; top: 50%; transform-origin: 50% 100%; background: #1f2933; border-radius: 999px;
     }
-    .brand{display:flex;align-items:center;gap:10px}
-    .brand__logo{width:28px;height:28px;border-radius:8px;background:var(--brand);display:grid;place-items:center;color:#fff;font-weight:700}
-    .brand__name{font-weight:700}
+    .logo-clock::before { width: 2px; height: 9px; transform: translate(-50%, -100%) rotate(0deg); animation: clock-hour 180s linear infinite; }
+    .logo-clock::after  { width: 2px; height: 12px;transform: translate(-50%, -100%) rotate(0deg); animation: clock-minute 60s linear infinite; }
+    @keyframes clock-hour   { from {transform: translate(-50%,-100%) rotate(0)} to {transform: translate(-50%,-100%) rotate(360deg)} }
+    @keyframes clock-minute { from {transform: translate(-50%,-100%) rotate(0)} to {transform: translate(-50%,-100%) rotate(360deg)} }
 
-    /* 搜尋 + 語言 */
-    .header-right{display:flex;align-items:center;gap:16px}
-    .search-ico{width:22px;height:22px;opacity:.85}
-    .lang-switch{position:relative}
-    .lang-pill{
-      display:flex;align-items:center;gap:10px;
-      background:var(--pill);
-      padding:8px 14px;border-radius:9999px;
-      cursor:pointer;user-select:none;border:1px solid #cfe0ff;
-    }
-    .lang-pill .globe{font-size:18px;opacity:.9}
-    #langCurrent{font-weight:700}
-    .lang-menu{
-      position:absolute;top:44px;left:0;min-width:180px;
-      background:var(--card);border-radius:12px;
-      box-shadow:0 8px 24px rgba(18,38,63,.12);
-      border:1px solid var(--line);
-      padding:8px;display:none;z-index:50; /* 提高層級避免被其他元素擋到 */
-    }
-    .lang-switch.open .lang-menu{display:block}
-    .lang-item{
-      width:100%;text-align:left;border:0;background:#fff;
-      padding:10px 12px;border-radius:10px;cursor:pointer;
-      font-size:14px;
-    }
-    .lang-item:hover{background:#f5f8ff}
-    .lang-item.active{background:#e9f2ff;font-weight:700}
+    .logo-text-main { font-size: 16px; font-weight: 600; letter-spacing: .04em; }
+    .logo-text-sub  { font-size: 11px; color: var(--text-sub); }
+    .header-center { flex: 1; display: flex; justify-content: center; gap: 32px; font-size: 15px; font-weight: 500; }
+    .top-nav-link { position: relative; padding: 4px 0; color: #4b5563; }
+    .top-nav-link:hover { color: #111827; }
+    .top-nav-link.active::after { content:""; position:absolute; left:0; right:0; bottom:-10px; height:3px; border-radius:999px; background:#b91c1c; }
 
-    /* 內容 */
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .card{
-      background:var(--card);border-radius:16px;border:1px solid var(--line);
-      padding:18px;
+    .header-right { display:flex; align-items:center; gap:16px; font-size:13px; position: relative; z-index: 1001; }
+    .header-search { font-size:18px; color:#6b7280; }
+
+    /* 語言切換（穩定） */
+    .lang-switch { position: relative; }
+    .lang-toggle {
+      display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:999px; border:none; background:#f3f4f6;
+      cursor:pointer; color:#4b5563;
     }
-    h2{margin:0 0 12px}
-    label{display:block;margin:12px 0 6px;font-size:14px;color:var(--sub)}
-    input[type="text"],input[type="number"],select,textarea{
-      width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;outline:none;
+    .lang-toggle:hover { background:#e5e7eb; }
+    .lang-switch-icon { font-size:14px; }
+    .lang-menu {
+      position:absolute; right:0; top:110%; padding:10px 18px; border-radius:14px;
+      background: rgba(249,250,251,.98); box-shadow: 0 10px 25px rgba(15,23,42,.12);
+      display:none; flex-direction:column; gap:4px; min-width:140px; z-index: 9999;
     }
-    textarea{min-height:84px;resize:vertical}
+    .lang-switch.open .lang-menu { display:flex; }
+    .lang-item { border:none; background:transparent; padding:2px 0; font-size:13px; text-align:left; color:#6b7280; cursor:pointer; }
+    .lang-item.active { color:#b91c1c; font-weight:600; }
 
-    .btn-row{display:flex;gap:12px;margin-top:14px}
-    .btn{
-      padding:12px 18px;border-radius:12px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:700;
+    /* Hero & sections */
+    section:not(.hero) {
+      margin: 24px 0 0; background:#fff; border-radius:var(--radius-lg); border:1px solid var(--border-soft);
+      box-shadow:var(--shadow-soft); padding: 20px 22px;
     }
-    .btn-primary{background:var(--brand);border-color:var(--brand);color:#fff}
-    .btn:disabled{opacity:.5;cursor:not-allowed}
-
-    .hint{font-size:12px;color:var(--sub);margin-top:10px}
-
-    /* 結果 */
-    .result-title{font-weight:700;margin-bottom:6px}
-    #resultPreview{white-space:pre-line}
-    #aiOutput{white-space:pre-line} /* AI 文字換行一定要有 */
-
-    /* 保護時鐘/圓形圖示不要被擠成橢圓（若你 class 用 .clock 就會套用） */
-    .clock{
-      width:28px;aspect-ratio:1/1;border-radius:50% !important;
-      padding:0 !important;display:grid;place-items:center;box-sizing:border-box;
+    .hero {
+      display:grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1.1fr); gap:32px;
+      padding: 28px 48px; background:#fff; border-radius:var(--radius-lg); border:1px solid var(--border-soft);
+      box-shadow:var(--shadow-soft); margin-top: 16px;
     }
-    .clock svg,.clock img{width:70%;height:70%;aspect-ratio:1/1;object-fit:contain}
+    .hero-left-title { font-size:28px; font-weight:700; margin: 8px 0; }
+    .hero-left-title span { color: var(--brand-blue); }
+    .hero-left-sub { font-size:14px; color:var(--text-sub); margin-bottom: 16px; max-width:520px; }
+    .hero-tag { display:inline-flex; align-items:center; gap:8px; font-size:12px; margin-bottom:8px; color:var(--brand-blue); }
+    .hero-tag-pill { padding:2px 8px; border-radius:999px; border:1px solid var(--brand-blue); font-size:11px; }
 
-    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    .btn-primary { padding:9px 16px; border-radius:999px; background:var(--brand-blue); border:none; color:#fff; font-size:14px; font-weight:600; cursor:pointer; }
+    .btn-secondary { padding:9px 16px; border-radius:999px; border:1px solid var(--border-soft); background:#fff; font-size:14px; cursor:pointer; }
+    .small-hint { font-size:11px; color:var(--text-sub); margin-top: 6px; }
+
+    .assessment-layout { display:grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr); gap:18px; margin-top: 6px; }
+    .form { display:flex; flex-direction:column; gap:8px; font-size:13px; }
+    .form-row { display:flex; flex-direction:column; gap:4px; }
+    .form-row-inline { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px; }
+    label { font-size:12px; color:var(--text-sub); }
+    input, select, textarea {
+      padding:7px 9px; border-radius:6px; border:1px solid #d1d5db; font-size:13px; background:#fff; color:var(--text-main); outline:none;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--brand-blue); box-shadow:0 0 0 1px rgba(0,87,184,.2); }
+    textarea { min-height:70px; resize:vertical; }
+
+    .result-preview {
+      border-radius:10px; border:1px solid #d6e1f5; background: var(--brand-blue-light);
+      padding: 10px 12px; font-size:13px;
+    }
+    .result-tag { font-size:11px; color:var(--brand-blue); margin-bottom: 4px; }
+    .result-title { font-size:14px; font-weight:600; margin-bottom:6px; }
+    .result-line { margin-bottom:4px; font-size:13px; color:#111827; }
+    .result-highlight { color:#c05621; font-weight:500; }
+
+    .footer { border-top: 1px solid #e5e7eb; background:#fff; margin-top: 24px; }
+    .footer-inner {
+      max-width: var(--max-width); margin:0 auto; padding:10px 20px 14px;
+      font-size:11px; color:var(--text-sub); display:flex; justify-content:space-between; gap:12px;
+    }
+
+    @media (max-width: 900px){
+      .hero{ grid-template-columns:1fr; padding:18px 16px; margin-top:4px; }
+      .assessment-layout{ grid-template-columns:1fr; }
+    }
+
+    /* 結果卡片閃一下 */
+    @keyframes flash {
+      0% { box-shadow: 0 0 0 rgba(0,87,184,0); transform: scale(1); }
+      25%{ box-shadow: 0 0 18px rgba(0,87,184,.4); transform: scale(1.01); }
+      100%{ box-shadow: var(--shadow-soft); transform: scale(1); }
+    }
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <div class="brand__logo">T</div>
-        <div class="brand__name">Taimic</div>
-      </div>
-      <div class="header-right">
-        <img class="search-ico" alt="search" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24'%3E%3Cpath fill='%23555' d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5A6.5 6.5 0 1 0 9.5 16a6.471 6.471 0 0 0 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0A4.5 4.5 0 1 1 14 9.5A4.505 4.505 0 0 1 9.5 14'/%3E%3C/svg%3E">
-        <div class="lang-switch" id="langSwitch">
-          <span class="lang-pill" id="langToggle" aria-expanded="false">
-            <span class="globe">🌐</span>
-            <span id="langCurrent">繁中</span>
-          </span>
-          <div class="lang-menu" id="langMenu" role="menu" aria-hidden="true">
-            <button class="lang-item active" data-lang="zh-Hant">繁中</button>
-            <button class="lang-item" data-lang="zh-Hans">简中</button>
-            <button class="lang-item" data-lang="en">English</button>
-            <button class="lang-item" data-lang="ja">日本語</button>
+  <div class="page">
+    <!-- HEADER -->
+    <div class="site-header-wrap">
+      <header class="site-header">
+        <div class="header-left">
+          <div class="logo-mark logo-clock"></div>
+          <div>
+            <div class="logo-text-main">Taimic</div>
+            <div class="logo-text-sub">AI 保險 × 資產配置</div>
           </div>
         </div>
-      </div>
-    </header>
 
-    <div class="grid">
-      <!-- 左：輸入 -->
-      <div class="card">
-        <h2 data-i18n="title">3 分鐘試算你的「財務安全指數」</h2>
+        <nav class="header-center">
+          <a href="#overview" class="top-nav-link">服務說明</a>
+          <a href="#flow" class="top-nav-link">流程</a>
+          <a href="#assessment" class="top-nav-link">免費健檢</a>
+          <a href="#about" class="top-nav-link">關於 Taimic</a>
+          <a href="#contact" class="top-nav-link">聯絡</a>
+        </nav>
 
-        <form id="mainForm" autocomplete="off">
-          <label for="age" data-i18n="age">你的年齡</label>
-          <input id="age" type="number" min="0" placeholder="例如：30" />
+        <div class="header-right">
+          <span class="header-search">🔍</span>
 
-          <label for="family" data-i18n="family">家庭狀況</label>
-          <select id="family">
-            <option value="單身">單身</option>
-            <option value="已婚，無小孩">已婚，無小孩</option>
-            <option value="已婚，有小孩">已婚，有小孩</option>
-          </select>
+          <!-- 語言切換（穩定版） -->
+          <div class="lang-switch" id="langSwitch">
+            <button class="lang-toggle" id="langToggle" type="button">
+              <span class="lang-switch-icon">🌐</span>
+              <span id="currentLangLabel">繁中</span>
+            </button>
 
-          <label for="income" data-i18n="income">大約月收入區間</label>
-          <select id="income">
-            <option>20 萬以上</option>
-            <option>10–20 萬</option>
-            <option>5–10 萬</option>
-            <option>3–5 萬</option>
-            <option>3 萬以下</option>
-          </select>
-
-          <label for="assets" data-i18n="assets">大約可投資資產規模</label>
-          <select id="assets">
-            <option>500 萬以上</option>
-            <option>200–500 萬</option>
-            <option>100–200 萬</option>
-            <option>100 萬以下</option>
-          </select>
-
-          <label for="risk" data-i18n="risk">你覺得自己屬於哪種風險屬性？</label>
-          <select id="risk">
-            <option>積極（願意換波動換成長）</option>
-            <option>穩健（可以接受一些波動）</option>
-            <option>保守（以穩定為主）</option>
-          </select>
-
-          <label for="insurance" data-i18n="insuranceNow">目前有沒有保單？</label>
-          <select id="insurance">
-            <option>有一些，但看不太懂</option>
-            <option>幾乎沒有</option>
-            <option>很完整</option>
-          </select>
-
-          <label for="focus" data-i18n="focus">你最在意什麼？（選填）</label>
-          <textarea id="focus" placeholder="例如：怕生病花很多錢、擔心小孩教育費、想 10 年內可以半退休……"></textarea>
-
-          <div class="btn-row">
-            <button type="submit" class="btn btn-primary" id="demoBtn" data-i18n="btn_demo">產生 Demo 建議 ⚡</button>
-            <button type="button" class="btn" id="aiGenBtn" data-i18n="btn_ai">用 AI 產生建議</button>
+            <div class="lang-menu" id="langMenu" role="menu" aria-hidden="true">
+              <button class="lang-item" data-lang="en">English</button>
+              <button class="lang-item active" data-lang="zh-Hant">繁中</button>
+              <button class="lang-item" data-lang="zh-Hans">簡中</button>
+              <button class="lang-item" data-lang="ja">日本語</button>
+            </div>
           </div>
-          <div class="hint" data-i18n="hint">送出後右側會更新建議內容；不會寄信、不會儲存到任何伺服器。</div>
-        </form>
-      </div>
-
-      <!-- 右：輸出 -->
-      <div class="card">
-        <div class="result-title" data-i18n="preview">建議預覽</div>
-        <div id="resultPreview" style="margin-bottom:14px;color:#222;"></div>
-
-        <div class="result-title" id="aiTitle">AI 建議</div>
-        <div id="aiOutput" class="result" style="display:none;color:#222;"></div>
-      </div>
+        </div>
+      </header>
     </div>
+
+    <div class="page-inner">
+      <main>
+        <!-- HERO -->
+        <section class="hero" id="top">
+          <div>
+            <div class="hero-tag">
+              <span class="hero-tag-pill">概念驗證</span>
+              <span>尚未串接保險公司與真實商品</span>
+            </div>
+            <h1 class="hero-left-title">給你一個<br/>看得懂的 <span>保險＋資產配置方向</span></h1>
+            <p class="hero-left-sub">
+              Taimic 目前是一個用來和客戶溝通的工具，透過幾個簡單問題，初步幫你整理「保障是否太少」與「資產大方向怎麼分」。
+            </p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:8px;">
+              <button class="btn-primary" onclick="scrollToId('assessment')">3 分鐘免費健檢</button>
+              <button class="btn-secondary" onclick="scrollToId('overview')">先了解服務內容</button>
+            </div>
+            <div class="small-hint">※ 所有結果僅供教育與示意用途，實際投保與投資仍須與合法專業人員討論。</div>
+          </div>
+
+          <aside class="result-preview">
+            <div class="result-tag">這個可以做什麼？</div>
+            <div class="result-line">看一下目前保險大概是偏少、剛好或略多</div>
+            <div class="result-line">根據風險屬性給出「現金 / 債券 / 成長」的比例方向</div>
+            <div class="result-line">提示下一步可以準備哪些資料</div>
+          </aside>
+        </section>
+
+        <!-- 服務說明（省略文字，可自行補） -->
+        <section id="overview">
+          <h2 style="font-size:18px; font-weight:600; margin-bottom:6px;">Taimic 想解決的是什麼？</h2>
+          <p class="small-hint">把保險當風險防護網、把資產配置當長期地圖、把 AI 當對話起點。</p>
+        </section>
+
+        <!-- 流程（省略文字，可自行補） -->
+        <section id="flow">
+          <h2 style="font-size:18px; font-weight:600; margin-bottom:6px;">使用流程</h2>
+          <p class="small-hint">填寫、看初步分析、帶著結果討論。</p>
+        </section>
+
+        <!-- Demo 評估 -->
+        <section id="assessment">
+          <div style="margin-bottom:14px;">
+            <h2 style="font-size:18px; font-weight:600; margin-bottom:4px;">3 分鐘試算你的「財務安全指紋」</h2>
+            <p class="small-hint">這裡的結果只是 Demo 規則，不會幫你下單，也不會存任何個資；重整頁面資料就會消失。</p>
+          </div>
+
+          <div class="assessment-layout">
+            <!-- 表單 -->
+            <form class="form" id="demoForm" onsubmit="handleDemoSubmit(event)">
+              <div class="form-row-inline">
+                <div class="form-row">
+                  <label for="age">你的年齡</label>
+                  <input id="age" type="number" placeholder="例如：32" required />
+                </div>
+                <div class="form-row">
+                  <label for="family">家庭狀況</label>
+                  <select id="family" required>
+                    <option value="">請選擇</option>
+                    <option>單身</option>
+                    <option>已婚，無小孩</option>
+                    <option>已婚，有小孩</option>
+                    <option>其他／不方便透露</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row-inline">
+                <div class="form-row">
+                  <label for="income">大約月收入區間</label>
+                  <select id="income" required>
+                    <option value="">請選擇</option>
+                    <option>5 萬以下</option>
+                    <option>5–10 萬</option>
+                    <option>10–20 萬</option>
+                    <option>20 萬以上</option>
+                  </select>
+                </div>
+                <div class="form-row">
+                  <label for="assets">大約可投資資產規模</label>
+                  <select id="assets" required>
+                    <option value="">請選擇</option>
+                    <option>50 萬以下</option>
+                    <option>50–200 萬</option>
+                    <option>200–500 萬</option>
+                    <option>500 萬以上</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row-inline">
+                <div class="form-row">
+                  <label for="risk">你覺得自己屬於哪種風險屬性？</label>
+                  <select id="risk" required>
+                    <option value="">請選擇</option>
+                    <option>非常保守（不太能接受虧損）</option>
+                    <option>穩健（可以接受一些波動）</option>
+                    <option>積極（願意換波動換成長）</option>
+                  </select>
+                </div>
+                <div class="form-row">
+                  <label for="insurance">目前有沒有保單？</label>
+                  <select id="insurance" required>
+                    <option value="">請選擇</option>
+                    <option>幾乎沒有</option>
+                    <option>有一些，但看不太懂</option>
+                    <option>有，覺得還算夠</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <label for="focus">你最在意什麼？（選填）</label>
+                <textarea id="focus" placeholder="例如：怕生病花很多錢、擔心小孩教育費、想 10 年內可以半退休⋯⋯"></textarea>
+              </div>
+
+              <button type="submit" class="btn-primary">產生 Demo 建議 ⚡</button>
+
+              <button type="button" id="aiGenBtn" class="btn-secondary">用 AI 產生建議</button>
+              <div class="small-hint">送出後右側會更新建議內容，不會寄信、不會儲存到任何伺服器。</div>
+            </form>
+
+            <!-- 結果區 -->
+            <div>
+              <div class="result-preview" id="resultPreview">
+                <div class="result-tag">建議預覽</div>
+                <div class="result-title">請先左側填寫資料，再按下「產生 Demo 建議」。</div>
+                <p class="result-line">✅ 保險部分的建議會出現在這裡。</p>
+                <p class="result-line">💡 資產配置比例與風險屬性會出現在這裡。</p>
+                <p class="result-line">🔔 下一步具體行動方向會出現在這裡。</p>
+              </div>
+
+              <div class="result-preview" id="aiOutput" style="display:none; margin-top:10px;">
+                <div class="result-tag">AI 建議</div>
+                <div class="result-title" id="aiTitle">等待產生中…</div>
+                <div class="result-line" id="aiText"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="small-hint" style="margin-top:10px;">
+            法律聲明：本頁面為概念展示與一般性財務教育資訊，不構成任何保險、基金、債券、股票等商品之招攬或建議。實際決策請務必與具合法資格之專業人員討論。
+          </div>
+        </section>
+
+        <!-- 關於 / 聯絡（簡化） -->
+        <section id="about">
+          <h2 style="font-size:18px; font-weight:600; margin-bottom:6px;">關於 Taimic</h2>
+          <p class="small-hint">我們正在探索「AI 能不能同時幫忙看保險與資產配置」。</p>
+        </section>
+
+        <section id="contact">
+          <h2 style="font-size:18px; font-weight:600; margin-bottom:6px;">想知道之後的正式版本？</h2>
+          <p class="small-hint">若你願意收到未來 alpha / beta 版本消息，之後會提供表單。</p>
+        </section>
+      </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>© <span id="year"></span> Taimic. All rights reserved.</div>
+        <div>聯絡信箱：<a href="mailto:founder@example.com">founder@example.com</a></div>
+      </div>
+    </footer>
   </div>
 
   <script>
-    /* === 把這個改成你的 Worker /chat === */
-    const AI_ENDPOINT = "https://cool-cell-b227.amy20060226.workers.dev/chat";
-    /* 例如：const AI_ENDPOINT = "https://你的worker名.你的帳號.workers.dev/chat"; */
+    // === 一打開就把 HERO 拉到可視(避免頂部空白過大) ===
+    document.addEventListener("DOMContentLoaded", function () {
+      const hero = document.getElementById("top");
+      if (!hero) return;
+      const gap = hero.getBoundingClientRect().top;
+      if (gap > 80) hero.scrollIntoView({ behavior: "auto", block: "start" });
+    });
 
-    /* ===== 1) Demo 本地計算，不走 AI ===== */
-    const form = document.getElementById('mainForm');
-    const resultPreview = document.getElementById('resultPreview');
-    form.addEventListener('submit', handleDemoSubmit);
+    // 年份
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-    function handleDemoSubmit(e){
-      e.preventDefault();
-      const age = Number(document.getElementById('age').value) || 0;
-      const family = document.getElementById('family').value;
-      const income = document.getElementById('income').value;
-      const assets = document.getElementById('assets').value;
-      const risk = document.getElementById('risk').value;
-      const insurance = document.getElementById('insurance').value;
-      const focus = document.getElementById('focus').value.trim();
-
-      let protectLevel = "";
-      if (insurance.includes("幾乎沒有")){
-        protectLevel = "保障缺口明顯，建議盡快補齊「醫療＋重大疾病＋壽險」三大基本防線。";
-      } else if (insurance.includes("看不太懂")){
-        protectLevel = "目前有一定保障，但內容可能不夠清楚，建議先做一次保單總體檢，確認沒有重複或缺角。";
-      } else {
-        protectLevel = "保障看起來完整，建議檢視保額是否與收入、家庭責任相符，每 1–2 年更新一次。";
-      }
-
-      let assetPlan = "";
-      if (risk.includes("積極")){
-        assetPlan = "資產配置偏向成長：股票／高股息／新興市場等佔比可拉高，但需接受波動並定期再平衡。";
-      } else if (risk.includes("穩健")){
-        assetPlan = "資產配置偏向平衡：股債約 6:4 或 5:5，保留部分現金以維持流動性與心態穩定。";
-      } else {
-        assetPlan = "資產配置偏向防禦：提高債券與現金比重、定期定額進場，用時間換取複利。";
-      }
-
-      const lines = [
-        `【保險概況】${protectLevel}`,
-        `【資產配置】${assetPlan}`,
-        focus ? `【你的焦點】${focus}` : ""
-      ].filter(Boolean);
-
-      resultPreview.textContent = lines.join("\n\n");
+    // 捲動到區塊
+    function scrollToId(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    /* ===== 2) AI 產生建議 ===== */
-    const aiBtn   = document.getElementById('aiGenBtn');
-    const aiTitle = document.getElementById('aiTitle');
-    const aiText  = document.getElementById('aiOutput');
+    // === 語言切換（穩定版）===
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        const switchEl  = document.getElementById('langSwitch');
+        const toggleEl  = document.getElementById('langToggle');
+        const menuEl    = document.getElementById('langMenu');
+        const items     = menuEl ? menuEl.querySelectorAll('.lang-item') : [];
+        const currentEl = document.getElementById('currentLangLabel');
+        if (!switchEl || !toggleEl || !menuEl || !currentEl) return;
 
-    aiBtn.addEventListener('click', aiSuggest);
+        toggleEl.addEventListener('click', (e) => {
+          e.stopPropagation();
+          switchEl.classList.toggle('open');
+        });
 
-    async function aiSuggest(){
-      const btn = aiBtn;
-      aiText.style.display = "block";
-      btn.disabled = true;
-      btn.textContent = "產生中…";
+        items.forEach((btn) => {
+          btn.addEventListener('click', () => {
+            items.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentEl.textContent = btn.textContent;
+            switchEl.classList.remove('open');
+            // TODO: 之後接你的多語邏輯：btn.dataset.lang
+          });
+        });
 
+        document.addEventListener('click', (e) => {
+          if (!switchEl.contains(e.target)) switchEl.classList.remove('open');
+        });
+      } catch (err) {
+        console.error('lang switch init failed:', err);
+      }
+    });
+
+    // === Demo 表單：本地規則產生 ===
+    function handleDemoSubmit(e) {
+      e.preventDefault();
+
+      const age = Number(document.getElementById("age").value);
+      const family = document.getElementById("family").value;
+      const income = document.getElementById("income").value;
+      const assets = document.getElementById("assets").value;
+      const risk = document.getElementById("risk").value;
+      const insurance = document.getElementById("insurance").value;
+      const focus = document.getElementById("focus").value.trim();
+
+      // 1. 保險保障評語
+      let protectLevel = "";
+      if (insurance === "幾乎沒有") {
+        protectLevel = "保障缺口明顯，建議盡快補齊「醫療＋重大疾病＋壽險」三大基本防線。";
+      } else if (insurance === "有一些，但看不太懂") {
+        protectLevel = "目前有一定保障，但內容可能不夠清楚，建議先做一次保單總體檢，確認沒有重複或缺角。";
+      } else {
+        protectLevel = "整體保障看起來還可以，再把醫療與收入中斷風險稍微補強會更安心。";
+      }
+
+      // 2. 投資風格 & 比例
+      let profile = "", mix = "";
+      if (risk.includes("非常保守")) {
+        profile = "偏保守型";
+        mix = "現金 / 活存預備金約 30%，穩健債券或保守型基金約 50%，成長型資產約 20%。";
+      } else if (risk.includes("穩健")) {
+        profile = "穩健成長型";
+        mix = "現金 20%，穩健債券或平衡型基金 40%，成長型基金或股票 40%。";
+      } else {
+        profile = "積極成長型";
+        mix = "現金 10–15%，穩健債券 25–30%，成長型股票 / 基金 55–65%。";
+      }
+
+      // 3. 依資產規模給下一步建議
+      let stepNext = "";
+      if (assets === "50 萬以下") {
+        stepNext = "先把緊急預備金存到 6 個月生活費，再開始做長期投資會比較舒服。";
+      } else if (assets === "50–200 萬") {
+        stepNext = "可以分批投入基金或 ETF，利用定期定額分散進場時間。";
+      } else if (assets === "200–500 萬") {
+        stepNext = "可以規劃一部分做長期成長，一部分做較穩的現金流（例如債券或配息型標的）。";
+      } else {
+        stepNext = "資產規模已經不小，建議搭配稅務與財產傳承的思考，一起做中長期規劃。";
+      }
+      if (family.includes("有小孩")) {
+        stepNext += " 另外，因為你有小孩，可以特別留意壽險保額與教育金準備。";
+      }
+
+      // 4. 客製化關注點
+      let focusLine = focus ? `你特別在意的重點是：「${focus}」，之後在調整保險與投資配置時，可以以這個目標當優先。` : "";
+
+      // 塞回畫面
+      const preview = document.getElementById("resultPreview");
+      const titleEl = preview.querySelector(".result-title");
+      const lines = preview.querySelectorAll(".result-line");
+
+      titleEl.textContent = "依照你目前填寫的初步分析摘要";
+      lines[0].innerHTML = "✅ 保險部分：" + `<span class="result-highlight">${protectLevel}</span>`;
+      lines[1].innerHTML = "💡 資產配置部分：依你的風險屬性，目前較接近 " +
+        `<span class="result-highlight">${profile}</span>，可參考的比例為：` +
+        `<span class="result-highlight">${mix}</span>`;
+      lines[2].innerHTML = "🔔 下一步建議：" + stepNext + (focusLine ? "<br>" + focusLine : "");
+
+      // 讓卡片閃一下
+      preview.style.animation = "none"; void preview.offsetWidth; preview.style.animation = "flash .6s ease-out";
+
+      // 顯示結果區（避免被你之前的 CSS 隱藏）
+      preview.style.display = "block";
+    }
+
+    // === 用 AI 產生建議（呼叫 Cloudflare Worker） ===
+    const AI_ENDPOINT = "https://cool-cell-b227.amy20060226.workers.dev/chat"; // ← 如需替換，改這裡
+
+    async function aiSuggest() {
+      const btn = document.getElementById("aiGenBtn");
+      const outBox = document.getElementById("aiOutput");
+      const aiTitle = document.getElementById("aiTitle");
+      const aiText  = document.getElementById("aiText");
+
+      // 收集資料
       const payload = {
-        age: Number(document.getElementById('age').value)||0,
-        family: document.getElementById('family').value,
-        income: document.getElementById('income').value,
-        assets: document.getElementById('assets').value,
-        risk: document.getElementById('risk').value,
-        insurance: document.getElementById('insurance').value,
-        focus: document.getElementById('focus').value.trim()
+        age: Number(document.getElementById("age").value || 0),
+        family: document.getElementById("family").value,
+        income: document.getElementById("income").value,
+        assets: document.getElementById("assets").value,
+        risk: document.getElementById("risk").value,
+        insurance: document.getElementById("insurance").value,
+        focus: (document.getElementById("focus").value || "").trim()
       };
 
-      try{
+      // 基本校驗（先要求用戶把表單必填選好）
+      if (!payload.family || !payload.income || !payload.assets || !payload.risk || !payload.insurance) {
+        outBox.style.display = "block";
+        aiTitle.textContent = "AI 建議產生失敗";
+        aiText.textContent = "請先把左側必填欄位都選好，再試一次。";
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "產生中…";
+      outBox.style.display = "block";
+      aiTitle.textContent = "AI 產生中…";
+      aiText.textContent = "請稍等 1–3 秒（依網路與模型負載而定）。";
+
+      try {
         const res = await fetch(AI_ENDPOINT, {
-          method:"POST",
-          headers:{ "Content-Type":"application/json" },
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
         });
 
-        const raw = await res.text(); // Worker 可能回 text/plain
-        if(!res.ok){
+        // Worker 多半回 text/plain；保險些就用 text() 接
+        const text = await res.text();
+
+        if (!res.ok) {
           aiTitle.textContent = "AI 建議產生失敗";
-          aiText.textContent  = `狀態 ${res.status}：${raw || "未知錯誤"}`;
-        }else{
-          let text = raw.trim();
-          // 若是 JSON（{"text":"..."}）就取 text；不是就當純文字
-          try{
-            const j = JSON.parse(raw);
-            if (j && typeof j === 'object'){
-              if (Array.isArray(j)) text = j.join("\n");
-              else if (j.text)      text = String(j.text);
-              else                  text = JSON.stringify(j, null, 2);
-            }
-          }catch(_){/* 不是 JSON，保留 raw */}
+          aiText.textContent = `狀態 ${res.status}：${text || "未知錯誤"}`;
+        } else {
           aiTitle.textContent = "依你的條件，AI 的建議摘要";
-          aiText.textContent  = text;
+          aiText.textContent = text.trim();
         }
-      }catch(err){
+      } catch (err) {
         aiTitle.textContent = "AI 建議產生失敗";
-        aiText.textContent  = `錯誤：${err.message || err}`;
-      }finally{
+        aiText.textContent = `錯誤：${err.message || err}`;
+      } finally {
         btn.disabled = false;
         btn.textContent = "用 AI 產生建議";
       }
     }
 
-    /* ===== 3) 語言切換：可點、可收合、記住選擇 ===== */
-    document.addEventListener("DOMContentLoaded", () => {
-      const switchEl = document.getElementById("langSwitch");
-      const toggleEl = document.getElementById("langToggle");
-      const menuEl   = document.getElementById("langMenu");
-      const items    = menuEl.querySelectorAll(".lang-item");
-      const current  = document.getElementById("langCurrent");
-
-      const saved = localStorage.getItem("taimic_lang") || "zh-Hant";
-      activeLang(saved);
-
-      toggleEl.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const open = switchEl.classList.toggle("open");
-        toggleEl.setAttribute("aria-expanded", String(open));
-      });
-
-      items.forEach(btn=>{
-        btn.addEventListener("click", (e)=>{
-          e.stopPropagation();
-          const lang = btn.dataset.lang;
-          activeLang(lang);
-          switchEl.classList.remove("open");
-          toggleEl.setAttribute("aria-expanded","false");
-        });
-      });
-
-      document.addEventListener("click", (e)=>{
-        if(!switchEl.contains(e.target)){
-          switchEl.classList.remove("open");
-          toggleEl.setAttribute("aria-expanded","false");
-        }
-      });
-
-      function activeLang(lang){
-        items.forEach(b=>{
-          b.classList.toggle("active", b.dataset.lang===lang);
-        });
-        current.textContent =
-          lang==="zh-Hant" ? "繁中" :
-          lang==="zh-Hans" ? "简中" :
-          lang==="ja"      ? "日本語" : "English";
-        localStorage.setItem("taimic_lang", lang);
-        applyI18n(lang);
-      }
-    });
-
-    /* ===== 4)（可選）簡易 i18n 文案 ===== */
-    const I18N = {
-      "zh-Hant": {
-        title:"3 分鐘試算你的「財務安全指數」",
-        age:"你的年齡", family:"家庭狀況", income:"大約月收入區間",
-        assets:"大約可投資資產規模", risk:"你覺得自己屬於哪種風險屬性？",
-        insuranceNow:"目前有沒有保單？", focus:"你最在意什麼？（選填）",
-        btn_demo:"產生 Demo 建議 ⚡", btn_ai:"用 AI 產生建議",
-        preview:"建議預覽", hint:"送出後右側會更新建議內容；不會寄信、不會儲存到任何伺服器。"
-      },
-      "en": {
-        title:"3-min Check: Your Financial Safety Index",
-        age:"Age", family:"Family status", income:"Monthly income range",
-        assets:"Investable assets", risk:"Risk tolerance",
-        insuranceNow:"Current insurance status", focus:"What do you care most? (optional)",
-        btn_demo:"Generate Demo Advice ⚡", btn_ai:"Generate with AI",
-        preview:"Preview", hint:"No email will be sent and nothing is stored. Right panel updates after submit."
-      },
-      "zh-Hans": {
-        title:"3 分钟试算你的「财务安全指数」",
-        age:"你的年龄", family:"家庭状况", income:"大约月收入区间",
-        assets:"可投资资产规模", risk:"你认为自己属于哪种风险属性？",
-        insuranceNow:"目前有没有保单？", focus:"你最在意什么？（选填）",
-        btn_demo:"产生 Demo 建议 ⚡", btn_ai:"用 AI 产生建议",
-        preview:"建议预览", hint:"右侧会更新建议，不会发信、不做存储。"
-      },
-      "ja": {
-        title:"3分で分かるあなたの『資産安全指数』",
-        age:"年齢", family:"家族状況", income:"月収の目安",
-        assets:"投資可能資産", risk:"リスク許容度",
-        insuranceNow:"保険の状況", focus:"一番気になること（任意）",
-        btn_demo:"デモ提案を作成 ⚡", btn_ai:"AIで提案を作成",
-        preview:"プレビュー", hint:"右側に結果が表示され、メール送信も保存も行いません。"
-      }
-    };
-
-    function applyI18n(lang){
-      const dict = I18N[lang] || I18N["zh-Hant"];
-      document.querySelectorAll("[data-i18n]").forEach(el=>{
-        const key = el.getAttribute("data-i18n");
-        if(dict[key]) el.textContent = dict[key];
-      });
-    }
+    document.getElementById("aiGenBtn").addEventListener("click", aiSuggest);
   </script>
 </body>
 </html>
