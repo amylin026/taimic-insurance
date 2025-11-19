@@ -709,6 +709,50 @@
         transform: scale(1);
       }
     }
+    /* -------- 優化補丁 (Optimizations) -------- */
+
+/* 1. 啟用原生平滑捲動 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 2. iOS 輸入體驗優化 */
+@media (max-width: 640px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* 3. 簡單的手機版導航調整 (讓它變成橫向可滑動，不會消失也不會換行) */
+@media (max-width: 900px) {
+  .site-header {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  
+  .header-center {
+    order: 3; /* 把選單換到最下面一行 */
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto; /* 允許橫向滑動 */
+    padding-bottom: 8px;
+    white-space: nowrap; /* 強制不換行 */
+    -webkit-overflow-scrolling: touch; /* iOS 滑動慣性 */
+    gap: 20px;
+    border-top: 1px solid #f3f4f6;
+    padding-top: 10px;
+  }
+  
+  /* 隱藏捲軸 */
+  .header-center::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* 4. 增加點擊區域，讓手機好點一點 */
+.top-nav-link {
+  padding: 8px 4px; 
+}
   </style>
 </head>
 <body>
