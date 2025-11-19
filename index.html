@@ -2,475 +2,439 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <title>Taimic｜AI 財富決策</title>
+  <title>Taimic｜AI 財富決策系統</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
-  <meta name="description" content="Taimic 運用 AI 幫你檢視保險保障和資產配置，提供簡單易懂的財務規劃建議。" />
-  <meta property="og:title" content="Taimic｜AI 財富決策" />
-  <meta property="og:image" content="https://placehold.co/1200x630/0066CC/ffffff?text=Taimic+AI+Wealth" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2240%22 fill=%22%230066CC%22/><text x=%2250%22 y=%2260%22 font-family=%22sans-serif%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22>AI</text></svg>" />
+  <meta name="description" content="Taimic 運用 AI 運算模型，協助個人建構最佳化的保險防護與資產配置策略。" />
+  <meta property="og:title" content="Taimic｜AI 財富決策系統" />
+  <meta property="og:image" content="https://placehold.co/1200x630/0057b8/ffffff?text=Taimic+Technology" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230057b8%22 rx=%2210%22/><path d=%22M30 50 L50 70 L80 30%22 stroke=%22white%22 stroke-width=%2210%22 fill=%22none%22/></svg>" />
 
   <style>
-    /* -------- 1. 企業識別系統 (CIS) -------- */
+    /* -------- 1. 企業識別與基礎設定 (Corporate Identity) -------- */
     :root {
-      /* 科技藍：稍微亮一點，更親民 */
-      --brand-color: #007bff; /* 標準的 Bootstrap primary blue */
-      --brand-dark: #0056b3;
-      --brand-light: #e6f2ff; /* 淺藍色背景 */
+      /* Taimic 科技藍 (參考 TSMC/Intel 穩重色系) */
+      --brand-primary: #0057b8; 
+      --brand-dark: #003a7a;
+      --brand-light: #eef4fb;
       
-      /* 企業灰階 */
-      --text-primary: #212529; /* 深灰 */
-      --text-secondary: #6c757d; /* 中灰 */
-      --bg-body: #FFFFFF;
-      --bg-light: #f8f9fa; /* 更淺的背景 */
-      --border-color: #dee2e6; /* 標準邊框灰 */
+      /* 介面顏色 */
+      --text-main: #1f2933;      /* 深灰黑 */
+      --text-sub: #52606d;       /* 次要灰 */
+      --bg-body: #ffffff;
+      --bg-section: #f8f9fa;
+      --border-color: #e1e4e8;
 
-      /* 形狀：直角、俐落 */
-      --radius-xs: 2px; 
-      --radius-none: 0px;
+      /* 形狀：直角、硬派科技風 */
+      --radius-base: 2px; 
       
-      --max-width: 1200px; 
-      --header-height: 70px; /* 稍微降低高度 */
+      --header-height: 72px;
+      --max-width: 1280px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: "Noto Sans TC", "Helvetica Neue", Helvetica, Arial, "PingFang TC", "Heiti TC", "Microsoft JhengHei", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
       background: var(--bg-body);
-      color: var(--text-primary);
+      color: var(--text-main);
       line-height: 1.6;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
 
-    a { text-decoration: none; color: inherit; transition: 0.2s; }
-    ul { list-style: none; }
+    a { text-decoration: none; color: inherit; transition: all 0.2s; }
+    button { font-family: inherit; }
 
-    /* -------- 2. Header (企業級導覽列) -------- */
+    /* -------- 2. Header 導覽列 (Sticky & Solid) -------- */
     .site-header-wrap {
-      width: 100%;
-      background: #fff;
-      border-bottom: 1px solid var(--border-color);
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* 更輕的陰影 */
+      background: rgba(255, 255, 255, 0.98);
+      border-bottom: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
     }
 
     .site-header {
       max-width: var(--max-width);
       margin: 0 auto;
       height: var(--header-height);
-      padding: 0 24px; 
+      padding: 0 30px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    /* Logo 區塊 */
+    /* Logo 區域 */
     .header-left {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    /* === 新版科技 Logo：AI 圖標 (更簡潔易懂) === */
+    /* 抽象科技時鐘 Logo (CSS 繪製) */
     .logo-icon {
       width: 36px;
       height: 36px;
       position: relative;
-      background: var(--brand-color);
-      border-radius: 50%; /* 圓形 Logo */
+      border: 2px solid var(--brand-primary);
+      border-radius: 50%; /* 外圓 */
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 700;
-      color: #fff;
-      font-size: 18px;
+    }
+    /* 內部軌道 (代表數據流動) */
+    .logo-icon::before {
+      content: "";
+      position: absolute;
+      width: 24px; height: 24px;
+      border: 2px solid transparent;
+      border-top-color: var(--brand-primary);
+      border-right-color: var(--brand-primary);
+      border-radius: 50%;
+      transform: rotate(45deg);
+    }
+    /* 中心點與指針 (代表精準) */
+    .logo-icon::after {
+      content: "";
+      position: absolute;
+      width: 2px; height: 10px;
+      background: var(--brand-primary);
+      top: 5px; left: 50%;
+      transform: translateX(-50%);
     }
 
-    .logo-text {
+    .logo-text-group {
       display: flex;
       flex-direction: column;
       line-height: 1.1;
     }
     .logo-title {
       font-size: 20px;
-      font-weight: 700; 
+      font-weight: 800;
+      color: var(--brand-primary);
       letter-spacing: 0.5px;
-      color: var(--brand-color);
     }
     .logo-sub {
-      font-size: 11px;
-      color: var(--text-secondary);
+      font-size: 10px;
+      color: var(--text-sub);
       letter-spacing: 1px;
-      text-transform: uppercase;
+      font-weight: 600;
     }
 
-    /* 導覽選單 */
+    /* 中間導覽選單 */
     .header-nav {
       display: flex;
       height: 100%;
+      gap: 4px;
     }
     .nav-item {
       display: flex;
       align-items: center;
-      padding: 0 20px;
+      padding: 0 16px;
       font-size: 15px;
-      font-weight: 500;
-      color: var(--text-primary);
+      font-weight: 600;
+      color: var(--text-main);
       position: relative;
       height: 100%;
       cursor: pointer;
     }
     .nav-item:hover {
-      color: var(--brand-color);
-      background: var(--bg-light);
+      color: var(--brand-primary);
+      background: var(--brand-light);
     }
-    .nav-item::before {
+    /* 台積電風格：下方紅線/藍線指示 */
+    .nav-item::after {
       content: "";
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 3px; /* 稍微細一點 */
-      background: var(--brand-color);
-      transform: scaleY(0);
+      bottom: 0; left: 0; width: 100%; height: 3px;
+      background: var(--brand-primary);
+      transform: scaleX(0);
       transition: transform 0.2s;
     }
-    .nav-item:hover::before { transform: scaleY(1); }
+    .nav-item:hover::after { transform: scaleX(1); }
 
-    /* 右側功能區 */
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    /* 語言切換：簡單按鈕 */
-    .lang-toggle-btn {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
+    /* 右側語言切換 */
+    .lang-btn {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-sub);
       border: 1px solid var(--border-color);
-      padding: 6px 12px;
-      border-radius: var(--radius-xs);
+      padding: 6px 16px;
+      border-radius: var(--radius-base);
       background: #fff;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 4px;
-      transition: all 0.2s;
+      gap: 6px;
     }
-    .lang-toggle-btn:hover { 
-      color: var(--brand-color); 
-      border-color: var(--brand-color);
-      background: var(--brand-light);
+    .lang-btn:hover {
+      border-color: var(--brand-primary);
+      color: var(--brand-primary);
     }
 
-    /* -------- 3. Hero Section (左右對稱布局) -------- */
+    /* -------- 3. Hero Section (專業大氣版面) -------- */
     .hero-wrap {
       width: 100%;
-      background: var(--bg-light); /* 更淺的背景色 */
-      padding: 60px 0;
+      background: linear-gradient(to right, #ffffff 50%, var(--bg-section) 50%);
+      padding: 80px 0;
       border-bottom: 1px solid var(--border-color);
     }
     
     .hero-inner {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 30px;
       display: grid;
-      grid-template-columns: 1fr 1fr; /* 左右均分 */
-      gap: 40px;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
       align-items: center;
     }
 
     .hero-content h1 {
-      font-size: 42px; /* 稍微小一點 */
+      font-size: 42px;
       font-weight: 700;
       line-height: 1.3;
-      margin-bottom: 20px;
-      color: var(--text-primary);
+      margin-bottom: 24px;
+      color: #111;
     }
     .hero-content h1 span {
-      color: var(--brand-color);
-      border-bottom: 3px solid var(--brand-color); /* 強調線 */
-      padding-bottom: 4px;
+      color: var(--brand-primary);
     }
     
     .hero-content p {
-      font-size: 17px;
-      color: var(--text-secondary);
-      margin-bottom: 30px;
-      max-width: 500px;
+      font-size: 18px;
+      color: var(--text-sub);
+      margin-bottom: 32px;
+      max-width: 540px;
     }
 
-    /* 按鈕組：方正、無圓角 */
-    .btn-group { display: flex; gap: 12px; }
+    .btn-group { display: flex; gap: 16px; }
     
     .btn-primary {
-      background: var(--brand-color);
+      background: var(--brand-primary);
       color: #fff;
-      padding: 12px 28px;
-      font-size: 16px;
+      padding: 12px 32px;
+      font-size: 15px;
       font-weight: 600;
       border: none;
-      border-radius: var(--radius-xs);
+      border-radius: var(--radius-base);
       cursor: pointer;
-      transition: background 0.2s;
     }
     .btn-primary:hover { background: var(--brand-dark); }
 
     .btn-outline {
       background: transparent;
-      color: var(--text-primary);
-      border: 1px solid var(--border-color);
-      padding: 12px 28px;
-      font-size: 16px;
-      font-weight: 600;
-      border-radius: var(--radius-xs);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-outline:hover { 
-      border-color: var(--brand-color); 
-      color: var(--brand-color); 
-      background: #fff;
-    }
-
-    /* 右側視覺：資訊圖表風格 */
-    .hero-visual {
-      background: #fff;
-      border: 1px solid var(--border-color);
-      padding: 30px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-    }
-    .visual-title {
+      color: var(--text-main);
+      border: 1px solid #ccc;
+      padding: 12px 32px;
       font-size: 15px;
+      font-weight: 600;
+      border-radius: var(--radius-base);
+      cursor: pointer;
+    }
+    .btn-outline:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
+
+    /* Hero 右側視覺卡片 */
+    .hero-card {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--brand-primary);
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+    }
+    .hero-card-title {
+      font-size: 14px;
       font-weight: 700;
-      color: var(--text-secondary);
-      text-transform: uppercase;
+      color: #999;
       letter-spacing: 1px;
       margin-bottom: 20px;
-      border-bottom: 1px dashed var(--border-color);
-      padding-bottom: 10px;
+      text-transform: uppercase;
     }
-    .visual-list li {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 10px;
-      font-size: 15px;
-      color: var(--text-primary);
+    .hero-list li {
+      margin-bottom: 12px;
+      padding-left: 20px;
+      position: relative;
+      font-size: 16px;
+      color: var(--text-main);
     }
-    .visual-list li::before {
-      content: "•"; /* 簡單的圓點 */
-      color: var(--brand-color);
-      font-size: 20px;
-      margin-right: 10px;
-      line-height: 1;
+    .hero-list li::before {
+      content: "■";
+      color: var(--brand-primary);
+      font-size: 10px;
+      position: absolute;
+      left: 0; top: 7px;
     }
 
-    /* -------- 4. Content Sections (標準網格) -------- */
+    /* -------- 4. 通用區塊與網格 -------- */
     .section-wrap {
-      padding: 60px 0;
+      padding: 80px 0;
       border-bottom: 1px solid var(--border-color);
     }
     .container {
       max-width: var(--max-width);
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 30px;
     }
 
-    .section-head { margin-bottom: 30px; text-align: center; } /* 標題置中 */
+    .section-head { margin-bottom: 48px; }
     .section-head h2 {
-      font-size: 30px;
+      font-size: 32px;
       font-weight: 700;
-      margin-bottom: 10px;
-      color: var(--text-primary);
+      margin-bottom: 12px;
+      position: relative;
+      display: inline-block;
     }
-    .section-head p { font-size: 16px; color: var(--text-secondary); max-width: 800px; margin: 0 auto; }
+    /* 標題下方小藍線 */
+    .section-head h2::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: var(--brand-primary);
+      margin-top: 12px;
+    }
+    .section-head p {
+      font-size: 16px;
+      color: var(--text-sub);
+      margin-top: 16px;
+      max-width: 700px;
+    }
 
-    /* 3欄佈局 */
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+      gap: 30px;
     }
 
-    /* 硬派卡片 */
-    .corp-card {
+    /* 科技卡片 (Tech Card) */
+    .tech-card {
       background: #fff;
       border: 1px solid var(--border-color);
-      padding: 24px;
-      height: 100%;
-      transition: border-color 0.3s, box-shadow 0.3s;
-      text-align: center; /* 內容置中 */
+      padding: 32px;
+      transition: all 0.3s;
     }
-    .corp-card:hover {
-      border-color: var(--brand-color);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    .tech-card:hover {
+      border-color: var(--brand-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
     }
-    .corp-card h3 {
+    .tech-card h3 {
       font-size: 18px;
       font-weight: 700;
-      margin-bottom: 10px;
-      color: var(--text-primary);
+      margin-bottom: 12px;
+      color: #111;
     }
-    .corp-card p {
+    .tech-card p {
       font-size: 14px;
-      color: var(--text-secondary);
+      color: var(--text-sub);
       line-height: 1.7;
     }
 
-    /* -------- 5. 評估工具 (儀表板風格) -------- */
-    .assessment-container {
+    /* -------- 5. 評估工具 (Dashboard Style) -------- */
+    .assess-grid {
       display: grid;
-      grid-template-columns: 350px 1fr; /* 左側控制面板，右側結果 */
+      grid-template-columns: 320px 1fr;
       border: 1px solid var(--border-color);
       background: #fff;
-      min-height: 500px; /* 最小高度 */
     }
-    
-    /* 左側面板 */
-    .assess-panel {
-      background: var(--bg-light);
-      padding: 30px;
+    .assess-sidebar {
+      background: #f9fafb;
+      padding: 32px;
       border-right: 1px solid var(--border-color);
     }
     .assess-main {
-      padding: 30px;
+      padding: 32px;
       background: #fff;
+      min-height: 400px;
     }
 
-    .form-group { margin-bottom: 18px; }
+    .form-group { margin-bottom: 20px; }
     .form-label {
       display: block;
       font-size: 13px;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 6px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
     }
-    .form-input, .form-select, .form-textarea {
+    .form-control {
       width: 100%;
-      padding: 9px 12px;
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-xs);
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: var(--radius-base);
       font-size: 14px;
       background: #fff;
-      color: var(--text-primary);
     }
-    .form-input:focus, .form-select:focus, .form-textarea:focus {
+    .form-control:focus {
       outline: none;
-      border-color: var(--brand-color);
-      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* 輕微藍色光暈 */
+      border-color: var(--brand-primary);
     }
-    .form-textarea { resize: vertical; }
-
+    
     .btn-submit-full {
       width: 100%;
-      background: var(--brand-color);
+      background: var(--brand-primary);
       color: #fff;
-      padding: 10px;
+      padding: 12px;
       font-weight: 600;
       border: none;
-      border-radius: var(--radius-xs);
+      border-radius: var(--radius-base);
       cursor: pointer;
       margin-top: 10px;
-      transition: background 0.2s;
     }
     .btn-submit-full:hover { background: var(--brand-dark); }
 
-    /* 結果顯示區 */
-    .result-placeholder {
+    /* 結果區域 */
+    .result-empty {
       height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      color: var(--text-secondary);
+      color: #999;
+      border: 2px dashed #eee;
       text-align: center;
-      border: 2px dashed var(--border-color);
-      padding: 30px;
+      padding: 40px;
     }
-    .result-placeholder .icon { font-size: 48px; color: #ced4da; margin-bottom: 16px; }
     .result-data { display: none; }
-    .result-data h3 {
-      color: var(--brand-color); 
-      margin-bottom: 16px; 
-      border-bottom: 2px solid var(--brand-color); 
-      padding-bottom: 8px;
-      font-size: 20px;
-      font-weight: 700;
-    }
-    .result-data pre {
-        background: var(--bg-light);
-        padding: 15px;
-        border: 1px solid var(--border-color);
-        white-space: pre-wrap; /* 處理長文字換行 */
-        word-wrap: break-word;
-        font-family: monospace;
-        font-size: 14px;
-        line-height: 1.8;
-        color: var(--text-primary);
+    .result-report {
+      font-family: "Menlo", "Monaco", "Courier New", monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      color: #333;
+      white-space: pre-line;
+      background: #f4f6f8;
+      padding: 20px;
+      border-radius: var(--radius-base);
+      border: 1px solid #e1e4e8;
     }
 
-    /* -------- 6. Footer -------- */
-    .corp-footer {
-      background: var(--text-primary); /* 深灰 */
+    /* -------- 6. Footer (Simple) -------- */
+    .site-footer {
+      background: #1f2933;
       color: #fff;
-      padding: 40px 0 20px;
+      padding: 40px 0;
+      font-size: 13px;
       margin-top: auto;
     }
-    .footer-inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 24px;
-      text-align: center;
-    }
-    .footer-logo-name {
-      font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #fff;
-    }
-    .footer-sub-text {
-      color: #ced4da;
-      font-size: 14px;
-      margin-bottom: 20px;
-    }
-    .footer-copy {
-      border-top: 1px solid #495057;
-      padding-top: 20px;
-      margin-top: 20px;
-      font-size: 12px;
-      color: #adb5bd;
+    .footer-content {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    .footer-links a {
-      color: #adb5bd;
-      margin-left: 15px;
-    }
-    .footer-links a:hover {
-      color: #fff;
-      text-decoration: underline;
-    }
+    .footer-links span { margin-left: 20px; color: #888; cursor: pointer; }
+    .footer-links span:hover { color: #fff; }
 
-
-    /* -------- 7. Modal (人才招募彈窗) -------- */
+    /* -------- 7. Modal (人才招募) -------- */
     .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
       z-index: 2000;
       display: none;
       align-items: center;
       justify-content: center;
+      backdrop-filter: blur(3px);
     }
     .modal-overlay.active { display: flex; }
     
@@ -478,48 +442,28 @@
       background: #fff;
       width: 500px;
       max-width: 90%;
-      padding: 30px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+      padding: 40px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
       position: relative;
-      border-radius: var(--radius-xs);
+      border-radius: var(--radius-base);
     }
     .modal-close {
-      position: absolute;
-      top: 15px; right: 15px;
-      font-size: 28px;
-      color: #999;
-      cursor: pointer;
-      line-height: 1;
+      position: absolute; top: 20px; right: 20px;
+      font-size: 24px; color: #999; cursor: pointer;
     }
     .modal-title {
-      font-size: 26px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      color: var(--brand-color);
-      border-bottom: 2px solid var(--brand-color);
-      padding-bottom: 10px;
-      display: inline-block;
+      font-size: 22px; font-weight: 700; color: var(--brand-primary);
+      margin-bottom: 20px; border-bottom: 2px solid var(--brand-primary);
+      padding-bottom: 10px; display: inline-block;
     }
 
     /* RWD */
-    @media (max-width: 992px) { /* Tablet and smaller */
-      .site-header { padding: 0 15px; }
-      .nav-item { padding: 0 10px; font-size: 14px; }
-      .header-nav { display: none; } /* Hide nav on smaller screens */
-      .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 30px; padding: 0 15px; }
-      .hero-content p { margin: 0 auto 25px; }
-      .btn-group { justify-content: center; }
-      .hero-wrap { padding: 40px 0; }
-      .section-wrap { padding: 40px 0; }
-      .section-head h2 { font-size: 26px; }
-      .section-head p { font-size: 15px; }
-      .grid-3 { grid-template-columns: 1fr; gap: 20px; }
-      .assessment-container { grid-template-columns: 1fr; min-height: auto; }
-      .assess-panel { border-right: none; border-bottom: 1px solid var(--border-color); }
-      .assess-main { padding: 20px; }
-      .corp-footer { padding: 30px 0 15px; }
-      .footer-copy { flex-direction: column; gap: 10px; text-align: center; }
-      .footer-links a { margin: 0 8px; }
+    @media (max-width: 900px) {
+      .site-header { padding: 0 20px; }
+      .nav-item { display: none; } /* 手機版隱藏選單，保持介面乾淨 */
+      .hero-inner, .assess-grid, .grid-3 { grid-template-columns: 1fr; }
+      .hero-wrap { background: #fff; }
+      .assess-sidebar { border-right: none; border-bottom: 1px solid var(--border-color); }
     }
   </style>
 </head>
@@ -528,24 +472,24 @@
   <div class="site-header-wrap">
     <header class="site-header">
       <div class="header-left">
-        <div class="logo-icon">AI</div>
-        <div class="logo-text">
+        <div class="logo-icon"></div>
+        <div class="logo-text-group">
           <div class="logo-title">Taimic</div>
-          <div class="logo-sub">AI WEALTH</div>
+          <div class="logo-sub" data-i18n="logo.sub">AI WEALTH</div>
         </div>
       </div>
 
       <nav class="header-nav">
-        <a href="#overview" class="nav-item" data-i18n="nav.service">服務</a>
-        <a href="#flow" class="nav-item" data-i18n="nav.ai_tech">AI 原理</a>
-        <a href="#assessment" class="nav-item" data-i18n="nav.tool">試算工具</a>
+        <a href="#overview" class="nav-item" data-i18n="nav.solution">解決方案</a>
+        <a href="#tech" class="nav-item" data-i18n="nav.tech">核心技術</a>
+        <a href="#tool" class="nav-item" data-i18n="nav.tool">決策工具</a>
         <a href="#about" class="nav-item" data-i18n="nav.about">關於我們</a>
         <a href="#" class="nav-item" onclick="openModal()" data-i18n="nav.career">人才招募</a>
       </nav>
 
       <div class="header-right">
-        <button class="lang-toggle-btn" id="langToggle">
-          <span>🌐</span> <span id="currentLang">繁中</span>
+        <button class="lang-btn" id="langToggle">
+          <span>🌐</span> <span id="langLabel">English</span>
         </button>
       </div>
     </header>
@@ -555,25 +499,25 @@
     <div class="hero-inner">
       <div class="hero-content">
         <h1 data-i18n="hero.title">
-          用 AI 協助你<br>做好 <span>保險與資產規劃</span>
+          數據驅動的<br><span>資產防護決策系統</span>
         </h1>
         <p data-i18n="hero.desc">
-          Taimic 是一個智能決策輔助工具，透過 AI 分析，讓你清楚了解
-          目前的保險夠不夠，以及資產該怎麼配置更穩健。
+          Taimic 運用演算法模型，協助您檢視「風險保障」與「資產配置」的平衡性，
+          提供客觀、不含銷售意圖的決策輔助。
         </p>
         <div class="btn-group">
-          <button class="btn-primary" onclick="scrollToId('assessment')" data-i18n="hero.btn1">立即免費試算</button>
-          <button class="btn-outline" onclick="scrollToId('overview')" data-i18n="hero.btn2">了解 AI 怎麼幫你</button>
+          <button class="btn-primary" onclick="scrollToId('tool')" data-i18n="hero.btn1">開始模型試算</button>
+          <button class="btn-outline" onclick="scrollToId('overview')" data-i18n="hero.btn2">了解核心邏輯</button>
         </div>
       </div>
       
-      <div class="hero-visual">
-        <div class="visual-title" data-i18n="card.title">Taimic 智能分析</div>
-        <ul class="visual-list" data-i18n="card.list">
-          <li>風險缺口評估：檢視保障是否足夠</li>
-          <li>資產配置建議：根據你的狀況給出比例</li>
-          <li>不推銷商品：只提供客觀數據與建議</li>
-          <li>操作簡單：回答幾個問題就能上手</li>
+      <div class="hero-card">
+        <div class="hero-card-title" data-i18n="card.title">SYSTEM OVERVIEW</div>
+        <ul class="hero-list" data-i18n="card.list">
+          <li>Dynamic Risk Assessment (動態風險評估)</li>
+          <li>Asset Allocation Modeling (資產配置模型)</li>
+          <li>Gap Analysis (缺口分析)</li>
+          <li>Objective Decision Support (客觀決策支援)</li>
         </ul>
       </div>
     </div>
@@ -582,120 +526,230 @@
   <div class="section-wrap" id="overview">
     <div class="container">
       <div class="section-head">
-        <h2 data-i18n="overview.title">Taimic 怎麼幫你？</h2>
-        <p data-i18n="overview.sub">我們將複雜的財務規劃，簡化成三個核心步驟，讓你輕鬆掌握自己的財務狀況。</p>
+        <h2 data-i18n="over.title">關鍵解決方案</h2>
+        <p data-i18n="over.sub">針對傳統金融服務割裂問題，我們提供整合式的資產對策。</p>
       </div>
       <div class="grid-3">
-        <div class="corp-card">
-          <h3 data-i18n="feat.1.title">風險檢視</h3>
-          <p data-i18n="feat.1.desc">透過 AI 快速評估你的保障缺口，找出醫療、壽險、重大傷病等潛在風險，避免資產受損。</p>
+        <div class="tech-card">
+          <h3 data-i18n="f1.title">風險防護網建構</h3>
+          <p data-i18n="f1.desc">運用量化數據分析潛在財務衝擊，精準計算醫療與壽險缺口，建立防禦底線。</p>
         </div>
-        <div class="corp-card">
-          <h3 data-i18n="feat.2.title">資產配置</h3>
-          <p data-i18n="feat.2.desc">根據你的年齡、收入、風險偏好，給出客觀的現金、債券、股票配置建議，協助資產穩健增長。</p>
+        <div class="tech-card">
+          <h3 data-i18n="f2.title">資產分層管理</h3>
+          <p data-i18n="f2.desc">基於生命週期理論，將資產劃分為流動層、安全層與成長層，確保長期複利效應。</p>
         </div>
-        <div class="corp-card">
-          <h3 data-i18n="feat.3.title">個人化報告</h3>
-          <p data-i18n="feat.3.desc">生成一份簡單易懂的分析報告，讓你對自己的財務狀況一目瞭然，作為後續規劃的參考。</p>
+        <div class="tech-card">
+          <h3 data-i18n="f3.title">AI 輔助決策</h3>
+          <p data-i18n="f3.desc">利用演算法模型，快速篩選適合使用者的標準化配置架構，減少人為偏誤。</p>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="section-wrap" id="flow" style="background: var(--bg-light);">
+  <div class="section-wrap" id="tool" style="background: #f8f9fa;">
     <div class="container">
       <div class="section-head">
-        <h2 data-i18n="flow.title">Taimic AI 的運作原理</h2>
-        <p data-i18n="flow.sub">我們運用大數據和智能演算法，為你提供客觀、高效的財務建議。</p>
-      </div>
-      <div class="grid-3">
-        <div class="corp-card">
-          <h3 data-i18n="ai.1.title">數據分析</h3>
-          <p data-i18n="ai.1.desc">整合市場數據與個人財務模型，精準分析風險與收益潛力。</p>
-        </div>
-        <div class="corp-card">
-          <h3 data-i18n="ai.2.title">智能演算法</h3>
-          <p data-i18n="ai.2.desc">基於馬可維茲投資組合理論與風險值模型，優化資產配置策略。</p>
-        </div>
-        <div class="corp-card">
-          <h3 data-i18n="ai.3.title">持續學習</h3>
-          <p data-i18n="ai.3.desc">模型會根據市場變化與新數據持續學習、迭代，確保建議的時效性與準確度。</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-wrap" id="assessment">
-    <div class="container">
-      <div class="section-head">
-        <h2 data-i18n="tool.title">3 分鐘免費試算你的「財務健康度」</h2>
-        <p data-i18n="tool.sub">請回答幾個簡單問題，立即獲得 AI 分析報告。</p>
+        <h2 data-i18n="tool.title">財務模型試算</h2>
+        <p data-i18n="tool.sub">輸入關鍵參數，系統將生成初步的風險與配置報告。</p>
       </div>
 
-      <div class="assessment-container">
-        <div class="assess-panel">
+      <div class="assess-grid">
+        <div class="assess-sidebar">
           <form id="calcForm">
             <div class="form-group">
-              <label class="form-label" for="age" data-i18n="form.age">年齡</label>
-              <input type="number" class="form-input" id="age" placeholder="例如：35" required>
+              <label class="form-label" data-i18n="form.age">年齡 (Age)</label>
+              <input type="number" class="form-control" id="age" placeholder="Ex: 35" required>
             </div>
             <div class="form-group">
-              <label class="form-label" for="income" data-i18n="form.income">月收入範圍</label>
-              <select class="form-select" id="income" required>
-                <option value="">請選擇</option>
-                <option value="low">5 萬以下</option>
-                <option value="mid">5 - 10 萬</option>
-                <option value="high">10 萬以上</option>
+              <label class="form-label" data-i18n="form.risk">風險屬性 (Risk Profile)</label>
+              <select class="form-control" id="risk" required>
+                <option value="">Select...</option>
+                <option value="low">保守型 (Conservative)</option>
+                <option value="mid">穩健型 (Moderate)</option>
+                <option value="high">積極型 (Aggressive)</option>
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label" for="risk" data-i18n="form.risk">風險偏好</label>
-              <select class="form-select" id="risk" required>
-                <option value="">請選擇</option>
-                <option value="conservative">保守型</option>
-                <option value="moderate">穩健型</option>
-                <option value="aggressive">積極型</option>
+              <label class="form-label" data-i18n="form.ins">保障現況 (Current Coverage)</label>
+              <select class="form-control" id="ins" required>
+                <option value="">Select...</option>
+                <option value="none">不足 (Insufficient)</option>
+                <option value="ok">充足 (Adequate)</option>
               </select>
             </div>
-            <div class="form-group">
-              <label class="form-label" for="insurance" data-i18n="form.insurance">目前保險狀況</label>
-              <select class="form-select" id="insurance" required>
-                <option value="">請選擇</option>
-                <option value="none">幾乎沒有</option>
-                <option value="basic">有基礎保障</option>
-                <option value="comprehensive">保障很充足</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="goal" data-i18n="form.goal">主要財務目標 (選填)</label>
-              <textarea class="form-textarea" id="goal" rows="2" placeholder="例如：退休規劃、子女教育金..."></textarea>
-            </div>
-            <button type="submit" class="btn-submit-full" data-i18n="form.submit">立即分析</button>
-            <p style="font-size:12px; color:var(--text-secondary); text-align:center; margin-top:10px;" data-i18n="form.note">
-              本工具不儲存個人資料，結果僅供參考。
-            </p>
+            <button type="submit" class="btn-submit-full" data-i18n="form.submit">執行分析 (Run Analysis)</button>
           </form>
         </div>
 
         <div class="assess-main">
-          <div class="result-placeholder" id="resPlaceholder">
-            <div class="icon">🤖</div>
-            <div data-i18n="res.hint">等待你的輸入...<br>填寫左側問題，讓 AI 幫你規劃！</div>
+          <div class="result-empty" id="resEmpty">
+            <div style="font-size:40px; margin-bottom:10px;">📊</div>
+            <div data-i18n="res.wait">等待參數輸入...</div>
           </div>
           <div class="result-data" id="resData">
-            <h3 data-i18n="res.report_title">Taimic AI 分析報告</h3>
-            <pre id="resContent"></pre>
+            <h3 data-i18n="res.title">分析報告</h3>
+            <div class="result-report" id="resReport"></div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="section-wrap" id="about">
+  <footer class="site-footer">
     <div class="container">
-      <div class="section-head">
-        <h2 data-i18n="about.title">關於 Taimic</h2>
-        <p data-i18n="about.sub">我們相信，透過 AI 技術，每個人都能更智慧地管理財富。</p>
+      <div class="footer-content">
+        <div>
+          <div style="font-size:18px; font-weight:700; margin-bottom:8px;">Taimic Inc.</div>
+          <div style="color:#888;">© 2025 All Rights Reserved.</div>
+        </div>
+        <div class="footer-links">
+          <span>Privacy Policy</span>
+          <span>Terms of Use</span>
+        </div>
       </div>
-      <div style="text-align:center; padding:20px;">
-        <p style="max-width:8
+    </div>
+  </footer>
+
+  <div class="modal-overlay" id="careerModal">
+    <div class="modal-box">
+      <div class="modal-close" onclick="closeModal()">×</div>
+      <div class="modal-title" data-i18n="modal.title">加入 Taimic</div>
+      <p style="margin-bottom:20px; color:#666;" data-i18n="modal.desc">我們正在尋找具備金融科技熱忱的夥伴。請留下您的資訊。</p>
+      
+      <form onsubmit="alert('感謝申請！'); closeModal(); return false;">
+        <div class="form-group">
+          <label class="form-label" data-i18n="modal.name">姓名</label>
+          <input type="text" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="modal.phone">手機</label>
+          <input type="tel" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="modal.email">Email</label>
+          <input type="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="modal.why">為什麼想加入？</label>
+          <textarea class="form-control" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn-submit-full" data-i18n="modal.btn">送出申請</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function scrollToId(id) { document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'}); }
+    
+    /* Modal Logic */
+    const modal = document.getElementById('careerModal');
+    function openModal() { modal.classList.add('active'); }
+    function closeModal() { modal.classList.remove('active'); }
+    modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+
+    /* Language Logic */
+    let currentLang = 'zh-Hant';
+    const langBtn = document.getElementById('langToggle');
+    const langLabel = document.getElementById('langLabel');
+
+    const i18n = {
+      'zh-Hant': {
+        'logo.sub': 'AI WEALTH',
+        'nav.solution': '解決方案', 'nav.tech': '核心技術', 'nav.tool': '決策工具', 'nav.about': '關於我們', 'nav.career': '人才招募',
+        'hero.title': '數據驅動的<br><span>資產防護決策系統</span>',
+        'hero.desc': 'Taimic 運用演算法模型，協助您檢視「風險保障」與「資產配置」的平衡性，提供客觀、不含銷售意圖的決策輔助。',
+        'hero.btn1': '開始模型試算', 'hero.btn2': '了解核心邏輯',
+        'card.title': 'SYSTEM OVERVIEW', 'card.list': '<li>Dynamic Risk Assessment (動態風險評估)</li><li>Asset Allocation Modeling (資產配置模型)</li><li>Gap Analysis (缺口分析)</li><li>Objective Decision Support (客觀決策支援)</li>',
+        'over.title': '關鍵解決方案', 'over.sub': '針對傳統金融服務割裂問題，我們提供整合式的資產對策。',
+        'f1.title': '風險防護網建構', 'f1.desc': '運用量化數據分析潛在財務衝擊，精準計算醫療與壽險缺口，建立防禦底線。',
+        'f2.title': '資產分層管理', 'f2.desc': '基於生命週期理論，將資產劃分為流動層、安全層與成長層，確保長期複利效應。',
+        'f3.title': 'AI 輔助決策', 'f3.desc': '利用演算法模型，快速篩選適合使用者的標準化配置架構，減少人為偏誤。',
+        'tool.title': '財務模型試算', 'tool.sub': '輸入關鍵參數，系統將生成初步的風險與配置報告。',
+        'form.age': '年齡 (Age)', 'form.risk': '風險屬性 (Risk Profile)', 'form.ins': '保障現況 (Current Coverage)', 'form.submit': '執行分析 (Run Analysis)',
+        'res.wait': '等待參數輸入...', 'res.title': '分析報告',
+        'modal.title': '加入 Taimic', 'modal.desc': '我們正在尋找具備金融科技熱忱的夥伴。請留下您的資訊。',
+        'modal.name': '姓名', 'modal.phone': '手機', 'modal.email': 'Email', 'modal.why': '為什麼想加入？', 'modal.btn': '送出申請'
+      },
+      'en': {
+        'logo.sub': 'AI WEALTH',
+        'nav.solution': 'Solutions', 'nav.tech': 'Technology', 'nav.tool': 'Simulation', 'nav.about': 'About', 'nav.career': 'Careers',
+        'hero.title': 'Data-Driven<br><span>Asset Protection System</span>',
+        'hero.desc': 'Taimic uses algorithmic modeling to help balance risk hedging and asset growth, providing objective decision support.',
+        'hero.btn1': 'Start Simulation', 'hero.btn2': 'Learn More',
+        'card.title': 'SYSTEM OVERVIEW', 'card.list': '<li>Dynamic Risk Assessment</li><li>Asset Allocation Modeling</li><li>Gap Analysis</li><li>Objective Decision Support</li>',
+        'over.title': 'Key Solutions', 'over.sub': 'Integrated strategies for fragmented financial services.',
+        'f1.title': 'Risk Shield', 'f1.desc': 'Quantitative analysis of potential financial impacts to build a precise defense line.',
+        'f2.title': 'Asset Management', 'f2.desc': 'Dividing assets into Liquidity, Safety, and Growth layers based on lifecycle theory.',
+        'f3.title': 'AI Support', 'f3.desc': 'Algorithm-based screening to reduce human bias and provide standardized recommendations.',
+        'tool.title': 'Financial Simulation', 'tool.sub': 'Input parameters to generate a preliminary risk report.',
+        'form.age': 'Age', 'form.risk': 'Risk Profile', 'form.ins': 'Current Coverage', 'form.submit': 'Run Analysis',
+        'res.wait': 'Awaiting Input...', 'res.title': 'Analysis Report',
+        'modal.title': 'Join Taimic', 'modal.desc': 'We are looking for passionate FinTech partners.',
+        'modal.name': 'Name', 'modal.phone': 'Phone', 'modal.email': 'Email', 'modal.why': 'Why join us?', 'modal.btn': 'Submit Application'
+      }
+    };
+
+    // 切換邏輯：按了按鈕後，語言切換，按鈕文字顯示「另一個語言」
+    langBtn.addEventListener('click', () => {
+      if (currentLang === 'zh-Hant') {
+        // 切換到英文
+        currentLang = 'en';
+        langLabel.textContent = '繁體中文'; // 按鈕顯示你「可以切換回」的語言
+      } else {
+        // 切換到中文
+        currentLang = 'zh-Hant';
+        langLabel.textContent = 'English';
+      }
+      
+      // 更新內容
+      const dict = i18n[currentLang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.innerHTML = dict[key];
+      });
+    });
+
+    /* Calc Logic */
+    document.getElementById('calcForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      document.getElementById('resEmpty').style.display = 'none';
+      document.getElementById('resData').style.display = 'block';
+      
+      const risk = document.getElementById('risk').value;
+      const ins = document.getElementById('ins').value;
+      
+      let txt = (currentLang === 'zh-Hant') ? "【系統診斷結果】\n\n" : "[ System Diagnosis ]\n\n";
+      
+      // Risk Logic
+      if(ins === 'none') {
+        txt += (currentLang === 'zh-Hant') 
+          ? "⚠️ 風險警示：防護網強度不足，資產暴露風險高。\n建議優先補強：實支實付醫療、重大傷病。\n\n"
+          : "⚠️ RISK ALERT: Insufficient protection coverage.\nRecommended: Priority on Medical and Critical Illness insurance.\n\n";
+      } else {
+        txt += (currentLang === 'zh-Hant')
+          ? "✅ 防護狀態：基礎保障尚可，請定期檢視保額。\n\n"
+          : "✅ STATUS: Basic coverage is adequate. Review periodically.\n\n";
+      }
+      
+      // Asset Logic
+      txt += (currentLang === 'zh-Hant') ? "【資產配置策略】\n" : "[ Asset Allocation Strategy ]\n";
+      
+      if(risk === 'low') {
+        txt += (currentLang === 'zh-Hant')
+          ? "► 策略：防禦型 (Defensive)\n► 配置：現金 30% / 債券 50% / 股票 20%\n► 目標：抗通膨與穩定現金流。"
+          : "► Strategy: Defensive\n► Allocation: Cash 30% / Bonds 50% / Stocks 20%\n► Goal: Inflation hedge & Stable cash flow.";
+      } else if(risk === 'high') {
+        txt += (currentLang === 'zh-Hant')
+          ? "► 策略：積極成長型 (Growth)\n► 配置：現金 10% / 債券 20% / 股票 70%\n► 目標：長期資本利得最大化。"
+          : "► Strategy: Growth\n► Allocation: Cash 10% / Bonds 20% / Stocks 70%\n► Goal: Maximize long-term capital gains.";
+      } else {
+        txt += (currentLang === 'zh-Hant')
+          ? "► 策略：平衡型 (Balanced)\n► 配置：現金 20% / 債券 40% / 股票 40%\n► 目標：波動控制下的穩健增長。"
+          : "► Strategy: Balanced\n► Allocation: Cash 20% / Bonds 40% / Stocks 40%\n► Goal: Steady growth with controlled volatility.";
+      }
+      
+      document.getElementById('resReport').textContent = txt;
+    });
+  </script>
+</body>
+</html>
