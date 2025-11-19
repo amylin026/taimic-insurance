@@ -1,809 +1,780 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Taimic｜AI 保險與資產配置</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <meta charset="UTF-8" />
+  <title>Taimic｜智能風險與資產配置</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="description" content="Taimic 運用數據分析與風險模型，提供客觀的保險與資產配置決策輔助。" />
+  <meta property="og:title" content="Taimic｜智能風險與資產配置" />
+  <meta property="og:image" content="https://placehold.co/1200x630/0066CC/ffffff?text=Taimic+Tech" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230066CC%22/><circle cx=%2250%22 cy=%2250%22 r=%2230%22 fill=%22white%22/></svg>" />
+
+  <style>
+    /* -------- 1. 企業識別系統 (CIS) -------- */
+    :root {
+      /* 科技藍：更亮、更現代的藍色，接近 Intel 或 Azure 的藍 */
+      --brand-color: #0066CC; 
+      --brand-dark: #004C99;
+      --brand-accent: #00A3E0; /* 亮藍色點綴 */
+      
+      /* 企業灰階 */
+      --text-primary: #222222;
+      --text-secondary: #555555;
+      --bg-body: #FFFFFF;
+      --bg-light: #F4F7F9; /* 極淡的冷灰藍 */
+      --border-color: #D1D5DB;
+
+      /* 形狀：直角、俐落 */
+      --radius-xs: 2px; 
+      --radius-none: 0px;
+      
+      --max-width: 1280px; /* 企業官網通常更寬 */
+      --header-height: 80px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, "PingFang TC", "Heiti TC", "Microsoft JhengHei", sans-serif;
+      background: var(--bg-body);
+      color: var(--text-primary);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    a { text-decoration: none; color: inherit; transition: 0.2s; }
+    ul { list-style: none; }
+
+    /* -------- 2. Header (企業級導覽列) -------- */
+    .site-header-wrap {
+      width: 100%;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    }
+
+    .site-header {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      height: var(--header-height);
+      padding: 0 40px; /* 寬裕的內距 */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Logo 區塊 */
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* === 新版科技 Logo：抽象時鐘 === */
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      position: relative;
+      border-radius: 50%;
+      /* 外圈軌道 */
+      border: 3px solid var(--brand-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* 內圈斷點設計 (Tech feel) */
+    .logo-icon::before {
+      content: "";
+      position: absolute;
+      top: 6px; left: 6px; right: 6px; bottom: 6px;
+      border: 2px solid var(--brand-accent);
+      border-radius: 50%;
+      border-top-color: transparent; /* 開口 */
+      transform: rotate(45deg);
+    }
+    /* 簡約指針 */
+    .logo-icon::after {
+      content: "";
+      position: absolute;
+      width: 2px;
+      height: 12px;
+      background: var(--brand-color);
+      top: 50%;
+      left: 50%;
+      transform-origin: center top; /* 從中心向下畫 */
+      transform: translate(-50%, -100%); /* 修正位置讓它變成12點鐘方向的指針 */
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .logo-title {
+      font-size: 22px;
+      font-weight: 800; /* 極粗體 */
+      letter-spacing: 1px;
+      color: var(--brand-color);
+      text-transform: uppercase;
+    }
+    .logo-sub {
+      font-size: 10px;
+      color: #888;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* 導覽選單 */
+    .header-nav {
+      display: flex;
+      height: 100%;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #444;
+      position: relative;
+      height: 100%;
+      cursor: pointer;
+    }
+    .nav-item:hover {
+      color: var(--brand-color);
+      background: #f9f9f9;
+    }
+    /* 台積電風格：Hover 時上方出現色條，而非下方 */
+    .nav-item::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 4px;
+      background: var(--brand-color);
+      transform: scaleY(0);
+      transition: transform 0.2s;
+    }
+    .nav-item:hover::before { transform: scaleY(1); }
+
+    /* 右側功能區 */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* 招募按鈕：實心矩形 */
+    .btn-career {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--brand-color);
+      border: 1px solid var(--brand-color);
+      padding: 8px 20px;
+      border-radius: var(--radius-xs);
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-career:hover {
+      background: var(--brand-color);
+      color: #fff;
+    }
+
+    /* 語言切換：純文字 */
+    .lang-switch {
+      font-size: 14px;
+      font-weight: 600;
+      color: #666;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .lang-switch:hover { color: var(--brand-color); }
+
+    /* -------- 3. Hero Section (版面切割) -------- */
+    .hero-wrap {
+      width: 100%;
+      /* 左右切割背景：左邊純白，右邊淡灰 */
+      background: linear-gradient(90deg, #fff 55%, var(--bg-light) 55%);
+      padding: 80px 0;
+      border-bottom: 1px solid #eee;
+    }
     
-    <meta name="description" content="用 Taimic 幫你快速檢視保險與資產配置的方向，根據年齡、家庭與資產規模，給出初步建議。" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Taimic｜AI 保險與資產配置" />
-    <meta property="og:description" content="3分鐘快速檢視保險與資產配置，根據年齡與風險屬性給出初步建議。" />
-    <meta property="og:image" content="https://placehold.co/1200x630/0057b8/ffffff?text=Taimic+AI" />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>" />
+    .hero-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 60px;
+      align-items: center;
+    }
 
-    <style>
-      /* -------- 1. 核心變數：回歸你的藍色系 -------- */
-      :root {
-        /* 你的品牌藍 */
-        --brand-blue: #0057b8; 
-        --brand-blue-dark: #00429c;
-        --brand-blue-light: #e6f0fb;
-        
-        /* 企業風格調整：改用比較深的文字與乾淨背景 */
-        --text-main: #1a1a1a;
-        --text-sub: #555555;
-        --bg-page: #ffffff;
-        
-        /* 版面風格 (仿台積電結構)：圓角變小，線條變銳利 */
-        --radius-sm: 2px;
-        --radius-card: 4px; /* 從原本的 16px 改成 4px，看起來更專業 */
-        --max-width: 1200px; /* 稍微加寬 */
-        --border-color: #e0e0e0;
-      }
+    .hero-content h1 {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 24px;
+      color: #111;
+    }
+    .hero-content h1 span {
+      color: var(--brand-color);
+    }
+    
+    .hero-content p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      max-width: 540px;
+    }
 
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+    /* 按鈕組：方正、無圓角 */
+    .btn-group { display: flex; gap: 16px; }
+    
+    .btn-primary {
+      background: var(--brand-color);
+      color: #fff;
+      padding: 14px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius-xs);
+      cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--brand-dark); }
 
-      html {
-        height: 100%;
-        scroll-behavior: smooth;
-      }
+    .btn-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid #ccc;
+      padding: 14px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: var(--radius-xs);
+      cursor: pointer;
+    }
+    .btn-outline:hover { border-color: var(--brand-color); color: var(--brand-color); }
 
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", Arial, sans-serif;
-        background: var(--bg-page);
-        color: var(--text-main);
-        line-height: 1.6;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-      }
+    /* 右側視覺：資訊圖表風格 */
+    .hero-visual {
+      position: relative;
+    }
+    .visual-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-left: 5px solid var(--brand-color); /* 左側色條 */
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    .visual-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+    .visual-list li {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      font-size: 15px;
+      color: #333;
+    }
+    .visual-list li::before {
+      content: "■";
+      color: var(--brand-color);
+      font-size: 10px;
+      margin-right: 12px;
+      margin-top: 6px;
+    }
 
-      a {
-        color: inherit;
-        text-decoration: none;
-        transition: color 0.2s;
-      }
+    /* -------- 4. Content Sections (標準網格) -------- */
+    .section-wrap {
+      padding: 80px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 40px;
+    }
 
-      /* -------- HEADER (結構仿台積電：滿版白底、紮實線條) -------- */
-      .site-header-wrap {
-        width: 100%;
-        background: #fff;
-        border-bottom: 1px solid #ddd;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-      }
+    .section-head { margin-bottom: 40px; }
+    .section-head h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .section-head p { font-size: 16px; color: var(--text-secondary); }
 
-      .site-header {
-        max-width: var(--max-width);
-        margin: 0 auto;
-        height: 72px; /* 加高一點點顯得大氣 */
-        padding: 0 24px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
+    /* 3欄佈局 */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
 
-      .header-left {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
+    /* 硬派卡片 */
+    .corp-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      padding: 32px;
+      height: 100%;
+      transition: border-color 0.3s;
+    }
+    .corp-card:hover {
+      border-color: var(--brand-color);
+    }
+    .corp-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #111;
+    }
+    .corp-card p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.7;
+    }
 
-      /* 回歸你的時鐘 Logo */
-      .logo-mark {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        border: 2px solid var(--brand-blue);
-        position: relative;
-        background: #fff;
-        flex-shrink: 0;
-      }
-      .logo-clock::before, .logo-clock::after {
-        content: "";
-        position: absolute;
-        left: 50%; top: 50%;
-        transform-origin: 50% 100%;
-        background: var(--brand-blue); /* 指針用藍色 */
-        border-radius: 99px;
-      }
-      .logo-clock::before {
-        width: 2px; height: 9px;
-        transform: translate(-50%, -100%);
-        animation: clock-hour 180s linear infinite;
-      }
-      .logo-clock::after {
-        width: 2px; height: 12px;
-        transform: translate(-50%, -100%);
-        animation: clock-minute 60s linear infinite;
-      }
+    /* -------- 5. 評估工具 (儀表板風格) -------- */
+    .assessment-container {
+      display: grid;
+      grid-template-columns: 300px 1fr; /* 左側控制面板，右側結果 */
+      border: 1px solid #ddd;
+      background: #fff;
+    }
+    
+    /* 左側面板 */
+    .assess-panel {
+      background: #f8f9fa;
+      padding: 32px;
+      border-right: 1px solid #ddd;
+    }
+    .assess-main {
+      padding: 32px;
+      background: #fff;
+    }
 
-      .logo-text-main {
-        font-size: 20px;
-        font-weight: 700;
-        color: var(--brand-blue);
-        line-height: 1;
-      }
-      .logo-text-sub {
-        font-size: 11px;
-        color: #666;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-top: 2px;
-      }
+    .form-group { margin-bottom: 20px; }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 8px;
+    }
+    .form-input, .form-select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: var(--radius-none); /* 直角 */
+      font-size: 14px;
+      background: #fff;
+    }
+    .form-input:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--brand-color);
+    }
 
-      /* 導覽列：改成純文字，Hover 變色 (比較像企業官網) */
-      .header-nav {
-        display: flex;
-        gap: 32px;
-      }
-      .nav-link {
-        font-size: 15px;
-        font-weight: 500;
-        color: #333;
-        padding: 24px 0; /* 增加點擊高度 */
-        position: relative;
-      }
-      .nav-link:hover {
-        color: var(--brand-blue);
-      }
-      .nav-link::after {
-        content: '';
-        position: absolute;
-        bottom: 0; left: 0; width: 100%; height: 3px;
-        background: var(--brand-blue);
-        transform: scaleX(0);
-        transition: transform 0.2s;
-      }
-      .nav-link:hover::after { transform: scaleX(1); }
+    .btn-submit-full {
+      width: 100%;
+      background: var(--brand-color);
+      color: #fff;
+      padding: 12px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .btn-submit-full:hover { background: var(--brand-dark); }
 
-      /* 右側工具 */
-      .header-right {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-      }
-      
-      /* 語言選單 (簡化版：只留繁中/英) */
-      .lang-switch {
-        position: relative;
-        font-size: 13px;
-      }
-      .lang-btn {
-        border: 1px solid #ccc;
-        background: #fff;
-        padding: 6px 12px;
-        border-radius: var(--radius-sm);
-        cursor: pointer;
-        color: #555;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-      .lang-btn:hover {
-        color: var(--brand-blue);
-        border-color: var(--brand-blue);
-      }
-      .lang-menu {
-        position: absolute;
-        top: 120%; right: 0;
-        background: #fff;
-        border: 1px solid #eee;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        display: none;
-        flex-direction: column;
-        min-width: 100px;
-        border-radius: var(--radius-sm);
-      }
-      .lang-switch.open .lang-menu { display: flex; }
-      .lang-opt {
-        padding: 8px 16px;
-        background: none; border: none;
-        text-align: left; cursor: pointer; font-size: 13px; color: #333;
-      }
-      .lang-opt:hover { background: #f5f5f5; color: var(--brand-blue); }
-      .lang-opt.active { color: var(--brand-blue); font-weight: 700; }
+    /* 結果顯示區 */
+    .result-placeholder {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #999;
+      text-align: center;
+      border: 2px dashed #eee;
+      padding: 40px;
+    }
+    .result-data { display: none; }
 
-      /* -------- HERO (滿版企業風，但用你的藍色) -------- */
-      .hero-section {
-        width: 100%;
-        /* 藍色漸層背景，看起來專業 */
-        background: linear-gradient(135deg, #0057b8 0%, #003a7a 100%);
-        color: #fff;
-        padding: 60px 20px;
-        position: relative;
-      }
-      /* 加一點幾何紋理增加科技感 */
-      .hero-section::before {
-        content: "";
-        position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-        background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
-        background-size: 24px 24px;
-        opacity: 0.5;
-        pointer-events: none;
-      }
+    /* -------- 6. Footer -------- */
+    .corp-footer {
+      background: #1a1a1a;
+      color: #fff;
+      padding: 60px 0 20px;
+      margin-top: auto;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-copy {
+      border-top: 1px solid #333;
+      padding-top: 20px;
+      font-size: 12px;
+      color: #666;
+      display: flex;
+      justify-content: space-between;
+    }
 
-      .hero-inner {
-        max-width: var(--max-width);
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 1.2fr 0.8fr;
-        gap: 40px;
-        align-items: center;
-        position: relative; z-index: 2;
-      }
+    /* -------- 7. Modal (人才招募彈窗) -------- */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.active { display: flex; }
+    
+    .modal-box {
+      background: #fff;
+      width: 500px;
+      max-width: 90%;
+      padding: 40px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 20px; right: 20px;
+      font-size: 24px;
+      color: #999;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .modal-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--brand-color);
+      border-bottom: 2px solid var(--brand-color);
+      padding-bottom: 12px;
+      display: inline-block;
+    }
 
-      .hero-text h1 {
-        font-size: 36px;
-        font-weight: 700;
-        margin-bottom: 16px;
-        line-height: 1.3;
-      }
-      .hero-text h1 span {
-        color: #8ecae6; /* 淺藍色強調 */
-        border-bottom: 2px solid #8ecae6;
-      }
-      .hero-text p {
-        font-size: 16px;
-        color: rgba(255,255,255,0.9);
-        margin-bottom: 24px;
-        max-width: 540px;
-      }
+    /* RWD */
+    @media (max-width: 900px) {
+      .site-header { padding: 0 20px; }
+      .nav-item { padding: 0 12px; font-size: 14px; }
+      .hero-wrap { background: #fff; } /* 手機版取消切割背景 */
+      .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+      .hero-content p { margin: 0 auto 30px; }
+      .btn-group { justify-content: center; }
+      .assessment-container { grid-template-columns: 1fr; }
+      .assess-panel { border-right: none; border-bottom: 1px solid #ddd; }
+      .grid-3 { grid-template-columns: 1fr; }
+      /* 隱藏部分選單以適應手機 */
+      .header-nav { display: none; } 
+    }
+  </style>
+</head>
+<body>
 
-      .hero-btns { display: flex; gap: 12px; }
-      .btn-hero-primary {
-        background: #fff; color: var(--brand-blue);
-        padding: 10px 24px; border-radius: var(--radius-sm);
-        font-weight: 600; cursor: pointer; border: none;
-      }
-      .btn-hero-secondary {
-        background: transparent; color: #fff;
-        padding: 10px 24px; border-radius: var(--radius-sm);
-        font-weight: 600; cursor: pointer; border: 1px solid rgba(255,255,255,0.6);
-      }
-      .btn-hero-secondary:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
-
-      /* Hero 右側說明卡 (半透明) */
-      .hero-card-right {
-        background: rgba(255,255,255,0.1);
-        border: 1px solid rgba(255,255,255,0.2);
-        padding: 24px;
-        border-radius: var(--radius-card);
-        backdrop-filter: blur(4px);
-      }
-      .hero-card-right ul { padding-left: 20px; font-size: 14px; line-height: 1.8; color: rgba(255,255,255,0.9); }
-
-      /* -------- MAIN CONTENT (結構化佈局) -------- */
-      .page-content {
-        max-width: var(--max-width);
-        margin: 0 auto;
-        padding: 48px 24px;
-        flex: 1;
-      }
-
-      section { margin-bottom: 64px; }
-
-      /* 標題樣式：仿企業報告的左側線條 */
-      .section-head {
-        margin-bottom: 24px;
-        border-left: 4px solid var(--brand-blue);
-        padding-left: 16px;
-      }
-      .section-head h2 { font-size: 24px; color: #222; margin-bottom: 6px; }
-      .section-head p { font-size: 14px; color: #666; }
-
-      /* 網格卡片：方正、乾淨邊框 */
-      .grid-3 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 24px;
-      }
-      .info-card {
-        background: #fff;
-        border: 1px solid #e5e5e5;
-        border-radius: var(--radius-card);
-        padding: 24px;
-        transition: border-color 0.2s, box-shadow 0.2s;
-      }
-      .info-card:hover {
-        border-color: var(--brand-blue);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      }
-      .info-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #333; }
-      .info-card p { font-size: 14px; color: #666; }
-      
-      .step-tag { 
-        display: inline-block; background: var(--brand-blue-light); 
-        color: var(--brand-blue); padding: 2px 8px; 
-        font-size: 11px; font-weight: bold; margin-bottom: 8px; border-radius: 2px;
-      }
-
-      /* -------- 表單區 (專業感增強) -------- */
-      .assessment-wrap {
-        background: #f9f9f9;
-        border: 1px solid #e5e5e5;
-        border-radius: var(--radius-card);
-        padding: 32px;
-        display: grid;
-        grid-template-columns: 1.2fr 1fr;
-        gap: 40px;
-      }
-
-      .form-group { margin-bottom: 16px; }
-      .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-      
-      label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #444; }
-      
-      input, select, textarea {
-        width: 100%;
-        padding: 10px 12px;
-        font-size: 14px;
-        border: 1px solid #ccc;
-        border-radius: var(--radius-sm); /* 方角 */
-        background: #fff;
-        color: #333;
-      }
-      input:focus, select:focus, textarea:focus {
-        outline: none; border-color: var(--brand-blue);
-      }
-
-      .btn-submit {
-        background: var(--brand-blue); color: #fff;
-        border: none; padding: 12px 20px; font-weight: 600;
-        border-radius: var(--radius-sm); cursor: pointer;
-        font-size: 14px;
-      }
-      .btn-submit:hover { background: var(--brand-blue-dark); }
-      
-      .btn-ai {
-        background: #fff; color: var(--brand-blue);
-        border: 1px solid var(--border-color); padding: 12px 20px; font-weight: 600;
-        border-radius: var(--radius-sm); cursor: pointer;
-        font-size: 14px; margin-left: 8px;
-      }
-      .btn-ai:hover { background: #f0f7ff; }
-
-      /* 結果預覽區：做得像一份報表 */
-      .result-box {
-        background: #fff;
-        border: 1px solid #ddd;
-        border-top: 4px solid var(--brand-blue); /* 頂部藍條 */
-        padding: 24px;
-        height: 100%;
-      }
-      .result-header { font-weight: 700; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 12px; }
-      .result-content { font-size: 14px; color: #333; white-space: pre-line; line-height: 1.6; }
-      
-      .ai-result-box {
-        margin-top: 16px;
-        background: #fffaf0;
-        border: 1px solid #fae0b5;
-        padding: 16px;
-        border-radius: var(--radius-sm);
-        display: none;
-      }
-
-      /* -------- Footer (深色專業風) -------- */
-      .site-footer {
-        background: #1f2933; /* 深藍黑 */
-        color: #aaa;
-        padding: 40px 0;
-        font-size: 13px;
-        margin-top: auto;
-      }
-      .footer-inner {
-        max-width: var(--max-width);
-        margin: 0 auto;
-        padding: 0 24px;
-        display: flex; justify-content: space-between;
-      }
-      .footer-inner a { color: #fff; text-decoration: underline; }
-
-      /* -------- RWD -------- */
-      @media (max-width: 900px) {
-        .hero-inner, .assessment-wrap { grid-template-columns: 1fr; gap: 24px; }
-        .grid-3, .form-row-2 { grid-template-columns: 1fr; }
-        
-        /* 手機版 Nav：改為橫向滑動 */
-        .header-nav {
-          position: fixed; top: 72px; left: 0; right: 0;
-          background: #fff; border-bottom: 1px solid #eee;
-          overflow-x: auto; white-space: nowrap;
-          padding: 0 20px; gap: 20px;
-          z-index: 99;
-        }
-        .nav-link { padding: 12px 0; font-size: 14px; }
-        .hero-section { padding-top: 60px; } /* 避開兩層 header */
-      }
-      
-      @media (max-width: 600px) {
-         input, select, textarea { font-size: 16px !important; }
-      }
-
-      /* Animations */
-      @keyframes clock-hour { from { transform: translate(-50%, -100%) rotate(0deg); } to { transform: translate(-50%, -100%) rotate(360deg); } }
-      @keyframes clock-minute { from { transform: translate(-50%, -100%) rotate(0deg); } to { transform: translate(-50%, -100%) rotate(360deg); } }
-      @keyframes flash { 0% { background-color: rgba(0,87,184,0.1); } 100% { background-color: transparent; } }
-    </style>
-  </head>
-  <body>
-
-    <div class="site-header-wrap">
-      <header class="site-header">
-        <div class="header-left">
-          <div class="logo-mark logo-clock"></div>
-          <div>
-            <div class="logo-text-main">Taimic</div>
-            <div class="logo-text-sub" data-i18n="nav.logo_sub">AI WEALTH</div>
-          </div>
+  <div class="site-header-wrap">
+    <header class="site-header">
+      <div class="header-left">
+        <div class="logo-icon"></div>
+        <div class="logo-text">
+          <div class="logo-title">Taimic</div>
+          <div class="logo-sub">INTELLIGENCE</div>
         </div>
+      </div>
 
-        <nav class="header-nav">
-          <a href="#overview" class="nav-link" data-i18n="nav.service">服務說明</a>
-          <a href="#flow" class="nav-link" data-i18n="nav.flow">流程</a>
-          <a href="#assessment" class="nav-link" data-i18n="nav.checkup">免費健檢</a>
-          <a href="#about" class="nav-link" data-i18n="nav.about">關於我們</a>
-        </nav>
+      <nav class="header-nav">
+        <a href="#overview" class="nav-item" data-i18n="nav.service">解決方案</a>
+        <a href="#flow" class="nav-item" data-i18n="nav.tech">核心技術</a>
+        <a href="#assessment" class="nav-item" data-i18n="nav.demo">決策輔助</a>
+        <a href="#about" class="nav-item" data-i18n="nav.about">關於我們</a>
+      </nav>
 
-        <div class="header-right">
-          <div class="lang-switch" id="langSwitch">
-            <button class="lang-btn" type="button">
-              <span>🌐</span> 
-              <span id="currentLangLabel">繁中</span>
-              <span style="font-size:10px;">▼</span>
-            </button>
-            <div class="lang-menu">
-              <button class="lang-opt active" data-lang="zh-Hant">繁體中文</button>
-              <button class="lang-opt" data-lang="en">English</button>
-            </div>
-          </div>
+      <div class="header-right">
+        <button class="btn-career" onclick="openModal()">
+          <span>✦</span> <span data-i18n="nav.career">人才招募</span>
+        </button>
+
+        <div class="lang-switch" id="langToggle">
+          <span>🌐</span> <span id="currentLang">繁中</span>
         </div>
-      </header>
-    </div>
+      </div>
+    </header>
+  </div>
 
-    <div class="hero-section" id="top">
-      <div class="hero-inner">
-        <div class="hero-text">
-          <h1 data-i18n="hero.title">
-            給你一個<br>看得懂的 <span>保險＋資產配置方向</span>
-          </h1>
-          <p data-i18n="hero.desc">
-            Taimic 目前是一個用來和客戶溝通的工具，透過幾個簡單問題，
-            初步幫你整理「保障是否太少」與「資產大方向怎麼分」。
-          </p>
-          <div class="hero-btns">
-            <button class="btn-hero-primary" onclick="scrollToId('assessment')" data-i18n="hero.btn_primary">3 分鐘免費健檢</button>
-            <button class="btn-hero-secondary" onclick="scrollToId('overview')" data-i18n="hero.btn_secondary">了解服務內容</button>
-          </div>
+  <div class="hero-wrap">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <h1 data-i18n="hero.title">
+          數據驅動的<br><span>資產防護決策系統</span>
+        </h1>
+        <p data-i18n="hero.desc">
+          Taimic 專注於個人財務風險模型的建構。透過整合式演算法，
+          協助您在風險對沖（保險）與資產增值（投資）之間取得最佳平衡。
+        </p>
+        <div class="btn-group">
+          <button class="btn-primary" onclick="scrollToId('assessment')" data-i18n="hero.btn1">開始模型試算</button>
+          <button class="btn-outline" onclick="scrollToId('overview')" data-i18n="hero.btn2">了解核心邏輯</button>
         </div>
-        
-        <div class="hero-card-right">
-          <h3 style="margin-bottom:10px; color:#fff;" data-i18n="hero.right_title">這個可以做什麼？</h3>
-          <ul data-i18n="hero.right_list">
-            <li>• 檢視目前保險是偏少、剛好或略多</li>
-            <li>• 根據風險屬性建議「現金 / 債券 / 成長」比例</li>
-            <li>• 概念驗證階段，無須綁定真實帳戶</li>
+      </div>
+      
+      <div class="hero-visual">
+        <div class="visual-card">
+          <div class="visual-title" data-i18n="card.title">SYSTEM OVERVIEW</div>
+          <ul class="visual-list" data-i18n="card.list">
+            <li>Dynamic Risk Assessment (動態風險評估)</li>
+            <li>Asset Allocation Modeling (資產配置模型)</li>
+            <li>Gap Analysis (缺口分析)</li>
+            <li>Objective Decision Support (客觀決策支援)</li>
           </ul>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="page-content">
-      
-      <section id="overview">
-        <div class="section-head">
-          <h2 data-i18n="overview.title">Taimic 想解決的是什麼？</h2>
-          <p data-i18n="overview.sub">很多人同時有保險、基金、股票，但很少有人把「保障」和「資產配置」一起看。</p>
+  <div class="section-wrap" id="overview">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="overview.title">關鍵解決方案</h2>
+        <p data-i18n="overview.sub">針對傳統金融服務割裂問題的整合式對策。</p>
+      </div>
+      <div class="grid-3">
+        <div class="corp-card">
+          <h3 data-i18n="feat.1.title">風險防護網建構</h3>
+          <p data-i18n="feat.1.desc">運用量化數據分析醫療、壽險與重大疾病的潛在財務衝擊，建立精準的防禦底線，防止資產回撤。</p>
         </div>
-        <div class="grid-3">
-          <div class="info-card">
-            <h3 data-i18n="overview.card1_title">把保險看成風險防護網</h3>
-            <p data-i18n="overview.card1_desc">先看醫療、重大疾病、壽險有沒有大洞，避免一場意外或重病就把多年存款一次打掉。</p>
-          </div>
-          <div class="info-card">
-            <h3 data-i18n="overview.card2_title">把資產配置看成長期地圖</h3>
-            <p data-i18n="overview.card2_desc">依照你的年齡與風險屬性，先分出「安全層」與「成長層」，而不是只靠單一商品。</p>
-          </div>
-          <div class="info-card">
-            <h3 data-i18n="overview.card3_title">把 AI 當成對話起點</h3>
-            <p data-i18n="overview.card3_desc">目前用的是簡化規則，不是完整 AI 模型，但可以幫你更快對焦重點。</p>
-          </div>
+        <div class="corp-card">
+          <h3 data-i18n="feat.2.title">資產分層管理</h3>
+          <p data-i18n="feat.2.desc">基於生命週期理論，將資產劃分為流動層、安全層與成長層，確保長期複利效應的穩定性。</p>
         </div>
-      </section>
-
-      <section id="flow">
-        <div class="section-head">
-          <h2 data-i18n="flow.title">使用流程</h2>
-          <p data-i18n="flow.sub">目前先用簡化版陪你看方向。</p>
-        </div>
-        <div class="grid-3">
-          <div class="info-card">
-            <span class="step-tag">Step 1</span>
-            <h3 data-i18n="flow.step1_title">填寫基本資訊</h3>
-            <p data-i18n="flow.step1_desc">輸入年齡、家庭狀況、收入、可投資資產、風險屬性與目前保單概況。</p>
-          </div>
-          <div class="info-card">
-            <span class="step-tag">Step 2</span>
-            <h3 data-i18n="flow.step2_title">系統產生初步分析</h3>
-            <p data-i18n="flow.step2_desc">根據你填的條件，給出保障強度與資產配置方向。</p>
-          </div>
-          <div class="info-card">
-            <span class="step-tag">Step 3</span>
-            <h3 data-i18n="flow.step3_title">帶著結果討論</h3>
-            <p data-i18n="flow.step3_desc">把這份結果當成溝通起點，之後可以由專業人員進一步調整細節。</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="assessment">
-        <div class="section-head">
-          <h2 data-i18n="assess.title">3 分鐘試算你的「財務安全指紋」</h2>
-          <p data-i18n="assess.sub">Demo 規則，不會幫你下單，也不會存任何個資。</p>
-        </div>
-        
-        <div class="assessment-wrap">
-          <form id="mainForm">
-            <div class="form-row-2">
-              <div class="form-group">
-                <label data-i18n="form.age">你的年齡</label>
-                <input id="age" type="number" placeholder="例如：32" required>
-              </div>
-              <div class="form-group">
-                <label data-i18n="form.family">家庭狀況</label>
-                <select id="family" required>
-                  <option value="">請選擇</option>
-                  <option>單身</option>
-                  <option>已婚，無小孩</option>
-                  <option>已婚，有小孩</option>
-                  <option>其他</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-row-2">
-              <div class="form-group">
-                <label data-i18n="form.income">大約月收入</label>
-                <select id="income" required>
-                  <option value="">請選擇</option>
-                  <option>5 萬以下</option>
-                  <option>5–10 萬</option>
-                  <option>10–20 萬</option>
-                  <option>20 萬以上</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label data-i18n="form.assets">可投資資產</label>
-                <select id="assets" required>
-                  <option value="">請選擇</option>
-                  <option>50 萬以下</option>
-                  <option>50–200 萬</option>
-                  <option>200–500 萬</option>
-                  <option>500 萬以上</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-row-2">
-              <div class="form-group">
-                <label data-i18n="form.risk">風險屬性</label>
-                <select id="risk" required>
-                  <option value="">請選擇</option>
-                  <option>非常保守</option>
-                  <option>穩健</option>
-                  <option>積極</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label data-i18n="form.insurance">目前保單</label>
-                <select id="insurance" required>
-                  <option value="">請選擇</option>
-                  <option>幾乎沒有</option>
-                  <option>有一些，看不太懂</option>
-                  <option>有，覺得還算夠</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label data-i18n="form.focus">你最在意什麼？（選填）</label>
-              <textarea id="focus" placeholder="例如：怕生病花很多錢、擔心小孩教育費..."></textarea>
-            </div>
-
-            <div style="margin-top:16px;">
-              <button type="submit" class="btn-submit" data-i18n="form.btn_submit">產生 Demo 建議</button>
-              <button type="button" class="btn-ai" id="aiGenBtn" data-i18n="form.btn_ai">用 AI 產生建議</button>
-            </div>
-            <div style="font-size:12px; color:#888; margin-top:8px;" data-i18n="form.hint">
-              不會寄信、不會儲存任何個資。
-            </div>
-          </form>
-
-          <div class="right-panel">
-            <div class="result-box" id="resultPreview">
-              <div class="result-header" data-i18n="result.tag">建議預覽</div>
-              <div class="result-content" data-i18n="result.placeholder">
-                請先左側填寫資料，再按下「產生 Demo 建議」。
-                
-                ✅ 保險建議會出現在這裡。
-                💡 資產配置比例會出現在這裡。
-              </div>
-            </div>
-            
-            <div class="ai-result-box" id="aiOutput"></div>
-          </div>
-        </div>
-      </section>
-      
-      <section id="contact">
-         <div class="section-head">
-          <h2 data-i18n="contact.title">想知道 Taimic 正式版？</h2>
-          <p data-i18n="contact.sub">歡迎留下聯絡方式（Google 表單）。</p>
-        </div>
-        <div style="text-align:center; padding:20px;">
-          <a class="btn-submit" href="https://docs.google.com/forms/d/e/1FAIpQLSfQdm8R3sdNpr3up9kGSQdbPXGbab5clpF_gDeaSmdzaxnUZg/viewform" target="_blank" data-i18n="contact.btn">開啟聯絡表單 📩</a>
-        </div>
-      </section>
-    </div>
-
-    <footer class="site-footer">
-      <div class="footer-inner">
-        <div>© <span id="year"></span> Taimic. All rights reserved.</div>
-        <div data-i18n="footer.contact">
-          若有合作或想法，歡迎來信：<a href="mailto:founder@example.com">founder@example.com</a>
+        <div class="corp-card">
+          <h3 data-i18n="feat.3.title">AI 輔助決策</h3>
+          <p data-i18n="feat.3.desc">利用初步演算法模型，快速篩選適合使用者的配置架構，減少人為銷售誤導，提供標準化建議。</p>
         </div>
       </div>
-    </footer>
+    </div>
+  </div>
 
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-      function scrollToId(id){ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:"smooth", block:"start"}); }
+  <div class="section-wrap" id="assessment" style="background: #f9f9f9;">
+    <div class="container">
+      <div class="section-head">
+        <h2 data-i18n="tool.title">財務模型試算</h2>
+        <p data-i18n="tool.sub">輸入關鍵參數，系統將生成初步的風險與配置報告。</p>
+      </div>
 
-      /* --- 語言設定 (只留繁中與英) --- */
-      const translations = {
-        "zh-Hant": {
-           "nav.logo_sub": "AI 保險 × 資產配置",
-           "nav.service": "服務說明", "nav.flow": "流程", "nav.checkup": "免費健檢", "nav.about": "關於我們",
-           "hero.title": "給你一個<br>看得懂的 <span>保險＋資產配置方向</span>",
-           "hero.desc": "Taimic 目前是一個用來和客戶溝通的工具，透過幾個簡單問題，初步幫你整理「保障是否太少」與「資產大方向怎麼分」。",
-           "hero.btn_primary": "3 分鐘免費健檢", "hero.btn_secondary": "先了解服務內容",
-           "hero.right_title": "這個可以做什麼？", 
-           "hero.right_list": "<li>• 檢視目前保險是偏少、剛好或略多</li><li>• 根據風險屬性建議「現金 / 債券 / 成長」比例</li><li>• 概念驗證階段，無須綁定真實帳戶</li>",
-           "overview.title": "Taimic 想解決的是什麼？", "overview.sub": "很多人同時有保險、基金、股票，但很少有人把「保障」和「資產配置」一起看。",
-           "overview.card1_title": "把保險看成風險防護網", "overview.card1_desc": "先看醫療、重大疾病、壽險有沒有大洞，避免一場意外或重病就把多年存款一次打掉。",
-           "overview.card2_title": "把資產配置看成長期地圖", "overview.card2_desc": "依照你的年齡與風險屬性，先分出「安全層」與「成長層」，而不是只靠單一商品。",
-           "overview.card3_title": "把 AI 當成對話起點", "overview.card3_desc": "目前用的是簡化規則，不是完整 AI 模型，但可以幫你更快對焦重點。",
-           "flow.title": "使用流程", "flow.sub": "目前先用簡化版陪你看方向。",
-           "flow.step1_title": "填寫基本資訊", "flow.step1_desc": "輸入年齡、家庭狀況、收入、可投資資產、風險屬性與目前保單概況。",
-           "flow.step2_title": "系統產生初步分析", "flow.step2_desc": "根據你填的條件，給出保障強度與資產配置方向。",
-           "flow.step3_title": "帶著結果討論", "flow.step3_desc": "把這份結果當成溝通起點，之後可以由專業人員進一步調整細節。",
-           "assess.title": "3 分鐘試算你的「財務安全指紋」", "assess.sub": "Demo 規則，不會幫你下單，也不會存任何個資。",
-           "form.age": "你的年齡", "form.family": "家庭狀況", "form.income": "大約月收入", "form.assets": "可投資資產", 
-           "form.risk": "風險屬性", "form.insurance": "目前保單", "form.focus": "你最在意什麼？（選填）",
-           "form.btn_submit": "產生 Demo 建議", "form.btn_ai": "用 AI 產生建議", "form.hint": "不會寄信、不會儲存任何個資。",
-           "result.tag": "建議預覽", "result.placeholder": "請先左側填寫資料，再按下「產生 Demo 建議」。\n✅ 保險建議會出現在這裡。\n💡 資產配置比例會出現在這裡。",
-           "contact.title": "想知道 Taimic 正式版？", "contact.sub": "歡迎留下聯絡方式（Google 表單）。", "contact.btn": "開啟聯絡表單 📩",
-           "footer.contact": "若有合作或想法，歡迎來信：<a href=\"mailto:founder@example.com\">founder@example.com</a>"
-        },
-        "en": {
-           "nav.logo_sub": "AI WEALTH",
-           "nav.service": "Services", "nav.flow": "Process", "nav.checkup": "Checkup", "nav.about": "About",
-           "hero.title": "A Direction for<br><span>Insurance + Asset Allocation</span>",
-           "hero.desc": "Taimic is a communication tool designed to give you a preliminary overview of your protection gaps and asset allocation strategy.",
-           "hero.btn_primary": "Free Checkup", "hero.btn_secondary": "Learn More",
-           "hero.right_title": "What can this do?",
-           "hero.right_list": "<li>• Check insurance coverage levels</li><li>• Suggest asset mix (Cash/Bonds/Growth)</li><li>• Proof of Concept, no real accounts linked</li>",
-           "overview.title": "What does Taimic solve?", "overview.sub": "Viewing 'Protection' and 'Allocation' together.",
-           "overview.card1_title": "Insurance as Safety Net", "overview.card1_desc": "Check for gaps in medical and life insurance to prevent wiping out savings.",
-           "overview.card2_title": "Asset Allocation as Map", "overview.card2_desc": "Separate 'Safety' and 'Growth' layers based on age and risk profile.",
-           "overview.card3_title": "AI as Starting Point", "overview.card3_desc": "Using simplified rules to help you focus on key issues faster.",
-           "flow.title": "How it works", "flow.sub": "Simplified version for direction.",
-           "flow.step1_title": "Basic Info", "flow.step1_desc": "Enter age, family, income, assets, risk profile, and insurance status.",
-           "flow.step2_title": "Analysis", "flow.step2_desc": "Get protection strength and asset allocation direction.",
-           "flow.step3_title": "Discussion", "flow.step3_desc": "Use results as a starting point with professionals.",
-           "assess.title": "Get Your 'Financial Fingerprint'", "assess.sub": "Demo rules only. No data saved.",
-           "form.age": "Age", "form.family": "Family", "form.income": "Income", "form.assets": "Assets", 
-           "form.risk": "Risk Profile", "form.insurance": "Insurance", "form.focus": "Primary Concern",
-           "form.btn_submit": "Generate Demo", "form.btn_ai": "Ask AI", "form.hint": "No data stored.",
-           "result.tag": "Preview", "result.placeholder": "Fill form and click 'Generate Demo'.\n✅ Suggestions appear here.",
-           "contact.title": "Official Release?", "contact.sub": "Leave info for updates.", "contact.btn": "Open Google Form 📩",
-           "footer.contact": "Contact: <a href=\"mailto:founder@example.com\">founder@example.com</a>"
-        }
-      };
+      <div class="assessment-container">
+        <div class="assess-panel">
+          <form id="calcForm">
+            <div class="form-group">
+              <label class="form-label" data-i18n="form.age">Age (年齡)</label>
+              <input type="number" class="form-input" id="age" placeholder="Ex: 35" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="form.risk">Risk Profile (風險屬性)</label>
+              <select class="form-select" id="risk" required>
+                <option value="">Select...</option>
+                <option value="Conservative">Conservative (保守)</option>
+                <option value="Moderate">Moderate (穩健)</option>
+                <option value="Aggressive">Aggressive (積極)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="form.insurance">Coverage Status (保障現況)</label>
+              <select class="form-select" id="insurance" required>
+                <option value="">Select...</option>
+                <option value="None">Insufficient (不足)</option>
+                <option value="Unsure">Unclear (不明確)</option>
+                <option value="Good">Adequate (充足)</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-submit-full" data-i18n="form.submit">RUN ANALYSIS</button>
+          </form>
+        </div>
 
-      // 語言切換邏輯
-      const langSwitch = document.getElementById("langSwitch");
-      const langBtn = langSwitch.querySelector(".lang-btn");
-      const langOpts = langSwitch.querySelectorAll(".lang-opt");
-      const currentLabel = document.getElementById("currentLangLabel");
+        <div class="assess-main">
+          <div class="result-placeholder" id="resPlaceholder">
+            <div style="font-size:40px; color:#ddd; margin-bottom:16px;">📊</div>
+            <div data-i18n="res.hint">等待參數輸入...<br>請於左側面板填寫資料並執行分析。</div>
+          </div>
+          <div class="result-data" id="resData">
+            <h3 style="color:var(--brand-color); margin-bottom:16px; border-bottom:2px solid var(--brand-color); padding-bottom:8px;">ANALYSIS REPORT</h3>
+            <div id="resContent" style="font-family:monospace; white-space:pre-line; color:#333;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-      langBtn.addEventListener("click", (e) => { e.stopPropagation(); langSwitch.classList.toggle("open"); });
-      document.addEventListener("click", () => langSwitch.classList.remove("open"));
+  <footer class="corp-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div style="font-size:20px; font-weight:700; margin-bottom:12px;">Taimic</div>
+          <p style="color:#999; font-size:14px;">Intelligent Risk & Asset Management</p>
+        </div>
+        <div style="text-align:right;">
+          <a href="#" style="color:#fff; text-decoration:underline;">Contact Us</a>
+        </div>
+      </div>
+      <div class="footer-copy">
+        <div>© <span id="year"></span> Taimic Inc. All Rights Reserved.</div>
+        <div>Privacy Policy | Terms of Use</div>
+      </div>
+    </div>
+  </footer>
 
-      // 初始化
-      const savedLang = localStorage.getItem("taimic_lang") || "zh-Hant";
-      setLang(savedLang);
+  <div class="modal-overlay" id="careerModal">
+    <div class="modal-box">
+      <div class="modal-close" onclick="closeModal()">×</div>
+      <div class="modal-title" data-i18n="modal.title">Join Taimic</div>
+      <p style="margin-bottom:20px; color:#666; font-size:14px;" data-i18n="modal.sub">
+        我們正在尋找具備金融科技熱忱的夥伴。請留下您的資訊，人資部門將盡快與您聯繫。
+      </p>
+      
+      <form id="careerForm">
+        <div class="form-group">
+          <label class="form-label" data-i18n="modal.name">姓名 (Name)</label>
+          <input type="text" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="modal.phone">手機 (Phone)</label>
+          <input type="tel" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="modal.email">電子郵件 (Email)</label>
+          <input type="email" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" data-i18n="modal.why">為什麼想加入 Taimic？</label>
+          <textarea class="form-input" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn-submit-full" data-i18n="modal.submit">送出申請 (Submit Application)</button>
+      </form>
+    </div>
+  </div>
 
-      langOpts.forEach(opt => {
-        opt.addEventListener("click", () => {
-          const lang = opt.getAttribute("data-lang");
-          setLang(lang);
-        });
-      });
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    function scrollToId(id){ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:"smooth", block:"start"}); }
 
-      function setLang(lang) {
-        localStorage.setItem("taimic_lang", lang);
-        const dict = translations[lang] || translations["zh-Hant"];
-        
-        // Update Label
-        currentLabel.textContent = (lang === "en") ? "English" : "繁中";
-        
-        // Update Active State
-        langOpts.forEach(o => {
-           if(o.getAttribute("data-lang") === lang) o.classList.add("active");
-           else o.classList.remove("active");
-        });
+    /* --- Modal Logic --- */
+    const modal = document.getElementById("careerModal");
+    function openModal() { modal.classList.add("active"); }
+    function closeModal() { modal.classList.remove("active"); }
+    
+    // 點擊背景關閉
+    modal.addEventListener("click", (e) => {
+      if(e.target === modal) closeModal();
+    });
 
-        // Replace Text
-        document.querySelectorAll("[data-i18n]").forEach(el => {
-          const key = el.getAttribute("data-i18n");
-          if(dict[key]) el.innerHTML = dict[key];
-        });
+    // 招募表單送出模擬
+    document.getElementById("careerForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      alert("感謝您的申請！資料已送至 Taimic 人才庫。\n(Thank you! Application submitted.)");
+      closeModal();
+    });
+
+    /* --- Demo Logic (模擬運算) --- */
+    document.getElementById("calcForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const risk = document.getElementById("risk").value;
+      const ins = document.getElementById("insurance").value;
+      
+      // 顯示結果
+      document.getElementById("resPlaceholder").style.display = "none";
+      const resData = document.getElementById("resData");
+      resData.style.display = "block";
+      
+      let txt = "【系統診斷 System Diagnosis】\n\n";
+      
+      if(ins === "None" || ins === "Unsure") {
+        txt += "⚠️ 風險警示 (Risk Alert):\n目前的防護網強度不足。建議優先配置「醫療實支實付」與「重大傷病」險種，以防止資產極端回撤。\n\n";
+      } else {
+        txt += "✅ 防護狀態 (Protection Status):\n基礎保障尚可。建議每年依據收入變動進行動態調整。\n\n";
+      }
+      
+      txt += "【資產配置建議 Asset Allocation Strategy】\n";
+      if(risk === "Conservative") {
+        txt += "► 策略：防禦型 (Defensive)\n► 配置：現金 30% / 投資級債券 50% / 全球股票 20%\n► 目標：抗通膨與穩定現金流。";
+      } else if(risk === "Aggressive") {
+        txt += "► 策略：積極成長型 (Growth)\n► 配置：現金 10% / 債券 20% / 成長型股票 70%\n► 目標：長期資本利得最大化。";
+      } else {
+        txt += "► 策略：平衡型 (Balanced)\n► 配置：現金 20% / 債券 40% / 股票 40%\n► 目標：波動控制下的穩健增長。";
       }
 
-      /* --- Demo 計算 --- */
-      const form = document.getElementById("mainForm");
-      const resultPreview = document.getElementById("resultPreview");
-      const resultContent = resultPreview.querySelector(".result-content");
+      document.getElementById("resContent").textContent = txt;
+    });
 
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        // 簡單 Demo 邏輯
-        const risk = document.getElementById("risk").value;
-        const insurance = document.getElementById("insurance").value;
-        
-        let msg = "【分析結果】\n\n";
-        
-        if(insurance.includes("沒有")) msg += "⚠️ 保障部分：你的風險防護網較弱，建議優先規劃醫療實支實付與重大傷病險。\n\n";
-        else msg += "✅ 保障部分：已有基礎觀念，建議定期檢視保額是否隨收入調整。\n\n";
+    /* --- Language Toggle (Simple) --- */
+    const langBtn = document.getElementById("langToggle");
+    let curLang = "zh-Hant";
+    
+    const dict = {
+      "zh-Hant": {
+        "nav.service": "解決方案", "nav.tech": "核心技術", "nav.demo": "決策輔助", "nav.about": "關於我們", "nav.career": "人才招募",
+        "hero.title": "數據驅動的<br><span>資產防護決策系統</span>",
+        "hero.desc": "Taimic 專注於個人財務風險模型的建構。透過整合式演算法，協助您在風險對沖（保險）與資產增值（投資）之間取得最佳平衡。",
+        "hero.btn1": "開始模型試算", "hero.btn2": "了解核心邏輯",
+        "card.title": "SYSTEM OVERVIEW", "card.list": "<li>Dynamic Risk Assessment (動態風險評估)</li><li>Asset Allocation Modeling (資產配置模型)</li><li>Gap Analysis (缺口分析)</li><li>Objective Decision Support (客觀決策支援)</li>",
+        "overview.title": "關鍵解決方案", "overview.sub": "針對傳統金融服務割裂問題的整合式對策。",
+        "feat.1.title": "風險防護網建構", "feat.1.desc": "運用量化數據分析醫療、壽險與重大疾病的潛在財務衝擊，建立精準的防禦底線。",
+        "feat.2.title": "資產分層管理", "feat.2.desc": "基於生命週期理論，將資產劃分為流動層、安全層與成長層，確保長期複利效應。",
+        "feat.3.title": "AI 輔助決策", "feat.3.desc": "利用初步演算法模型，快速篩選適合使用者的配置架構，減少人為銷售誤導。",
+        "tool.title": "財務模型試算", "tool.sub": "輸入關鍵參數，系統將生成初步的風險與配置報告。",
+        "form.age": "Age (年齡)", "form.risk": "Risk Profile (風險屬性)", "form.insurance": "Coverage Status (保障現況)", "form.submit": "RUN ANALYSIS",
+        "res.hint": "等待參數輸入...<br>請於左側面板填寫資料並執行分析。",
+        "modal.title": "Join Taimic", "modal.sub": "我們正在尋找具備金融科技熱忱的夥伴。請留下您的資訊，人資部門將盡快與您聯繫。",
+        "modal.name": "姓名 (Name)", "modal.phone": "手機 (Phone)", "modal.email": "電子郵件 (Email)", "modal.why": "為什麼想加入 Taimic？", "modal.submit": "送出申請 (Submit Application)"
+      },
+      "en": {
+        "nav.service": "Solutions", "nav.tech": "Technology", "nav.demo": "Simulation", "nav.about": "About", "nav.career": "Careers",
+        "hero.title": "Data-Driven<br><span>Asset Protection System</span>",
+        "hero.desc": "Taimic specializes in personal financial risk modeling. Our algorithm helps balance risk hedging (insurance) and asset growth (investment).",
+        "hero.btn1": "Start Simulation", "hero.btn2": "Learn More",
+        "card.title": "SYSTEM OVERVIEW", "card.list": "<li>Dynamic Risk Assessment</li><li>Asset Allocation Modeling</li><li>Gap Analysis</li><li>Objective Decision Support</li>",
+        "overview.title": "Key Solutions", "overview.sub": "Integrated strategies for fragmented financial services.",
+        "feat.1.title": "Risk Shield Construction", "feat.1.desc": "Quantitative analysis of potential financial impacts from medical and life events to build a precise defense line.",
+        "feat.2.title": "Asset Stratification", "feat.2.desc": "Dividing assets into Liquidity, Safety, and Growth layers based on lifecycle theory.",
+        "feat.3.title": "AI Decision Support", "feat.3.desc": "Algorithm-based screening to reduce human bias and provide standardized recommendations.",
+        "tool.title": "Financial Model Simulation", "tool.sub": "Input key parameters to generate a preliminary risk and allocation report.",
+        "form.age": "Age", "form.risk": "Risk Profile", "form.insurance": "Coverage Status", "form.submit": "RUN ANALYSIS",
+        "res.hint": "Awaiting Input...<br>Please fill in the data on the left panel.",
+        "modal.title": "Join Taimic", "modal.sub": "We are looking for passionate FinTech partners. Please leave your info.",
+        "modal.name": "Name", "modal.phone": "Phone", "modal.email": "Email", "modal.why": "Why join Taimic?", "modal.submit": "Submit Application"
+      }
+    };
 
-        if(risk.includes("保守")) msg += "📊 配置建議：現金 30% + 債券 50% + 股票 20%。重點在穩健領息。\n";
-        else if(risk.includes("積極")) msg += "📊 配置建議：現金 10% + 債券 20% + 股票 70%。重點在長期資本利得。\n";
-        else msg += "📊 配置建議：現金 20% + 債券 40% + 股票 40%。股債平衡策略。\n";
-
-        resultContent.textContent = msg;
-        
-        // Flash effect
-        resultPreview.style.animation = "none";
-        void resultPreview.offsetWidth;
-        resultPreview.style.animation = "flash 0.5s";
+    langBtn.addEventListener("click", () => {
+      curLang = curLang === "zh-Hant" ? "en" : "zh-Hant";
+      document.getElementById("currentLang").textContent = curLang === "zh-Hant" ? "繁中" : "EN";
+      
+      const d = dict[curLang];
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if(d[key]) el.innerHTML = d[key];
       });
-
-      /* --- AI 功能 --- */
-      const aiBtn = document.getElementById("aiGenBtn");
-      const aiOutput = document.getElementById("aiOutput");
-      const AI_ENDPOINT = "https://cool-cell-b227.amy20060226.workers.dev/chat";
-
-      aiBtn.addEventListener("click", async () => {
-        aiOutput.style.display = "block";
-        aiOutput.textContent = "AI 思考中...";
-        aiBtn.disabled = true;
-
-        const payload = {
-          age: document.getElementById("age").value,
-          family: document.getElementById("family").value,
-          risk: document.getElementById("risk").value,
-          lang: localStorage.getItem("taimic_lang") || "zh-Hant"
-        };
-
-        try {
-          const res = await fetch(AI_ENDPOINT, {
-             method: "POST", headers: {"Content-Type":"application/json"},
-             body: JSON.stringify(payload)
-          });
-          const text = await res.text();
-          aiOutput.textContent = text;
-        } catch(e) {
-          aiOutput.textContent = "連線錯誤，請稍後再試。";
-        } finally {
-          aiBtn.disabled = false;
-        }
-      });
-    </script>
-  </body>
+    });
+  </script>
+</body>
 </html>
