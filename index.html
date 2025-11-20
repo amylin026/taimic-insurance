@@ -95,7 +95,7 @@
     .nav-link:hover { color: var(--brand-blue); }
     .nav-link.active { color: #000; font-weight: 700; border-bottom: 4px solid var(--brand-blue); }
 
-    /* --- Dropdown Menus (改成用 JS 控制，不再用 :hover) --- */
+    /* --- Dropdown Menus (用 JS 控制顯示) --- */
     .dropdown-container { position: relative; height: 100%; display: flex; align-items: center; }
     .dropdown-menu {
       position: absolute;
@@ -194,7 +194,7 @@
           <button onclick="setCurrency('TWD')" id="btn-twd" class="px-3 py-2 bg-gray-100 text-[#0066cc] font-bold">TWD</button>
         </div>
 
-        <!-- Language Switcher (用 click 打開/關閉) -->
+        <!-- Language Switcher -->
         <div class="dropdown-container cursor-pointer h-full">
           <button id="lang-toggle" type="button" class="flex items-center gap-2 text-gray-600 hover:text-[#0066cc] transition-colors">
             <i class="fa-solid fa-globe text-lg"></i>
@@ -206,7 +206,7 @@
           </div>
         </div>
 
-        <!-- User Menu (用 click 打開/關閉) -->
+        <!-- User Menu -->
         <div class="dropdown-container cursor-pointer h-full border-l border-gray-200 pl-6">
           <button id="user-toggle" type="button" class="w-10 h-10 bg-[#f0f0f0] text-gray-600 rounded-full flex items-center justify-center hover:bg-[#0066cc] hover:text-white transition-colors">
             <i class="fa-solid fa-user text-lg"></i>
@@ -449,13 +449,19 @@
 
     function fmt(usd) {
       const val = curr === 'USD' ? usd : usd * RATE;
-      return new Intl.NumberFormat(curr==='USD'?'en-US':'zh-TW', { style: 'currency', currency: curr, maximumFractionDigits: 0 }).format(val);
+      return new Intl.NumberFormat(curr==='USD'?'en-US':'zh-TW', {
+        style: 'currency', currency: curr, maximumFractionDigits: 0
+      }).format(val);
     }
 
     function render() {
       const t = I18N[lang];
-      document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t[el.dataset.i18n]);
-      document.querySelectorAll('.val-display').forEach(el => el.textContent = fmt(el.dataset.usd));
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        el.textContent = t[el.dataset.i18n];
+      });
+      document.querySelectorAll('.val-display').forEach(el => {
+        el.textContent = fmt(el.dataset.usd);
+      });
       
       const tbody = document.getElementById('asset-list');
       tbody.innerHTML = '';
@@ -475,15 +481,15 @@
       });
       
       if(curr==='USD'){
-        document.getElementById('btn-usd').className='px-3 py-2 bg-gray-100 text-[#0066cc] font-bold';
-        document.getElementById('btn-twd').className='px-3 py-2 hover:bg-gray-50 transition-colors';
+        btnUsd.className='px-3 py-2 bg-gray-100 text-[#0066cc] font-bold';
+        btnTwd.className='px-3 py-2 hover:bg-gray-50 transition-colors';
       } else {
-        document.getElementById('btn-twd').className='px-3 py-2 bg-gray-100 text-[#0066cc] font-bold';
-        document.getElementById('btn-usd').className='px-3 py-2 hover:bg-gray-50 transition-colors';
+        btnTwd.className='px-3 py-2 bg-gray-100 text-[#0066cc] font-bold';
+        btnUsd.className='px-3 py-2 hover:bg-gray-50 transition-colors';
       }
 
-      document.getElementById('opt-zh').classList.toggle('active', lang==='zh');
-      document.getElementById('opt-en').classList.toggle('active', lang==='en');
+      optZh.classList.toggle('active', lang==='zh');
+      optEn.classList.toggle('active', lang==='en');
     }
 
     function setCurrency(c) { curr = c; render(); }
@@ -491,17 +497,16 @@
     function changeLang(l) {
       lang = l;
       render();
-      // 點選後順便收起語言選單（手機好關）
-      const langMenu = document.getElementById('lang-menu');
-      if (langMenu) langMenu.classList.add('hidden');
+      // 點完語言後把語言選單收起來
+      langMenu.classList.add('hidden');
     }
 
     function openModal() {
-      document.getElementById('modal-overlay').classList.remove('hidden');
+      modalOverlay.classList.remove('hidden');
       document.getElementById('modal-step-1').classList.remove('hidden');
       document.getElementById('modal-step-2').classList.add('hidden');
     }
-    function closeModal() { document.getElementById('modal-overlay').classList.add('hidden'); }
+    function closeModal() { modalOverlay.classList.add('hidden'); }
     
     function startScan() {
       document.getElementById('modal-step-1').classList.add('hidden');
@@ -534,27 +539,11 @@
       }, 3000);
     }
 
-    // 共用：點擊開關 dropdown，點外面就關閉
-    function setupDropdownToggle(toggleId, menuId) {
-      const toggle = document.getElementById(toggleId);
-      const menu = document.getElementById(menuId);
-      if (!toggle || !menu) return;
-
-      toggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        menu.classList.toggle('hidden');
-      });
-
-      document.addEventListener('click', (e) => {
-        if (!menu.classList.contains('hidden') &&
-            !menu.contains(e.target) &&
-            !toggle.contains(e.target)) {
-          menu.classList.add('hidden');
-        }
-      });
-    }
-
+    // ====== 全局變數（DOM 快取） ======
     let chart;
+    let btnUsd, btnTwd, optZh, optEn;
+    let langMenu, userMenu, modalOverlay;
+
     window.onload = function() {
       const ctx = document.getElementById('geoChart').getContext('2d');
       chart = new Chart(ctx, {
@@ -573,12 +562,51 @@
         }
       });
 
+      // 把常用節點存起來
+      btnUsd = document.getElementById('btn-usd');
+      btnTwd = document.getElementById('btn-twd');
+      optZh = document.getElementById('opt-zh');
+      optEn = document.getElementById('opt-en');
+      langMenu = document.getElementById('lang-menu');
+      userMenu = document.getElementById('user-menu');
+      modalOverlay = document.getElementById('modal-overlay');
+
       render();
 
-      // 啟動 dropdown 點擊邏輯（手機 / 桌機都可用）
-      setupDropdownToggle('lang-toggle', 'lang-menu');
-      setupDropdownToggle('user-toggle', 'user-menu');
-    }
+      const langToggle = document.getElementById('lang-toggle');
+      const userToggle = document.getElementById('user-toggle');
+
+      // 一次關掉所有 dropdown
+      function closeAllMenus() {
+        if (langMenu) langMenu.classList.add('hidden');
+        if (userMenu) userMenu.classList.add('hidden');
+      }
+
+      // 語言按鈕：開啟前先關掉 user menu
+      if (langToggle && langMenu) {
+        langToggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const willOpen = langMenu.classList.contains('hidden');
+          closeAllMenus();
+          if (willOpen) langMenu.classList.remove('hidden');
+        });
+        langMenu.addEventListener('click', (e)=>e.stopPropagation());
+      }
+
+      // 使用者按鈕：開啟前先關掉 lang menu
+      if (userToggle && userMenu) {
+        userToggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const willOpen = userMenu.classList.contains('hidden');
+          closeAllMenus();
+          if (willOpen) userMenu.classList.remove('hidden');
+        });
+        userMenu.addEventListener('click', (e)=>e.stopPropagation());
+      }
+
+      // 點頁面其他地方就關掉所有
+      document.addEventListener('click', closeAllMenus);
+    };
   </script>
 </body>
 </html>
