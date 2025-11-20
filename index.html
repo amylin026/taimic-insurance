@@ -32,29 +32,29 @@
       --text-main: #222222;
     }
 
-    /* --- Logo: 科技感時鐘（色調變淺） --- */
+    /* --- Logo: 科技感淺藍時鐘 --- */
     .logo-clock { width: 44px; height: 44px; }
 
     .clock-outer {
       fill: none;
-      stroke: #cbd5e1; /* 淺一點的灰藍 */
+      stroke: #dbeafe;              /* 很淺的藍灰外框 */
       stroke-width: 2.5;
     }
 
     .clock-inner {
-      fill: #0f172a;         /* 深藍灰，但比原本淺 */
-      stroke: #e2e8f0;
+      fill: #eff6ff;                /* 很淺的藍底 */
+      stroke: #e5edff;
       stroke-width: 1.5;
     }
 
     .clock-core {
-      fill: url(#clockGradient);
-      opacity: 0.95;
+      fill: url(#clockGradient);    /* 中間淺藍漸層 */
+      opacity: 0.98;
     }
 
     .clock-tick-line {
-      stroke: #e2e8f0;       /* 淺灰刻度 */
-      stroke-width: 1.6;
+      stroke: #cbd5f5;              /* 淺刻度 */
+      stroke-width: 1.4;
       stroke-linecap: round;
     }
 
@@ -64,20 +64,20 @@
       transform-origin: 50% 50%;
     }
 
-    /* 比原本快，但還是偏慢：時針 30 分鐘一圈，分針 5 分鐘一圈 */
+    /* 時針 30 分鐘一圈，分針 5 分鐘一圈（維持原本速度） */
     .hand-hour {
-      stroke: #f9fafb;
+      stroke: #1f2933;              /* 深一點的灰藍，細線不會太重 */
       animation: rotate 1800s linear infinite;
     }
 
     .hand-minute {
-      stroke: #38bdf8; /* 淺一點的科技藍 */
+      stroke: #3b82f6;              /* 亮淺藍 */
       animation: rotate 300s linear infinite;
     }
 
     .center-dot {
-      fill: #0f172a;
-      stroke: #e5e7eb;
+      fill: #ffffff;
+      stroke: #3b82f6;
       stroke-width: 2;
     }
 
@@ -139,19 +139,19 @@
         <svg class="logo-clock" viewBox="0 0 100 100">
           <defs>
             <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#60a5fa" />
-              <stop offset="100%" stop-color="#1d4ed8" />
+              <stop offset="0%" stop-color="#bfdbfe" />
+              <stop offset="100%" stop-color="#60a5fa" />
             </linearGradient>
           </defs>
 
           <!-- Outer ring -->
           <circle cx="50" cy="50" r="46" class="clock-outer" />
-          <!-- Inner dark disc -->
+          <!-- Inner light disc -->
           <circle cx="50" cy="50" r="38" class="clock-inner" />
           <!-- Gradient core -->
           <circle cx="50" cy="50" r="30" class="clock-core" />
 
-          <!-- Minimal tick marks at 12 / 3 / 6 / 9 -->
+          <!-- Tick marks at 12 / 3 / 6 / 9 -->
           <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
           <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
           <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
@@ -171,7 +171,7 @@
         </div>
       </div>
 
-      <!-- 2. Navigation (TSMC-style center nav) -->
+      <!-- 2. Navigation -->
       <nav class="hidden lg:flex h-full items-center space-x-4">
         <a href="#" class="nav-link active" data-i18n="nav.overview">資產總覽</a>
         <a href="#" class="nav-link" data-i18n="nav.tax">稅務合規</a>
@@ -189,7 +189,7 @@
           <button onclick="setCurrency('TWD')" id="btn-twd" class="px-3 py-2 bg-gray-100 text-[#0066cc] font-bold">TWD</button>
         </div>
 
-        <!-- Language Switcher (保留 dropdown) -->
+        <!-- Language Switcher -->
         <div class="dropdown-container cursor-pointer h-full">
           <div class="flex items-center gap-2 text-gray-600 hover:text-[#0066cc] transition-colors">
             <i class="fa-solid fa-globe text-lg"></i>
@@ -224,7 +224,7 @@
     </div>
   </header>
 
-  <!-- ================= HERO (TSMC style: 灰底＋白卡片) ================= -->
+  <!-- ================= HERO ================= -->
   <section class="border-b border-gray-200 bg-[#e9ecef]">
     <div class="max-w-[1440px] mx-auto px-6 py-10">
       <div class="bg-white shadow-sm border border-gray-200 px-8 py-8 md:px-10 md:py-10 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
@@ -255,7 +255,6 @@
   <!-- ================= MAIN ================= -->
   <main class="flex-grow py-10">
     <div class="max-w-[1440px] mx-auto px-6 w-full">
-      <!-- 白背景主要內容卡片 -->
       <div class="bg-white border border-gray-200 shadow-sm px-6 md:px-8 lg:px-10 py-8 md:py-10">
 
         <!-- Stats -->
@@ -351,7 +350,7 @@
                 </div>
               </div>
               <div class="bg-[#e6f0fa] p-4 rounded border border-blue-100 mt-4">
-                <div class="text-[10px] font-bold text-[#0066cc] mb-1 uppercase flex itemscenter gap-1">
+                <div class="text-[10px] font-bold text-[#0066cc] mb-1 uppercase flex items-center gap-1">
                    <i class="fa-solid fa-robot"></i> <span data-i18n="chart.insight">AI Insight</span>
                 </div>
                 <p class="text-xs text-gray-600 leading-relaxed" data-i18n="chart.desc">
@@ -362,7 +361,7 @@
           </div>
         </div>
 
-      </div> <!-- end main white card -->
+      </div>
     </div>
   </main>
 
