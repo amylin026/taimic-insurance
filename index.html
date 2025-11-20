@@ -14,63 +14,70 @@
   <!-- 3. FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- 4. Google Fonts (Inter for English, Noto Sans TC for Chinese) -->
+  <!-- 4. Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
   <style>
-    /* 全局設定 */
     body {
       font-family: 'Inter', 'Noto Sans TC', sans-serif;
-      background-color: #ffffff;
+      background-color: #f5f5f5;
       color: #333333;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* --- 企業識別色 (Corporate Blue) --- */
+    /* --- 企業識別色 (Tech Blue) --- */
     :root {
-      /* 這是標準的 Tech Blue，類似 Intel 或 TSMC 科技感，不深不淺 */
       --brand-blue: #0066cc; 
       --brand-dark: #004c99;
-      --brand-gray: #f7f7f7;
       --text-main: #222222;
-      --text-sub: #5d5d5d;
     }
 
-    /* --- Logo: 高級科技時鐘 (CSS Animation) --- */
-    .logo-clock {
-      width: 40px;
-      height: 40px;
-      position: relative;
-    }
-    /* 錶面：細線圈，科技感 */
-    .clock-ring {
+    /* --- Logo: 科技感時鐘 --- */
+    .logo-clock { width: 44px; height: 44px; }
+
+    .clock-outer {
       fill: none;
-      stroke: var(--brand-blue);
+      stroke: rgba(148,163,184,0.7);
       stroke-width: 2.5;
     }
-    /* 刻度：增加精細度 */
-    .clock-tick {
-      stroke: #e5e7eb;
-      stroke-width: 1;
+
+    .clock-inner {
+      fill: #020617;
+      stroke: #1e293b;
+      stroke-width: 1.5;
     }
-    /* 指針：極簡線條 */
+
+    .clock-core {
+      fill: url(#clockGradient);
+      opacity: 0.95;
+    }
+
+    .clock-tick-line {
+      stroke: rgba(148,163,184,0.9);
+      stroke-width: 1.6;
+      stroke-linecap: round;
+    }
+
     .hand {
-      stroke: var(--brand-blue);
-      stroke-width: 2.5;
-      stroke-linecap: square; /* 方頭比圓頭更像科技儀表 */
+      stroke-width: 2.6;
+      stroke-linecap: round;
       transform-origin: 50% 50%;
     }
+
+    /* 比原本快，但還是偏慢：時針 30 分鐘一圈，分針 5 分鐘一圈 */
     .hand-hour {
-      stroke: #333; /* 時針深色 */
-      animation: rotate 60s linear infinite; /* 非常慢 */
+      stroke: #e5e7eb;
+      animation: rotate 1800s linear infinite;
     }
+
     .hand-minute {
-      stroke: var(--brand-blue);
-      animation: rotate 10s linear infinite; /* 稍微有動感 */
+      stroke: #0ea5e9;
+      animation: rotate 300s linear infinite;
     }
+
     .center-dot {
-      fill: #fff;
-      stroke: var(--brand-blue);
+      fill: #020617;
+      stroke: #e5e7eb;
       stroke-width: 2;
     }
 
@@ -79,348 +86,326 @@
       to { transform: rotate(360deg); }
     }
 
-    /* --- 導覽列 (TSMC Style) --- */
+    /* --- TSMC Style Top Utility Bar --- */
+    .top-utility-link {
+      font-size: 11px;
+      color: #6b7280;
+    }
+    .top-utility-link:hover {
+      color: #111827;
+    }
+
+    /* --- TSMC Style Navigation --- */
     .nav-link {
-      font-size: 14px;
-      font-weight: 500;
-      color: #555;
-      padding: 28px 16px; /* 增加高度，符合大企業官網的大氣感 */
-      border-bottom: 3px solid transparent;
-      transition: all 0.2s;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      height: 100%;
+      font-size: 15px; font-weight: 500; color: #555;
+      padding: 0 20px; height: 80px; display: flex; align-items: center;
+      border-bottom: 4px solid transparent; transition: all 0.2s; text-decoration: none;
     }
-    .nav-link:hover {
-      color: var(--brand-blue);
-    }
-    .nav-link.active {
-      color: #000;
-      font-weight: 700;
-      border-bottom: 3px solid var(--brand-blue);
-    }
+    .nav-link:hover { color: var(--brand-blue); }
+    .nav-link.active { color: #000; font-weight: 700; border-bottom: 4px solid var(--brand-blue); }
 
-    /* --- 按鈕樣式 --- */
+    /* --- Dropdown Menus --- */
+    .dropdown-container { position: relative; height: 100%; display: flex; align-items: center; }
+    .dropdown-menu {
+      display: none; position: absolute; top: 70px; right: 0;
+      background: white; border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      min-width: 160px; z-index: 50; border-radius: 2px;
+    }
+    .dropdown-container:hover .dropdown-menu { display: block; }
+    
+    .dropdown-item {
+      padding: 12px 20px; font-size: 14px; color: #555; cursor: pointer;
+      display: flex; align-items: center; gap: 8px; transition: background 0.2s;
+    }
+    .dropdown-item:hover { background-color: #f8f9fa; color: var(--brand-blue); }
+    .dropdown-item.active { font-weight: 700; color: var(--brand-blue); }
+
+    /* --- Buttons --- */
     .btn-corp {
-      background-color: var(--brand-blue);
-      color: white;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 10px 24px;
-      border-radius: 2px; /* 微圓角，偏方正 */
-      transition: background 0.2s;
+      background-color: var(--brand-blue); color: white; font-size: 14px; font-weight: 600;
+      padding: 10px 24px; border-radius: 2px; transition: background 0.2s;
     }
-    .btn-corp:hover {
-      background-color: var(--brand-dark);
-    }
+    .btn-corp:hover { background-color: var(--brand-dark); }
 
-    /* --- 表格樣式 --- */
-    .corp-table th {
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #666;
-      border-bottom: 2px solid #eee;
-      padding-bottom: 12px;
-    }
-    .corp-table td {
-      padding: 16px 0;
-      border-bottom: 1px solid #f3f4f6;
-      color: #333;
-    }
-
-    /* --- 語言選單 (Hover Dropdown) --- */
-    .lang-switch:hover .lang-menu {
-      display: block;
-    }
-    .lang-menu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      right: 0;
-      background: white;
-      border: 1px solid #eee;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      min-width: 120px;
-      z-index: 50;
-    }
-    .lang-item {
-      padding: 10px 16px;
-      font-size: 13px;
-      color: #555;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .lang-item:hover {
-      background-color: #f8f9fa;
-      color: var(--brand-blue);
-    }
-    .lang-item.active {
-      font-weight: 700;
-      color: var(--brand-blue);
-    }
-
-    /* --- 掃描動畫 --- */
+    /* --- Animations --- */
     .scan-overlay {
       background: linear-gradient(to bottom, transparent, rgba(0, 102, 204, 0.15), transparent);
       animation: scan 2s linear infinite;
     }
-    @keyframes scan {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(100%); }
-    }
+    @keyframes scan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+    .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
-  <!-- ================= HEADER (TSMC Style) ================= -->
+  <!-- ================= TOP UTILITY BAR (TSMC style) ================= -->
+  <div class="bg-[#f0f0f0] border-b border-gray-200 text-[11px] text-gray-500">
+    <div class="max-w-[1440px] mx-auto px-6 flex justify-between items-center h-8">
+      <div class="flex items-center gap-4">
+        <span class="font-medium">繁中</span>
+        <span class="top-utility-link cursor-pointer">English</span>
+        <span class="top-utility-link cursor-pointer">简中</span>
+        <span class="top-utility-link cursor-pointer">日本語</span>
+      </div>
+      <button class="flex items-center gap-1 top-utility-link cursor-pointer">
+        <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
+        <span>搜尋</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= HEADER ================= -->
   <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm h-[80px]">
-    <div class="max-w-[1400px] mx-auto px-6 h-full flex justify-between items-center">
+    <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center">
       
-      <!-- 1. Logo Area -->
-      <div class="flex items-center gap-3 cursor-pointer group">
-        <!-- Tech Clock Logo -->
+      <!-- 1. Logo -->
+      <div class="flex items-center gap-4 cursor-pointer">
         <svg class="logo-clock" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="46" class="clock-ring" />
-          <!-- Ticks (刻度) for professional look -->
-          <line x1="50" y1="10" x2="50" y2="15" class="clock-tick" />
-          <line x1="50" y1="85" x2="50" y2="90" class="clock-tick" />
-          <line x1="90" y1="50" x2="85" y2="50" class="clock-tick" />
-          <line x1="10" y1="50" x2="15" y2="50" class="clock-tick" />
-          
-          <!-- Hands -->
-          <line x1="50" y1="50" x2="50" y2="28" class="hand hand-hour" />
-          <line x1="50" y1="50" x2="50" y2="20" class="hand hand-minute" />
-          <circle cx="50" cy="50" r="3" class="center-dot" />
+          <defs>
+            <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#0b1120" />
+              <stop offset="100%" stop-color="#0066cc" />
+            </linearGradient>
+          </defs>
+
+          <!-- Outer ring -->
+          <circle cx="50" cy="50" r="46" class="clock-outer" />
+          <!-- Inner dark disc -->
+          <circle cx="50" cy="50" r="38" class="clock-inner" />
+          <!-- Gradient core -->
+          <circle cx="50" cy="50" r="30" class="clock-core" />
+
+          <!-- Minimal tick marks at 12 / 3 / 6 / 9 -->
+          <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
+          <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
+          <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
+          <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
+
+          <!-- Hands (科技感，比較俐落) -->
+          <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
+          <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
+
+          <!-- Center dot -->
+          <circle cx="50" cy="50" r="3.2" class="center-dot" />
         </svg>
 
-        <!-- Brand Text (Professional Typography) -->
         <div class="flex flex-col justify-center">
-          <span class="text-[20px] font-[700] tracking-tight text-[#222] leading-none group-hover:text-[#0066cc] transition-colors font-sans">
-            TAIMIC
-          </span>
-          <span class="text-[10px] font-[600] tracking-[0.15em] text-gray-500 mt-1 uppercase">
-            Global Wealth
-          </span>
+          <span class="text-[22px] font-[700] tracking-tight text-[#0066cc] leading-none font-sans">TAIMIC</span>
+          <span class="text-[10px] font-[600] tracking-[0.2em] text-gray-500 mt-1 uppercase">Global Wealth</span>
         </div>
       </div>
 
-      <!-- 2. Main Navigation -->
-      <nav class="hidden lg:flex h-full items-center space-x-2">
+      <!-- 2. Navigation (TSMC-style center nav) -->
+      <nav class="hidden lg:flex h-full items-center space-x-4">
         <a href="#" class="nav-link active" data-i18n="nav.overview">資產總覽</a>
-        <a href="#" class="nav-link" data-i18n="nav.compliance">稅務合規</a>
-        <a href="#" class="nav-link" data-i18n="nav.legacy">家族傳承</a>
+        <a href="#" class="nav-link" data-i18n="nav.tax">稅務合規</a>
+        <a href="#" class="nav-link" data-i18n="nav.estate">家族傳承</a>
         <a href="#" class="nav-link" data-i18n="nav.reports">分析報告</a>
       </nav>
 
       <!-- 3. Right Utilities -->
-      <div class="flex items-center gap-6">
+      <div class="flex items-center gap-6 h-full">
         
-        <!-- Currency Selector (Clean Text) -->
+        <!-- Currency -->
         <div class="hidden sm:flex items-center text-xs font-medium text-gray-500 border border-gray-200 rounded overflow-hidden">
           <button onclick="setCurrency('USD')" id="btn-usd" class="px-3 py-2 hover:bg-gray-50 transition-colors">USD</button>
           <div class="w-[1px] h-4 bg-gray-200"></div>
           <button onclick="setCurrency('TWD')" id="btn-twd" class="px-3 py-2 bg-gray-100 text-[#0066cc] font-bold">TWD</button>
         </div>
 
-        <!-- Language Selector (Explicit) -->
-        <div class="relative lang-switch py-4 cursor-pointer">
-          <div class="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-[#0066cc] transition-colors">
-            <i class="fa-solid fa-globe"></i>
-            <span id="current-lang">繁體中文</span>
+        <!-- Language Switcher (保留) -->
+        <div class="dropdown-container cursor-pointer h-full">
+          <div class="flex items-center gap-2 text-gray-600 hover:text-[#0066cc] transition-colors">
+            <i class="fa-solid fa-globe text-lg"></i>
             <i class="fa-solid fa-caret-down text-xs"></i>
           </div>
-          
-          <!-- Dropdown Menu -->
-          <div class="lang-menu">
-            <div class="lang-item active" onclick="changeLang('zh')" id="opt-zh">
-              繁體中文 <i class="fa-solid fa-check text-xs"></i>
+          <div class="dropdown-menu">
+            <div class="dropdown-item active" onclick="changeLang('zh')" id="opt-zh">繁體中文</div>
+            <div class="dropdown-item" onclick="changeLang('en')" id="opt-en">English</div>
+          </div>
+        </div>
+
+        <!-- User Menu -->
+        <div class="dropdown-container cursor-pointer h-full border-l border-gray-200 pl-6">
+          <div class="w-10 h-10 bg-[#f0f0f0] text-gray-600 rounded-full flex items-center justify-center hover:bg-[#0066cc] hover:text-white transition-colors">
+            <i class="fa-solid fa-user text-lg"></i>
+          </div>
+          <div class="dropdown-menu">
+            <div class="dropdown-item">
+              <i class="fa-solid fa-right-to-bracket"></i> <span data-i18n="user.login">登入</span>
             </div>
-            <div class="lang-item" onclick="changeLang('en')" id="opt-en">
-              English
+            <div class="dropdown-item">
+              <i class="fa-solid fa-user-plus"></i> <span data-i18n="user.register">註冊</span>
+            </div>
+            <div class="border-t border-gray-100 my-1"></div>
+            <div class="dropdown-item">
+              <i class="fa-solid fa-circle-question"></i> <span>Help</span>
             </div>
           </div>
         </div>
 
-        <!-- User -->
-        <div class="w-8 h-8 bg-[#222] text-white rounded-full flex items-center justify-center text-xs font-bold tracking-wide">
-          EH
-        </div>
       </div>
     </div>
   </header>
 
-  <!-- ================= PAGE TITLE (Corporate) ================= -->
-  <div class="bg-[#f7f7f7] border-b border-gray-200 py-12">
-    <div class="max-w-[1400px] mx-auto px-6 flex flex-col md:flex-row justify-between items-end gap-6">
-      <div>
-        <div class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Global Asset Management / Dashboard</div>
-        <h1 class="text-3xl font-[700] text-[#222] tracking-tight mb-2" data-i18n="page.title">跨國資產整合平台</h1>
-        <p class="text-gray-600 text-sm max-w-2xl leading-relaxed" data-i18n="page.subtitle">
-          整合台灣與美國資產，提供即時淨值分析與跨境稅務風險檢測。
-        </p>
+  <!-- ================= HERO (TSMC style: 灰底＋白卡片) ================= -->
+  <section class="border-b border-gray-200 bg-[#e9ecef]">
+    <div class="max-w-[1440px] mx-auto px-6 py-10">
+      <div class="bg-white shadow-sm border border-gray-200 px-8 py-8 md:px-10 md:py-10 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+        <div>
+          <div class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+            Global Asset Management / Dashboard
+          </div>
+          <h1 class="text-3xl md:text-[32px] font-[700] text-[#222] tracking-tight mb-3" data-i18n="page.title">
+            跨國資產整合平台
+          </h1>
+          <p class="text-gray-600 text-sm md:text-[15px] max-w-2xl leading-relaxed" data-i18n="page.desc">
+            整合台灣與美國資產，提供即時淨值分析與跨境稅務風險檢測。
+          </p>
+        </div>
+        <div class="flex flex-col items-start md:items-end gap-3">
+          <button onclick="openModal()" class="btn-corp flex items-center gap-2 shadow-sm">
+            <i class="fa-solid fa-plus"></i> <span data-i18n="btn.add">新增資產</span>
+          </button>
+          <div class="text-[11px] text-gray-500 flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-[#0066cc]"></i>
+            <span>FATCA / CRS 即時風險掃描</span>
+          </div>
+        </div>
       </div>
-      <button onclick="openModal()" class="btn-corp flex items-center gap-2 shadow-sm">
-        <i class="fa-solid fa-plus"></i> <span data-i18n="btn.add">新增資產</span>
-      </button>
     </div>
-  </div>
+  </section>
 
-  <!-- ================= MAIN CONTENT ================= -->
-  <main class="flex-grow py-12 bg-white w-full">
-    <div class="max-w-[1400px] mx-auto px-6">
-      
-      <!-- 1. Key Metrics -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-        <!-- Card 1 -->
-        <div class="p-6 border border-gray-200 hover:border-[#0066cc] transition-colors bg-white">
-          <div class="flex justify-between items-start mb-4">
-            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider" data-i18n="stat.us">美國總資產 (US)</h3>
-            <span class="text-xl">🇺🇸</span>
-          </div>
-          <div class="text-3xl font-bold text-[#222] font-mono tracking-tight val-display" data-usd="482500">...</div>
-          <div class="mt-2 text-xs font-medium text-green-600 flex items-center gap-1">
-            <i class="fa-solid fa-arrow-trend-up"></i> +4.2% YTD
-          </div>
-        </div>
+  <!-- ================= MAIN ================= -->
+  <main class="flex-grow py-10">
+    <div class="max-w-[1440px] mx-auto px-6 w-full">
+      <!-- 白背景主要內容卡片 (TSMC 內頁感覺) -->
+      <div class="bg-white border border-gray-200 shadow-sm px-6 md:px-8 lg:px-10 py-8 md:py-10">
 
-        <!-- Card 2 -->
-        <div class="p-6 border border-gray-200 hover:border-[#0066cc] transition-colors bg-white">
-          <div class="flex justify-between items-start mb-4">
-            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider" data-i18n="stat.tw">台灣總資產 (TW)</h3>
-            <span class="text-xl">🇹🇼</span>
-          </div>
-          <div class="text-3xl font-bold text-[#222] font-mono tracking-tight val-display" data-usd="315200" id="val-tw">...</div>
-          <div class="mt-2 text-xs font-medium text-green-600 flex items-center gap-1">
-            <i class="fa-solid fa-arrow-trend-up"></i> +1.8% YTD
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="p-6 bg-[#f0f6fa] border border-blue-100">
-          <div class="flex justify-between items-start mb-4">
-            <h3 class="text-xs font-bold text-[#0066cc] uppercase tracking-wider" data-i18n="stat.global">全球總淨值</h3>
-            <i class="fa-solid fa-globe text-[#0066cc]"></i>
-          </div>
-          <div class="text-3xl font-bold text-[#0066cc] font-mono tracking-tight val-display" data-usd="797700" id="val-global">...</div>
-          <div class="mt-2 text-xs font-medium text-gray-500 flex items-center gap-1">
-            <i class="fa-solid fa-shield-check text-[#0066cc]"></i> <span data-i18n="stat.safe">遺產稅風險：安全</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2. Dashboard Layout -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        
-        <!-- Left: Assets Table (2/3) -->
-        <div class="lg:col-span-2">
-          
-          <!-- Alert Banner -->
-          <div id="ai-alert" class="hidden mb-8 bg-orange-50 border-l-4 border-orange-500 p-5 flex gap-4 animate-fade-in">
-            <div class="text-orange-500 pt-1"><i class="fa-solid fa-triangle-exclamation text-lg"></i></div>
-            <div>
-              <h4 class="font-bold text-[#222] text-sm mb-1" data-i18n="alert.title">AI 稅務警示：偵測到潛在申報風險</h4>
-              <p class="text-sm text-gray-600 leading-relaxed" data-i18n="alert.desc">
-                系統掃描發現一筆新增的「高現金價值保單（台灣）」。根據美國 IRS 規範，此資產可能需填寫 Form 8938。
-              </p>
-              <button class="mt-3 text-xs font-bold text-[#0066cc] uppercase tracking-wide hover:underline">檢視詳細分析報告 &rarr;</button>
+        <!-- Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+          <div class="p-6 border border-gray-200 hover:border-[#0066cc] transition-colors bg-white">
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider" data-i18n="stat.us">美國總資產</h3>
+              <span class="text-xl">🇺🇸</span>
+            </div>
+            <div class="text-3xl font-bold text-[#222] font-mono tracking-tight val-display" data-usd="482500">...</div>
+            <div class="mt-2 text-xs font-medium text-green-600 flex items-center gap-1">
+              <i class="fa-solid fa-arrow-trend-up"></i> +4.2% YTD
             </div>
           </div>
 
-          <div class="flex justify-between items-end mb-4 pb-2 border-b border-gray-200">
-            <h3 class="text-lg font-bold text-[#222]" data-i18n="table.title">資產持有清單</h3>
-            <button class="text-xs text-[#0066cc] font-bold uppercase hover:text-[#004c99] flex items-center gap-1">
-              <i class="fa-solid fa-file-export"></i> Export
-            </button>
+          <div class="p-6 border border-gray-200 hover:border-[#0066cc] transition-colors bg-white">
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider" data-i18n="stat.tw">台灣總資產</h3>
+              <span class="text-xl">🇹🇼</span>
+            </div>
+            <div class="text-3xl font-bold text-[#222] font-mono tracking-tight val-display" data-usd="315200" id="val-tw">...</div>
+            <div class="mt-2 text-xs font-medium text-green-600 flex items-center gap-1">
+              <i class="fa-solid fa-arrow-trend-up"></i> +1.8% YTD
+            </div>
           </div>
 
-          <div class="overflow-x-auto">
-            <table class="w-full text-left corp-table">
-              <thead>
-                <tr>
-                  <th class="pl-2" data-i18n="col.name">資產名稱</th>
-                  <th data-i18n="col.region">地區</th>
-                  <th data-i18n="col.type">類別</th>
-                  <th class="text-right pr-2" data-i18n="col.val">現值</th>
-                </tr>
-              </thead>
-              <tbody id="asset-list">
-                <!-- JS Content -->
-              </tbody>
-            </table>
+          <div class="p-6 bg-[#f0f6fa] border border-blue-100">
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="text-xs font-bold text-[#0066cc] uppercase tracking-wider" data-i18n="stat.global">全球總淨值</h3>
+              <i class="fa-solid fa-globe text-[#0066cc]"></i>
+            </div>
+            <div class="text-3xl font-bold text-[#0066cc] font-mono tracking-tight val-display" data-usd="797700" id="val-global">...</div>
+            <div class="mt-2 text-xs font-medium text-gray-500 flex items-center gap-1">
+              <i class="fa-solid fa-shield-check text-[#0066cc]"></i>
+              <span data-i18n="stat.safe">遺產稅風險：安全</span>
+            </div>
           </div>
         </div>
 
-        <!-- Right: Charts & Insights (1/3) -->
-        <div class="space-y-8">
+        <!-- Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
           
-          <!-- Chart Box -->
-          <div class="border border-gray-200 p-6 bg-white shadow-sm">
-            <h3 class="text-xs font-bold text-gray-500 uppercase mb-6 tracking-wider" data-i18n="chart.title">區域配置分析</h3>
-            <div class="h-64 relative">
-              <canvas id="geoChart"></canvas>
-              <!-- Center Text -->
-              <div class="absolute inset-0 flex items-center justify-center pointer-events-none pb-6">
-                <div class="text-center">
-                  <div class="text-[10px] text-gray-400 font-bold uppercase">Total</div>
-                  <div class="text-sm font-bold text-[#222]">100%</div>
+          <!-- Table -->
+          <div class="lg:col-span-2">
+            
+            <!-- Alert -->
+            <div id="ai-alert" class="hidden mb-8 bg-orange-50 border-l-4 border-orange-500 p-5 flex gap-4 animate-fade-in">
+              <div class="text-orange-500 pt-1"><i class="fa-solid fa-triangle-exclamation text-lg"></i></div>
+              <div>
+                <h4 class="font-bold text-[#222] text-sm mb-1" data-i18n="alert.title">AI 稅務警示：偵測到潛在申報風險</h4>
+                <p class="text-sm text-gray-600 leading-relaxed" data-i18n="alert.desc">
+                  系統掃描發現一筆新增的「高現金價值保單（台灣）」。根據美國 IRS 規範，此資產可能需填寫 Form 8938。
+                </p>
+                <button class="mt-3 text-xs font-bold text-[#0066cc] uppercase tracking-wide hover:underline">
+                  檢視詳細分析報告 &rarr;
+                </button>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-end mb-4 pb-2 border-b border-gray-200">
+              <h3 class="text-lg font-bold text-[#222]" data-i18n="table.title">資產持有清單</h3>
+              <button class="text-xs text-[#0066cc] font-bold uppercase hover:text-[#004c99] flex items-center gap-1">
+                <i class="fa-solid fa-file-export"></i> Export
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead>
+                  <tr>
+                    <th class="pl-2 pb-3 text-xs font-bold text-gray-500 uppercase border-b-2 border-gray-100" data-i18n="col.name">資產名稱</th>
+                    <th class="pb-3 text-xs font-bold text-gray-500 uppercase border-b-2 border-gray-100" data-i18n="col.region">地區</th>
+                    <th class="pb-3 text-xs font-bold text-gray-500 uppercase border-b-2 border-gray-100" data-i18n="col.type">類別</th>
+                    <th class="pr-2 pb-3 text-xs font-bold text-gray-500 uppercase border-b-2 border-gray-100 text-right" data-i18n="col.val">現值</th>
+                  </tr>
+                </thead>
+                <tbody id="asset-list"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Charts -->
+          <div class="space-y-8">
+            <div class="border border-gray-200 p-6 bg-white shadow-sm">
+              <h3 class="text-xs font-bold text-gray-500 uppercase mb-6 tracking-wider" data-i18n="chart.title">區域配置分析</h3>
+              <div class="h-64 relative">
+                <canvas id="geoChart"></canvas>
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none pb-6">
+                  <div class="text-center">
+                    <div class="text-[10px] text-gray-400 font-bold uppercase">Total</div>
+                    <div class="text-sm font-bold text-[#222]">100%</div>
+                  </div>
                 </div>
               </div>
-            </div>
-            
-            <div class="bg-blue-50 p-4 border border-blue-100 mt-4">
-              <div class="text-[10px] font-bold text-[#0066cc] mb-1 uppercase flex items-center gap-1">
-                 <i class="fa-solid fa-robot"></i> <span data-i18n="chart.insight">AI Insight</span>
+              <div class="bg-[#e6f0fa] p-4 rounded border border-blue-100 mt-4">
+                <div class="text-[10px] font-bold text-[#0066cc] mb-1 uppercase flex items-center gap-1">
+                   <i class="fa-solid fa-robot"></i> <span data-i18n="chart.insight">AI Insight</span>
+                </div>
+                <p class="text-xs text-gray-600 leading-relaxed" data-i18n="chart.desc">
+                  您的台灣資產佔總淨值的 40%。建議針對台幣匯率風險進行避險。
+                </p>
               </div>
-              <p class="text-xs text-gray-600 leading-relaxed" data-i18n="chart.desc">
-                您的台灣資產佔總淨值的 40%。建議針對台幣匯率風險進行避險。
-              </p>
             </div>
           </div>
-
-          <!-- Service Box -->
-          <div class="bg-[#222] text-white p-6 shadow-lg">
-            <h4 class="font-bold text-sm mb-2 flex items-center gap-2">
-              <i class="fa-solid fa-user-tie"></i> <span data-i18n="card.title">需要專家諮詢？</span>
-            </h4>
-            <p class="text-xs text-gray-400 mb-4 leading-relaxed" data-i18n="card.text">
-              我們的認證會計師團隊專精於台美雙重國籍者的資產傳承與稅務規劃。
-            </p>
-            <button class="w-full bg-white text-[#222] py-2 text-xs font-bold uppercase tracking-widest hover:bg-[#0066cc] hover:text-white transition-colors">
-              Contact Specialist
-            </button>
-          </div>
-
         </div>
-      </div>
+
+      </div> <!-- end main white card -->
     </div>
   </main>
 
   <!-- ================= FOOTER ================= -->
-  <footer class="bg-[#f7f7f7] border-t border-gray-200 py-12 text-xs text-gray-500">
-    <div class="max-w-[1400px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+  <footer class="bg-[#f0f0f0] border-t border-gray-200 py-12 text-xs text-gray-500">
+    <div class="max-w-[1400px] mx-auto px-6 text-center">
       <p>&copy; 2025 Taimic Inc. All Rights Reserved.</p>
-      <div class="flex gap-6">
-        <a href="#" class="hover:text-[#0066cc]">Privacy Policy</a>
-        <a href="#" class="hover:text-[#0066cc]">Terms of Use</a>
-        <a href="#" class="hover:text-[#0066cc]">Security</a>
-      </div>
     </div>
   </footer>
 
-  <!-- ================= MODAL (Simulate AI OCR) ================= -->
+  <!-- ================= MODAL ================= -->
   <div id="modal-overlay" class="hidden fixed inset-0 bg-[#222]/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-md shadow-2xl overflow-hidden relative transform transition-all scale-100">
-      
       <div class="bg-[#0066cc] p-4 flex justify-between items-center text-white">
         <h3 class="font-bold text-sm tracking-wide" data-i18n="modal.title">新增台灣資產 (AI OCR)</h3>
         <i class="fa-solid fa-xmark cursor-pointer hover:opacity-75 text-lg" onclick="closeModal()"></i>
       </div>
 
-      <!-- Step 1: Upload -->
       <div id="modal-step-1" class="p-8 text-center">
         <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-[#0066cc]">
           <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
@@ -433,169 +418,135 @@
         </button>
       </div>
 
-      <!-- Step 2: Scanning -->
       <div id="modal-step-2" class="hidden relative h-64 bg-[#1a1a1a]">
         <div class="absolute inset-0 flex flex-col items-center justify-center z-10">
           <p class="text-white font-mono text-sm mb-2" data-i18n="modal.scanning">AI Processing...</p>
-          
-          <!-- Progress Bar -->
           <div class="w-48 h-1 bg-gray-700 rounded overflow-hidden mb-4">
             <div id="scan-bar" class="h-full bg-[#0066cc] w-0 transition-all duration-[3000ms] ease-linear"></div>
           </div>
-          
-          <!-- Terminal Logs -->
           <div id="scan-log" class="text-[10px] text-green-400 font-mono h-12 flex flex-col items-center gap-1"></div>
         </div>
-        
-        <!-- Scan Effect -->
         <div class="scan-overlay absolute inset-0"></div>
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 20px 20px;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ================= JS LOGIC ================= -->
+  <!-- ================= SCRIPT ================= -->
   <script>
     const RATE = 32.5;
-    let curr = 'TWD'; // Default TWD
-    let lang = 'zh';  // Default Chinese
+    let curr = 'TWD'; 
+    let lang = 'zh';
 
-    // Mock Data
     const assets = [
       { id: 1, name: {en:'Vanguard Total Stock (VTI)', zh:'Vanguard 全球股票 ETF (VTI)'}, type: {en:'ETF', zh:'指數型基金'}, region:'US', usd: 145200 },
       { id: 2, name: {en:'Taipei Xinyi Condo', zh:'台北信義區公寓'}, type: {en:'Real Estate', zh:'房地產'}, region:'TW', usd: 280000 },
       { id: 3, name: {en:'Fidelity 401(k)', zh:'富達退休金 401(k)'}, type: {en:'Retirement', zh:'退休金'}, region:'US', usd: 98500 },
     ];
 
-    // i18n Dictionary
     const I18N = {
       en: {
-        'nav.overview': 'Overview', 'nav.compliance': 'Tax & Compliance', 'nav.legacy': 'Legacy Plan', 'nav.reports': 'Reports',
-        'page.title': 'Cross-Border Wealth Platform', 'page.subtitle': 'Integrated view of Taiwan & US assets with FATCA compliance checks.',
+        'nav.overview': 'Overview', 'nav.tax': 'Tax & Compliance', 'nav.estate': 'Estate Plan', 'nav.reports': 'Reports',
+        'page.title': 'Cross-Border Wealth Platform', 'page.desc': 'Integrated view of Taiwan & US assets with FATCA compliance checks.',
         'btn.add': 'Add Asset', 'btn.upload': 'Click to Upload File',
         'stat.us': 'US Net Worth', 'stat.tw': 'Taiwan Net Worth', 'stat.global': 'Global Total', 'stat.safe': 'Estate Tax Risk: Safe',
         'table.title': 'Portfolio Holdings', 'col.name': 'Asset Name', 'col.region': 'Region', 'col.type': 'Category', 'col.val': 'Value',
         'alert.title': 'AI Tax Alert: FATCA Risk Detected', 'alert.desc': 'We detected a new "High Cash Value" insurance policy in Taiwan. This exceeds the $50,000 reporting threshold for IRS Form 8938.',
         'chart.title': 'Regional Allocation', 'chart.insight': 'AI Insight', 'chart.desc': 'Your Taiwan assets comprise 40% of your net worth. Consider hedging TWD currency risk.',
-        'card.title': 'Need Expert Advice?', 'card.text': 'Schedule a call with our cross-border CPA team.',
-        'modal.title': 'Add Taiwan Asset (AI OCR)', 'modal.desc': 'Upload Policy or Statement. AI will extract data.', 'modal.scanning': 'AI Analyzing...'
+        'modal.title': 'Add Taiwan Asset (AI OCR)', 'modal.desc': 'Upload Policy or Statement. AI will extract data.', 'modal.scanning': 'AI Analyzing...',
+        'user.login': 'Login', 'user.register': 'Register'
       },
       zh: {
-        'nav.overview': '資產總覽', 'nav.compliance': '稅務合規', 'nav.legacy': '家族傳承', 'nav.reports': '分析報告',
-        'page.title': '跨國資產整合平台', 'page.subtitle': '整合台灣與美國資產，提供即時淨值分析與跨境稅務風險檢測。',
+        'nav.overview': '資產總覽', 'nav.tax': '稅務合規', 'nav.estate': '家族傳承', 'nav.reports': '分析報告',
+        'page.title': '跨國資產整合平台', 'page.desc': '整合台灣與美國資產，提供即時淨值分析與跨境稅務風險檢測。',
         'btn.add': '新增資產', 'btn.upload': '點擊上傳檔案',
         'stat.us': '美國總資產', 'stat.tw': '台灣總資產', 'stat.global': '全球總淨值', 'stat.safe': '遺產稅風險：安全',
         'table.title': '資產持有清單', 'col.name': '資產名稱', 'col.region': '地區', 'col.type': '類別', 'col.val': '現值',
         'alert.title': 'AI 稅務警示：偵測到 FATCA 風險', 'alert.desc': '系統掃描到一張新增的台灣高現金價值保單。此金額已超過 IRS Form 8938 的 5 萬美元申報門檻。',
         'chart.title': '區域資產配置', 'chart.insight': 'AI 智能分析', 'chart.desc': '您的台灣資產佔總淨值的 40%。建議針對台幣匯率風險進行避險。',
-        'card.title': '需要專家諮詢？', 'card.text': '預約我們的台美跨境會計師諮詢服務。',
-        'modal.title': '新增台灣資產 (AI OCR)', 'modal.desc': '上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。', 'modal.scanning': 'AI 分析中...'
+        'modal.title': '新增台灣資產 (AI OCR)', 'modal.desc': '上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。', 'modal.scanning': 'AI 分析中...',
+        'user.login': '登入', 'user.register': '註冊'
       }
     };
 
-    // Helpers
     function fmt(usd) {
       const val = curr === 'USD' ? usd : usd * RATE;
-      const locale = curr === 'USD' ? 'en-US' : 'zh-TW';
-      return new Intl.NumberFormat(locale, { style: 'currency', currency: curr, maximumFractionDigits: 0 }).format(val);
+      return new Intl.NumberFormat(curr==='USD'?'en-US':'zh-TW', { style: 'currency', currency: curr, maximumFractionDigits: 0 }).format(val);
     }
 
     function render() {
-      // Text
       const t = I18N[lang];
       document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t[el.dataset.i18n]);
-
-      // Values
       document.querySelectorAll('.val-display').forEach(el => el.textContent = fmt(el.dataset.usd));
-
-      // Table
+      
       const tbody = document.getElementById('asset-list');
       tbody.innerHTML = '';
       assets.forEach(a => {
         const n = a.name[lang]; const tp = a.type[lang];
-        const flag = a.region === 'US' ? '🇺🇸' : '🇹🇼';
-        const badgeClass = a.region === 'US' ? 'bg-blue-50 text-blue-700' : 'bg-green-50 text-green-700';
+        const flag = a.region==='US'?'🇺🇸':'🇹🇼';
+        const badge = a.region==='US'?'bg-blue-50 text-blue-700':'bg-green-50 text-green-700';
+        const hl = a.new ? 'bg-orange-50 animate-fade-in' : '';
         const riskTag = a.risk ? `<span class="ml-2 inline-flex items-center px-2 py-0.5 bg-orange-100 text-orange-700 text-[10px] font-bold rounded border border-orange-200">FATCA</span>` : '';
-        const hl = a.new ? 'bg-orange-50 animate-pulse' : '';
-        
         tbody.innerHTML += `
-          <tr class="group transition-colors hover:bg-gray-50 ${hl}">
-            <td class="py-4 pl-2">
-              <div class="font-bold text-[#222] group-hover:text-[#0066cc] transition-colors">${n}</div>
-            </td>
-            <td class="py-4">
-              <span class="px-2 py-1 rounded text-xs font-bold ${badgeClass}">${flag} ${a.region}</span>${riskTag}
-            </td>
+          <tr class="group transition-colors hover:bg-gray-50 border-b border-gray-100 last:border-0 ${hl}">
+            <td class="py-4 pl-2"><div class="font-bold text-[#222] group-hover:text-[#0066cc] transition-colors">${n}</div></td>
+            <td class="py-4"><span class="px-2 py-1 rounded text-xs font-bold ${badge}">${flag} ${a.region}</span>${riskTag}</td>
             <td class="py-4 text-sm text-gray-600">${tp}</td>
             <td class="py-4 pr-2 text-right font-mono font-bold text-[#222] tracking-tight">${fmt(a.usd)}</td>
-          </tr>
-        `;
+          </tr>`;
       });
-
-      // Active States
-      const usdBtn = document.getElementById('btn-usd');
-      const twdBtn = document.getElementById('btn-twd');
-      if (curr === 'USD') {
-        usdBtn.className = 'px-3 py-2 bg-gray-100 text-[#0066cc] font-bold';
-        twdBtn.className = 'px-3 py-2 hover:bg-gray-50 transition-colors';
+      
+      if(curr==='USD'){
+        document.getElementById('btn-usd').className='px-3 py-2 bg-gray-100 text-[#0066cc] font-bold';
+        document.getElementById('btn-twd').className='px-3 py-2 hover:bg-gray-50 transition-colors';
       } else {
-        twdBtn.className = 'px-3 py-2 bg-gray-100 text-[#0066cc] font-bold';
-        usdBtn.className = 'px-3 py-2 hover:bg-gray-50 transition-colors';
+        document.getElementById('btn-twd').className='px-3 py-2 bg-gray-100 text-[#0066cc] font-bold';
+        document.getElementById('btn-usd').className='px-3 py-2 hover:bg-gray-50 transition-colors';
       }
 
-      document.getElementById('current-lang').textContent = lang === 'en' ? 'English' : '繁體中文';
-      document.getElementById('opt-zh').classList.toggle('active', lang === 'zh');
-      document.getElementById('opt-en').classList.toggle('active', lang === 'en');
+      document.getElementById('opt-zh').classList.toggle('active', lang==='zh');
+      document.getElementById('opt-en').classList.toggle('active', lang==='en');
     }
 
-    // Actions
     function setCurrency(c) { curr = c; render(); }
     function changeLang(l) { lang = l; render(); }
-    
-    // Modal
     function openModal() {
       document.getElementById('modal-overlay').classList.remove('hidden');
       document.getElementById('modal-step-1').classList.remove('hidden');
       document.getElementById('modal-step-2').classList.add('hidden');
     }
-    function closeModal() {
-      document.getElementById('modal-overlay').classList.add('hidden');
-    }
-
-    // Demo Scan
+    function closeModal() { document.getElementById('modal-overlay').classList.add('hidden'); }
+    
     function startScan() {
       document.getElementById('modal-step-1').classList.add('hidden');
       document.getElementById('modal-step-2').classList.remove('hidden');
-      
       setTimeout(() => document.getElementById('scan-bar').style.width = '100%', 100);
-      
       const log = document.getElementById('scan-log');
-      setTimeout(() => log.innerHTML = '> Detecting Language: zh-TW', 800);
-      setTimeout(() => log.innerHTML += '<br>> Parsing: "富邦人壽 (Fubon Life)"', 1600);
-      setTimeout(() => log.innerHTML += '<br>> Match IRS Code: 8938', 2400);
-
+      setTimeout(()=> log.innerHTML = '> Detecting Language: zh-TW', 800);
+      setTimeout(()=> log.innerHTML += '<br>> Parsing: "富邦人壽 (Fubon Life)"', 1600);
+      setTimeout(()=> log.innerHTML += '<br>> Match IRS Code: 8938', 2400);
       setTimeout(() => {
-        // Add Data
         assets.unshift({
-          id: 99, name: {en:'Fubon Life (Whole Life)', zh:'富邦人壽 (終身壽險)'}, 
-          type: {en:'Insurance', zh:'儲蓄險'}, region:'TW', usd: 52000, new: true, risk: true
+          id: 99,
+          name: {en:'Fubon Life (Whole Life)', zh:'富邦人壽 (終身壽險)'},
+          type: {en:'Insurance', zh:'儲蓄險'},
+          region:'TW',
+          usd: 52000,
+          new: true,
+          risk: true
         });
-        
-        // Update Totals
-        const tEl = document.getElementById('val-tw'); tEl.dataset.usd = parseFloat(tEl.dataset.usd) + 52000;
-        const gEl = document.getElementById('val-global'); gEl.dataset.usd = parseFloat(gEl.dataset.usd) + 52000;
-        
-        // Update Chart
-        chart.data.datasets[0].data[1] += 52000; chart.update();
-
+        const tEl = document.getElementById('val-tw');
+        tEl.dataset.usd = parseFloat(tEl.dataset.usd) + 52000;
+        const gEl = document.getElementById('val-global');
+        gEl.dataset.usd = parseFloat(gEl.dataset.usd) + 52000;
+        chart.data.datasets[0].data[1] += 52000;
+        chart.update();
         document.getElementById('ai-alert').classList.remove('hidden');
         render();
         closeModal();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({top:0, behavior:'smooth'});
       }, 3000);
     }
 
-    // Chart
     let chart;
     window.onload = function() {
       const ctx = document.getElementById('geoChart').getContext('2d');
@@ -609,7 +560,10 @@
             borderWidth: 0
           }]
         },
-        options: { cutout: '75%', plugins: { legend: { display: false } } }
+        options: {
+          cutout: '75%',
+          plugins: { legend: { display: false } }
+        }
       });
       render();
     }
