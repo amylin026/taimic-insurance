@@ -32,18 +32,18 @@
       --text-main: #222222;
     }
 
-    /* --- Logo: 科技感時鐘 --- */
+    /* --- Logo: 科技感時鐘（色調變淺） --- */
     .logo-clock { width: 44px; height: 44px; }
 
     .clock-outer {
       fill: none;
-      stroke: rgba(148,163,184,0.7);
+      stroke: #cbd5e1; /* 淺一點的灰藍 */
       stroke-width: 2.5;
     }
 
     .clock-inner {
-      fill: #020617;
-      stroke: #1e293b;
+      fill: #0f172a;         /* 深藍灰，但比原本淺 */
+      stroke: #e2e8f0;
       stroke-width: 1.5;
     }
 
@@ -53,7 +53,7 @@
     }
 
     .clock-tick-line {
-      stroke: rgba(148,163,184,0.9);
+      stroke: #e2e8f0;       /* 淺灰刻度 */
       stroke-width: 1.6;
       stroke-linecap: round;
     }
@@ -66,17 +66,17 @@
 
     /* 比原本快，但還是偏慢：時針 30 分鐘一圈，分針 5 分鐘一圈 */
     .hand-hour {
-      stroke: #e5e7eb;
+      stroke: #f9fafb;
       animation: rotate 1800s linear infinite;
     }
 
     .hand-minute {
-      stroke: #0ea5e9;
+      stroke: #38bdf8; /* 淺一點的科技藍 */
       animation: rotate 300s linear infinite;
     }
 
     .center-dot {
-      fill: #020617;
+      fill: #0f172a;
       stroke: #e5e7eb;
       stroke-width: 2;
     }
@@ -84,15 +84,6 @@
     @keyframes rotate {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
-    }
-
-    /* --- TSMC Style Top Utility Bar --- */
-    .top-utility-link {
-      font-size: 11px;
-      color: #6b7280;
-    }
-    .top-utility-link:hover {
-      color: #111827;
     }
 
     /* --- TSMC Style Navigation --- */
@@ -139,22 +130,6 @@
 </head>
 <body class="flex flex-col min-h-screen">
 
-  <!-- ================= TOP UTILITY BAR (TSMC style) ================= -->
-  <div class="bg-[#f0f0f0] border-b border-gray-200 text-[11px] text-gray-500">
-    <div class="max-w-[1440px] mx-auto px-6 flex justify-between items-center h-8">
-      <div class="flex items-center gap-4">
-        <span class="font-medium">繁中</span>
-        <span class="top-utility-link cursor-pointer">English</span>
-        <span class="top-utility-link cursor-pointer">简中</span>
-        <span class="top-utility-link cursor-pointer">日本語</span>
-      </div>
-      <button class="flex items-center gap-1 top-utility-link cursor-pointer">
-        <i class="fa-solid fa-magnifying-glass text-[10px]"></i>
-        <span>搜尋</span>
-      </button>
-    </div>
-  </div>
-
   <!-- ================= HEADER ================= -->
   <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm h-[80px]">
     <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center">
@@ -164,8 +139,8 @@
         <svg class="logo-clock" viewBox="0 0 100 100">
           <defs>
             <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#0b1120" />
-              <stop offset="100%" stop-color="#0066cc" />
+              <stop offset="0%" stop-color="#60a5fa" />
+              <stop offset="100%" stop-color="#1d4ed8" />
             </linearGradient>
           </defs>
 
@@ -182,7 +157,7 @@
           <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
           <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
 
-          <!-- Hands (科技感，比較俐落) -->
+          <!-- Hands -->
           <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
           <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
 
@@ -214,7 +189,7 @@
           <button onclick="setCurrency('TWD')" id="btn-twd" class="px-3 py-2 bg-gray-100 text-[#0066cc] font-bold">TWD</button>
         </div>
 
-        <!-- Language Switcher (保留) -->
+        <!-- Language Switcher (保留 dropdown) -->
         <div class="dropdown-container cursor-pointer h-full">
           <div class="flex items-center gap-2 text-gray-600 hover:text-[#0066cc] transition-colors">
             <i class="fa-solid fa-globe text-lg"></i>
@@ -280,7 +255,7 @@
   <!-- ================= MAIN ================= -->
   <main class="flex-grow py-10">
     <div class="max-w-[1440px] mx-auto px-6 w-full">
-      <!-- 白背景主要內容卡片 (TSMC 內頁感覺) -->
+      <!-- 白背景主要內容卡片 -->
       <div class="bg-white border border-gray-200 shadow-sm px-6 md:px-8 lg:px-10 py-8 md:py-10">
 
         <!-- Stats -->
@@ -376,7 +351,7 @@
                 </div>
               </div>
               <div class="bg-[#e6f0fa] p-4 rounded border border-blue-100 mt-4">
-                <div class="text-[10px] font-bold text-[#0066cc] mb-1 uppercase flex items-center gap-1">
+                <div class="text-[10px] font-bold text-[#0066cc] mb-1 uppercase flex itemscenter gap-1">
                    <i class="fa-solid fa-robot"></i> <span data-i18n="chart.insight">AI Insight</span>
                 </div>
                 <p class="text-xs text-gray-600 leading-relaxed" data-i18n="chart.desc">
