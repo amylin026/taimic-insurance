@@ -1,493 +1,502 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend 
-} from 'recharts';
-import { 
-  LayoutDashboard, 
-  FileText, 
-  Landmark, 
-  Plus, 
-  UploadCloud, 
-  X, 
-  AlertTriangle, 
-  ArrowUpRight, 
-  Wallet, 
-  Building2,
-  ShieldCheck,
-  Globe,
-  ChevronDown,
-  Search,
-  User,
-  Menu
-} from 'lucide-react';
-
-// --- 1. Configuration & Mock Data ---
-const EXCHANGE_RATE = 32.5; // USD to TWD
-
-// TSMC Color Palette Inspiration (Professional, Solid)
-const THEME = {
-  primary: '#d90015', // TSMC Red (Accent) -> We stick to Blue for Finance, or maybe Deep Red if requested? 
-                      // Let's use a "Taimic" Deep Blue to keep it financial but layout like TSMC.
-  brand: '#005eb8',   // Professional Blue
-  textMain: '#333333',
-  textLight: '#767676',
-  bgLight: '#f7f7f7',
-  border: '#e0e0e0'
-};
-
-const ASSETS_DATA = [
-  { id: 1, name: 'Vanguard Total Stock (VTI)', namezh: 'Vanguard 全球股票 ETF (VTI)', type: 'ETF', typezh: '指數型基金', country: 'US', valueUsd: 145200, category: 'Investment', categoryzh: '投資' },
-  { id: 2, name: 'Taipei Xinyi Condo', namezh: '台北信義區公寓', type: 'Real Estate', typezh: '房地產', country: 'TW', valueUsd: 280000, category: 'Property', categoryzh: '不動產' },
-  { id: 3, name: 'Fidelity 401(k)', namezh: '富達退休金帳戶 401(k)', type: 'Retirement', typezh: '退休金', country: 'US', valueUsd: 98500, category: 'Retirement', categoryzh: '退休規劃' },
-];
-
-// --- 2. Translation Dictionary (i18n) ---
-const TRANSLATIONS = {
-  en: {
-    nav: { overview: 'Overview', tax: 'Tax & Compliance', estate: 'Estate Plan', us: 'US Assets', tw: 'TW Assets' },
-    header: { title: 'Global Asset Command', subtitle: 'Consolidated view for Tax Year 2025' },
-    stats: { us_net: 'US Net Worth', tw_net: 'Taiwan Net Worth', global: 'Global Total', estate_safe: 'Estate Tax Safe' },
-    table: { title: 'Portfolio Holdings', name: 'Asset Name', jurisdiction: 'Jurisdiction', category: 'Category', value: 'Value' },
-    geo: { title: 'Geo-Allocation', insight: 'AI INSIGHT', insight_text: 'Your Taiwan assets comprise {pct}% of your net worth. Consider hedging currency risk.' },
-    alert: { title: 'AI Tax Alert', text: 'High cash-value insurance detected. Potential FATCA reporting required.' },
-    btn: { add: 'Add Asset', analyzing: 'Analyzing...', upload: 'Click to Upload' },
-    modal: { title: 'Add Taiwan Asset', desc: 'Upload policy or statement. AI will extract tax data.', step1: 'Detecting Language...', step2: 'Parsing Values...', step3: 'Checking IRS Codes...' }
-  },
-  zh: {
-    nav: { overview: '資產總覽', tax: '稅務合規', estate: '傳承規劃', us: '美國資產', tw: '台灣資產' },
-    header: { title: '全球資產指揮中心', subtitle: '2025 稅務年度跨國資產整合視圖' },
-    stats: { us_net: '美國總資產', tw_net: '台灣總資產', global: '全球總淨值', estate_safe: '遺產稅安全水位' },
-    table: { title: '投資組合持倉', name: '資產名稱', jurisdiction: '管轄區', category: '類別', value: '現值' },
-    geo: { title: '資產區域配置', insight: 'AI 智能分析', insight_text: '您的台灣資產佔總淨值的 {pct}%。建議留意台幣匯率風險。' },
-    alert: { title: 'AI 稅務警示', text: '偵測到高現金價值保單。可能需要申報 FATCA (肥咖條款)。' },
-    btn: { add: '新增資產', analyzing: 'AI 分析中...', upload: '點擊上傳照片' },
-    modal: { title: '新增台灣資產', desc: '上傳保單或對帳單，AI 將自動提取稅務數據。', step1: '偵測語言：繁體中文...', step2: '解析數值：現金價值...', step3: '比對 IRS 稅法代碼...' }
-  }
-};
-
-const App = () => {
-  // --- State ---
-  const [lang, setLang] = useState('zh'); // 'en' or 'zh'
-  const [currency, setCurrency] = useState('TWD'); // 'USD' or 'TWD'
-  const [assets, setAssets] = useState(ASSETS_DATA);
-  const [showModal, setShowModal] = useState(false);
-  const [scanStep, setScanStep] = useState(0);
-  const [showTaxAlert, setShowTaxAlert] = useState(false);
-
-  // --- Helpers ---
-  const t = TRANSLATIONS[lang];
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>Taimic Global | 跨國資產指揮中心</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   
-  const formatMoney = (valUsd) => {
-    if (currency === 'USD') {
-      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(valUsd);
-    } else {
-      return new Intl.NumberFormat('zh-TW', { style: 'currency', currency: 'TWD', maximumFractionDigits: 0 }).format(valUsd * EXCHANGE_RATE);
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Google Fonts: Noto Sans TC -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Roboto', 'Noto Sans TC', sans-serif;
+      background-color: #ffffff;
+      color: #333333;
     }
-  };
+    :root {
+      --corp-blue: #005eb8;
+      --corp-red: #d90015;
+    }
+    
+    /* Navigation Hover Effect */
+    .nav-link {
+      position: relative;
+      color: #555;
+      font-weight: 500;
+      font-size: 14px;
+      transition: color 0.2s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+    .nav-link:hover { color: var(--corp-blue); }
+    .nav-link.active { color: #333; font-weight: 700; }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: var(--corp-red);
+    }
 
-  const totalUsd = assets.reduce((acc, curr) => acc + curr.valueUsd, 0);
-  const usAssetsTotal = assets.filter(a => a.country === 'US').reduce((acc, curr) => acc + curr.valueUsd, 0);
-  const twAssetsTotal = assets.filter(a => a.country === 'TW').reduce((acc, curr) => acc + curr.valueUsd, 0);
-  const twPercentage = Math.round((twAssetsTotal / totalUsd) * 100);
+    /* Scanning Animation */
+    @keyframes scan {
+      0% { width: 0%; opacity: 0; }
+      50% { width: 100%; opacity: 1; }
+      100% { width: 0%; opacity: 0; margin-left: auto; }
+    }
+    .scan-line {
+      height: 3px;
+      background: var(--corp-blue);
+      animation: scan 1.5s infinite ease-in-out;
+    }
 
-  const chartData = [
-    { name: 'US', value: usAssetsTotal },
-    { name: 'TW', value: twAssetsTotal },
-  ];
+    /* Fade In Animation */
+    .animate-fade-in {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
 
-  // --- Handlers ---
-  const handleUpload = () => {
-    setScanStep(1);
-    setTimeout(() => {
-      setScanStep(2);
-      setTimeout(() => {
-        setScanStep(3);
-        setTimeout(() => {
-          const newAsset = {
-            id: Date.now(),
-            name: 'Fubon Life (Whole Life)',
-            namezh: '富邦人壽 (終身壽險)',
-            type: 'Insurance',
-            typezh: '儲蓄險',
-            country: 'TW',
-            valueUsd: 52000,
-            category: 'Insurance',
-            categoryzh: '保險',
-            isNew: true,
-            risk: 'FATCA'
-          };
-          setAssets([newAsset, ...assets]);
-          setShowTaxAlert(true);
-          setShowModal(false);
-          setScanStep(0);
-        }, 800);
-      }, 800);
-    }, 1000);
-  };
-
-  return (
-    <div className="min-h-screen bg-white text-[#333] font-sans">
-      
-      {/* --- Header (TSMC Style: Clean, Top Nav, White Bg) --- */}
-      <header className="sticky top-0 z-50 bg-white border-b border-[#e0e0e0] shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            
-            {/* Logo Section */}
-            <div className="flex items-center gap-3 cursor-pointer">
-              {/* A more solid, corporate logo mark */}
-              <div className="w-10 h-10 bg-[#005eb8] text-white flex items-center justify-center font-bold text-xl rounded-sm">
-                T
-              </div>
-              <div className="flex flex-col justify-center">
-                <span className="font-bold text-xl tracking-tight text-[#333] leading-none">Taimic</span>
-                <span className="text-[10px] text-[#005eb8] font-bold tracking-widest uppercase mt-1">Global Wealth</span>
-              </div>
-            </div>
-
-            {/* Desktop Navigation (Center) */}
-            <nav className="hidden md:flex space-x-8 h-full">
-              <NavLink label={t.nav.overview} active />
-              <NavLink label={t.nav.tax} />
-              <NavLink label={t.nav.estate} />
-              <div className="border-l border-gray-200 h-6 my-auto mx-2"></div>
-              <NavLink label={t.nav.us} />
-              <NavLink label={t.nav.tw} />
-            </nav>
-
-            {/* Right Utilities (Lang, Currency, User) */}
-            <div className="flex items-center gap-4">
-              
-              {/* Currency Switcher (Pill Style) */}
-              <div className="hidden sm:flex items-center bg-[#f0f0f0] rounded-full p-1">
-                <button 
-                  onClick={() => setCurrency('USD')}
-                  className={`px-3 py-1 text-xs font-bold rounded-full transition-all ${currency === 'USD' ? 'bg-white text-[#005eb8] shadow-sm' : 'text-gray-500'}`}
-                >
-                  USD
-                </button>
-                <button 
-                  onClick={() => setCurrency('TWD')}
-                  className={`px-3 py-1 text-xs font-bold rounded-full transition-all ${currency === 'TWD' ? 'bg-white text-[#005eb8] shadow-sm' : 'text-gray-500'}`}
-                >
-                  TWD
-                </button>
-              </div>
-
-              {/* Language Switcher (Text Link Style) */}
-              <div className="flex items-center text-sm font-medium text-gray-600 gap-2 border-l border-gray-200 pl-4">
-                <Globe size={16} />
-                <span 
-                  className={`cursor-pointer hover:text-[#005eb8] ${lang === 'en' ? 'text-[#005eb8] font-bold' : ''}`}
-                  onClick={() => setLang('en')}
-                >
-                  EN
-                </span>
-                <span>/</span>
-                <span 
-                  className={`cursor-pointer hover:text-[#005eb8] ${lang === 'zh' ? 'text-[#005eb8] font-bold' : ''}`}
-                  onClick={() => setLang('zh')}
-                >
-                  繁中
-                </span>
-              </div>
-
-              {/* User Avatar */}
-              <div className="w-9 h-9 bg-[#333] text-white rounded-full flex items-center justify-center text-sm font-bold ml-2 cursor-pointer">
-                EH
-              </div>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <Menu className="text-gray-600" />
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* --- Hero / Breadcrumb Area (Corporate Feel) --- */}
-      <div className="bg-[#f7f7f7] border-b border-[#e0e0e0] py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold text-[#333] mb-2">{t.header.title}</h1>
-              <p className="text-gray-500 text-sm flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-full inline-block"></span>
-                {t.header.subtitle}
-              </p>
-            </div>
-            
-            <button 
-              onClick={() => setShowModal(true)}
-              className="bg-[#005eb8] hover:bg-[#004a94] text-white px-6 py-3 rounded-sm text-sm font-bold flex items-center gap-2 shadow-sm transition-colors"
-            >
-              <Plus size={16} /> {t.btn.add}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* --- Main Content Container --- */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  <!-- Header -->
+  <header class="border-b border-gray-200 sticky top-0 z-50 bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
         
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          <StatBox 
-            label={t.stats.us_net} 
-            val={formatMoney(usAssetsTotal)} 
-            flag="🇺🇸" 
-            trend="+4.2%" 
-          />
-          <StatBox 
-            label={t.stats.tw_net} 
-            val={formatMoney(twAssetsTotal)} 
-            flag="🇹🇼" 
-            trend="+1.8%" 
-          />
-          <StatBox 
-            label={t.stats.global} 
-            val={formatMoney(totalUsd)} 
-            flag="🌍" 
-            sub={t.stats.estate_safe} 
-            isTotal 
-          />
+        <!-- Logo -->
+        <div class="flex items-center gap-3 cursor-pointer">
+          <div class="w-10 h-10 bg-[#005eb8] text-white flex items-center justify-center font-bold text-xl rounded-sm">T</div>
+          <div class="flex flex-col justify-center">
+            <span class="font-bold text-xl tracking-tight text-gray-800 leading-none">Taimic</span>
+            <span class="text-[10px] text-[#005eb8] font-bold tracking-widest uppercase mt-1">Global Wealth</span>
+          </div>
         </div>
 
-        {/* Dashboard Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          {/* Left Column: Asset List */}
-          <div className="lg:col-span-2 space-y-8">
-            
-            {/* AI Alert Banner */}
-            {showTaxAlert && (
-              <div className="bg-[#fff4e5] border-l-4 border-[#ff9800] p-4 flex gap-4 animate-fade-in">
-                <AlertTriangle className="text-[#ff9800] flex-shrink-0" size={24} />
-                <div>
-                  <h4 className="font-bold text-[#333] text-sm">{t.alert.title}</h4>
-                  <p className="text-[#666] text-sm mt-1">
-                    {t.alert.text}
-                  </p>
-                  <button className="mt-2 text-xs font-bold text-[#ff9800] uppercase tracking-wide hover:underline">
-                    View IRS Form 8938 Rules &rarr;
-                  </button>
-                </div>
-              </div>
-            )}
+        <!-- Navigation -->
+        <nav class="hidden md:flex space-x-8 h-full items-center">
+          <a href="#" class="nav-link active" data-i18n="nav.overview">Overview</a>
+          <a href="#" class="nav-link" data-i18n="nav.tax">Tax & Compliance</a>
+          <a href="#" class="nav-link" data-i18n="nav.estate">Estate Plan</a>
+          <div class="h-6 border-l border-gray-300 mx-2"></div>
+          <a href="#" class="nav-link" data-i18n="nav.us">US Assets</a>
+          <a href="#" class="nav-link" data-i18n="nav.tw">TW Assets</a>
+        </nav>
 
-            {/* Table Card */}
-            <div className="bg-white border border-[#e0e0e0] rounded-sm shadow-sm">
-              <div className="px-6 py-4 border-b border-[#e0e0e0] bg-gray-50">
-                <h3 className="font-bold text-gray-800">{t.table.title}</h3>
-              </div>
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm">
-                  <thead>
-                    <tr className="bg-white text-gray-500 border-b border-[#e0e0e0]">
-                      <th className="px-6 py-4 font-semibold">{t.table.name}</th>
-                      <th className="px-6 py-4 font-semibold">{t.table.jurisdiction}</th>
-                      <th className="px-6 py-4 font-semibold">{t.table.category}</th>
-                      <th className="px-6 py-4 font-semibold text-right">{t.table.value}</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    {assets.map((asset) => (
-                      <tr key={asset.id} className={`hover:bg-gray-50 transition-colors ${asset.isNew ? 'bg-orange-50' : ''}`}>
-                        <td className="px-6 py-4">
-                          <div className="flex items-center gap-3">
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold ${asset.country === 'US' ? 'bg-blue-600' : 'bg-green-600'}`}>
-                              {asset.country}
-                            </div>
-                            <div>
-                              <div className="font-bold text-[#333]">
-                                {lang === 'zh' && asset.namezh ? asset.namezh : asset.name}
-                              </div>
-                              <div className="text-xs text-gray-500">
-                                {lang === 'zh' && asset.typezh ? asset.typezh : asset.type}
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                           {asset.country === 'US' 
-                             ? <span className="inline-flex items-center px-2 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded">USA</span>
-                             : <span className="inline-flex items-center px-2 py-1 bg-green-50 text-green-700 text-xs font-bold rounded">TWN</span>
-                           }
-                           {asset.risk && <span className="ml-2 inline-flex items-center px-2 py-1 bg-orange-100 text-orange-800 text-xs font-bold rounded">FATCA</span>}
-                        </td>
-                        <td className="px-6 py-4 text-gray-600">
-                          {lang === 'zh' && asset.categoryzh ? asset.categoryzh : asset.category}
-                        </td>
-                        <td className="px-6 py-4 text-right font-bold text-[#333] tracking-tight">
-                          {formatMoney(asset.valueUsd)}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+        <!-- Tools -->
+        <div class="flex items-center gap-4">
+          <div class="hidden sm:flex bg-gray-100 rounded-full p-1">
+            <button onclick="setCurrency('USD')" id="btn-usd" class="px-3 py-1 text-xs font-bold rounded-full transition-all text-gray-500">USD</button>
+            <button onclick="setCurrency('TWD')" id="btn-twd" class="px-3 py-1 text-xs font-bold rounded-full transition-all bg-white text-[#005eb8] shadow-sm">TWD</button>
           </div>
 
-          {/* Right Column: Charts & Insights */}
-          <div className="space-y-6">
-            <div className="bg-white border border-[#e0e0e0] rounded-sm shadow-sm p-6">
-              <h3 className="font-bold text-gray-800 mb-6">{t.geo.title}</h3>
-              <div className="h-64 w-full relative">
-                 <ResponsiveContainer width="100%" height="100%">
-                    <PieChart>
-                      <Pie
-                        data={chartData}
-                        innerRadius={60}
-                        outerRadius={80}
-                        paddingAngle={5}
-                        dataKey="value"
-                      >
-                        <Cell fill="#005eb8" /> {/* US */}
-                        <Cell fill="#00a651" /> {/* TW */}
-                      </Pie>
-                      <Tooltip 
-                         formatter={(value) => formatMoney(value)}
-                         contentStyle={{borderRadius: '4px', border: '1px solid #eee', boxShadow: '0 2px 10px rgba(0,0,0,0.1)'}}
-                      />
-                      <Legend verticalAlign="bottom" height={36}/>
-                    </PieChart>
-                 </ResponsiveContainer>
-                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none pb-8">
-                   <div className="text-center">
-                     <div className="text-xs text-gray-400 font-bold uppercase">Total</div>
-                     <div className="text-sm font-bold text-[#333]">100%</div>
-                   </div>
-                 </div>
-              </div>
-              
-              <div className="bg-gray-50 p-4 border border-gray-200 rounded-sm mt-4">
-                <div className="text-xs font-bold text-[#005eb8] mb-1 uppercase tracking-wider flex items-center gap-1">
-                   <ShieldCheck size={12} /> {t.geo.insight}
-                </div>
-                <p className="text-xs text-gray-600 leading-relaxed">
-                  {t.geo.insight_text.replace('{pct}', twPercentage)}
-                </p>
-              </div>
-            </div>
+          <div class="flex items-center text-sm font-medium text-gray-600 gap-2 border-l border-gray-200 pl-4">
+            <i class="fa-solid fa-globe"></i>
+            <span class="cursor-pointer hover:text-[#005eb8]" onclick="setLang('en')" id="lang-en">EN</span>
+            <span>/</span>
+            <span class="cursor-pointer hover:text-[#005eb8] font-bold text-[#005eb8]" onclick="setLang('zh')" id="lang-zh">繁中</span>
+          </div>
 
-             {/* Contact Agent (TSMC style service link) */}
-             <div className="bg-[#333] text-white p-6 rounded-sm">
-                <h4 className="font-bold text-sm mb-2">Need Estate Planning?</h4>
-                <p className="text-xs text-gray-400 mb-4">Contact our certified cross-border tax specialists.</p>
-                <button className="w-full bg-white text-[#333] py-2 text-xs font-bold uppercase tracking-wide hover:bg-gray-100">
-                  Contact Support
-                </button>
-             </div>
+          <div class="w-9 h-9 bg-gray-800 text-white rounded-full flex items-center justify-center text-sm font-bold ml-2 cursor-pointer">EH</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <div class="bg-gray-50 border-b border-gray-200 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-800 mb-2" data-i18n="header.title">全球資產指揮中心</h1>
+          <p class="text-gray-500 text-sm flex items-center gap-2">
+            <span class="w-2 h-2 bg-green-500 rounded-full inline-block"></span>
+            <span data-i18n="header.subtitle">2025 稅務年度跨國資產整合視圖</span>
+          </p>
+        </div>
+        <button onclick="openModal()" class="bg-[#005eb8] hover:bg-[#004a94] text-white px-6 py-3 rounded-sm text-sm font-bold flex items-center gap-2 shadow-sm transition-colors">
+          <i class="fa-solid fa-plus"></i> <span data-i18n="btn.add">新增資產</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+    
+    <!-- Stats Row -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      <div class="bg-white p-6 border border-gray-200 rounded-sm shadow-sm">
+        <div class="flex justify-between items-start mb-2">
+          <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider" data-i18n="stats.us_net">美國總資產</h3>
+          <span class="text-xl">🇺🇸</span>
+        </div>
+        <div class="text-3xl font-bold text-gray-800 tracking-tight mb-1 val-display" data-usd="482500"></div>
+        <div class="text-xs font-bold text-green-600 flex items-center gap-1"><i class="fa-solid fa-arrow-trend-up"></i> +4.2% YTD</div>
+      </div>
+
+      <div class="bg-white p-6 border border-gray-200 rounded-sm shadow-sm">
+        <div class="flex justify-between items-start mb-2">
+          <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider" data-i18n="stats.tw_net">台灣總資產</h3>
+          <span class="text-xl">🇹🇼</span>
+        </div>
+        <div class="text-3xl font-bold text-gray-800 tracking-tight mb-1 val-display" data-usd="315200" id="stat-tw"></div>
+        <div class="text-xs font-bold text-green-600 flex items-center gap-1"><i class="fa-solid fa-arrow-trend-up"></i> +1.8% YTD</div>
+      </div>
+
+      <div class="bg-white p-6 border border-gray-200 rounded-sm shadow-sm border-l-4 border-l-gray-800">
+        <div class="flex justify-between items-start mb-2">
+          <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider" data-i18n="stats.global">全球總淨值</h3>
+          <span class="text-xl">🌍</span>
+        </div>
+        <div class="text-3xl font-bold text-gray-800 tracking-tight mb-1 val-display" data-usd="797700" id="stat-global"></div>
+        <div class="text-xs font-bold text-[#005eb8] flex items-center gap-1">
+          <i class="fa-solid fa-shield-check"></i> <span data-i18n="stats.estate_safe">遺產稅安全水位</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard Columns -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- Left: Assets -->
+      <div class="lg:col-span-2 space-y-8">
+        
+        <!-- AI Alert -->
+        <div id="ai-alert" class="hidden bg-orange-50 border-l-4 border-orange-500 p-4 flex gap-4 animate-fade-in">
+          <div class="bg-white p-2 rounded-full h-10 w-10 flex items-center justify-center text-orange-500 shadow-sm">
+             <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-800 text-sm" data-i18n="alert.title">AI 稅務警示</h4>
+            <p class="text-gray-600 text-sm mt-1 leading-relaxed" data-i18n="alert.text">偵測到高現金價值保單。可能需要申報 FATCA (肥咖條款)。</p>
+            <button class="mt-2 text-xs font-bold text-[#005eb8] hover:underline">View IRS Form 8938 Analysis &rarr;</button>
+          </div>
+        </div>
+
+        <!-- Asset Table -->
+        <div class="bg-white border border-gray-200 rounded-sm shadow-sm">
+          <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+            <h3 class="font-bold text-gray-800" data-i18n="table.title">投資組合持倉</h3>
+            <span class="text-xs text-gray-400 font-mono">Data Source: Live API</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead>
+                <tr class="bg-white text-gray-500 border-b border-gray-200">
+                  <th class="px-6 py-4 font-semibold" data-i18n="table.name">資產名稱</th>
+                  <th class="px-6 py-4 font-semibold" data-i18n="table.jurisdiction">管轄區</th>
+                  <th class="px-6 py-4 font-semibold" data-i18n="table.category">類別</th>
+                  <th class="px-6 py-4 font-semibold text-right" data-i18n="table.value">現值</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100" id="asset-list">
+                <!-- JS Injected -->
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
 
-      {/* --- Footer (Corporate Standard) --- */}
-      <footer className="bg-[#1a1a1a] text-white py-12 border-t border-gray-800 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-           <div>
-              <div className="font-bold text-lg mb-4">Taimic Global</div>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                 Providing advanced AI wealth management solutions for the global diaspora.
-              </p>
-           </div>
-           <div>
-              <h5 className="font-bold text-sm mb-4 text-gray-300">Platform</h5>
-              <ul className="space-y-2 text-xs text-gray-400">
-                 <li>Overview</li>
-                 <li>Pricing</li>
-                 <li>Security</li>
-              </ul>
-           </div>
-           <div>
-              <h5 className="font-bold text-sm mb-4 text-gray-300">Company</h5>
-              <ul className="space-y-2 text-xs text-gray-400">
-                 <li>About Us</li>
-                 <li>Careers</li>
-                 <li>Contact</li>
-              </ul>
-           </div>
-           <div>
-              <h5 className="font-bold text-sm mb-4 text-gray-300">Legal</h5>
-              <ul className="space-y-2 text-xs text-gray-400">
-                 <li>Privacy Policy</li>
-                 <li>Terms of Service</li>
-              </ul>
-           </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-gray-800 text-center text-xs text-gray-500">
-           &copy; 2025 Taimic Inc. All Rights Reserved.
-        </div>
-      </footer>
-
-      {/* --- Modal (Functional) --- */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-sm shadow-2xl w-full max-w-md overflow-hidden relative">
-            <div className="bg-[#005eb8] p-4 flex justify-between items-center">
-               <h3 className="text-white font-bold text-sm">{t.modal.title}</h3>
-               <X size={20} className="text-white cursor-pointer" onClick={() => setShowModal(false)} />
-            </div>
-            
-            <div className="p-8 text-center">
-              {scanStep === 0 && (
-                <>
-                   <UploadCloud size={48} className="text-gray-300 mx-auto mb-4" />
-                   <p className="text-sm text-gray-600 mb-6">{t.modal.desc}</p>
-                   <button 
-                     onClick={handleUpload}
-                     className="w-full border-2 border-dashed border-gray-300 py-8 rounded-sm hover:border-[#005eb8] hover:bg-blue-50 transition-all text-gray-500 hover:text-[#005eb8] font-bold text-sm"
-                   >
-                     {t.btn.upload}
-                   </button>
-                </>
-              )}
-              {scanStep > 0 && (
-                 <div className="text-left space-y-3">
-                    <div className="flex items-center gap-3 text-sm text-gray-700">
-                       {scanStep >= 1 ? <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white text-[10px]">✓</div> : <div className="w-4 h-4 border border-gray-300 rounded-full"></div>}
-                       {t.modal.step1}
-                    </div>
-                    <div className="flex items-center gap-3 text-sm text-gray-700">
-                       {scanStep >= 2 ? <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white text-[10px]">✓</div> : <div className="w-4 h-4 border border-gray-300 rounded-full"></div>}
-                       {t.modal.step2}
-                    </div>
-                    <div className="flex items-center gap-3 text-sm text-gray-700">
-                       {scanStep >= 3 ? <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white text-[10px]">✓</div> : <div className="w-4 h-4 border border-gray-300 rounded-full animate-pulse bg-gray-200"></div>}
-                       {t.modal.step3}
-                    </div>
-                 </div>
-              )}
+      <!-- Right: Charts -->
+      <div class="space-y-6">
+        <div class="bg-white border border-gray-200 rounded-sm shadow-sm p-6">
+          <h3 class="font-bold text-gray-800 mb-6" data-i18n="geo.title">資產區域配置</h3>
+          <div class="h-64 w-full relative">
+            <canvas id="geoChart"></canvas>
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none pb-6">
+              <div class="text-center">
+                <div class="text-xs text-gray-400 font-bold uppercase">Total</div>
+                <div class="text-sm font-bold text-gray-800">100%</div>
+              </div>
             </div>
           </div>
+          
+          <div class="bg-blue-50 p-4 border border-blue-100 rounded-sm mt-4">
+            <div class="text-xs font-bold text-[#005eb8] mb-1 uppercase tracking-wider flex items-center gap-1">
+              <i class="fa-solid fa-robot"></i> <span data-i18n="geo.insight">AI 智能分析</span>
+            </div>
+            <p class="text-xs text-gray-600 leading-relaxed" data-i18n="geo.insight_text">
+              您的台灣資產佔總淨值的 40%。建議留意台幣匯率風險。
+            </p>
+          </div>
         </div>
-      )}
-    </div>
-  );
-};
 
-// --- Sub Components (Corporate Style) ---
-const NavLink = ({ label, active }) => (
-  <a 
-    href="#" 
-    className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors h-full ${active ? 'border-[#005eb8] text-[#333]' : 'border-transparent text-gray-500 hover:text-[#005eb8] hover:border-gray-300'}`}
-  >
-    {label}
-  </a>
-);
-
-const StatBox = ({ label, val, flag, trend, sub, isTotal }) => (
-  <div className={`bg-white p-6 border rounded-sm shadow-sm ${isTotal ? 'border-l-4 border-l-[#333]' : 'border-[#e0e0e0]'}`}>
-    <div className="flex justify-between items-start mb-2">
-      <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider">{label}</h3>
-      <span className="text-xl">{flag}</span>
+        <div class="bg-[#1e293b] text-white p-6 rounded-sm shadow-lg">
+          <h4 class="font-bold text-sm mb-2"><i class="fa-solid fa-headset mr-2"></i>Need Estate Planning?</h4>
+          <p class="text-xs text-gray-400 mb-4 leading-relaxed">Contact our certified cross-border tax specialists to optimize your legacy plan.</p>
+          <button class="w-full bg-white text-[#1e293b] py-2 text-xs font-bold uppercase tracking-wide hover:bg-gray-100 transition-colors rounded-sm">
+            Contact Support
+          </button>
+        </div>
+      </div>
     </div>
-    <div className="text-3xl font-bold text-[#333] tracking-tight mb-1">{val}</div>
-    {trend && <div className="text-xs font-bold text-green-600">{trend} YTD</div>}
-    {sub && <div className="text-xs font-bold text-[#005eb8] flex items-center gap-1"><ShieldCheck size={12}/> {sub}</div>}
   </div>
-);
 
-export default App;
+  <!-- Footer -->
+  <footer class="bg-[#111] text-white py-12 border-t border-gray-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <p class="text-xs text-gray-500 mb-2">&copy; 2025 Taimic Inc. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal-overlay" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-sm shadow-2xl w-full max-w-md overflow-hidden relative animate-fade-in">
+      <div class="bg-[#005eb8] p-4 flex justify-between items-center">
+        <h3 class="text-white font-bold text-sm flex items-center gap-2">
+           <i class="fa-solid fa-file-import"></i> <span data-i18n="modal.title">新增台灣資產</span>
+        </h3>
+        <i class="fa-solid fa-xmark text-white cursor-pointer text-lg hover:opacity-75" onclick="closeModal()"></i>
+      </div>
+      
+      <div class="p-8 text-center" id="modal-step-1">
+        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
+           <i class="fa-solid fa-cloud-arrow-up text-3xl"></i>
+        </div>
+        <p class="text-sm text-gray-600 mb-6 leading-relaxed" data-i18n="modal.desc">上傳保單或對帳單，AI 將自動提取稅務數據。</p>
+        <button onclick="startScan()" class="w-full border-2 border-dashed border-gray-300 py-8 rounded-sm hover:border-[#005eb8] hover:bg-blue-50 transition-all text-gray-500 hover:text-[#005eb8] font-bold text-sm group">
+          <span class="group-hover:scale-105 inline-block transition-transform" data-i18n="btn.upload">點擊上傳照片</span>
+        </button>
+      </div>
+
+      <div class="p-8 hidden" id="modal-step-2">
+        <h3 class="text-center font-bold text-gray-800 mb-6 flex items-center justify-center gap-2">
+           <i class="fa-solid fa-circle-notch fa-spin text-[#005eb8]"></i> <span data-i18n="btn.analyzing">AI 分析中...</span>
+        </h3>
+        <div class="text-left space-y-3 bg-gray-50 p-4 rounded border border-gray-100 font-mono">
+          <div class="flex items-center gap-3 text-xs text-gray-700" id="step-txt-1">
+            <div class="w-3 h-3 border border-gray-300 rounded-full"></div> <span data-i18n="modal.step1">偵測語言...</span>
+          </div>
+          <div class="flex items-center gap-3 text-xs text-gray-700" id="step-txt-2">
+            <div class="w-3 h-3 border border-gray-300 rounded-full"></div> <span data-i18n="modal.step2">解析數值...</span>
+          </div>
+           <div class="flex items-center gap-3 text-xs text-gray-700" id="step-txt-3">
+            <div class="w-3 h-3 border border-gray-300 rounded-full"></div> <span data-i18n="modal.step3">比對 IRS...</span>
+          </div>
+        </div>
+        <div class="mt-6 h-1 w-full bg-gray-200 rounded-full overflow-hidden">
+           <div class="scan-line w-full"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logic -->
+  <script>
+    const EXCHANGE_RATE = 32.5;
+    let currentLang = 'zh';
+    let currentCurr = 'TWD';
+
+    let assets = [
+      { id: 1, name: 'Vanguard Total Stock (VTI)', namezh: 'Vanguard 全球股票 ETF (VTI)', type: 'ETF', typezh: '指數型基金', country: 'US', valueUsd: 145200, category: 'Investment', categoryzh: '投資' },
+      { id: 2, name: 'Taipei Xinyi Condo', namezh: '台北信義區公寓', type: 'Real Estate', typezh: '房地產', country: 'TW', valueUsd: 280000, category: 'Property', categoryzh: '不動產' },
+      { id: 3, name: 'Fidelity 401(k)', namezh: '富達退休金帳戶 401(k)', type: 'Retirement', typezh: '退休金', country: 'US', valueUsd: 98500, category: 'Retirement', categoryzh: '退休規劃' },
+    ];
+
+    const TRANSLATIONS = {
+      en: {
+        'nav.overview': 'Overview', 'nav.tax': 'Tax & Compliance', 'nav.estate': 'Estate Plan', 'nav.us': 'US Assets', 'nav.tw': 'TW Assets',
+        'header.title': 'Global Asset Command', 'header.subtitle': 'Consolidated view for Tax Year 2025',
+        'stats.us_net': 'US Net Worth', 'stats.tw_net': 'Taiwan Net Worth', 'stats.global': 'Global Total', 'stats.estate_safe': 'Estate Tax Safe',
+        'table.title': 'Portfolio Holdings', 'table.name': 'Asset Name', 'table.jurisdiction': 'Jurisdiction', 'table.category': 'Category', 'table.value': 'Value',
+        'geo.title': 'Geo-Allocation', 'geo.insight': 'AI INSIGHT', 'geo.insight_text': 'Your Taiwan assets comprise 40% of your net worth. Consider hedging currency risk.',
+        'alert.title': 'AI Tax Alert', 'alert.text': 'High cash-value insurance detected. Potential FATCA reporting required.',
+        'btn.add': 'Add Asset', 'btn.upload': 'Click to Upload', 'btn.analyzing': 'AI Analyzing...',
+        'modal.title': 'Add Taiwan Asset', 'modal.desc': 'Upload policy or statement. AI will extract tax data.', 
+        'modal.step1': 'Detecting Language: Traditional Chinese', 'modal.step2': 'Parsing Values: Cash Value', 'modal.step3': 'Checking IRS Form 8938 Codes'
+      },
+      zh: {
+        'nav.overview': '資產總覽', 'nav.tax': '稅務合規', 'nav.estate': '傳承規劃', 'nav.us': '美國資產', 'nav.tw': '台灣資產',
+        'header.title': '全球資產指揮中心', 'header.subtitle': '2025 稅務年度跨國資產整合視圖',
+        'stats.us_net': '美國總資產', 'stats.tw_net': '台灣總資產', 'stats.global': '全球總淨值', 'stats.estate_safe': '遺產稅安全水位',
+        'table.title': '投資組合持倉', 'table.name': '資產名稱', 'table.jurisdiction': '管轄區', 'table.category': '類別', 'table.value': '現值',
+        'geo.title': '資產區域配置', 'geo.insight': 'AI 智能分析', 'geo.insight_text': '您的台灣資產佔總淨值的 40%。建議留意台幣匯率風險。',
+        'alert.title': 'AI 稅務警示', 'alert.text': '偵測到高現金價值保單。可能需要申報 FATCA (肥咖條款)。',
+        'btn.add': '新增資產', 'btn.upload': '點擊上傳照片', 'btn.analyzing': 'AI 分析中...',
+        'modal.title': '新增台灣資產', 'modal.desc': '上傳保單或對帳單，AI 將自動提取稅務數據。',
+        'modal.step1': '偵測語言：繁體中文...', 'modal.step2': '解析數值：現金價值...', 'modal.step3': '比對 IRS 稅法代碼...'
+      }
+    };
+
+    let geoChart;
+    function initChart() {
+      const ctx = document.getElementById('geoChart').getContext('2d');
+      geoChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['US Assets', 'TW Assets'],
+          datasets: [{
+            data: [243700, 280000],
+            backgroundColor: ['#005eb8', '#00a651'],
+            borderWidth: 2,
+            borderColor: '#ffffff',
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '75%',
+          plugins: {
+            legend: { position: 'bottom', labels: { usePointStyle: true, font: { size: 11, family: "'Roboto', sans-serif" }, padding: 20 } }
+          }
+        }
+      });
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('asset-list');
+      tbody.innerHTML = '';
+      
+      assets.forEach(asset => {
+        const name = currentLang === 'zh' && asset.namezh ? asset.namezh : asset.name;
+        const type = currentLang === 'zh' && asset.typezh ? asset.typezh : asset.type;
+        const cat = currentLang === 'zh' && asset.categoryzh ? asset.categoryzh : asset.category;
+        const isUS = asset.country === 'US';
+        const badgeClass = isUS ? 'bg-blue-50 text-blue-700' : 'bg-green-50 text-green-700';
+        const badgeText = isUS ? 'USA' : 'TWN';
+        const bgClass = asset.isNew ? 'bg-orange-50 animate-fade-in' : '';
+        let riskTag = '';
+        if(asset.risk) {
+           riskTag = `<span class="ml-2 inline-flex items-center px-2 py-0.5 bg-orange-100 text-orange-700 text-[10px] font-bold rounded border border-orange-200"><i class="fa-solid fa-bolt mr-1"></i> FATCA</span>`;
+        }
+
+        const row = `
+          <tr class="hover:bg-gray-50 transition-colors ${bgClass} group border-b border-gray-100 last:border-0">
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-md flex items-center justify-center text-white text-xs font-bold shadow-sm ${isUS ? 'bg-blue-600' : 'bg-green-600'}">${asset.country}</div>
+                <div><div class="font-bold text-gray-800 group-hover:text-[#005eb8] transition-colors">${name}</div><div class="text-xs text-gray-500">${type}</div></div>
+              </div>
+            </td>
+            <td class="px-6 py-4"><span class="inline-flex items-center px-2 py-1 text-xs font-bold rounded ${badgeClass}">${badgeText}</span>${riskTag}</td>
+            <td class="px-6 py-4 text-gray-600 text-xs font-medium uppercase tracking-wide">${cat}</td>
+            <td class="px-6 py-4 text-right font-bold text-gray-800 tracking-tight val-display font-mono" data-usd="${asset.valueUsd}">...</td>
+          </tr>
+        `;
+        tbody.innerHTML += row;
+      });
+      updateValues();
+    }
+
+    function formatMoney(valUsd) {
+      if (currentCurr === 'USD') {
+        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(valUsd);
+      } else {
+        return new Intl.NumberFormat('zh-TW', { style: 'currency', currency: 'TWD', maximumFractionDigits: 0 }).format(valUsd * EXCHANGE_RATE);
+      }
+    }
+
+    function updateValues() {
+      document.querySelectorAll('.val-display').forEach(el => {
+        const val = parseFloat(el.getAttribute('data-usd'));
+        el.textContent = formatMoney(val);
+      });
+
+      const btnUsd = document.getElementById('btn-usd');
+      const btnTwd = document.getElementById('btn-twd');
+      const activeClass = "bg-white text-[#005eb8] shadow-sm";
+      const inactiveClass = "text-gray-500";
+
+      if (currentCurr === 'USD') {
+        btnUsd.className = `px-3 py-1 text-xs font-bold rounded-full transition-all ${activeClass}`;
+        btnTwd.className = `px-3 py-1 text-xs font-bold rounded-full transition-all ${inactiveClass}`;
+      } else {
+        btnUsd.className = `px-3 py-1 text-xs font-bold rounded-full transition-all ${inactiveClass}`;
+        btnTwd.className = `px-3 py-1 text-xs font-bold rounded-full transition-all ${activeClass}`;
+      }
+    }
+
+    function updateText() {
+      const t = TRANSLATIONS[currentLang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.textContent = t[key];
+      });
+      
+      const enBtn = document.getElementById('lang-en');
+      const zhBtn = document.getElementById('lang-zh');
+      const activeClass = "cursor-pointer hover:text-[#005eb8] font-bold text-[#005eb8]";
+      const inactiveClass = "cursor-pointer hover:text-[#005eb8] text-gray-500";
+
+      if(currentLang === 'en') {
+        enBtn.className = activeClass;
+        zhBtn.className = inactiveClass;
+      } else {
+        enBtn.className = inactiveClass;
+        zhBtn.className = activeClass;
+      }
+      renderTable();
+    }
+
+    function setCurrency(c) { currentCurr = c; updateValues(); }
+    function setLang(l) { currentLang = l; updateText(); }
+    function openModal() { document.getElementById('modal-overlay').classList.remove('hidden'); document.getElementById('modal-step-1').classList.remove('hidden'); document.getElementById('modal-step-2').classList.add('hidden'); }
+    function closeModal() { document.getElementById('modal-overlay').classList.add('hidden'); }
+
+    function startScan() {
+      document.getElementById('modal-step-1').classList.add('hidden');
+      document.getElementById('modal-step-2').classList.remove('hidden');
+
+      const s1 = document.getElementById('step-txt-1');
+      const s2 = document.getElementById('step-txt-2');
+      const s3 = document.getElementById('step-txt-3');
+      const checkIcon = '<i class="fa-solid fa-check text-green-500"></i>';
+
+      setTimeout(() => { s1.children[0].outerHTML = checkIcon; s1.classList.add('font-bold'); }, 1000);
+      setTimeout(() => { s2.children[0].outerHTML = checkIcon; s2.classList.add('font-bold'); }, 2000);
+      setTimeout(() => { s3.children[0].outerHTML = checkIcon; s3.classList.add('font-bold'); }, 3000);
+
+      setTimeout(() => {
+        const newAsset = {
+          id: Date.now(), name: 'Fubon Life (Whole Life)', namezh: '富邦人壽 (終身壽險)',
+          type: 'Insurance', typezh: '儲蓄險', country: 'TW', valueUsd: 52000,
+          category: 'Insurance', categoryzh: '保險', isNew: true, risk: 'FATCA'
+        };
+        assets.unshift(newAsset);
+        
+        const twStat = document.getElementById('stat-tw');
+        const glStat = document.getElementById('stat-global');
+        const newTwVal = parseFloat(twStat.getAttribute('data-usd')) + 52000;
+        const newGlVal = parseFloat(glStat.getAttribute('data-usd')) + 52000;
+        
+        twStat.setAttribute('data-usd', newTwVal);
+        glStat.setAttribute('data-usd', newGlVal);
+
+        geoChart.data.datasets[0].data[1] += 52000; 
+        geoChart.update();
+
+        document.getElementById('ai-alert').classList.remove('hidden');
+        renderTable();
+        updateValues();
+        closeModal();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 3800);
+    }
+
+    window.onload = function() {
+      initChart();
+      renderTable();
+      updateValues();
+    }
+  </script>
+</body>
+</html>
