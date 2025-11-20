@@ -689,25 +689,34 @@
       }
     };
 
-    // 切換邏輯：按了按鈕後，語言切換，按鈕文字顯示「另一個語言」
-    langBtn.addEventListener('click', () => {
-      if (currentLang === 'zh-Hant') {
-        // 切換到英文
-        currentLang = 'en';
-        langLabel.textContent = '繁體中文'; // 按鈕顯示你「可以切換回」的語言
-      } else {
-        // 切換到中文
-        currentLang = 'zh-Hant';
-        langLabel.textContent = 'English';
-      }
-      
-      // 更新內容
-      const dict = i18n[currentLang];
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (dict[key]) el.innerHTML = dict[key];
-      });
-    });
+    /* Language Logic */
+let currentLang = 'zh-Hant';
+const langBtn = document.getElementById('langToggle');
+const langLabel = document.getElementById('langLabel');
+
+// 一開始就讓按鈕顯示「目前語言」
+langLabel.textContent = '繁體中文';
+
+function applyLang() {
+  const dict = i18n[currentLang];
+  document.documentElement.lang = currentLang; // <html lang="...">
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) el.innerHTML = dict[key];
+  });
+
+  // 按鈕顯示「目前語言」
+  langLabel.textContent = currentLang === 'zh-Hant' ? '繁體中文' : 'English';
+}
+
+langBtn.addEventListener('click', () => {
+  currentLang = (currentLang === 'zh-Hant') ? 'en' : 'zh-Hant';
+  applyLang();
+});
+
+// 如果你想一載入就跑一次翻譯（保險）
+applyLang();
 
     /* Calc Logic */
     document.getElementById('calcForm').addEventListener('submit', (e) => {
