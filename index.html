@@ -8,19 +8,19 @@
   <meta name="description" content="Taimic 運用 AI 運算模型，協助個人建構最佳化的保險防護與資產配置策略。" />
   <meta property="og:title" content="Taimic｜AI 財富決策系統" />
   <meta property="og:image" content="https://placehold.co/1200x630/0057b8/ffffff?text=Taimic+Technology" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230057b8%22 rx=%2210%22/><path d=%22M30 50 L50 70 L80 30%22 stroke=%22white%22 stroke-width=%2210%22 fill=%22none%22/></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230057b8%22 rx=%222%22/><circle cx=%2250%22 cy=%2250%22 r=%2230%22 stroke=%22white%22 stroke-width=%228%22 fill=%22none%22/><rect x=%2246%22 y=%2220%22 width=%228%22 height=%2230%22 fill=%22white%22/></svg>" />
 
   <style>
-    /* -------- 1. 企業識別與基礎設定 (Corporate Identity) -------- */
+    /* -------- 1. 企業識別與基礎設定 -------- */
     :root {
-      /* Taimic 科技藍 (參考 TSMC/Intel 穩重色系) */
+      /* Taimic 科技藍 (參考 TSMC/Intel) */
       --brand-primary: #0057b8; 
       --brand-dark: #003a7a;
-      --brand-light: #eef4fb;
+      --brand-light: #f0f5fa;
       
       /* 介面顏色 */
-      --text-main: #1f2933;      /* 深灰黑 */
-      --text-sub: #52606d;       /* 次要灰 */
+      --text-main: #1f2933;
+      --text-sub: #52606d;
       --bg-body: #ffffff;
       --bg-section: #f8f9fa;
       --border-color: #e1e4e8;
@@ -28,7 +28,7 @@
       /* 形狀：直角、硬派科技風 */
       --radius-base: 2px; 
       
-      --header-height: 72px;
+      --header-height: 80px;
       --max-width: 1280px;
     }
 
@@ -47,7 +47,7 @@
     a { text-decoration: none; color: inherit; transition: all 0.2s; }
     button { font-family: inherit; }
 
-    /* -------- 2. Header 導覽列 (Sticky & Solid) -------- */
+    /* -------- 2. Header 導覽列 -------- */
     .site-header-wrap {
       position: sticky;
       top: 0;
@@ -74,45 +74,42 @@
       gap: 12px;
     }
 
-    /* 抽象科技時鐘 Logo (CSS 繪製) */
+    /* 抽象科技時鐘 Logo */
     .logo-icon {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       position: relative;
-      border: 2px solid var(--brand-primary);
-      border-radius: 50%; /* 外圓 */
+      border: 3px solid var(--brand-primary);
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    /* 內部軌道 (代表數據流動) */
+    /* 缺口設計 */
     .logo-icon::before {
       content: "";
       position: absolute;
-      width: 24px; height: 24px;
-      border: 2px solid transparent;
-      border-top-color: var(--brand-primary);
-      border-right-color: var(--brand-primary);
-      border-radius: 50%;
-      transform: rotate(45deg);
+      top: -3px; right: -3px;
+      width: 12px; height: 12px;
+      background: #fff;
     }
-    /* 中心點與指針 (代表精準) */
+    /* 指針 */
     .logo-icon::after {
       content: "";
       position: absolute;
-      width: 2px; height: 10px;
+      width: 3px; height: 12px;
       background: var(--brand-primary);
-      top: 5px; left: 50%;
+      top: 6px; left: 50%;
       transform: translateX(-50%);
     }
 
     .logo-text-group {
       display: flex;
       flex-direction: column;
-      line-height: 1.1;
+      line-height: 1;
     }
     .logo-title {
-      font-size: 20px;
+      font-size: 24px;
       font-weight: 800;
       color: var(--brand-primary);
       letter-spacing: 0.5px;
@@ -122,34 +119,36 @@
       color: var(--text-sub);
       letter-spacing: 1px;
       font-weight: 600;
+      margin-top: 4px;
     }
 
     /* 中間導覽選單 */
     .header-nav {
       display: flex;
       height: 100%;
-      gap: 4px;
+      align-items: center;
+      gap: 8px;
     }
     .nav-item {
       display: flex;
       align-items: center;
-      padding: 0 16px;
+      padding: 0 20px;
       font-size: 15px;
       font-weight: 600;
       color: var(--text-main);
       position: relative;
-      height: 100%;
+      height: 100%; /* 滿高 */
       cursor: pointer;
     }
     .nav-item:hover {
       color: var(--brand-primary);
       background: var(--brand-light);
     }
-    /* 台積電風格：下方紅線/藍線指示 */
+    /* Hover 底線指示 */
     .nav-item::after {
       content: "";
       position: absolute;
-      bottom: 0; left: 0; width: 100%; height: 3px;
+      bottom: 0; left: 0; width: 100%; height: 4px;
       background: var(--brand-primary);
       transform: scaleX(0);
       transition: transform 0.2s;
@@ -157,29 +156,36 @@
     .nav-item:hover::after { transform: scaleX(1); }
 
     /* 右側語言切換 */
+    .header-right {
+      display: flex;
+      align-items: center;
+    }
+
     .lang-btn {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
       color: var(--text-sub);
       border: 1px solid var(--border-color);
-      padding: 6px 16px;
+      padding: 8px 16px;
       border-radius: var(--radius-base);
       background: #fff;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
+      transition: all 0.2s;
     }
     .lang-btn:hover {
       border-color: var(--brand-primary);
       color: var(--brand-primary);
     }
 
-    /* -------- 3. Hero Section (專業大氣版面) -------- */
+    /* -------- 3. Hero Section -------- */
     .hero-wrap {
       width: 100%;
-      background: linear-gradient(to right, #ffffff 50%, var(--bg-section) 50%);
-      padding: 80px 0;
+      /* 左右切割背景 */
+      background: linear-gradient(to right, #ffffff 55%, var(--bg-section) 55%);
+      padding: 100px 0;
       border-bottom: 1px solid var(--border-color);
     }
     
@@ -188,17 +194,17 @@
       margin: 0 auto;
       padding: 0 30px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 80px;
       align-items: center;
     }
 
     .hero-content h1 {
-      font-size: 42px;
-      font-weight: 700;
-      line-height: 1.3;
+      font-size: 48px;
+      font-weight: 800;
+      line-height: 1.2;
       margin-bottom: 24px;
-      color: #111;
+      color: #000;
     }
     .hero-content h1 span {
       color: var(--brand-primary);
@@ -207,8 +213,9 @@
     .hero-content p {
       font-size: 18px;
       color: var(--text-sub);
-      margin-bottom: 32px;
-      max-width: 540px;
+      margin-bottom: 40px;
+      max-width: 520px;
+      line-height: 1.7;
     }
 
     .btn-group { display: flex; gap: 16px; }
@@ -216,8 +223,8 @@
     .btn-primary {
       background: var(--brand-primary);
       color: #fff;
-      padding: 12px 32px;
-      font-size: 15px;
+      padding: 14px 36px;
+      font-size: 16px;
       font-weight: 600;
       border: none;
       border-radius: var(--radius-base);
@@ -226,51 +233,52 @@
     .btn-primary:hover { background: var(--brand-dark); }
 
     .btn-outline {
-      background: transparent;
+      background: #fff;
       color: var(--text-main);
       border: 1px solid #ccc;
-      padding: 12px 32px;
-      font-size: 15px;
+      padding: 14px 36px;
+      font-size: 16px;
       font-weight: 600;
       border-radius: var(--radius-base);
       cursor: pointer;
     }
     .btn-outline:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
 
-    /* Hero 右側視覺卡片 */
+    /* Hero 右側資訊卡 */
     .hero-card {
       background: #fff;
       border: 1px solid var(--border-color);
-      border-left: 4px solid var(--brand-primary);
+      border-left: 5px solid var(--brand-primary);
       padding: 40px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.05);
     }
     .hero-card-title {
       font-size: 14px;
       font-weight: 700;
       color: #999;
-      letter-spacing: 1px;
-      margin-bottom: 20px;
+      letter-spacing: 1.5px;
+      margin-bottom: 24px;
       text-transform: uppercase;
     }
     .hero-list li {
-      margin-bottom: 12px;
-      padding-left: 20px;
+      margin-bottom: 16px;
+      padding-left: 24px;
       position: relative;
       font-size: 16px;
       color: var(--text-main);
+      font-weight: 500;
     }
     .hero-list li::before {
       content: "■";
       color: var(--brand-primary);
       font-size: 10px;
       position: absolute;
-      left: 0; top: 7px;
+      left: 0; top: 8px;
     }
 
-    /* -------- 4. 通用區塊與網格 -------- */
+    /* -------- 4. Content Sections -------- */
     .section-wrap {
-      padding: 80px 0;
+      padding: 100px 0;
       border-bottom: 1px solid var(--border-color);
     }
     .container {
@@ -279,22 +287,21 @@
       padding: 0 30px;
     }
 
-    .section-head { margin-bottom: 48px; }
+    .section-head { margin-bottom: 60px; }
     .section-head h2 {
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       position: relative;
       display: inline-block;
     }
-    /* 標題下方小藍線 */
     .section-head h2::after {
       content: "";
       display: block;
-      width: 60px;
-      height: 4px;
+      width: 80px;
+      height: 5px;
       background: var(--brand-primary);
-      margin-top: 12px;
+      margin-top: 16px;
     }
     .section-head p {
       font-size: 16px;
@@ -306,65 +313,65 @@
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 30px;
+      gap: 40px;
     }
 
-    /* 科技卡片 (Tech Card) */
     .tech-card {
       background: #fff;
       border: 1px solid var(--border-color);
-      padding: 32px;
+      padding: 40px;
       transition: all 0.3s;
+      height: 100%;
     }
     .tech-card:hover {
       border-color: var(--brand-primary);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.06);
     }
     .tech-card h3 {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       color: #111;
     }
     .tech-card p {
-      font-size: 14px;
+      font-size: 15px;
       color: var(--text-sub);
       line-height: 1.7;
     }
 
-    /* -------- 5. 評估工具 (Dashboard Style) -------- */
+    /* -------- 5. 評估工具 -------- */
     .assess-grid {
       display: grid;
-      grid-template-columns: 320px 1fr;
+      grid-template-columns: 350px 1fr;
       border: 1px solid var(--border-color);
       background: #fff;
     }
     .assess-sidebar {
-      background: #f9fafb;
-      padding: 32px;
+      background: #fcfcfc;
+      padding: 40px;
       border-right: 1px solid var(--border-color);
     }
     .assess-main {
-      padding: 32px;
+      padding: 40px;
       background: #fff;
-      min-height: 400px;
+      min-height: 450px;
     }
 
-    .form-group { margin-bottom: 20px; }
+    .form-group { margin-bottom: 24px; }
     .form-label {
       display: block;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--text-main);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
     .form-control {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       border: 1px solid #ccc;
       border-radius: var(--radius-base);
-      font-size: 14px;
+      font-size: 15px;
       background: #fff;
     }
     .form-control:focus {
@@ -376,16 +383,16 @@
       width: 100%;
       background: var(--brand-primary);
       color: #fff;
-      padding: 12px;
+      padding: 14px;
       font-weight: 600;
       border: none;
       border-radius: var(--radius-base);
       cursor: pointer;
       margin-top: 10px;
+      font-size: 15px;
     }
     .btn-submit-full:hover { background: var(--brand-dark); }
 
-    /* 結果區域 */
     .result-empty {
       height: 100%;
       display: flex;
@@ -393,7 +400,7 @@
       justify-content: center;
       align-items: center;
       color: #999;
-      border: 2px dashed #eee;
+      border: 2px dashed #f0f0f0;
       text-align: center;
       padding: 40px;
     }
@@ -404,13 +411,12 @@
       line-height: 1.8;
       color: #333;
       white-space: pre-line;
-      background: #f4f6f8;
-      padding: 20px;
-      border-radius: var(--radius-base);
+      background: #f8f9fa;
+      padding: 30px;
       border: 1px solid #e1e4e8;
     }
 
-    /* -------- 6. Footer (Simple) -------- */
+    /* -------- 6. Footer (簡約版) -------- */
     .site-footer {
       background: #1f2933;
       color: #fff;
@@ -421,20 +427,20 @@
     .footer-content {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-end;
     }
-    .footer-links span { margin-left: 20px; color: #888; cursor: pointer; }
+    .footer-links span { margin-left: 24px; color: #888; cursor: pointer; transition:0.2s; }
     .footer-links span:hover { color: #fff; }
 
     /* -------- 7. Modal (人才招募) -------- */
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.6);
       z-index: 2000;
       display: none;
       align-items: center;
       justify-content: center;
-      backdrop-filter: blur(3px);
+      backdrop-filter: blur(4px);
     }
     .modal-overlay.active { display: flex; }
     
@@ -442,28 +448,35 @@
       background: #fff;
       width: 500px;
       max-width: 90%;
-      padding: 40px;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+      padding: 48px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.25);
       position: relative;
       border-radius: var(--radius-base);
     }
     .modal-close {
-      position: absolute; top: 20px; right: 20px;
-      font-size: 24px; color: #999; cursor: pointer;
+      position: absolute; top: 24px; right: 24px;
+      font-size: 28px; color: #ccc; cursor: pointer;
+      line-height: 1;
     }
+    .modal-close:hover { color: #333; }
+    
     .modal-title {
-      font-size: 22px; font-weight: 700; color: var(--brand-primary);
-      margin-bottom: 20px; border-bottom: 2px solid var(--brand-primary);
-      padding-bottom: 10px; display: inline-block;
+      font-size: 24px; font-weight: 700; color: var(--brand-primary);
+      margin-bottom: 20px; border-bottom: 3px solid var(--brand-primary);
+      padding-bottom: 12px; display: inline-block;
     }
 
     /* RWD */
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .site-header { padding: 0 20px; }
-      .nav-item { display: none; } /* 手機版隱藏選單，保持介面乾淨 */
+      /* 手機版隱藏選單，只留 Logo 與 語言 */
+      .nav-item { display: none; } 
+      
       .hero-inner, .assess-grid, .grid-3 { grid-template-columns: 1fr; }
-      .hero-wrap { background: #fff; }
+      .hero-wrap { background: #fff; padding: 60px 0; }
+      .hero-content h1 { font-size: 36px; }
       .assess-sidebar { border-right: none; border-bottom: 1px solid var(--border-color); }
+      .modal-box { padding: 30px; }
     }
   </style>
 </head>
@@ -489,7 +502,7 @@
 
       <div class="header-right">
         <button class="lang-btn" id="langToggle">
-          <span>🌐</span> <span id="langLabel">English</span>
+          <span>🌐</span> <span id="langLabel">繁體中文</span>
         </button>
       </div>
     </header>
@@ -614,9 +627,9 @@
     <div class="modal-box">
       <div class="modal-close" onclick="closeModal()">×</div>
       <div class="modal-title" data-i18n="modal.title">加入 Taimic</div>
-      <p style="margin-bottom:20px; color:#666;" data-i18n="modal.desc">我們正在尋找具備金融科技熱忱的夥伴。請留下您的資訊。</p>
+      <p style="margin-bottom:24px; color:#666;" data-i18n="modal.desc">我們正在尋找具備金融科技熱忱的夥伴。請留下您的資訊。</p>
       
-      <form onsubmit="alert('感謝申請！'); closeModal(); return false;">
+      <form onsubmit="alert('感謝申請！資料已送出。'); closeModal(); return false;">
         <div class="form-group">
           <label class="form-label" data-i18n="modal.name">姓名</label>
           <input type="text" class="form-control" required>
@@ -689,34 +702,25 @@
       }
     };
 
-    /* Language Logic */
-let currentLang = 'zh-Hant';
-const langBtn = document.getElementById('langToggle');
-const langLabel = document.getElementById('langLabel');
-
-// 一開始就讓按鈕顯示「目前語言」
-langLabel.textContent = '繁體中文';
-
-function applyLang() {
-  const dict = i18n[currentLang];
-  document.documentElement.lang = currentLang; // <html lang="...">
-
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (dict[key]) el.innerHTML = dict[key];
-  });
-
-  // 按鈕顯示「目前語言」
-  langLabel.textContent = currentLang === 'zh-Hant' ? '繁體中文' : 'English';
-}
-
-langBtn.addEventListener('click', () => {
-  currentLang = (currentLang === 'zh-Hant') ? 'en' : 'zh-Hant';
-  applyLang();
-});
-
-// 如果你想一載入就跑一次翻譯（保險）
-applyLang();
+    // 語言切換邏輯：按鈕文字 = 當前語言
+    langBtn.addEventListener('click', () => {
+      if (currentLang === 'zh-Hant') {
+        // 切換到英文
+        currentLang = 'en';
+        langLabel.textContent = 'English'; 
+      } else {
+        // 切換到中文
+        currentLang = 'zh-Hant';
+        langLabel.textContent = '繁體中文';
+      }
+      
+      // 更新內容
+      const dict = i18n[currentLang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.innerHTML = dict[key];
+      });
+    });
 
     /* Calc Logic */
     document.getElementById('calcForm').addEventListener('submit', (e) => {
