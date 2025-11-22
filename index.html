@@ -412,13 +412,20 @@
               </h3>
               <div class="h-64 relative">
                 <canvas id="geoChart"></canvas>
-                <div class="absolute inset-0 flex items-center justify-center pointer-events-none pb-4">
-                  <div class="text-center">
-                    <div class="text-[10px] text-gray-400 font-bold uppercase">Total</div>
-                    <div class="text-sm font-bold text-[#111827]">100%</div>
-                  </div>
-                </div>
-              </div>
+               <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+  <div class="relative text-center">
+    <!-- 先讓 100% 真正在圓的正中心 -->
+    <div class="text-lg font-bold text-[#0f172a] leading-none">
+      100%
+    </div>
+    <!-- TOTAL 用 absolute 吊在上方，視覺上比較自然 -->
+    <div
+      class="absolute left-1/2 -translate-x-1/2 -top-4
+             text-[10px] text-gray-400 font-bold uppercase tracking-[0.18em]">
+      TOTAL
+    </div>
+  </div>
+</div>
               <div class="bg-[#e6f0fa] p-4 rounded-lg border border-blue-100 mt-4">
                 <div class="text-[10px] font-bold text-[#0066cc] mb-1 uppercase flex items-center gap-1">
                   <i class="fa-solid fa-robot"></i>
