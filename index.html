@@ -512,8 +512,8 @@
 
   <!-- ============= UPLOAD MODAL (AI OCR Demo) ============= -->
   <div id="modal-overlay" class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white w全 max-w-md shadow-2xl rounded-xl overflow-hidden relative transform transition-all">
-      <div class="bg-[#0066cc] p-4 flex justify-between items-center text白">
+    <div class="bg-white w-full max-w-md shadow-2xl rounded-xl overflow-hidden relative transform transition-all">
+      <div class="bg-[#0066cc] p-4 flex justify-between items-center text-white">
         <h3 class="font-bold text-sm tracking-wide" data-i18n="modal.title">新增台灣資產 (AI OCR)</h3>
         <i class="fa-solid fa-xmark cursor-pointer hover:opacity-80 text-lg" onclick="closeUploadModal()"></i>
       </div>
@@ -526,7 +526,7 @@
         <p class="text-sm text-gray-600 mb-6 leading-relaxed" data-i18n="modal.desc">
           上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。
         </p>
-        <button onclick="startScan()" class="w全 border-2 border-dashed border-gray-300 py-4 rounded-xl hover:border-[#0066cc] hover:bg-blue-50 transition-all text-gray-500 hover:text-[#0066cc] font-bold text-sm">
+        <button onclick="startScan()" class="w-full border-2 border-dashed border-gray-300 py-4 rounded-xl hover:border-[#0066cc] hover:bg-blue-50 transition-all text-gray-500 hover:text-[#0066cc] font-bold text-sm">
           <span data-i18n="btn.upload">點擊上傳檔案</span>
         </button>
       </div>
@@ -534,7 +534,7 @@
       <!-- step 2 -->
       <div id="modal-step-2" class="hidden relative h-64 bg-[#050816]">
         <div class="absolute inset-0 flex flex-col items-center justify-center z-10">
-          <p class="text白 font-mono text-sm mb-2" data-i18n="modal.scanning">AI 分析中...</p>
+          <p class="text-white font-mono text-sm mb-2" data-i18n="modal.scanning">AI 分析中...</p>
           <div class="w-48 h-1 bg-gray-700 rounded overflow-hidden mb-4">
             <div id="scan-bar" class="h-full bg-[#3b82f6] w-0 transition-all duration-[3000ms] ease-linear"></div>
           </div>
@@ -547,8 +547,8 @@
 
   <!-- ============= AUTH MODAL (登入 / 註冊) ============= -->
   <div id="auth-overlay" class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg白 w全 max-w-lg rounded-xl shadow-2xl overflow-hidden">
-      <div class="bg-[#1d4ed8] px-6 py-4 flex items-center justify-between text白">
+    <div class="bg-white w-full max-w-lg rounded-xl shadow-2xl overflow-hidden">
+      <div class="bg-[#1d4ed8] px-6 py-4 flex items-center justify-between text-white">
         <h3 id="auth-title" class="font-bold text-base">註冊 TAIMIC 帳號</h3>
         <button onclick="closeAuthModal()" class="hover:opacity-80">
           <i class="fa-solid fa-xmark text-xl"></i>
@@ -558,15 +558,15 @@
         <div class="space-y-2">
           <label class="block text-sm font-medium text-gray-700">Email</label>
           <input id="auth-email" type="email" placeholder="you@gmail.com"
-                 class="w全 border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb] placeholder-gray-400" />
+                 class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb] placeholder-gray-400" />
         </div>
         <div class="space-y-2">
           <label class="block text-sm font-medium text-gray-700">密碼</label>
           <input id="auth-password" type="password" placeholder="請輸入至少 6 碼密碼"
-                 class="w全 border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]" />
+                 class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]" />
         </div>
         <p id="auth-message" class="text-sm h-5 text-center"></p>
-        <button id="auth-submit" class="w全 bg-[#2563eb] hover:bg-[#1d4ed8] text白 font-semibold text-sm py-3 rounded-full flex items-center justify-center gap-2 transition">
+        <button id="auth-submit" class="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold text-sm py-3 rounded-full flex items-center justify-center gap-2 transition">
           <i class="fa-solid fa-arrow-right-to-bracket"></i>
           <span id="auth-submit-text">註冊</span>
         </button>
