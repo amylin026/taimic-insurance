@@ -801,6 +801,55 @@
         return;
       }
 
+      async function handleResetSubmit() {
+  const email = document.getElementById('reset-email').value.trim();
+  const token = document.getElementById('reset-token').value.trim();
+  const newPassword = document.getElementById('reset-new-password').value;
+  const statusEl = document.getElementById('reset-status');
+
+  statusEl.className = 'text-sm text-gray-600';
+  statusEl.textContent = '';
+
+  if (!email || !token || !newPassword) {
+    statusEl.textContent = '請把 Email、驗證碼與新密碼都填好。';
+    statusEl.className = 'text-sm text-red-500';
+    return;
+  }
+
+  if (newPassword.length < 6) {
+    statusEl.textContent = '新密碼至少需要 6 碼。';
+    statusEl.className = 'text-sm text-red-500';
+    return;
+  }
+
+  try {
+    statusEl.textContent = '處理中...';
+
+    // 這裡假設你的 Worker 有 /api/reset-password 這個 endpoint
+    const data = await callAuthAPI('/api/reset-password', {
+      email,
+      resetToken: token,
+      newPassword,
+    });
+
+    if (data.ok) {
+      statusEl.textContent = '密碼已重設成功，請用新密碼登入。';
+      statusEl.className = 'text-sm text-green-600';
+
+      setTimeout(() => {
+        const resetModal = document.getElementById('reset-modal');
+        resetModal.classList.add('hidden');
+      }, 1500);
+    } else {
+      statusEl.textContent = data.message || '重設失敗，請確認資料是否正確。';
+      statusEl.className = 'text-sm text-red-500';
+    }
+  } catch (err) {
+    console.error(err);
+    statusEl.textContent = '伺服器錯誤，請稍後再試。';
+    statusEl.className = 'text-sm text-red-500';
+  }
+}
       try {
         const path = authMode === 'register' ? '/api/register' : '/api/login';
         const data = await callAuthAPI(path, { email, password });
@@ -885,6 +934,27 @@
 
       document.getElementById('auth-submit').addEventListener('click', handleAuthSubmit);
     };
+          // 忘記密碼 -> 打開重設密碼 modal
+      const forgotLink = document.getElementById('forgot-password-link');
+      const resetModal = document.getElementById('reset-modal');
+      const closeResetBtn = document.getElementById('close-reset-modal');
+      const sendResetBtn = document.getElementById('send-reset-btn');
+
+      if (forgotLink && resetModal) {
+        forgotLink.addEventListener('click', () => {
+          resetModal.classList.remove('hidden');
+        });
+      }
+
+      if (closeResetBtn && resetModal) {
+        closeResetBtn.addEventListener('click', () => {
+          resetModal.classList.add('hidden');
+        });
+      }
+
+      if (sendResetBtn) {
+        sendResetBtn.addEventListener('click', handleResetSubmit);
+      }
   </script>
   <!-- 重設密碼 Modal -->
 <div
