@@ -5,16 +5,17 @@
   <title>TAIMIC | Global Wealth Management</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
-  <!-- 1. Tailwind CSS -->
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- 2. Chart.js -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
-  <!-- 3. FontAwesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- FontAwesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- 4. Fonts -->
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
   <style>
@@ -25,9 +26,8 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* --- 企業識別色 (Tech Blue) --- */
     :root {
-      --brand-blue: #0066cc; 
+      --brand-blue: #0066cc;
       --brand-dark: #004c99;
       --text-main: #222222;
     }
@@ -64,7 +64,6 @@
       transform-origin: 50% 50%;
     }
 
-    /* 時針 30 分鐘一圈，分針 5 分鐘一圈 */
     .hand-hour {
       stroke: #1f2933;
       animation: rotate 1800s linear infinite;
@@ -86,7 +85,7 @@
       to { transform: rotate(360deg); }
     }
 
-    /* --- TSMC Style Navigation --- */
+    /* --- Navigation --- */
     .nav-link {
       font-size: 15px; font-weight: 500; color: #555;
       padding: 0 20px; height: 80px; display: flex; align-items: center;
@@ -95,7 +94,7 @@
     .nav-link:hover { color: var(--brand-blue); }
     .nav-link.active { color: #000; font-weight: 700; border-bottom: 4px solid var(--brand-blue); }
 
-    /* --- Dropdown Menus (用 JS 控制顯示) --- */
+    /* --- Dropdown --- */
     .dropdown-container { position: relative; height: 100%; display: flex; align-items: center; }
     .dropdown-menu {
       position: absolute;
@@ -108,7 +107,6 @@
       z-index: 50;
       border-radius: 2px;
     }
-    
     .dropdown-item {
       padding: 12px 20px; font-size: 14px; color: #555; cursor: pointer;
       display: flex; align-items: center; gap: 8px; transition: background 0.2s;
@@ -129,17 +127,22 @@
       animation: scan 2s linear infinite;
     }
     @keyframes scan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+
     .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
+
 <body class="flex flex-col min-h-screen">
 
   <!-- ================= HEADER ================= -->
   <header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm h-[80px]">
     <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center">
       
-      <!-- 1. Logo -->
+      <!-- Logo -->
       <div class="flex items-center gap-4 cursor-pointer">
         <svg class="logo-clock" viewBox="0 0 100 100">
           <defs>
@@ -149,24 +152,18 @@
             </linearGradient>
           </defs>
 
-          <!-- Outer ring -->
           <circle cx="50" cy="50" r="46" class="clock-outer" />
-          <!-- Inner light disc -->
           <circle cx="50" cy="50" r="38" class="clock-inner" />
-          <!-- Gradient core -->
           <circle cx="50" cy="50" r="30" class="clock-core" />
 
-          <!-- Tick marks at 12 / 3 / 6 / 9 -->
           <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
           <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
           <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
           <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
 
-          <!-- Hands -->
           <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
           <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
 
-          <!-- Center dot -->
           <circle cx="50" cy="50" r="3.2" class="center-dot" />
         </svg>
 
@@ -176,7 +173,7 @@
         </div>
       </div>
 
-      <!-- 2. Navigation -->
+      <!-- Navigation -->
       <nav class="hidden lg:flex h-full items-center space-x-4">
         <a href="#" class="nav-link active" data-i18n="nav.overview">資產總覽</a>
         <a href="#" class="nav-link" data-i18n="nav.tax">稅務合規</a>
@@ -184,7 +181,7 @@
         <a href="#" class="nav-link" data-i18n="nav.reports">分析報告</a>
       </nav>
 
-      <!-- 3. Right Utilities -->
+      <!-- Right Utilities -->
       <div class="flex items-center gap-6 h-full">
         
         <!-- Currency -->
@@ -212,11 +209,13 @@
             <i class="fa-solid fa-user text-lg"></i>
           </button>
           <div class="dropdown-menu hidden" id="user-menu">
-            <div class="dropdown-item">
-              <i class="fa-solid fa-right-to-bracket"></i> <span data-i18n="user.login">登入</span>
+            <div class="dropdown-item" id="btn-login-open">
+              <i class="fa-solid fa-right-to-bracket"></i>
+              <span data-i18n="user.login">登入</span>
             </div>
-            <div class="dropdown-item">
-              <i class="fa-solid fa-user-plus"></i> <span data-i18n="user.register">註冊</span>
+            <div class="dropdown-item" id="btn-register-open">
+              <i class="fa-solid fa-user-plus"></i>
+              <span data-i18n="user.register">註冊</span>
             </div>
             <div class="border-t border-gray-100 my-1"></div>
             <div class="dropdown-item">
@@ -377,7 +376,7 @@
     </div>
   </footer>
 
-  <!-- ================= MODAL ================= -->
+  <!-- ================= OCR MODAL ================= -->
   <div id="modal-overlay" class="hidden fixed inset-0 bg-[#222]/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-md shadow-2xl overflow-hidden relative transform transition-all scale-100">
       <div class="bg-[#0066cc] p-4 flex justify-between items-center text-white">
@@ -385,7 +384,6 @@
         <i class="fa-solid fa-xmark cursor-pointer hover:opacity-75 text-lg" onclick="closeModal()"></i>
       </div>
 
-      <!-- STEP 1：選檔案 -->
       <div id="modal-step-1" class="p-8 text-center">
         <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-[#0066cc]">
           <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
@@ -393,26 +391,11 @@
         <p class="text-sm text-gray-600 mb-6 leading-relaxed" data-i18n="modal.desc">
           上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。
         </p>
-
-        <!-- 真正的檔案 input（藏起來） -->
-        <input
-          id="file-input"
-          type="file"
-          class="hidden"
-          accept="image/*,.pdf"
-        />
-
-        <!-- 使用者點這個，才會跳出選檔視窗 -->
-        <button
-          type="button"
-          onclick="triggerUpload()"
-          class="w-full border-2 border-dashed border-gray-300 py-4 rounded hover:border-[#0066cc] hover:bg-blue-50 transition-all text-gray-500 hover:text-[#0066cc] font-bold text-sm"
-        >
+        <button onclick="startScan()" class="w-full border-2 border-dashed border-gray-300 py-4 rounded hover:border-[#0066cc] hover:bg-blue-50 transition-all text-gray-500 hover:text-[#0066cc] font-bold text-sm">
           <span data-i18n="btn.upload">點擊上傳檔案</span>
         </button>
       </div>
 
-      <!-- STEP 2：AI 分析中 -->
       <div id="modal-step-2" class="hidden relative h-64 bg-[#1a1a1a]">
         <div class="absolute inset-0 flex flex-col items-center justify-center z-10">
           <p class="text-white font-mono text-sm mb-2" data-i18n="modal.scanning">AI Processing...</p>
@@ -426,15 +409,55 @@
     </div>
   </div>
 
+  <!-- ================= AUTH MODAL (LOGIN / REGISTER) ================= -->
+  <div id="auth-modal-overlay"
+       class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center px-4">
+    <div class="bg-white w-full max-w-sm rounded shadow-xl overflow-hidden">
+      <div class="bg-[#0066cc] text-white px-5 py-3 flex items-center justify-between">
+        <h3 id="auth-modal-title" class="text-sm font-bold tracking-wide">
+          登入 TAIMIC
+        </h3>
+        <button id="auth-modal-close" class="hover:opacity-75">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-4">
+        <div class="space-y-2">
+          <label class="text-xs font-semibold text-gray-600">Email</label>
+          <input id="auth-email"
+                 type="email"
+                 class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0066cc]"
+                 placeholder="you@example.com" />
+        </div>
+
+        <div class="space-y-2">
+          <label class="text-xs font-semibold text-gray-600">密碼</label>
+          <input id="auth-password"
+                 type="password"
+                 class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0066cc]"
+                 placeholder="請輸入至少 6 碼密碼" />
+        </div>
+
+        <p id="auth-message" class="text-xs mt-1 hidden"></p>
+
+        <button id="auth-submit"
+                class="w-full mt-2 btn-corp flex items-center justify-center gap-2">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <span id="auth-submit-text">登入</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ================= SCRIPT ================= -->
   <script>
-    const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
-    // ====== 後端 API base（只存在 JS，不會再跑到畫面上） ======
-    const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
-
     const RATE = 32.5;
-    let curr = 'TWD'; 
+    let curr = 'TWD';
     let lang = 'zh';
+
+    // 這裡改成你的 Worker 網址
+    const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
 
     const assets = [
       { id: 1, name: {en:'Vanguard Total Stock (VTI)', zh:'Vanguard 全球股票 ETF (VTI)'}, type: {en:'ETF', zh:'指數型基金'}, region:'US', usd: 145200 },
@@ -517,67 +540,25 @@
     function changeLang(l) {
       lang = l;
       render();
-      // 點完語言後把語言選單收起來
-      langMenu.classList.add('hidden');
+      if (langMenu) langMenu.classList.add('hidden');
     }
 
+    // ===== OCR modal =====
     function openModal() {
       modalOverlay.classList.remove('hidden');
       document.getElementById('modal-step-1').classList.remove('hidden');
       document.getElementById('modal-step-2').classList.add('hidden');
     }
     function closeModal() { modalOverlay.classList.add('hidden'); }
-
-    // 使用者按「點擊上傳檔案」→ 觸發真正的 file input
-    function triggerUpload() {
-      const fi = document.getElementById('file-input');
-      if (fi) fi.click();
-    }
-
-    // 真正的「AI 分析」流程，會在選檔案後被呼叫
-    async function startScan(file) {
-      // 切換到 Step 2
+    
+    function startScan() {
       document.getElementById('modal-step-1').classList.add('hidden');
       document.getElementById('modal-step-2').classList.remove('hidden');
-
-      const bar = document.getElementById('scan-bar');
+      setTimeout(() => document.getElementById('scan-bar').style.width = '100%', 100);
       const log = document.getElementById('scan-log');
-      bar.style.width = '0%';
-      log.innerHTML = '&gt; Uploading file...';
-
-      // 讓進度條動一下
-      setTimeout(() => { bar.style.width = '100%'; }, 100);
-
-      // 假裝 OCR 出來的內容（之後你可以改成真的文字）
-      const fakeExtractedText = '富邦人壽 終身壽險 保單 現金價值 52,000 USD';
-
-      setTimeout(()=> log.innerHTML += '<br>&gt; Detecting Language: zh-TW', 800);
-      setTimeout(()=> log.innerHTML += '<br>&gt; Parsing: "富邦人壽 (Fubon Life)"', 1600);
-      setTimeout(()=> log.innerHTML += '<br>&gt; Match IRS Code: 8938', 2400);
-
-      // 丟到 Cloudflare Worker（目前只是 demo，送文字與檔名）
-      try {
-        const payload = {
-          filename: file ? file.name : 'demo-policy.pdf',
-          size: file ? file.size : 0,
-          extractedText: fakeExtractedText,
-          assetsSnapshot: assets
-        };
-
-        const res = await fetch(`${API_BASE}/api/save-assets`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        const data = await res.json();
-        console.log('save-assets response from worker:', data);
-      } catch (err) {
-        console.error('save-assets error:', err);
-        log.innerHTML += '<br>&gt; Error: 無法連線到 TAIMIC 伺服器';
-      }
-
-      // 3 秒後把新資產加進前端列表 + 顯示黃色 FATCA 卡片
+      setTimeout(()=> log.innerHTML = '> Detecting Language: zh-TW', 800);
+      setTimeout(()=> log.innerHTML += '<br>> Parsing: "富邦人壽 (Fubon Life)"', 1600);
+      setTimeout(()=> log.innerHTML += '<br>> Match IRS Code: 8938', 2400);
       setTimeout(() => {
         assets.unshift({
           id: 99,
@@ -588,7 +569,6 @@
           new: true,
           risk: true
         });
-
         const tEl = document.getElementById('val-tw');
         tEl.dataset.usd = parseFloat(tEl.dataset.usd) + 52000;
         const gEl = document.getElementById('val-global');
@@ -602,7 +582,46 @@
       }, 3000);
     }
 
-    // ====== 全局變數（DOM 快取） ======
+    // ===== Auth (login/register) =====
+    let authMode = 'login';
+    let authModal, authTitle, authEmail, authPassword, authMessage, authSubmitBtn, authSubmitText;
+
+    function showAuthMessage(text, isError = true) {
+      authMessage.textContent = text;
+      authMessage.classList.remove('hidden');
+      authMessage.classList.toggle('text-red-600', isError);
+      authMessage.classList.toggle('text-green-600', !isError);
+    }
+
+    function openAuthModal(mode) {
+      authMode = mode;
+      if (mode === 'login') {
+        authTitle.textContent = '登入 TAIMIC';
+        authSubmitText.textContent = '登入';
+      } else {
+        authTitle.textContent = '註冊 TAIMIC 帳號';
+        authSubmitText.textContent = '註冊';
+      }
+      authEmail.value = '';
+      authPassword.value = '';
+      authMessage.classList.add('hidden');
+      authModal.classList.remove('hidden');
+    }
+
+    function closeAuthModal() {
+      authModal.classList.add('hidden');
+    }
+
+    async function callAuthApi(path, payload) {
+      const res = await fetch(`${API_BASE}${path}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      return res.json();
+    }
+
+    // ===== 全域 DOM =====
     let chart;
     let btnUsd, btnTwd, optZh, optEn;
     let langMenu, userMenu, modalOverlay;
@@ -625,30 +644,6 @@
         }
       });
 
-      async function register(email, password) {
-  const res = await fetch(`${API_BASE}/api/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password })
-  });
-
-  const data = await res.json();
-  console.log("register:", data);
-  return data;
-}
-
-async function login(email, password) {
-  const res = await fetch(`${API_BASE}/api/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password })
-  });
-
-  const data = await res.json();
-  console.log("login:", data);
-  return data;
-}
-      // 把常用節點存起來
       btnUsd = document.getElementById('btn-usd');
       btnTwd = document.getElementById('btn-twd');
       optZh = document.getElementById('opt-zh');
@@ -657,19 +652,25 @@ async function login(email, password) {
       userMenu = document.getElementById('user-menu');
       modalOverlay = document.getElementById('modal-overlay');
 
+      // auth dom
+      authModal = document.getElementById('auth-modal-overlay');
+      authTitle = document.getElementById('auth-modal-title');
+      authEmail = document.getElementById('auth-email');
+      authPassword = document.getElementById('auth-password');
+      authMessage = document.getElementById('auth-message');
+      authSubmitBtn = document.getElementById('auth-submit');
+      authSubmitText = document.getElementById('auth-submit-text');
+
       render();
 
       const langToggle = document.getElementById('lang-toggle');
       const userToggle = document.getElementById('user-toggle');
-      const fileInput = document.getElementById('file-input');
 
-      // 一次關掉所有 dropdown
       function closeAllMenus() {
         if (langMenu) langMenu.classList.add('hidden');
         if (userMenu) userMenu.classList.add('hidden');
       }
 
-      // 語言按鈕：開啟前先關掉 user menu
       if (langToggle && langMenu) {
         langToggle.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -680,7 +681,6 @@ async function login(email, password) {
         langMenu.addEventListener('click', (e)=>e.stopPropagation());
       }
 
-      // 使用者按鈕：開啟前先關掉 lang menu
       if (userToggle && userMenu) {
         userToggle.addEventListener('click', (e) => {
           e.stopPropagation();
@@ -691,15 +691,81 @@ async function login(email, password) {
         userMenu.addEventListener('click', (e)=>e.stopPropagation());
       }
 
-      // 點頁面其他地方就關掉所有
       document.addEventListener('click', closeAllMenus);
 
-      // 監聽「真的選檔案」這件事，選了才啟動 AI 分析
-      if (fileInput) {
-        fileInput.addEventListener('change', (e) => {
-          const file = e.target.files[0];
-          if (!file) return;      // 使用者取消就什麼都不做
-          startScan(file);
+      const btnLoginOpen = document.getElementById('btn-login-open');
+      const btnRegisterOpen = document.getElementById('btn-register-open');
+      const authCloseBtn = document.getElementById('auth-modal-close');
+
+      if (btnLoginOpen) {
+        btnLoginOpen.addEventListener('click', (e) => {
+          e.stopPropagation();
+          closeAllMenus();
+          openAuthModal('login');
+        });
+      }
+
+      if (btnRegisterOpen) {
+        btnRegisterOpen.addEventListener('click', (e) => {
+          e.stopPropagation();
+          closeAllMenus();
+          openAuthModal('register');
+        });
+      }
+
+      if (authCloseBtn) {
+        authCloseBtn.addEventListener('click', () => {
+          closeAuthModal();
+        });
+      }
+
+      if (authModal) {
+        authModal.addEventListener('click', (e) => {
+          if (e.target === authModal) closeAuthModal();
+        });
+      }
+
+      if (authSubmitBtn) {
+        authSubmitBtn.addEventListener('click', async () => {
+          const email = authEmail.value.trim();
+          const password = authPassword.value.trim();
+
+          if (!email || !password) {
+            showAuthMessage('Email 和密碼都要填。', true);
+            return;
+          }
+          if (password.length < 6) {
+            showAuthMessage('密碼至少 6 碼。', true);
+            return;
+          }
+
+          authSubmitBtn.disabled = true;
+          authSubmitText.textContent = (authMode === 'login' ? '登入中...' : '註冊中...');
+
+          try {
+            const path = authMode === 'login' ? '/api/login' : '/api/register';
+            const data = await callAuthApi(path, { email, password });
+
+            console.log('auth response:', data);
+
+            if (data.ok) {
+              localStorage.setItem('taimicUserEmail', email);
+              showAuthMessage(
+                authMode === 'login'
+                  ? `登入成功，歡迎 ${email}`
+                  : `註冊成功，歡迎 ${email}`,
+                false
+              );
+            } else {
+              showAuthMessage(data.message || '操作失敗，請稍後再試。', true);
+            }
+          } catch (err) {
+            console.error(err);
+            showAuthMessage('伺服器失敗，等等再試。', true);
+          } finally {
+            authSubmitBtn.disabled = false;
+            authSubmitText.textContent = (authMode === 'login' ? '登入' : '註冊');
+          }
         });
       }
     };
