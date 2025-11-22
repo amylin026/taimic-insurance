@@ -12,16 +12,18 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <!-- FontAwesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
   <style>
     body {
-      font-family: 'Inter', 'Noto Sans TC', sans-serif;
+      font-family: 'Inter', 'Noto Sans TC', system-ui, -apple-system, BlinkMacSystemFont,
+      'Segoe UI', sans-serif;
       background-color: #f5f5f5;
-      color: #333333;
+      color: #222222;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -31,7 +33,7 @@
       --text-main: #222222;
     }
 
-    /* --- Logo Clock --- */
+    /* ===== Clock Logo (Header + Footer 共用) ===== */
     .logo-clock { width: 44px; height: 44px; }
 
     .clock-outer {
@@ -65,12 +67,12 @@
 
     .hand-hour {
       stroke: #1f2933;
-      animation: rotate 1800s linear infinite;
+      animation: rotateHour 1800s linear infinite;
     }
 
     .hand-minute {
       stroke: #3b82f6;
-      animation: rotate 300s linear infinite;
+      animation: rotateMinute 300s linear infinite;
     }
 
     .center-dot {
@@ -79,790 +81,1079 @@
       stroke-width: 2;
     }
 
-    @keyframes rotate {
+    @keyframes rotateHour {
       from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
+      to { transform: rotate(360deg); }
     }
 
-    /* --- Nav --- */
+    @keyframes rotateMinute {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===== TSMC style nav ===== */
     .nav-link {
-      font-size: 15px; font-weight: 500; color: #555;
-      padding: 0 20px; height: 80px; display: flex; align-items: center;
-      border-bottom: 4px solid transparent; transition: all .2s; text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      color: #555;
+      padding: 0 20px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      border-bottom: 4px solid transparent;
+      transition: all 0.2s;
+      text-decoration: none;
     }
-    .nav-link:hover { color: var(--brand-blue); }
-    .nav-link.active { color: #000; font-weight: 700; border-bottom-color: var(--brand-blue); }
 
-    /* --- Dropdown – 改成圓一點 --- */
+    .nav-link:hover {
+      color: var(--brand-blue);
+    }
+
+    .nav-link.active {
+      color: #000;
+      font-weight: 700;
+      border-bottom: 4px solid var(--brand-blue);
+    }
+
     .dropdown-container {
       position: relative;
       height: 100%;
       display: flex;
       align-items: center;
     }
+
     .dropdown-menu {
       position: absolute;
       top: 70px;
       right: 0;
-      background: white;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
-      min-width: 180px;
+      background: #ffffff;
+      border: 1px solid #eee;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      min-width: 170px;
       z-index: 50;
-      border-radius: 12px;
-      padding: 6px 0;
-      overflow: hidden;
+      border-radius: 2px;
     }
+
     .dropdown-item {
-      padding: 10px 18px;
+      padding: 12px 20px;
       font-size: 14px;
-      color: #4b5563;
+      color: #555;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: background .15s, color .15s;
+      transition: background 0.2s, color 0.2s;
     }
+
     .dropdown-item:hover {
-      background-color: #f3f4ff;
+      background-color: #f8f9fa;
       color: var(--brand-blue);
     }
+
     .dropdown-item.active {
       font-weight: 700;
       color: var(--brand-blue);
-      background-color: #eef2ff;
     }
 
     .btn-corp {
       background-color: var(--brand-blue);
-      color: white;
+      color: #fff;
       font-size: 14px;
       font-weight: 600;
       padding: 10px 24px;
-      border-radius: 9999px;
-      transition: background .2s, transform .1s;
+      border-radius: 2px;
+      transition: background 0.2s;
     }
+
     .btn-corp:hover {
       background-color: var(--brand-dark);
-      transform: translateY(-1px);
     }
 
     .scan-overlay {
-      background: linear-gradient(to bottom, transparent, rgba(0, 102, 204, 0.15), transparent);
+      background: linear-gradient(to bottom,
+      transparent,
+      rgba(0, 102, 204, 0.15),
+      transparent);
       animation: scan 2s linear infinite;
     }
+
     @keyframes scan {
-      0% { transform: translateY(-100%); }
+      0%   { transform: translateY(-100%); }
       100% { transform: translateY(100%); }
     }
 
     .animate-fade-in {
-      animation: fadeIn .4s ease-out forwards;
+      animation: fadeIn 0.5s ease-out forwards;
     }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(4px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
-    /* --- TSMC 風格一點的卡片 --- */
-    .panel {
-      background: white;
-      border-radius: 12px;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
-    }
-
-    /* --- Footer like SaaS site --- */
-    .footer-col-title {
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: #6b7280;
-      margin-bottom: 10px;
-    }
-    .footer-link {
-      font-size: 14px;
-      color: #4b5563;
-      padding: 4px 0;
-      cursor: pointer;
-    }
-    .footer-link:hover {
-      color: var(--brand-blue);
-    }
   </style>
 </head>
+<body class="flex flex-col min-h-screen">
 
-<body class="flex flex-col min-h-screen bg-[#f3f5f9]">
+<!-- ================= HEADER ================= -->
+<header class="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm h-[80px]">
+  <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center">
 
-  <!-- ============= HEADER ============= -->
-  <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[80px]">
-    <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center">
+    <!-- Logo -->
+    <div class="flex items-center gap-4 cursor-pointer">
+      <svg class="logo-clock" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#bfdbfe"/>
+            <stop offset="100%" stop-color="#60a5fa"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="50" r="46" class="clock-outer"/>
+        <circle cx="50" cy="50" r="38" class="clock-inner"/>
+        <circle cx="50" cy="50" r="30" class="clock-core"/>
+        <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line"/>
+        <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line"/>
+        <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line"/>
+        <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line"/>
+        <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour"/>
+        <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute"/>
+        <circle cx="50" cy="50" r="3.2" class="center-dot"/>
+      </svg>
 
-      <!-- Logo -->
-      <div class="flex items-center gap-4 cursor-pointer">
-        <svg class="logo-clock" viewBox="0 0 100 100">
-          <defs>
-            <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#bfdbfe" />
-              <stop offset="100%" stop-color="#60a5fa" />
-            </linearGradient>
-          </defs>
-          <circle cx="50" cy="50" r="46" class="clock-outer" />
-          <circle cx="50" cy="50" r="38" class="clock-inner" />
-          <circle cx="50" cy="50" r="30" class="clock-core" />
-          <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
-          <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
-          <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
-          <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
-          <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
-          <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
-          <circle cx="50" cy="50" r="3.2" class="center-dot" />
-        </svg>
-        <div class="flex flex-col justify-center">
-          <span class="text-[22px] font-[700] tracking-tight text-[#0066cc] leading-none">TAIMIC</span>
-          <span class="text-[10px] font-[600] tracking-[0.2em] text-gray-500 mt-1 uppercase">Global Wealth</span>
-        </div>
-      </div>
-
-      <!-- Nav -->
-      <nav class="hidden lg:flex h-full items-center space-x-4">
-        <a href="#" class="nav-link active" data-i18n="nav.overview">資產總覽</a>
-        <a href="#" class="nav-link" data-i18n="nav.tax">稅務合規</a>
-        <a href="#" class="nav-link" data-i18n="nav.estate">家族傳承</a>
-        <a href="#" class="nav-link" data-i18n="nav.reports">分析報告</a>
-      </nav>
-
-      <!-- Right tools -->
-      <div class="flex items-center gap-6 h-full">
-
-        <!-- Currency (改成膠囊形狀) -->
-        <div class="hidden sm:flex items-center text-xs font-medium text-gray-600 border border-gray-200 rounded-full overflow-hidden bg-gray-50 shadow-sm">
-          <button id="btn-usd" onclick="setCurrency('USD')" class="px-4 py-2 transition-colors">
-            USD
-          </button>
-          <button id="btn-twd" onclick="setCurrency('TWD')" class="px-4 py-2 transition-colors">
-            TWD
-          </button>
-        </div>
-
-        <!-- Language -->
-        <div class="dropdown-container cursor-pointer h-full">
-          <button id="lang-toggle" type="button" class="flex items-center gap-2 text-gray-600 hover:text-[#0066cc] transition-colors">
-            <div class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-50 border border-gray-200">
-              <i class="fa-solid fa-globe text-sm"></i>
-            </div>
-            <i class="fa-solid fa-caret-down text-xs"></i>
-          </button>
-          <div id="lang-menu" class="dropdown-menu hidden">
-            <div id="opt-zh" class="dropdown-item active" onclick="changeLang('zh')">繁體中文</div>
-            <div id="opt-en" class="dropdown-item" onclick="changeLang('en')">English</div>
-          </div>
-        </div>
-
-        <!-- User -->
-        <div class="dropdown-container cursor-pointer h-full border-l border-gray-200 pl-4">
-          <button id="user-toggle" type="button" class="w-10 h-10 bg-[#f3f4f6] text-gray-600 rounded-full flex items-center justify-center hover:bg-[#0066cc] hover:text-white transition-colors">
-            <i class="fa-solid fa-user text-base"></i>
-          </button>
-          <div id="user-menu" class="dropdown-menu hidden">
-            <div class="dropdown-item" onclick="openAuthModal('login')">
-              <i class="fa-solid fa-right-to-bracket"></i>
-              <span data-i18n="user.login">登入</span>
-            </div>
-            <div class="dropdown-item" onclick="openAuthModal('register')">
-              <i class="fa-solid fa-user-plus"></i>
-              <span data-i18n="user.register">註冊</span>
-            </div>
-            <div class="border-t border-gray-100 my-1"></div>
-            <div class="dropdown-item">
-              <i class="fa-solid fa-circle-question"></i>
-              <span>Help</span>
-            </div>
-          </div>
-        </div>
-
+      <div class="flex flex-col justify-center">
+        <span class="text-[22px] font-[700] tracking-tight text-[#0066cc] leading-none">
+          TAIMIC
+        </span>
+        <span class="text-[10px] font-[600] tracking-[0.2em] text-gray-500 mt-1 uppercase">
+          GLOBAL WEALTH
+        </span>
       </div>
     </div>
-  </header>
 
-  <!-- ============= HERO / SUMMARY ============= -->
-  <section class="border-b border-gray-200 bg-[#e5ebf5]">
-    <div class="max-w-[1440px] mx-auto px-6 py-8 md:py-10">
-      <div class="panel px-8 py-8 md:px-10 md:py-9 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-        <div>
-          <div class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-2">
-            Global Asset Management / Dashboard
-          </div>
-          <h1 class="text-[28px] md:text-[32px] font-[700] text-[#111827] tracking-tight mb-3" data-i18n="page.title">
-            跨國資產整合平台
-          </h1>
-          <p class="text-gray-600 text-sm md:text-[15px] max-w-2xl leading-relaxed" data-i18n="page.desc">
-            整合台灣與美國資產，提供即時淨值分析與跨境稅務風險檢測。
-          </p>
+    <!-- Nav -->
+    <nav class="hidden lg:flex h-full items-center space-x-4">
+      <a href="#" class="nav-link active" data-i18n="nav.overview">資產總覽</a>
+      <a href="#" class="nav-link" data-i18n="nav.tax">稅務合規</a>
+      <a href="#" class="nav-link" data-i18n="nav.estate">家族傳承</a>
+      <a href="#" class="nav-link" data-i18n="nav.reports">分析報告</a>
+    </nav>
+
+    <!-- Right side -->
+    <div class="flex items-center gap-6 h-full">
+
+      <!-- Currency -->
+      <div
+        class="hidden sm:flex items-center text-xs font-medium text-gray-500 border border-gray-200 rounded-full overflow-hidden">
+        <button onclick="setCurrency('USD')" id="btn-usd"
+                class="px-3 py-2 hover:bg-gray-50 transition-colors">
+          USD
+        </button>
+        <div class="w-[1px] h-4 bg-gray-200"></div>
+        <button onclick="setCurrency('TWD')" id="btn-twd"
+                class="px-3 py-2 bg-gray-100 text-[#0066cc] font-bold">
+          TWD
+        </button>
+      </div>
+
+      <!-- Language -->
+      <div class="dropdown-container cursor-pointer h-full">
+        <button id="lang-toggle" type="button"
+                class="flex items-center gap-2 text-gray-600 hover:text-[#0066cc] transition-colors">
+          <i class="fa-solid fa-globe text-lg"></i>
+          <i class="fa-solid fa-caret-down text-xs"></i>
+        </button>
+        <div class="dropdown-menu hidden" id="lang-menu">
+          <div class="dropdown-item active" onclick="changeLang('zh')" id="opt-zh">繁體中文</div>
+          <div class="dropdown-item" onclick="changeLang('en')" id="opt-en">English</div>
         </div>
+      </div>
 
-        <div class="flex flex-col items-start md:items-end gap-3">
-          <button onclick="openUploadModal()" class="btn-corp flex items-center gap-2 shadow-sm">
-            <i class="fa-solid fa-plus"></i>
-            <span data-i18n="btn.add">新增資產</span>
-          </button>
-          <div class="text-[11px] text-gray-500 flex items-center gap-2">
-            <i class="fa-solid fa-shield-halved text-[#0066cc]"></i>
-            <span>FATCA / CRS 即時風險掃描</span>
+      <!-- User -->
+      <div class="dropdown-container cursor-pointer h-full border-l border-gray-200 pl-6">
+        <button id="user-toggle" type="button"
+                class="w-10 h-10 bg-[#f0f0f0] text-gray-600 rounded-full flex items-center justify-center hover:bg-[#0066cc] hover:text-white transition-colors">
+          <i class="fa-solid fa-user text-lg"></i>
+        </button>
+        <div class="dropdown-menu hidden" id="user-menu">
+          <div class="dropdown-item" onclick="openAuthModal('login')">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            <span data-i18n="user.login">登入</span>
+          </div>
+          <div class="dropdown-item" onclick="openAuthModal('register')">
+            <i class="fa-solid fa-user-plus"></i>
+            <span data-i18n="user.register">註冊</span>
+          </div>
+          <div class="border-t border-gray-100 my-1"></div>
+          <div class="dropdown-item">
+            <i class="fa-solid fa-circle-question"></i> <span>Help</span>
           </div>
         </div>
       </div>
+
     </div>
-  </section>
+  </div>
+</header>
 
-  <!-- ============= MAIN ============= -->
-  <main class="flex-grow py-10">
-    <div class="max-w-[1440px] mx-auto px-6 w-full">
-      <div class="panel px-6 md:px-8 lg:px-10 py-8 md:py-10">
+<!-- ================= HERO ================= -->
+<section class="border-b border-gray-200 bg-[#e9ecef]">
+  <div class="max-w-[1440px] mx-auto px-6 py-10">
+    <div
+      class="bg-white shadow-sm border border-gray-200 px-8 py-8 md:px-10 md:py-10 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+      <div>
+        <div
+          class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+          Global Asset Management / Dashboard
+        </div>
+        <h1
+          class="text-3xl md:text-[32px] font-[700] text-[#222] tracking-tight mb-3"
+          data-i18n="page.title">
+          跨國資產整合平台
+        </h1>
+        <p
+          class="text-gray-600 text-sm md:text-[15px] max-w-2xl leading-relaxed"
+          data-i18n="page.desc">
+          整合台灣與美國資產，提供即時淨值分析與跨境稅務風險檢測。
+        </p>
+      </div>
+      <div class="flex flex-col items-start md:items-end gap-3">
+        <button onclick="openModal()" class="btn-corp flex items-center gap-2 shadow-sm">
+          <i class="fa-solid fa-plus"></i>
+          <span data-i18n="btn.add">新增資產</span>
+        </button>
+        <div class="text-[11px] text-gray-500 flex items-center gap-2">
+          <i class="fa-solid fa-shield-halved text-[#0066cc]"></i>
+          <span>FATCA / CRS 即時風險掃描</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <!-- Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          <div class="p-6 border border-gray-200 rounded-xl hover:border-[#0066cc] transition-colors bg-white">
-            <div class="flex justify-between items-start mb-4">
-              <h3 class="text-xs font-bold text-gray-500 uppercase tracking-[0.18em]" data-i18n="stat.us">美國總資產</h3>
-              <span class="text-xl">🇺🇸</span>
-            </div>
-            <div class="text-3xl font-bold text-[#111827] font-mono tracking-tight val-display" data-usd="482500">...</div>
-            <div class="mt-2 text-xs font-medium text-green-600 flex items-center gap-1">
-              <i class="fa-solid fa-arrow-trend-up"></i> +4.2% YTD
-            </div>
+<!-- ================= MAIN ================= -->
+<main class="flex-grow py-10">
+  <div class="max-w-[1440px] mx-auto px-6 w-full">
+    <div class="bg-white border border-gray-200 shadow-sm px-6 md:px-8 lg:px-10 py-8 md:py-10">
+
+      <!-- Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+        <div class="p-6 border border-gray-200 hover:border-[#0066cc] transition-colors bg-white">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider"
+                data-i18n="stat.us">美國總資產</h3>
+            <span class="text-xl">🇺🇸</span>
           </div>
-
-          <div class="p-6 border border-gray-200 rounded-xl hover:border-[#0066cc] transition-colors bg-white">
-            <div class="flex justify-between items-start mb-4">
-              <h3 class="text-xs font-bold text-gray-500 uppercase tracking-[0.18em]" data-i18n="stat.tw">台灣總資產</h3>
-              <span class="text-xl">🇹🇼</span>
-            </div>
-            <div id="val-tw" class="text-3xl font-bold text-[#111827] font-mono tracking-tight val-display" data-usd="315200">...</div>
-            <div class="mt-2 text-xs font-medium text-green-600 flex items-center gap-1">
-              <i class="fa-solid fa-arrow-trend-up"></i> +1.8% YTD
-            </div>
-          </div>
-
-          <div class="p-6 bg-[#eff4fb] border border-blue-100 rounded-xl">
-            <div class="flex justify-between items-start mb-4">
-              <h3 class="text-xs font-bold text-[#0066cc] uppercase tracking-[0.2em]" data-i18n="stat.global">全球總淨值</h3>
-              <i class="fa-solid fa-globe text-[#0066cc]"></i>
-            </div>
-            <div id="val-global" class="text-3xl font-bold text-[#0066cc] font-mono tracking-tight val-display" data-usd="797700">...</div>
-            <div class="mt-2 text-xs font-medium text-gray-600 flex items-center gap-1">
-              <i class="fa-solid fa-shield-check text-[#0066cc]"></i>
-              <span data-i18n="stat.safe">遺產稅風險：安全</span>
-            </div>
+          <div class="text-3xl font-bold text-[#222] font-mono tracking-tight val-display"
+               data-usd="482500">...</div>
+          <div class="mt-2 text-xs font-medium text-green-600 flex items-center gap-1">
+            <i class="fa-solid fa-arrow-trend-up"></i> +4.2% YTD
           </div>
         </div>
 
-        <!-- Table + Chart -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <div class="p-6 border border-gray-200 hover:border-[#0066cc] transition-colors bg-white">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider"
+                data-i18n="stat.tw">台灣總資產</h3>
+            <span class="text-xl">🇹🇼</span>
+          </div>
+          <div class="text-3xl font-bold text-[#222] font-mono tracking-tight val-display"
+               data-usd="315200" id="val-tw">...</div>
+          <div class="mt-2 text-xs font-medium text-green-600 flex items-center gap-1">
+            <i class="fa-solid fa-arrow-trend-up"></i> +1.8% YTD
+          </div>
+        </div>
 
-          <!-- Table -->
-          <div class="lg:col-span-2">
+        <div class="p-6 bg-[#f0f6fa] border border-blue-100">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xs font-bold text-[#0066cc] uppercase tracking-wider"
+                data-i18n="stat.global">全球總淨值</h3>
+            <i class="fa-solid fa-globe text-[#0066cc]"></i>
+          </div>
+          <div class="text-3xl font-bold text-[#0066cc] font-mono tracking-tight val-display"
+               data-usd="797700" id="val-global">...</div>
+          <div class="mt-2 text-xs font-medium text-gray-500 flex items-center gap-1">
+            <i class="fa-solid fa-shield-check text-[#0066cc]"></i>
+            <span data-i18n="stat.safe">遺產稅風險：安全</span>
+          </div>
+        </div>
+      </div>
 
-            <!-- AI Alert -->
-            <div id="ai-alert" class="hidden mb-8 bg-orange-50 border-l-4 border-orange-500 rounded-lg p-5 flex gap-4 animate-fade-in">
-              <div class="text-orange-500 pt-1">
-                <i class="fa-solid fa-triangle-exclamation text-lg"></i>
-              </div>
-              <div>
-                <h4 class="font-bold text-[#111827] text-sm mb-1" data-i18n="alert.title">
-                  AI 稅務警示：偵測到潛在申報風險
-                </h4>
-                <p class="text-sm text-gray-700 leading-relaxed" data-i18n="alert.desc">
-                  系統掃描發現一筆新增的「高現金價值保單（台灣）」。根據美國 IRS 規範，此資產可能需填寫 Form 8938。
-                </p>
-                <button class="mt-3 text-xs font-bold text-[#0066cc] uppercase tracking-wide hover:underline">
-                  檢視詳細分析報告 &rarr;
-                </button>
-              </div>
+      <!-- Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+
+        <!-- Table + Alert -->
+        <div class="lg:col-span-2">
+
+          <div id="ai-alert"
+               class="hidden mb-8 bg-orange-50 border-l-4 border-orange-500 p-5 flex gap-4 animate-fade-in">
+            <div class="text-orange-500 pt-1">
+              <i class="fa-solid fa-triangle-exclamation text-lg"></i>
             </div>
-
-            <div class="flex justify-between items-end mb-4 pb-2 border-b border-gray-200">
-              <h3 class="text-lg font-bold text-[#111827]" data-i18n="table.title">資產持有清單</h3>
-              <button class="text-xs text-[#0066cc] font-bold uppercase hover:text-[#004c99] flex items-center gap-1">
-                <i class="fa-solid fa-file-export"></i> Export
+            <div>
+              <h4 class="font-bold text-[#222] text-sm mb-1" data-i18n="alert.title">
+                AI 稅務警示：偵測到潛在申報風險
+              </h4>
+              <p class="text-sm text-gray-600 leading-relaxed" data-i18n="alert.desc">
+                系統掃描發現一筆新增的「高現金價值保單（台灣）」。根據美國 IRS 規範，此資產可能需填寫 Form 8938。
+              </p>
+              <button
+                class="mt-3 text-xs font-bold text-[#0066cc] uppercase tracking-wide hover:underline">
+                檢視詳細分析報告 &rarr;
               </button>
             </div>
-
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-sm">
-                <thead>
-                  <tr class="text-xs text-gray-500 uppercase tracking-[0.16em]">
-                    <th class="pl-2 pb-3 border-b-2 border-gray-100" data-i18n="col.name">資產名稱</th>
-                    <th class="pb-3 border-b-2 border-gray-100" data-i18n="col.region">地區</th>
-                    <th class="pb-3 border-b-2 border-gray-100" data-i18n="col.type">類別</th>
-                    <th class="pr-2 pb-3 border-b-2 border-gray-100 text-right" data-i18n="col.val">現值</th>
-                  </tr>
-                </thead>
-                <tbody id="asset-list"></tbody>
-              </table>
-            </div>
           </div>
 
-          <!-- Chart -->
-          <div class="space-y-8">
-            <div class="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
-              <h3 class="text-xs font-bold text-gray-500 uppercase mb-5 tracking-[0.18em]" data-i18n="chart.title">
-                區域配置分析
-              </h3>
-              <div class="h-64 relative">
-                <canvas id="geoChart"></canvas>
-                <div class="absolute inset-0 flex items-center justify-center pointer-events-none pb-4">
-                  <div class="text-center">
-                    <div class="text-[10px] text-gray-400 font-bold uppercase">Total</div>
-                    <div class="text-sm font-bold text-[#111827]">100%</div>
-                  </div>
+          <div class="flex justify-between items-end mb-4 pb-2 border-b border-gray-200">
+            <h3 class="text-lg font-bold text-[#222]" data-i18n="table.title">資產持有清單</h3>
+            <button
+              class="text-xs text-[#0066cc] font-bold uppercase hover:text-[#004c99] flex items-center gap-1">
+              <i class="fa-solid fa-file-export"></i> Export
+            </button>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead>
+              <tr>
+                <th class="pl-2 pb-3 text-xs font-bold text-gray-500 uppercase border-b-2 border-gray-100"
+                    data-i18n="col.name">資產名稱</th>
+                <th class="pb-3 text-xs font-bold text-gray-500 uppercase border-b-2 border-gray-100"
+                    data-i18n="col.region">地區</th>
+                <th class="pb-3 text-xs font-bold text-gray-500 uppercase border-b-2 border-gray-100"
+                    data-i18n="col.type">類別</th>
+                <th class="pr-2 pb-3 text-xs font-bold text-gray-500 uppercase border-b-2 border-gray-100 text-right"
+                    data-i18n="col.val">現值</th>
+              </tr>
+              </thead>
+              <tbody id="asset-list"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="space-y-8">
+          <div class="border border-gray-200 p-6 bg-white shadow-sm">
+            <h3 class="text-xs font-bold text-gray-500 uppercase mb-6 tracking-wider"
+                data-i18n="chart.title">區域配置分析</h3>
+            <div class="h-64 relative">
+              <canvas id="geoChart"></canvas>
+              <div
+                class="absolute inset-0 flex items-center justify-center pointer-events-none pb-6">
+                <div class="text-center">
+                  <div class="text-[10px] text-gray-400 font-bold uppercase">Total</div>
+                  <div class="text-sm font-bold text-[#222]">100%</div>
                 </div>
               </div>
-              <div class="bg-[#e6f0fa] p-4 rounded-lg border border-blue-100 mt-4">
-                <div class="text-[10px] font-bold text-[#0066cc] mb-1 uppercase flex items-center gap-1">
-                  <i class="fa-solid fa-robot"></i>
-                  <span data-i18n="chart.insight">AI Insight</span>
-                </div>
-                <p class="text-xs text-gray-700 leading-relaxed" data-i18n="chart.desc">
-                  您的台灣資產佔總淨值的 40%。建議針對台幣匯率風險進行避險。
-                </p>
+            </div>
+            <div class="bg-[#e6f0fa] p-4 rounded border border-blue-100 mt-4">
+              <div
+                class="text-[10px] font-bold text-[#0066cc] mb-1 uppercase flex items-center gap-1">
+                <i class="fa-solid fa-robot"></i>
+                <span data-i18n="chart.insight">AI Insight</span>
               </div>
+              <p class="text-xs text-gray-600 leading-relaxed" data-i18n="chart.desc">
+                您的台灣資產佔總淨值的 40%。建議針對台幣匯率風險進行避險。
+              </p>
             </div>
           </div>
-
         </div>
+
       </div>
+
     </div>
-  </main>
+  </div>
+</main>
 
-  <!-- ============= FOOTER（新樣式） ============= -->
-  <footer class="bg-[#f4f6fb] border-t border-gray-200 mt-16">
-    <div class="max-w-[1440px] mx-auto px-6 pt-10 pb-4">
+<!-- ================= FOOTER ================= -->
+<footer class="bg-[#f5f7fb] border-t border-gray-200 pt-10 pb-6 text-xs text-gray-500">
+  <div class="max-w-[1440px] mx-auto px-6">
 
-      <!-- Top rows -->
-      <div class="flex flex-col lg:flex-row gap-10 lg:gap-20 pb-8 border-b border-gray-200">
-        <!-- brand -->
-        <div class="flex-1">
-          <div class="flex items-center gap-2 mb-4">
-            <svg class="logo-clock" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="46" class="clock-outer" />
-              <circle cx="50" cy="50" r="38" class="clock-inner" />
-              <circle cx="50" cy="50" r="30" class="clock-core" />
-            </svg>
-            <div>
-              <div class="text-[20px] font-bold text-[#0066cc] leading-none">TAIMIC</div>
-              <div class="text-[10px] tracking-[0.18em] text-gray-500 uppercase mt-1">Global Wealth</div>
+    <div
+      class="flex flex-col md:flex-row md:items-start md:justify-between gap-10 pb-8">
+
+      <!-- Left block: logo + tagline -->
+      <div class="flex-1 min-w-[220px]">
+        <div class="flex items-center gap-3 mb-4">
+          <svg class="logo-clock" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="clockGradient-footer" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#bfdbfe"/>
+                <stop offset="100%" stop-color="#60a5fa"/>
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="46" class="clock-outer"/>
+            <circle cx="50" cy="50" r="38" class="clock-inner"/>
+            <circle cx="50" cy="50" r="30" fill="url(#clockGradient-footer)" opacity="0.98"/>
+            <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line"/>
+            <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line"/>
+            <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line"/>
+            <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line"/>
+            <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour"/>
+            <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute"/>
+            <circle cx="50" cy="50" r="3.2" class="center-dot"/>
+          </svg>
+
+          <div>
+            <div class="text-[20px] font-[700] tracking-tight text-[#0066cc]">
+              TAIMIC
+            </div>
+            <div
+              class="text-[10px] font-[600] tracking-[0.2em] text-gray-500 uppercase">
+              GLOBAL WEALTH
             </div>
           </div>
-          <p class="text-sm text-gray-600 mb-4">
-            FATCA / CRS Compliant ・ Cross-Border Wealth Platform
-          </p>
-          <div class="inline-flex items-center text-xs font-medium text-green-700 bg-green-50 border border-green-200 rounded-full px-3 py-1">
-            <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
-            All systems operational
-          </div>
         </div>
 
-        <!-- Columns -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
-          <div>
-            <div class="footer-col-title">SOLUTIONS</div>
-            <div class="footer-link">Family Office</div>
-            <div class="footer-link">Cross-Border Clients</div>
-            <div class="footer-link">Entrepreneurs</div>
-            <div class="footer-link">Retirement</div>
-          </div>
-          <div>
-            <div class="footer-col-title">PLATFORM</div>
-            <div class="footer-link">Global Dashboard</div>
-            <div class="footer-link">Tax &amp; Compliance</div>
-            <div class="footer-link">Estate Planning</div>
-            <div class="footer-link">Risk Monitoring</div>
-          </div>
-          <div>
-            <div class="footer-col-title">RESOURCES</div>
-            <div class="footer-link">Insights</div>
-            <div class="footer-link">Product Updates</div>
-            <div class="footer-link">Partner Program</div>
-            <div class="footer-link">Status</div>
-          </div>
-          <div>
-            <div class="footer-col-title">LEGAL</div>
-            <div class="footer-link">Privacy Policy</div>
-            <div class="footer-link">Terms of Service</div>
-            <div class="footer-link">Data Processing</div>
-            <div class="footer-link">Subprocessors</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bottom row -->
-      <div class="flex flex-col md:flex-row items-center justify-between gap-4 pt-4 pb-2 text-xs text-gray-500">
-        <div>© 2025 Taimic Inc. All Rights Reserved.</div>
-        <div class="flex items-center gap-4 text-gray-400">
-          <i class="fa-brands fa-x-twitter"></i>
-          <i class="fa-brands fa-discord"></i>
-          <i class="fa-brands fa-instagram"></i>
-          <i class="fa-brands fa-github"></i>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ============= UPLOAD MODAL (AI OCR Demo) ============= -->
-  <div id="modal-overlay" class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-md shadow-2xl rounded-xl overflow-hidden relative transform transition-all">
-      <div class="bg-[#0066cc] p-4 flex justify-between items-center text-white">
-        <h3 class="font-bold text-sm tracking-wide" data-i18n="modal.title">新增台灣資產 (AI OCR)</h3>
-        <i class="fa-solid fa-xmark cursor-pointer hover:opacity-80 text-lg" onclick="closeUploadModal()"></i>
-      </div>
-
-      <!-- step 1 -->
-      <div id="modal-step-1" class="p-8 text-center">
-        <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-[#0066cc]">
-          <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
-        </div>
-        <p class="text-sm text-gray-600 mb-6 leading-relaxed" data-i18n="modal.desc">
-          上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。
+        <p class="text-[13px] text-gray-600 mb-3" data-i18n="footer.tagline">
+          FATCA / CRS Compliant · Cross-Border Wealth Platform
         </p>
-        <button onclick="startScan()" class="w-full border-2 border-dashed border-gray-300 py-4 rounded-xl hover:border-[#0066cc] hover:bg-blue-50 transition-all text-gray-500 hover:text-[#0066cc] font-bold text-sm">
-          <span data-i18n="btn.upload">點擊上傳檔案</span>
-        </button>
       </div>
 
-      <!-- step 2 -->
-      <div id="modal-step-2" class="hidden relative h-64 bg-[#050816]">
-        <div class="absolute inset-0 flex flex-col items-center justify-center z-10">
-          <p class="text-white font-mono text-sm mb-2" data-i18n="modal.scanning">AI 分析中...</p>
-          <div class="w-48 h-1 bg-gray-700 rounded overflow-hidden mb-4">
-            <div id="scan-bar" class="h-full bg-[#3b82f6] w-0 transition-all duration-[3000ms] ease-linear"></div>
+      <!-- Columns -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-[13px]">
+        <div>
+          <div class="font-semibold mb-3 text-gray-700" data-i18n="footer.solutions">
+            Solutions
           </div>
-          <div id="scan-log" class="text-[10px] text-green-400 font-mono h-12 flex flex-col items-center gap-1"></div>
+          <ul class="space-y-1 text-gray-600">
+            <li data-i18n="footer.sol.family">Family Office</li>
+            <li data-i18n="footer.sol.crossborder">Cross-Border Clients</li>
+            <li data-i18n="footer.sol.entrepreneurs">Entrepreneurs</li>
+            <li data-i18n="footer.sol.retirement">Retirement</li>
+          </ul>
         </div>
-        <div class="scan-overlay absolute inset-0"></div>
+
+        <div>
+          <div class="font-semibold mb-3 text-gray-700" data-i18n="footer.platform">
+            Platform
+          </div>
+          <ul class="space-y-1 text-gray-600">
+            <li data-i18n="footer.plat.dashboard">Global Dashboard</li>
+            <li data-i18n="footer.plat.tax">Tax &amp; Compliance</li>
+            <li data-i18n="footer.plat.estate">Estate Planning</li>
+            <li data-i18n="footer.plat.risk">Risk Monitoring</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="font-semibold mb-3 text-gray-700" data-i18n="footer.resources">
+            Resources
+          </div>
+          <ul class="space-y-1 text-gray-600">
+            <li data-i18n="footer.res.insights">Insights</li>
+            <li data-i18n="footer.res.updates">Product Updates</li>
+            <li data-i18n="footer.res.partner">Partner Program</li>
+            <li data-i18n="footer.res.status">Status</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="font-semibold mb-3 text-gray-700" data-i18n="footer.legal">
+            Legal
+          </div>
+          <ul class="space-y-1 text-gray-600">
+            <li data-i18n="footer.leg.privacy">Privacy Policy</li>
+            <li data-i18n="footer.leg.terms">Terms of Service</li>
+            <li data-i18n="footer.leg.dpa">Data Processing</li>
+            <li data-i18n="footer.leg.subprocessors">Subprocessors</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- bottom line -->
+    <div
+      class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-t border-gray-200 pt-4">
+      <p class="text-[12px]" data-i18n="footer.copyright">
+        © 2025 Taimic Inc. All Rights Reserved.
+      </p>
+      <div class="flex items-center gap-4 text-lg">
+        <a href="#" class="hover:text-[#0066cc]" aria-label="Instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="#" class="hover:text-[#0066cc]" aria-label="X">
+          <i class="fa-brands fa-x-twitter"></i>
+        </a>
       </div>
     </div>
   </div>
+</footer>
 
-  <!-- ============= AUTH MODAL (登入 / 註冊) ============= -->
-  <div id="auth-overlay" class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-white w-full max-w-lg rounded-xl shadow-2xl overflow-hidden">
-      <div class="bg-[#1d4ed8] px-6 py-4 flex items-center justify-between text-white">
-        <h3 id="auth-title" class="font-bold text-base">註冊 TAIMIC 帳號</h3>
-        <button onclick="closeAuthModal()" class="hover:opacity-80">
-          <i class="fa-solid fa-xmark text-xl"></i>
-        </button>
+<!-- ============== MODAL: OCR ============== -->
+<div id="modal-overlay"
+     class="hidden fixed inset-0 bg-[#222]/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div class="bg-white w-full max-w-md shadow-2xl overflow-hidden relative transform transition-all scale-100">
+    <div class="bg-[#0066cc] p-4 flex justify-between items-center text-white">
+      <h3 class="font-bold text-sm tracking-wide" data-i18n="modal.title">
+        新增台灣資產 (AI OCR)
+      </h3>
+      <i class="fa-solid fa-xmark cursor-pointer hover:opacity-75 text-lg"
+         onclick="closeModal()"></i>
+    </div>
+
+    <div id="modal-step-1" class="p-8 text-center">
+      <div
+        class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-[#0066cc]">
+        <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
       </div>
-      <div class="px-8 py-8 space-y-6">
-        <div class="space-y-2">
-          <label class="block text-sm font-medium text-gray-700">Email</label>
-          <input id="auth-email" type="email" placeholder="you@gmail.com"
-                 class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb] placeholder-gray-400" />
+      <p class="text-sm text-gray-600 mb-6 leading-relaxed" data-i18n="modal.desc">
+        上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。
+      </p>
+      <button onclick="startScan()"
+              class="w-full border-2 border-dashed border-gray-300 py-4 rounded hover:border-[#0066cc] hover:bg-blue-50 transition-all text-gray-500 hover:text-[#0066cc] font-bold text-sm">
+        <span data-i18n="btn.upload">點擊上傳檔案</span>
+      </button>
+    </div>
+
+    <div id="modal-step-2" class="hidden relative h-64 bg-[#1a1a1a]">
+      <div class="absolute inset-0 flex flex-col items-center justify-center z-10">
+        <p class="text-white font-mono text-sm mb-2" data-i18n="modal.scanning">
+          AI 分析中...
+        </p>
+        <div class="w-48 h-1 bg-gray-700 rounded overflow-hidden mb-4">
+          <div id="scan-bar"
+               class="h-full bg-[#0066cc] w-0 transition-all duration-[3000ms] ease-linear"></div>
         </div>
-        <div class="space-y-2">
-          <label class="block text-sm font-medium text-gray-700">密碼</label>
-          <input id="auth-password" type="password" placeholder="請輸入至少 6 碼密碼"
-                 class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]" />
-        </div>
-        <p id="auth-message" class="text-sm h-5 text-center"></p>
-        <button id="auth-submit" class="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold text-sm py-3 rounded-full flex items-center justify-center gap-2 transition">
-          <i class="fa-solid fa-arrow-right-to-bracket"></i>
-          <span id="auth-submit-text">註冊</span>
-        </button>
+        <div id="scan-log"
+             class="text-[10px] text-green-400 font-mono h-12 flex flex-col items-center gap-1"></div>
       </div>
+      <div class="scan-overlay absolute inset-0"></div>
     </div>
   </div>
+</div>
 
-  <!-- ============= SCRIPT ============= -->
-  <script>
-    const RATE = 32.5;
-    let curr = 'TWD';
-    let lang = 'zh';
-    const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
+<!-- ============== MODAL: AUTH (Login / Register) ============== -->
+<div id="auth-modal"
+     class="hidden fixed inset-0 bg-[#222]/60 backdrop-blur-sm z-50 flex items-center justify-center px-4">
+  <div class="bg-white w-full max-w-md shadow-2xl rounded-sm overflow-hidden">
+    <div class="bg-[#0066cc] text-white px-6 py-4 flex items-center justify-between">
+      <h3 id="auth-title" class="font-bold text-sm tracking-wide" data-i18n="auth.titleLogin">
+        登入 TAIMIC 帳號
+      </h3>
+      <button onclick="closeAuthModal()" class="hover:opacity-80">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
 
-    const assets = [
-      { id: 1, name: {en:'Vanguard Total Stock (VTI)', zh:'Vanguard 全球股票 ETF (VTI)'}, type: {en:'ETF', zh:'指數型基金'}, region:'US', usd: 145200 },
-      { id: 2, name: {en:'Taipei Xinyi Condo',      zh:'台北信義區公寓'},  type: {en:'Real Estate', zh:'房地產'},        region:'TW', usd: 280000 },
-      { id: 3, name: {en:'Fidelity 401(k)',         zh:'富達退休金 401(k)'}, type: {en:'Retirement', zh:'退休金'},       region:'US', usd: 98500 },
-    ];
+    <form id="auth-form" class="px-8 py-6 space-y-5">
+      <div class="flex gap-3 text-xs font-semibold text-gray-500">
+        <button type="button" id="tab-login"
+                class="flex-1 py-2 border border-gray-200 rounded text-center hover:bg-gray-50"
+                onclick="switchAuthMode('login')"
+        >
+          <span data-i18n="auth.tabLogin">登入</span>
+        </button>
+        <button type="button" id="tab-register"
+                class="flex-1 py-2 border border-gray-200 rounded text-center hover:bg-gray-50"
+                onclick="switchAuthMode('register')"
+        >
+          <span data-i18n="auth.tabRegister">註冊</span>
+        </button>
+      </div>
 
-    const I18N = {
-      en: {
-        'nav.overview':'Overview','nav.tax':'Tax & Compliance','nav.estate':'Estate Plan','nav.reports':'Reports',
-        'page.title':'Cross-Border Wealth Platform','page.desc':'Integrated view of Taiwan & US assets with FATCA compliance checks.',
-        'btn.add':'Add Asset','btn.upload':'Click to Upload File',
-        'stat.us':'US Net Worth','stat.tw':'Taiwan Net Worth','stat.global':'Global Total','stat.safe':'Estate Tax Risk: Safe',
-        'table.title':'Portfolio Holdings','col.name':'Asset Name','col.region':'Region','col.type':'Category','col.val':'Value',
-        'alert.title':'AI Tax Alert: FATCA Risk Detected','alert.desc':'We detected a new "High Cash Value" insurance policy in Taiwan. This exceeds the $50,000 reporting threshold for IRS Form 8938.',
-        'chart.title':'Regional Allocation','chart.insight':'AI Insight','chart.desc':'Your Taiwan assets comprise 40% of your net worth. Consider hedging TWD currency risk.',
-        'modal.title':'Add Taiwan Asset (AI OCR)','modal.desc':'Upload policy or statement. AI will extract data.','modal.scanning':'AI Processing...',
-        'user.login':'Login','user.register':'Register'
-      },
-      zh: {
-        'nav.overview':'資產總覽','nav.tax':'稅務合規','nav.estate':'家族傳承','nav.reports':'分析報告',
-        'page.title':'跨國資產整合平台','page.desc':'整合台灣與美國資產，提供即時淨值分析與跨境稅務風險檢測。',
-        'btn.add':'新增資產','btn.upload':'點擊上傳檔案',
-        'stat.us':'美國總資產','stat.tw':'台灣總資產','stat.global':'全球總淨值','stat.safe':'遺產稅風險：安全',
-        'table.title':'資產持有清單','col.name':'資產名稱','col.region':'地區','col.type':'類別','col.val':'現值',
-        'alert.title':'AI 稅務警示：偵測到 FATCA 風險','alert.desc':'系統掃描到一張新增的台灣高現金價值保單。此金額已超過 IRS Form 8938 的 5 萬美元申報門檻。',
-        'chart.title':'區域資產配置','chart.insight':'AI 智能分析','chart.desc':'您的台灣資產佔總淨值的 40%。建議針對台幣匯率風險進行避險。',
-        'modal.title':'新增台灣資產 (AI OCR)','modal.desc':'上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。','modal.scanning':'AI 分析中...',
-        'user.login':'登入','user.register':'註冊'
-      }
-    };
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <input id="auth-email"
+               type="email"
+               required
+               placeholder="you@gmail.com"
+               class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0066cc] focus:border-[#0066cc]">
+      </div>
 
-    function fmt(usd) {
-      const val = curr === 'USD' ? usd : usd * RATE;
-      return new Intl.NumberFormat(curr === 'USD' ? 'en-US' : 'zh-TW', {
-        style: 'currency', currency: curr, maximumFractionDigits: 0
-      }).format(val);
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1" data-i18n="auth.password">
+          密碼
+        </label>
+        <input id="auth-password"
+               type="password"
+               required
+               minlength="6"
+               class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#0066cc] focus:border-[#0066cc]"
+               data-i18n-placeholder="auth.passwordPlaceholder"
+               placeholder="請輸入至少 6 碼密碼">
+      </div>
+
+      <p id="auth-message" class="text-sm h-5"></p>
+
+      <button id="auth-submit"
+              type="submit"
+              class="w-full bg-[#0066cc] hover:bg-[#004c99] text-white font-semibold text-sm py-2.5 rounded flex items-center justify-center gap-2">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span data-i18n="auth.btnLogin">登入</span>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+  const RATE = 32.5;
+  let curr = 'TWD';
+  let lang = 'zh';
+  const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
+
+  const assets = [
+    {
+      id: 1,
+      name: {en: 'Vanguard Total Stock (VTI)', zh: 'Vanguard 全球股票 ETF (VTI)'},
+      type: {en: 'ETF', zh: '指數型基金'},
+      region: 'US',
+      usd: 145200
+    },
+    {
+      id: 2,
+      name: {en: 'Taipei Xinyi Condo', zh: '台北信義區公寓'},
+      type: {en: 'Real Estate', zh: '房地產'},
+      region: 'TW',
+      usd: 280000
+    },
+    {
+      id: 3,
+      name: {en: 'Fidelity 401(k)', zh: '富達退休金 401(k)'},
+      type: {en: 'Retirement', zh: '退休金'},
+      region: 'US',
+      usd: 98500
     }
+  ];
 
-    function render() {
-      const t = I18N[lang];
+  const I18N = {
+    en: {
+      'nav.overview': 'Overview',
+      'nav.tax': 'Tax & Compliance',
+      'nav.estate': 'Estate Plan',
+      'nav.reports': 'Reports',
 
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        el.textContent = t[el.dataset.i18n];
-      });
+      'page.title': 'Cross-Border Wealth Platform',
+      'page.desc': 'Integrated view of Taiwan & US assets with FATCA compliance checks.',
 
-      document.querySelectorAll('.val-display').forEach(el => {
-        el.textContent = fmt(parseFloat(el.dataset.usd));
-      });
+      'btn.add': 'Add Asset',
+      'btn.upload': 'Click to Upload File',
 
-      const tbody = document.getElementById('asset-list');
-      tbody.innerHTML = '';
-      assets.forEach(a => {
-        const n = a.name[lang];
-        const tp = a.type[lang];
-        const flag = a.region === 'US' ? '🇺🇸' : '🇹🇼';
-        const badge = a.region === 'US'
-          ? 'bg-blue-50 text-blue-700'
-          : 'bg-green-50 text-green-700';
-        const hl = a.new ? 'bg-orange-50 animate-fade-in' : '';
-        const riskTag = a.risk
-          ? `<span class="ml-2 inline-flex items-center px-2 py-0.5 bg-orange-100 text-orange-700 text-[10px] font-bold rounded-full border border-orange-200">FATCA</span>`
-          : '';
-        tbody.innerHTML += `
-          <tr class="group transition-colors hover:bg-gray-50 border-b border-gray-100 last:border-0 ${hl}">
-            <td class="py-4 pl-2">
-              <div class="font-semibold text-[#111827] group-hover:text-[#0066cc] transition-colors">${n}</div>
-            </td>
-            <td class="py-4">
-              <span class="px-2 py-1 rounded-full text-xs font-bold ${badge}">${flag} ${a.region}</span>${riskTag}
-            </td>
-            <td class="py-4 text-sm text-gray-600">${tp}</td>
-            <td class="py-4 pr-2 text-right font-mono font-bold text-[#111827] tracking-tight">${fmt(a.usd)}</td>
-          </tr>`;
-      });
+      'stat.us': 'US Net Worth',
+      'stat.tw': 'Taiwan Net Worth',
+      'stat.global': 'Global Total',
+      'stat.safe': 'Estate Tax Risk: Safe',
 
-      const btnUsd = document.getElementById('btn-usd');
-      const btnTwd = document.getElementById('btn-twd');
-      if (curr === 'USD') {
-        btnUsd.className = 'px-4 py-2 bg-white text-[#0066cc] font-semibold';
-        btnTwd.className = 'px-4 py-2 text-gray-500 hover:bg-gray-100';
-      } else {
-        btnTwd.className = 'px-4 py-2 bg-white text-[#0066cc] font-semibold';
-        btnUsd.className = 'px-4 py-2 text-gray-500 hover:bg-gray-100';
-      }
+      'table.title': 'Portfolio Holdings',
+      'col.name': 'Asset Name',
+      'col.region': 'Region',
+      'col.type': 'Category',
+      'col.val': 'Value',
 
-      document.getElementById('opt-zh').classList.toggle('active', lang === 'zh');
-      document.getElementById('opt-en').classList.toggle('active', lang === 'en');
+      'alert.title': 'AI Tax Alert: FATCA Risk Detected',
+      'alert.desc': 'We detected a new "High Cash Value" insurance policy in Taiwan. This exceeds the $50,000 reporting threshold for IRS Form 8938.',
+
+      'chart.title': 'Regional Allocation',
+      'chart.insight': 'AI Insight',
+      'chart.desc': 'Your Taiwan assets comprise 40% of your net worth. Consider hedging TWD currency risk.',
+
+      'modal.title': 'Add Taiwan Asset (AI OCR)',
+      'modal.desc': 'Upload policy or statement. AI will extract data.',
+      'modal.scanning': 'AI Processing...',
+
+      'user.login': 'Login',
+      'user.register': 'Register',
+
+      // auth
+      'auth.titleLogin': 'Login to TAIMIC',
+      'auth.titleRegister': 'Create TAIMIC Account',
+      'auth.tabLogin': 'Login',
+      'auth.tabRegister': 'Register',
+      'auth.password': 'Password',
+      'auth.passwordPlaceholder': 'At least 6 characters',
+      'auth.btnLogin': 'Login',
+      'auth.btnRegister': 'Register',
+      'auth.loginSuccess': 'Login successful',
+      'auth.registerSuccess': 'Registration successful',
+      'auth.error': 'Something went wrong, please try again.',
+      'auth.invalid': 'Invalid email or password.',
+
+      // footer
+      'footer.tagline': 'FATCA / CRS Compliant · Cross-Border Wealth Platform',
+      'footer.solutions': 'Solutions',
+      'footer.platform': 'Platform',
+      'footer.resources': 'Resources',
+      'footer.legal': 'Legal',
+
+      'footer.sol.family': 'Family Office',
+      'footer.sol.crossborder': 'Cross-Border Clients',
+      'footer.sol.entrepreneurs': 'Entrepreneurs',
+      'footer.sol.retirement': 'Retirement',
+
+      'footer.plat.dashboard': 'Global Dashboard',
+      'footer.plat.tax': 'Tax & Compliance',
+      'footer.plat.estate': 'Estate Planning',
+      'footer.plat.risk': 'Risk Monitoring',
+
+      'footer.res.insights': 'Insights',
+      'footer.res.updates': 'Product Updates',
+      'footer.res.partner': 'Partner Program',
+      'footer.res.status': 'Status',
+
+      'footer.leg.privacy': 'Privacy Policy',
+      'footer.leg.terms': 'Terms of Service',
+      'footer.leg.dpa': 'Data Processing',
+      'footer.leg.subprocessors': 'Subprocessors',
+
+      'footer.copyright': '© 2025 Taimic Inc. All Rights Reserved.'
+    },
+    zh: {
+      'nav.overview': '資產總覽',
+      'nav.tax': '稅務合規',
+      'nav.estate': '家族傳承',
+      'nav.reports': '分析報告',
+
+      'page.title': '跨國資產整合平台',
+      'page.desc': '整合台灣與美國資產，提供即時淨值分析與跨境稅務風險檢測。',
+
+      'btn.add': '新增資產',
+      'btn.upload': '點擊上傳檔案',
+
+      'stat.us': '美國總資產',
+      'stat.tw': '台灣總資產',
+      'stat.global': '全球總淨值',
+      'stat.safe': '遺產稅風險：安全',
+
+      'table.title': '資產持有清單',
+      'col.name': '資產名稱',
+      'col.region': '地區',
+      'col.type': '類別',
+      'col.val': '現值',
+
+      'alert.title': 'AI 稅務警示：偵測到 FATCA 風險',
+      'alert.desc': '系統掃描到一張新增的台灣高現金價值保單。此金額已超過 IRS Form 8938 的 5 萬美元申報門檻。',
+
+      'chart.title': '區域資產配置',
+      'chart.insight': 'AI 智能分析',
+      'chart.desc': '您的台灣資產佔總淨值的 40%。建議針對台幣匯率風險進行避險。',
+
+      'modal.title': '新增台灣資產 (AI OCR)',
+      'modal.desc': '上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。',
+      'modal.scanning': 'AI 分析中...',
+
+      'user.login': '登入',
+      'user.register': '註冊',
+
+      'auth.titleLogin': '登入 TAIMIC 帳號',
+      'auth.titleRegister': '註冊 TAIMIC 帳號',
+      'auth.tabLogin': '登入',
+      'auth.tabRegister': '註冊',
+      'auth.password': '密碼',
+      'auth.passwordPlaceholder': '請輸入至少 6 碼密碼',
+      'auth.btnLogin': '登入',
+      'auth.btnRegister': '註冊',
+      'auth.loginSuccess': '登入成功',
+      'auth.registerSuccess': '註冊成功',
+      'auth.error': '系統忙碌，請稍後再試。',
+      'auth.invalid': '帳號或密碼錯誤。',
+
+      'footer.tagline': 'FATCA / CRS 合規 · 跨境財富管理平台',
+      'footer.solutions': '解決方案',
+      'footer.platform': '平台',
+      'footer.resources': '資源',
+      'footer.legal': '法律',
+
+      'footer.sol.family': '家族辦公室',
+      'footer.sol.crossborder': '跨境客戶',
+      'footer.sol.entrepreneurs': '創業家',
+      'footer.sol.retirement': '退休規劃',
+
+      'footer.plat.dashboard': '全球總覽',
+      'footer.plat.tax': '稅務與合規',
+      'footer.plat.estate': '資產傳承',
+      'footer.plat.risk': '風險監控',
+
+      'footer.res.insights': '洞見',
+      'footer.res.updates': '產品更新',
+      'footer.res.partner': '合作夥伴計畫',
+      'footer.res.status': '系統狀態',
+
+      'footer.leg.privacy': '隱私權政策',
+      'footer.leg.terms': '服務條款',
+      'footer.leg.dpa': '資料處理',
+      'footer.leg.subprocessors': '次處理者',
+
+      'footer.copyright': '© 2025 Taimic Inc. 版權所有。'
     }
+  };
 
-    function setCurrency(c) {
-      curr = c;
+  function fmt(usd) {
+    const val = curr === 'USD' ? usd : usd * RATE;
+    return new Intl.NumberFormat(curr === 'USD' ? 'en-US' : 'zh-TW', {
+      style: 'currency',
+      currency: curr,
+      maximumFractionDigits: 0
+    }).format(val);
+  }
+
+  function render() {
+    const t = I18N[lang];
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (t[key]) el.textContent = t[key];
+    });
+
+    // placeholder with data-i18n-placeholder
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.dataset.i18nPlaceholder;
+      if (t[key]) el.placeholder = t[key];
+    });
+
+    document.querySelectorAll('.val-display').forEach(el => {
+      el.textContent = fmt(parseFloat(el.dataset.usd));
+    });
+
+    const tbody = document.getElementById('asset-list');
+    tbody.innerHTML = '';
+    assets.forEach(a => {
+      const n = a.name[lang];
+      const tp = a.type[lang];
+      const flag = a.region === 'US' ? '🇺🇸' : '🇹🇼';
+      const badge = a.region === 'US'
+        ? 'bg-blue-50 text-blue-700'
+        : 'bg-green-50 text-green-700';
+      const hl = a.new ? 'bg-orange-50 animate-fade-in' : '';
+      const riskTag = a.risk
+        ? '<span class="ml-2 inline-flex items-center px-2 py-0.5 bg-orange-100 text-orange-700 text-[10px] font-bold rounded border border-orange-200">FATCA</span>'
+        : '';
+
+      tbody.innerHTML += `
+        <tr class="group transition-colors hover:bg-gray-50 border-b border-gray-100 last:border-0 ${hl}">
+          <td class="py-4 pl-2">
+            <div class="font-bold text-[#222] group-hover:text-[#0066cc] transition-colors">${n}</div>
+          </td>
+          <td class="py-4">
+            <span class="px-2 py-1 rounded text-xs font-bold ${badge}">${flag} ${a.region}</span>${riskTag}
+          </td>
+          <td class="py-4 text-sm text-gray-600">${tp}</td>
+          <td class="py-4 pr-2 text-right font-mono font-bold text-[#222] tracking-tight">${fmt(a.usd)}</td>
+        </tr>`;
+    });
+
+    optZh.classList.toggle('active', lang === 'zh');
+    optEn.classList.toggle('active', lang === 'en');
+  }
+
+  function setCurrency(c) {
+    curr = c;
+    render();
+    if (curr === 'USD') {
+      btnUsd.className = 'px-3 py-2 bg-gray-100 text-[#0066cc] font-bold';
+      btnTwd.className = 'px-3 py-2 hover:bg-gray-50 transition-colors';
+    } else {
+      btnTwd.className = 'px-3 py-2 bg-gray-100 text-[#0066cc] font-bold';
+      btnUsd.className = 'px-3 py-2 hover:bg-gray-50 transition-colors';
+    }
+  }
+
+  function changeLang(l) {
+    lang = l;
+    render();
+    langMenu.classList.add('hidden');
+  }
+
+  function openModal() {
+    modalOverlay.classList.remove('hidden');
+    document.getElementById('modal-step-1').classList.remove('hidden');
+    document.getElementById('modal-step-2').classList.add('hidden');
+  }
+
+  function closeModal() {
+    modalOverlay.classList.add('hidden');
+  }
+
+  function startScan() {
+    document.getElementById('modal-step-1').classList.add('hidden');
+    document.getElementById('modal-step-2').classList.remove('hidden');
+    setTimeout(() => document.getElementById('scan-bar').style.width = '100%', 100);
+    const log = document.getElementById('scan-log');
+    setTimeout(() => log.innerHTML = '> Detecting Language: zh-TW', 800);
+    setTimeout(() => log.innerHTML += '<br>> Parsing: "富邦人壽 (Fubon Life)"', 1600);
+    setTimeout(() => log.innerHTML += '<br>> Match IRS Code: 8938', 2400);
+
+    setTimeout(() => {
+      assets.unshift({
+        id: 99,
+        name: {en: 'Fubon Life (Whole Life)', zh: '富邦人壽 (終身壽險)'},
+        type: {en: 'Insurance', zh: '儲蓄險'},
+        region: 'TW',
+        usd: 52000,
+        new: true,
+        risk: true
+      });
+
+      const tEl = document.getElementById('val-tw');
+      tEl.dataset.usd = parseFloat(tEl.dataset.usd) + 52000;
+      const gEl = document.getElementById('val-global');
+      gEl.dataset.usd = parseFloat(gEl.dataset.usd) + 52000;
+      chart.data.datasets[0].data[1] += 52000;
+      chart.update();
+
+      document.getElementById('ai-alert').classList.remove('hidden');
       render();
+      closeModal();
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }, 3000);
+  }
+
+  // ===== Auth (login / register) =====
+  let currentAuthMode = 'login';
+
+  function openAuthModal(mode) {
+    currentAuthMode = mode || 'login';
+    updateAuthUI();
+    document.getElementById('auth-message').textContent = '';
+    document.getElementById('auth-message').className = 'text-sm h-5';
+    document.getElementById('auth-email').value = '';
+    document.getElementById('auth-password').value = '';
+    document.getElementById('auth-modal').classList.remove('hidden');
+  }
+
+  function closeAuthModal() {
+    document.getElementById('auth-modal').classList.add('hidden');
+  }
+
+  function switchAuthMode(mode) {
+    currentAuthMode = mode;
+    updateAuthUI();
+    document.getElementById('auth-message').textContent = '';
+    document.getElementById('auth-message').className = 'text-sm h-5';
+  }
+
+  function updateAuthUI() {
+    const t = I18N[lang];
+    const titleEl = document.getElementById('auth-title');
+    const submitText = document.querySelector('#auth-submit span');
+    const btnIcon = document.querySelector('#auth-submit i');
+
+    const tabLogin = document.getElementById('tab-login');
+    const tabRegister = document.getElementById('tab-register');
+
+    if (currentAuthMode === 'login') {
+      titleEl.textContent = t['auth.titleLogin'];
+      submitText.textContent = t['auth.btnLogin'];
+      btnIcon.className = 'fa-solid fa-right-to-bracket';
+      tabLogin.classList.add('bg-gray-100', 'border-[#0066cc]');
+      tabRegister.classList.remove('bg-gray-100', 'border-[#0066cc]');
+    } else {
+      titleEl.textContent = t['auth.titleRegister'];
+      submitText.textContent = t['auth.btnRegister'];
+      btnIcon.className = 'fa-solid fa-user-plus';
+      tabRegister.classList.add('bg-gray-100', 'border-[#0066cc]');
+      tabLogin.classList.remove('bg-gray-100', 'border-[#0066cc]');
     }
+  }
 
-    function changeLang(l) {
-      lang = l;
-      render();
-      langMenu.classList.add('hidden');
-    }
+  document.getElementById('auth-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('auth-email').value.trim();
+    const password = document.getElementById('auth-password').value;
 
-    function openUploadModal() {
-      modalOverlay.classList.remove('hidden');
-      document.getElementById('modal-step-1').classList.remove('hidden');
-      document.getElementById('modal-step-2').classList.add('hidden');
-    }
-    function closeUploadModal() {
-      modalOverlay.classList.add('hidden');
-    }
+    const msgEl = document.getElementById('auth-message');
+    msgEl.textContent = '';
+    msgEl.className = 'text-sm h-5';
 
-    function startScan() {
-      document.getElementById('modal-step-1').classList.add('hidden');
-      document.getElementById('modal-step-2').classList.remove('hidden');
-      const bar = document.getElementById('scan-bar');
-      bar.style.width = '0';
-      setTimeout(() => bar.style.width = '100%', 100);
+    const path = currentAuthMode === 'register' ? '/api/register' : '/api/login';
 
-      const log = document.getElementById('scan-log');
-      log.innerHTML = '';
-      setTimeout(() => log.innerHTML = '&gt; Detecting Language: zh-TW', 800);
-      setTimeout(() => log.innerHTML += '<br>&gt; Parsing: "富邦人壽 (Fubon Life)"', 1600);
-      setTimeout(() => log.innerHTML += '<br>&gt; Match IRS Code: 8938', 2400);
-
-      setTimeout(() => {
-        assets.unshift({
-          id: 99,
-          name: {en:'Fubon Life (Whole Life)', zh:'富邦人壽 (終身壽險)'},
-          type: {en:'Insurance', zh:'儲蓄險'},
-          region: 'TW',
-          usd: 52000,
-          new: true,
-          risk: true
-        });
-
-        const tEl = document.getElementById('val-tw');
-        tEl.dataset.usd = parseFloat(tEl.dataset.usd) + 52000;
-        const gEl = document.getElementById('val-global');
-        gEl.dataset.usd = parseFloat(gEl.dataset.usd) + 52000;
-        geoChart.data.datasets[0].data[1] += 52000;
-        geoChart.update();
-
-        document.getElementById('ai-alert').classList.remove('hidden');
-        render();
-        closeUploadModal();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 3000);
-    }
-
-    // ===== Auth Modal =====
-    let authMode = 'register';
-
-    function openAuthModal(mode) {
-      authMode = mode;
-      const title = document.getElementById('auth-title');
-      const btnText = document.getElementById('auth-submit-text');
-      const msg = document.getElementById('auth-message');
-      msg.textContent = '';
-      msg.className = 'text-sm h-5 text-center';
-
-      if (mode === 'login') {
-        title.textContent = '登入 TAIMIC 帳號';
-        btnText.textContent = '登入';
-      } else {
-        title.textContent = '註冊 TAIMIC 帳號';
-        btnText.textContent = '註冊';
-      }
-
-      document.getElementById('auth-email').value = '';
-      document.getElementById('auth-password').value = '';
-
-      authOverlay.classList.remove('hidden');
-    }
-
-    function closeAuthModal() {
-      authOverlay.classList.add('hidden');
-    }
-
-    async function callAuthAPI(path, payload) {
-      const res = await fetch(`${API_BASE}${path}`, {
+    try {
+      const res = await fetch(API_BASE + path, {
         method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify(payload)
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email, password})
       });
-      return await res.json();
-    }
 
-    async function handleAuthSubmit() {
-      const email = document.getElementById('auth-email').value.trim();
-      const password = document.getElementById('auth-password').value;
-      const msg = document.getElementById('auth-message');
-      msg.textContent = '';
-      msg.className = 'text-sm h-5 text-center';
+      const data = await res.json();
 
-      if (!email || !password) {
-        msg.textContent = '請輸入 email 與密碼。';
-        msg.classList.add('text-red-500');
-        return;
-      }
-
-      try {
-        const path = authMode === 'register' ? '/api/register' : '/api/login';
-        const data = await callAuthAPI(path, { email, password });
-
-        console.log('auth response', data);
-
-        if (data.ok) {
-          msg.textContent = authMode === 'register'
-            ? '註冊成功，請重新登入。'
-            : `登入成功，歡迎 ${data.user?.email || email}`;
-          msg.classList.add('text-green-600');
-
-          if (authMode === 'login') {
-            localStorage.setItem('taimic-user-email', data.user?.email || email);
-            setTimeout(closeAuthModal, 1200);
-          }
+      if (res.ok && data.ok) {
+        const t = I18N[lang];
+        if (currentAuthMode === 'login') {
+          msgEl.textContent = t['auth.loginSuccess']; // 只顯示「登入成功」
         } else {
-          msg.textContent = data.message || '操作失敗，請稍後再試。';
-          msg.classList.add('text-red-500');
+          msgEl.textContent = t['auth.registerSuccess'];
         }
-      } catch (e) {
-        console.error(e);
-        msg.textContent = '伺服器錯誤，請稍後再試。';
-        msg.classList.add('text-red-500');
+        msgEl.className = 'text-sm h-5 text-green-600';
+
+        // 存一下登入狀態（簡單版）
+        if (currentAuthMode === 'login') {
+          localStorage.setItem('taimic_user', email);
+        }
+      } else if (res.status === 401) {
+        msgEl.textContent = I18N[lang]['auth.invalid'];
+        msgEl.className = 'text-sm h-5 text-red-600';
+      } else {
+        msgEl.textContent = I18N[lang]['auth.error'];
+        msgEl.className = 'text-sm h-5 text-red-600';
       }
+    } catch (err) {
+      console.error(err);
+      msgEl.textContent = I18N[lang]['auth.error'];
+      msgEl.className = 'text-sm h-5 text-red-600';
+    }
+  });
+
+  // ===== Globals (DOM cache) =====
+  let chart;
+  let btnUsd, btnTwd, optZh, optEn;
+  let langMenu, userMenu, modalOverlay;
+
+  window.onload = function () {
+    const ctx = document.getElementById('geoChart').getContext('2d');
+    chart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['US', 'TW'],
+        datasets: [{
+          data: [482500, 315200],
+          backgroundColor: ['#0066cc', '#222222'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        cutout: '75%',
+        plugins: {legend: {display: false}}
+      }
+    });
+
+    btnUsd = document.getElementById('btn-usd');
+    btnTwd = document.getElementById('btn-twd');
+    optZh = document.getElementById('opt-zh');
+    optEn = document.getElementById('opt-en');
+    langMenu = document.getElementById('lang-menu');
+    userMenu = document.getElementById('user-menu');
+    modalOverlay = document.getElementById('modal-overlay');
+
+    render();
+    updateAuthUI();
+
+    const langToggle = document.getElementById('lang-toggle');
+    const userToggle = document.getElementById('user-toggle');
+
+    function closeAllMenus() {
+      if (langMenu) langMenu.classList.add('hidden');
+      if (userMenu) userMenu.classList.add('hidden');
     }
 
-    // ===== Global refs & init =====
-    let geoChart;
-    let langMenu, userMenu, modalOverlay, authOverlay;
-
-    window.onload = function () {
-      const ctx = document.getElementById('geoChart').getContext('2d');
-      geoChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: ['US', 'TW'],
-          datasets: [{
-            data: [482500, 315200],
-            backgroundColor: ['#2563eb', '#111827'],
-            borderWidth: 0
-          }]
-        },
-        options: {
-          cutout: '70%',
-          plugins: { legend: { display: false } }
-        }
-      });
-
-      langMenu = document.getElementById('lang-menu');
-      userMenu = document.getElementById('user-menu');
-      modalOverlay = document.getElementById('modal-overlay');
-      authOverlay = document.getElementById('auth-overlay');
-
-      render();
-
-      const langToggle = document.getElementById('lang-toggle');
-      const userToggle = document.getElementById('user-toggle');
-
-      function closeAllMenus() {
-        langMenu.classList.add('hidden');
-        userMenu.classList.add('hidden');
-      }
-
-      langToggle.addEventListener('click', e => {
+    if (langToggle && langMenu) {
+      langToggle.addEventListener('click', (e) => {
         e.stopPropagation();
-        const open = langMenu.classList.contains('hidden');
+        const willOpen = langMenu.classList.contains('hidden');
         closeAllMenus();
-        if (open) langMenu.classList.remove('hidden');
+        if (willOpen) langMenu.classList.remove('hidden');
       });
       langMenu.addEventListener('click', e => e.stopPropagation());
+    }
 
-      userToggle.addEventListener('click', e => {
+    if (userToggle && userMenu) {
+      userToggle.addEventListener('click', (e) => {
         e.stopPropagation();
-        const open = userMenu.classList.contains('hidden');
+        const willOpen = userMenu.classList.contains('hidden');
         closeAllMenus();
-        if (open) userMenu.classList.remove('hidden');
+        if (willOpen) userMenu.classList.remove('hidden');
       });
       userMenu.addEventListener('click', e => e.stopPropagation());
+    }
 
-      document.addEventListener('click', closeAllMenus);
-
-      document.getElementById('auth-submit').addEventListener('click', handleAuthSubmit);
-    };
-  </script>
+    document.addEventListener('click', closeAllMenus);
+  };
+</script>
 </body>
 </html>
