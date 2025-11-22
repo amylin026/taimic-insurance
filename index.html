@@ -148,24 +148,31 @@
 
       <!-- Logo -->
       <div class="flex items-center gap-4 cursor-pointer">
-        <svg class="logo-clock" viewBox="0 0 100 100">
-          <defs>
-            <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#bfdbfe" />
-              <stop offset="100%" stop-color="#60a5fa" />
-            </linearGradient>
-          </defs>
-          <circle cx="50" cy="50" r="46" class="clock-outer" />
-          <circle cx="50" cy="50" r="38" class="clock-inner" />
-          <circle cx="50" cy="50" r="30" class="clock-core" />
-          <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
-          <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
-          <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
-          <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
-          <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
-          <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
-          <circle cx="50" cy="50" r="3.2" class="center-dot" />
-        </svg>
+      <svg class="logo-clock" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="clockGradientFooter" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#bfdbfe" />
+      <stop offset="100%" stop-color="#60a5fa" />
+    </linearGradient>
+  </defs>
+
+  <circle cx="50" cy="50" r="46" class="clock-halo-1" />
+  <circle cx="50" cy="50" r="40" class="clock-halo-2" />
+  <circle cx="50" cy="50" r="34" class="clock-halo-3" />
+
+  <circle cx="50" cy="50" r="28" class="clock-face" />
+  <circle cx="50" cy="50" r="22" class="clock-core" fill="url(#clockGradientFooter)" />
+
+  <line x1="50" y1="17" x2="50" y2="22" class="clock-tick" />
+  <line x1="83" y1="50" x2="78" y2="50" class="clock-tick" />
+  <line x1="50" y1="83" x2="50" y2="78" class="clock-tick" />
+  <line x1="17" y1="50" x2="22" y2="50" class="clock-tick" />
+
+  <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
+  <line x1="50" y1="50" x2="68" y2="38" class="hand hand-minute" />
+
+  <circle cx="50" cy="50" r="3.2" class="center-dot" />
+</svg>
         <div class="flex flex-col justify-center">
           <span class="text-[22px] font-[700] tracking-tight text-[#0066cc] leading-none">TAIMIC</span>
           <span class="text-[10px] font-[600] tracking-[0.2em] text-gray-500 mt-1 uppercase">Global Wealth</span>
