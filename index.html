@@ -233,9 +233,8 @@
         <a href="#" class="nav-link" data-i18n="nav.reports">分析報告</a>
       </nav>
 
-      <!-- Right tools -->
-      <div class="flex items-center gap-6 h-full">
-
+            <!-- Right tools -->
+      <div class="flex items-center gap-3 h-full">
         <!-- Currency (改成膠囊形狀) -->
         <div class="hidden sm:flex items-center text-xs font-medium text-gray-600 border border-gray-200 rounded-full overflow-hidden bg-gray-50 shadow-sm">
           <button id="btn-usd" onclick="setCurrency('USD')" class="px-4 py-2 transition-colors">
@@ -247,17 +246,15 @@
         </div>
 
         <!-- Language -->
-<div class="dropdown-container cursor-pointer h-full">
-  <button id="lang-toggle" type="button" class="flex items-center gap-2 text-gray-600 hover:text-[#0066cc] transition-colors">
-    <!-- 只剩地球 icon 本人 -->
-    <i class="fa-solid fa-globe text-base"></i>
-    <i class="fa-solid fa-caret-down text-xs"></i>
-  </button>
-  <div id="lang-menu" class="dropdown-menu hidden">
-    <div id="opt-zh" class="dropdown-item active" onclick="changeLang('zh')">繁體中文</div>
-    <div id="opt-en" class="dropdown-item" onclick="changeLang('en')">English</div>
-  </div>
-</div>
+        <div class="dropdown-container cursor-pointer h-full">
+          <button id="lang-toggle" type="button" class="flex items-center gap-1 text-gray-600 hover:text-[#0066cc] transition-colors">
+            <i class="fa-solid fa-globe text-base"></i>
+            <i class="fa-solid fa-caret-down text-xs"></i>
+          </button>
+          <div id="lang-menu" class="dropdown-menu hidden">
+            <div id="opt-zh" class="dropdown-item active" onclick="changeLang('zh')">繁體中文</div>
+            <div id="opt-en" class="dropdown-item" onclick="changeLang('en')">English</div>
+          </div>
         </div>
 
         <!-- User -->
@@ -281,9 +278,7 @@
             </div>
           </div>
         </div>
-
       </div>
-    </div>
   </header>
 
   <!-- ============= HERO / SUMMARY ============= -->
