@@ -411,6 +411,7 @@
   </div>
 
   <!-- ================= SCRIPT ================= -->
+  const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
   <script>
     const RATE = 32.5;
     let curr = 'TWD'; 
@@ -508,37 +509,60 @@
     }
     function closeModal() { modalOverlay.classList.add('hidden'); }
     
-    function startScan() {
-      document.getElementById('modal-step-1').classList.add('hidden');
-      document.getElementById('modal-step-2').classList.remove('hidden');
-      setTimeout(() => document.getElementById('scan-bar').style.width = '100%', 100);
-      const log = document.getElementById('scan-log');
-      setTimeout(()=> log.innerHTML = '> Detecting Language: zh-TW', 800);
-      setTimeout(()=> log.innerHTML += '<br>> Parsing: "富邦人壽 (Fubon Life)"', 1600);
-      setTimeout(()=> log.innerHTML += '<br>> Match IRS Code: 8938', 2400);
-      setTimeout(() => {
-        assets.unshift({
-          id: 99,
-          name: {en:'Fubon Life (Whole Life)', zh:'富邦人壽 (終身壽險)'},
-          type: {en:'Insurance', zh:'儲蓄險'},
-          region:'TW',
-          usd: 52000,
-          new: true,
-          risk: true
-        });
-        const tEl = document.getElementById('val-tw');
-        tEl.dataset.usd = parseFloat(tEl.dataset.usd) + 52000;
-        const gEl = document.getElementById('val-global');
-        gEl.dataset.usd = parseFloat(gEl.dataset.usd) + 52000;
-        chart.data.datasets[0].data[1] += 52000;
-        chart.update();
-        document.getElementById('ai-alert').classList.remove('hidden');
-        render();
-        closeModal();
-        window.scrollTo({top:0, behavior:'smooth'});
-      }, 3000);
-    }
+  function startScan() {
+  document.getElementById('modal-step-1').classList.add('hidden');
+  document.getElementById('modal-step-2').classList.remove('hidden');
+  setTimeout(() => document.getElementById('scan-bar').style.width = '100%', 100);
+  const log = document.getElementById('scan-log');
+  setTimeout(()=> log.innerHTML = '> Detecting Language: zh-TW', 800);
+  setTimeout(()=> log.innerHTML += '<br>> Parsing: "富邦人壽 (Fubon Life)"', 1600);
+  setTimeout(()=> log.innerHTML += '<br>> Match IRS Code: 8938', 2400);
 
+  setTimeout(() => {
+    assets.unshift({
+      id: 99,
+      name: {en:'Fubon Life (Whole Life)', zh:'富邦人壽 (終身壽險)'},
+      type: {en:'Insurance', zh:'儲蓄險'},
+      region:'TW',
+      usd: 52000,
+      new: true,
+      risk: true
+    });
+
+    const tEl = document.getElementById('val-tw');
+    tEl.dataset.usd = parseFloat(tEl.dataset.usd) + 52000;
+    const gEl = document.getElementById('val-global');
+    gEl.dataset.usd = parseFloat(gEl.dataset.usd) + 52000;
+    chart.data.datasets[0].data[1] += 52000;
+    chart.update();
+    document.getElementById('ai-alert').classList.remove('hidden');
+    render();
+    closeModal();
+    window.scrollTo({top:0, behavior:'smooth'});
+
+    // ⭐ 新增這一行：掃完之後把最新 assets 丟給 Cloudflare Worker
+    syncAssetsToServer();
+  }, 3000);
+}
+    const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev"; // 換成你的 worker 網址
+
+async function syncAssetsToServer() {
+  try {
+    const res = await fetch(`${API_BASE}/api/save-assets`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        assets,
+        baseCurrency: curr,
+      }),
+    });
+
+    const data = await res.json();
+    console.log('save-assets response from worker:', data);
+  } catch (err) {
+    console.error('save-assets error:', err);
+  }
+}
     // ====== 全局變數（DOM 快取） ======
     let chart;
     let btnUsd, btnTwd, optZh, optEn;
