@@ -884,5 +884,71 @@
       document.getElementById('auth-submit').addEventListener('click', handleAuthSubmit);
     };
   </script>
+  <!-- 重設密碼 Modal -->
+<div
+  id="reset-modal"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40"
+>
+  <div class="w-full max-w-md rounded-2xl bg-white shadow-xl p-6">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-semibold text-gray-800">重設 TAIMIC 密碼</h2>
+      <button
+        type="button"
+        id="close-reset-modal"
+        class="text-gray-400 hover:text-gray-600"
+      >
+        ✕
+      </button>
+    </div>
+
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <input
+          id="reset-email"
+          type="email"
+          class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0066cc]"
+          placeholder="you@gmail.com"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">驗證碼（resetToken）</label>
+        <input
+          id="reset-token"
+          type="text"
+          class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0066cc]"
+          placeholder="請貼上 resetToken"
+        />
+        <p class="mt-1 text-xs text-gray-500">
+          demo 版先把 token 印在 Console，你再貼過來。
+        </p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">新密碼</label>
+        <input
+          id="reset-new-password"
+          type="password"
+          class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0066cc]"
+          placeholder="請輸入至少 6 碼新密碼"
+        />
+      </div>
+
+      <p
+        id="reset-status"
+        class="text-sm text-gray-600 min-h-[1.5rem]"
+      ></p>
+
+      <button
+        type="button"
+        id="send-reset-btn"
+        class="mt-2 w-full rounded-full bg-[#0066cc] py-2 text-sm font-semibold text-white hover:bg-[#0052a3]"
+      >
+        送出重設
+      </button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
