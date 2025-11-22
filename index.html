@@ -428,6 +428,7 @@
 
   <!-- ================= SCRIPT ================= -->
   <script>
+    const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
     // ====== 後端 API base（只存在 JS，不會再跑到畫面上） ======
     const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
 
@@ -624,6 +625,29 @@
         }
       });
 
+      async function register(email, password) {
+  const res = await fetch(`${API_BASE}/api/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
+  });
+
+  const data = await res.json();
+  console.log("register:", data);
+  return data;
+}
+
+async function login(email, password) {
+  const res = await fetch(`${API_BASE}/api/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
+  });
+
+  const data = await res.json();
+  console.log("login:", data);
+  return data;
+}
       // 把常用節點存起來
       btnUsd = document.getElementById('btn-usd');
       btnTwd = document.getElementById('btn-twd');
