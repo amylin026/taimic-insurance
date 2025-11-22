@@ -93,7 +93,7 @@
     .nav-link:hover { color: var(--brand-blue); }
     .nav-link.active { color: #000; font-weight: 700; border-bottom-color: var(--brand-blue); }
 
-    /* --- Dropdown – 改成圓一點 --- */
+    /* --- Dropdown --- */
     .dropdown-container {
       position: relative;
       height: 100%;
@@ -164,7 +164,7 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* --- TSMC 風格一點的卡片 --- */
+    /* --- Card --- */
     .panel {
       background: white;
       border-radius: 12px;
@@ -172,7 +172,7 @@
       box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
     }
 
-    /* --- Footer like SaaS site --- */
+    /* --- Footer --- */
     .footer-col-title {
       font-size: 13px;
       font-weight: 700;
@@ -236,7 +236,7 @@
       <!-- Right tools -->
       <div class="flex items-center gap-6 h-full">
 
-        <!-- Currency (改成膠囊形狀) -->
+        <!-- Currency -->
         <div class="hidden sm:flex items-center text-xs font-medium text-gray-600 border border-gray-200 rounded-full overflow-hidden bg-gray-50 shadow-sm">
           <button id="btn-usd" onclick="setCurrency('USD')" class="px-4 py-2 transition-colors">
             USD
@@ -406,30 +406,32 @@
 
           <!-- Chart -->
           <div class="space-y-8">
-            <div class="border border-gray-200 rounded-xl p-6 bg-white shadow-sm">
-              <h3 class="text-xs font-bold text-gray-500 uppercase mb-5 tracking-[0.18em]" data-i18n="chart.title">
-                區域配置分析
+            <div class="border border-gray-200 rounded-3xl p-8 bg-white shadow-sm">
+              <h3 class="text-xs font-bold text-gray-500 uppercase mb-6 tracking-[0.18em]" data-i18n="chart.title">
+                區域資產配置
               </h3>
-              <div class="h-64 relative">
+
+              <!-- 正方形容器，圓心一定在正中央 -->
+              <div class="relative w-full max-w-[320px] mx-auto aspect-square">
                 <canvas id="geoChart"></canvas>
-               <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-  <div class="relative text-center">
-    <!-- 先讓 100% 真正在圓的正中心 -->
-    <div class="text-lg font-bold text-[#0f172a] leading-none">
-      100%
-    </div>
-    <!-- TOTAL 用 absolute 吊在上方，視覺上比較自然 -->
-    <div
-      class="absolute left-1/2 -translate-x-1/2 -top-4
-             text-[10px] text-gray-400 font-bold uppercase tracking-[0.18em]">
-      TOTAL
-    </div>
-  </div>
-</div>
-              <div class="bg-[#e6f0fa] p-4 rounded-lg border border-blue-100 mt-4">
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div class="relative text-center">
+                    <div class="text-lg font-bold text-[#0f172a] leading-none">
+                      100%
+                    </div>
+                    <div
+                      class="absolute left-1/2 -translate-x-1/2 -top-4
+                             text-[10px] text-gray-400 font-bold uppercase tracking-[0.18em]">
+                      TOTAL
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-[#e6f0fa] p-4 rounded-2xl border border-blue-100 mt-6">
                 <div class="text-[10px] font-bold text-[#0066cc] mb-1 uppercase flex items-center gap-1">
                   <i class="fa-solid fa-robot"></i>
-                  <span data-i18n="chart.insight">AI Insight</span>
+                  <span data-i18n="chart.insight">AI 智能分析</span>
                 </div>
                 <p class="text-xs text-gray-700 leading-relaxed" data-i18n="chart.desc">
                   您的台灣資產佔總淨值的 40%。建議針對台幣匯率風險進行避險。
@@ -443,7 +445,7 @@
     </div>
   </main>
 
-  <!-- ============= FOOTER（新樣式） ============= -->
+  <!-- ============= FOOTER ============= -->
   <footer class="bg-[#f4f6fb] border-t border-gray-200 mt-16">
     <div class="max-w-[1440px] mx-auto px-6 pt-10 pb-4">
 
@@ -830,8 +832,12 @@
           }]
         },
         options: {
-          cutout: '70%',
-          plugins: { legend: { display: false } }
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '72%',
+          plugins: {
+            legend: { display: false }
+          }
         }
       });
 
