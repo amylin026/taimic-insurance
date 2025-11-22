@@ -234,8 +234,9 @@
       </nav>
 
       <!-- Right tools -->
-      <div class="flex items-center gap-3 h-full">
-        <!-- Currency -->
+      <div class="flex items-center gap-6 h-full">
+
+        <!-- Currency (改成膠囊形狀) -->
         <div class="hidden sm:flex items-center text-xs font-medium text-gray-600 border border-gray-200 rounded-full overflow-hidden bg-gray-50 shadow-sm">
           <button id="btn-usd" onclick="setCurrency('USD')" class="px-4 py-2 transition-colors">
             USD
@@ -247,8 +248,10 @@
 
         <!-- Language -->
         <div class="dropdown-container cursor-pointer h-full">
-          <button id="lang-toggle" type="button" class="flex items-center gap-1 text-gray-600 hover:text-[#0066cc] transition-colors">
-            <i class="fa-solid fa-globe text-base"></i>
+          <button id="lang-toggle" type="button" class="flex items-center gap-2 text-gray-600 hover:text-[#0066cc] transition-colors">
+            <div class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-50 border border-gray-200">
+              <i class="fa-solid fa-globe text-sm"></i>
+            </div>
             <i class="fa-solid fa-caret-down text-xs"></i>
           </button>
           <div id="lang-menu" class="dropdown-menu hidden">
@@ -278,8 +281,8 @@
             </div>
           </div>
         </div>
-      </div>
 
+      </div>
     </div>
   </header>
 
@@ -409,7 +412,7 @@
               </h3>
               <div class="h-64 relative">
                 <canvas id="geoChart"></canvas>
-                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none pb-4">
                   <div class="text-center">
                     <div class="text-[10px] text-gray-400 font-bold uppercase">Total</div>
                     <div class="text-sm font-bold text-[#111827]">100%</div>
@@ -433,7 +436,7 @@
     </div>
   </main>
 
-  <!-- ============= FOOTER ============= -->
+  <!-- ============= FOOTER（新樣式） ============= -->
   <footer class="bg-[#f4f6fb] border-t border-gray-200 mt-16">
     <div class="max-w-[1440px] mx-auto px-6 pt-10 pb-4">
 
@@ -443,22 +446,9 @@
         <div class="flex-1">
           <div class="flex items-center gap-2 mb-4">
             <svg class="logo-clock" viewBox="0 0 100 100">
-              <defs>
-                <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#bfdbfe" />
-                  <stop offset="100%" stop-color="#60a5fa" />
-                </linearGradient>
-              </defs>
               <circle cx="50" cy="50" r="46" class="clock-outer" />
               <circle cx="50" cy="50" r="38" class="clock-inner" />
               <circle cx="50" cy="50" r="30" class="clock-core" />
-              <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
-              <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
-              <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
-              <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
-              <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
-              <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
-              <circle cx="50" cy="50" r="3.2" class="center-dot" />
             </svg>
             <div>
               <div class="text-[20px] font-bold text-[#0066cc] leading-none">TAIMIC</div>
@@ -468,6 +458,10 @@
           <p class="text-sm text-gray-600 mb-4">
             FATCA / CRS Compliant ・ Cross-Border Wealth Platform
           </p>
+          <div class="inline-flex items-center text-xs font-medium text-green-700 bg-green-50 border border-green-200 rounded-full px-3 py-1">
+            <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+            All systems operational
+          </div>
         </div>
 
         <!-- Columns -->
@@ -508,7 +502,9 @@
         <div>© 2025 Taimic Inc. All Rights Reserved.</div>
         <div class="flex items-center gap-4 text-gray-400">
           <i class="fa-brands fa-x-twitter"></i>
+          <i class="fa-brands fa-discord"></i>
           <i class="fa-brands fa-instagram"></i>
+          <i class="fa-brands fa-github"></i>
         </div>
       </div>
     </div>
@@ -558,112 +554,21 @@
           <i class="fa-solid fa-xmark text-xl"></i>
         </button>
       </div>
-
       <div class="px-8 py-8 space-y-6">
-        <!-- Email -->
         <div class="space-y-2">
           <label class="block text-sm font-medium text-gray-700">Email</label>
-          <input
-            id="auth-email"
-            type="email"
-            placeholder="you@gmail.com"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
-          />
+          <input id="auth-email" type="email" placeholder="you@gmail.com"
+                 class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb] placeholder-gray-400" />
         </div>
-
-        <!-- 密碼 + 忘記密碼 -->
         <div class="space-y-2">
           <label class="block text-sm font-medium text-gray-700">密碼</label>
-          <input
-            id="auth-password"
-            type="password"
-            placeholder="請輸入至少 6 碼密碼"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
-          />
-
-          <div class="mt-2 flex justify-end">
-            <button
-              type="button"
-              id="forgot-password-link"
-              class="text-sm text-[#0066cc] hover:underline"
-            >
-              忘記密碼？
-            </button>
-          </div>
+          <input id="auth-password" type="password" placeholder="請輸入至少 6 碼密碼"
+                 class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]" />
         </div>
-
         <p id="auth-message" class="text-sm h-5 text-center"></p>
-
         <button id="auth-submit" class="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold text-sm py-3 rounded-full flex items-center justify-center gap-2 transition">
           <i class="fa-solid fa-arrow-right-to-bracket"></i>
           <span id="auth-submit-text">註冊</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 重設密碼 Modal -->
-  <div
-    id="reset-modal"
-    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40"
-  >
-    <div class="w-full max-w-md rounded-2xl bg-white shadow-xl p-6">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-lg font-semibold text-gray-800">重設 TAIMIC 密碼</h2>
-        <button
-          type="button"
-          id="close-reset-modal"
-          class="text-gray-400 hover:text-gray-600"
-        >
-          ✕
-        </button>
-      </div>
-
-      <div class="space-y-4">
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-          <input
-            id="reset-email"
-            type="email"
-            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0066cc]"
-            placeholder="you@gmail.com"
-          />
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">驗證碼（resetToken）</label>
-          <input
-            id="reset-token"
-            type="text"
-            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0066cc]"
-            placeholder="請貼上 resetToken"
-          />
-          <p class="mt-1 text-xs text-gray-500">
-            demo 版先把 token 印在 Console，你再貼過來。
-          </p>
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">新密碼</label>
-          <input
-            id="reset-new-password"
-            type="password"
-            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0066cc]"
-            placeholder="請輸入至少 6 碼新密碼"
-          />
-        </div>
-
-        <p
-          id="reset-status"
-          class="text-sm text-gray-600 min-h-[1.5rem]"
-        ></p>
-
-        <button
-          type="button"
-          id="send-reset-btn"
-          class="mt-2 w-full rounded-full bg-[#0066cc] py-2 text-sm font-semibold text-white hover:bg-[#0052a3]"
-        >
-          送出重設
         </button>
       </div>
     </div>
@@ -736,7 +641,8 @@
           : 'bg-green-50 text-green-700';
         const hl = a.new ? 'bg-orange-50 animate-fade-in' : '';
         const riskTag = a.risk
-          ? `<span class="ml-2 inline-flex items-center px-2 py-0.5 bg-orange-100 text-orange-700 text-[10px] font-bold rounded-full border border-orange-200">FATCA</span>`;
+          ? `<span class="ml-2 inline-flex items-center px-2 py-0.5 bg-orange-100 text-orange-700 text-[10px] font-bold rounded-full border border-orange-200">FATCA</span>`
+          : '';
         tbody.innerHTML += `
           <tr class="group transition-colors hover:bg-gray-50 border-b border-gray-100 last:border-0 ${hl}">
             <td class="py-4 pl-2">
@@ -882,7 +788,7 @@
         if (data.ok) {
           msg.textContent = authMode === 'register'
             ? '註冊成功，請重新登入。'
-            : '登入成功';
+            : `登入成功，歡迎 ${data.user?.email || email}`;
           msg.classList.add('text-green-600');
 
           if (authMode === 'login') {
@@ -897,55 +803,6 @@
         console.error(e);
         msg.textContent = '伺服器錯誤，請稍後再試。';
         msg.classList.add('text-red-500');
-      }
-    }
-
-    async function handleResetSubmit() {
-      const email = document.getElementById('reset-email').value.trim();
-      const token = document.getElementById('reset-token').value.trim();
-      const newPassword = document.getElementById('reset-new-password').value;
-      const statusEl = document.getElementById('reset-status');
-
-      statusEl.className = 'text-sm text-gray-600';
-      statusEl.textContent = '';
-
-      if (!email || !token || !newPassword) {
-        statusEl.textContent = '請把 Email、驗證碼與新密碼都填好。';
-        statusEl.className = 'text-sm text-red-500';
-        return;
-      }
-
-      if (newPassword.length < 6) {
-        statusEl.textContent = '新密碼至少需要 6 碼。';
-        statusEl.className = 'text-sm text-red-500';
-        return;
-      }
-
-      try {
-        statusEl.textContent = '處理中...';
-
-        const data = await callAuthAPI('/api/reset-password', {
-          email,
-          resetToken: token,
-          newPassword,
-        });
-
-        if (data.ok) {
-          statusEl.textContent = '密碼已重設成功，請用新密碼登入。';
-          statusEl.className = 'text-sm text-green-600';
-
-          setTimeout(() => {
-            const resetModal = document.getElementById('reset-modal');
-            resetModal.classList.add('hidden');
-          }, 1500);
-        } else {
-          statusEl.textContent = data.message || '重設失敗，請確認資料是否正確。';
-          statusEl.className = 'text-sm text-red-500';
-        }
-      } catch (err) {
-        console.error(err);
-        statusEl.textContent = '伺服器錯誤，請稍後再試。';
-        statusEl.className = 'text-sm text-red-500';
       }
     }
 
@@ -1006,28 +863,6 @@
 
       document.getElementById('auth-submit').addEventListener('click', handleAuthSubmit);
     };
-
-    // 忘記密碼相關事件
-    const forgotLink = document.getElementById('forgot-password-link');
-    const resetModal = document.getElementById('reset-modal');
-    const closeResetBtn = document.getElementById('close-reset-modal');
-    const sendResetBtn = document.getElementById('send-reset-btn');
-
-    if (forgotLink && resetModal) {
-      forgotLink.addEventListener('click', () => {
-        resetModal.classList.remove('hidden');
-      });
-    }
-
-    if (closeResetBtn && resetModal) {
-      closeResetBtn.addEventListener('click', () => {
-        resetModal.classList.add('hidden');
-      });
-    }
-
-    if (sendResetBtn) {
-      sendResetBtn.addEventListener('click', handleResetSubmit);
-    }
   </script>
 </body>
 </html>
