@@ -445,10 +445,23 @@
         <div class="flex-1">
           <div class="flex items-center gap-2 mb-4">
             <svg class="logo-clock" viewBox="0 0 100 100">
-              <circle cx="50" cy="50" r="46" class="clock-outer" />
-              <circle cx="50" cy="50" r="38" class="clock-inner" />
-              <circle cx="50" cy="50" r="30" class="clock-core" />
-            </svg>
+  <defs>
+    <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#bfdbfe" />
+      <stop offset="100%" stop-color="#60a5fa" />
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="46" class="clock-outer" />
+  <circle cx="50" cy="50" r="38" class="clock-inner" />
+  <circle cx="50" cy="50" r="30" class="clock-core" />
+  <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
+  <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
+  <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
+  <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
+  <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
+  <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
+  <circle cx="50" cy="50" r="3.2" class="center-dot" />
+</svg>
             <div>
               <div class="text-[20px] font-bold text-[#0066cc] leading-none">TAIMIC</div>
               <div class="text-[10px] tracking-[0.18em] text-gray-500 uppercase mt-1">Global Wealth</div>
