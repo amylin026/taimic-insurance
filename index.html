@@ -247,17 +247,17 @@
         </div>
 
         <!-- Language -->
-        <div class="dropdown-container cursor-pointer h-full">
-          <button id="lang-toggle" type="button" class="flex items-center gap-2 text-gray-600 hover:text-[#0066cc] transition-colors">
-  <div class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-50 border border-gray-200">
-    <i class="fa-solid fa-globe text-sm"></i>
+<div class="dropdown-container cursor-pointer h-full">
+  <button id="lang-toggle" type="button" class="flex items-center gap-2 text-gray-600 hover:text-[#0066cc] transition-colors">
+    <!-- 只剩地球 icon 本人 -->
+    <i class="fa-solid fa-globe text-base"></i>
+    <i class="fa-solid fa-caret-down text-xs"></i>
+  </button>
+  <div id="lang-menu" class="dropdown-menu hidden">
+    <div id="opt-zh" class="dropdown-item active" onclick="changeLang('zh')">繁體中文</div>
+    <div id="opt-en" class="dropdown-item" onclick="changeLang('en')">English</div>
   </div>
-  <i class="fa-solid fa-caret-down text-xs"></i>
-</button>
-          <div id="lang-menu" class="dropdown-menu hidden">
-            <div id="opt-zh" class="dropdown-item active" onclick="changeLang('zh')">繁體中文</div>
-            <div id="opt-en" class="dropdown-item" onclick="changeLang('en')">English</div>
-          </div>
+</div>
         </div>
 
         <!-- User -->
