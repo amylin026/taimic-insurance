@@ -37,23 +37,23 @@
 
     .clock-outer {
       fill: none;
-      stroke: #dbeafe;              /* 很淺的藍灰外框 */
+      stroke: #dbeafe;
       stroke-width: 2.5;
     }
 
     .clock-inner {
-      fill: #eff6ff;                /* 很淺的藍底 */
+      fill: #eff6ff;
       stroke: #e5edff;
       stroke-width: 1.5;
     }
 
     .clock-core {
-      fill: url(#clockGradient);    /* 中間淺藍漸層 */
+      fill: url(#clockGradient);
       opacity: 0.98;
     }
 
     .clock-tick-line {
-      stroke: #cbd5f5;              /* 淺刻度 */
+      stroke: #cbd5f5;
       stroke-width: 1.4;
       stroke-linecap: round;
     }
@@ -385,7 +385,7 @@
         <i class="fa-solid fa-xmark cursor-pointer hover:opacity-75 text-lg" onclick="closeModal()"></i>
       </div>
 
-      <!-- Step 1: 選檔案 -->
+      <!-- STEP 1：選檔案 -->
       <div id="modal-step-1" class="p-8 text-center">
         <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-[#0066cc]">
           <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
@@ -394,23 +394,25 @@
           上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。
         </p>
 
-        <!-- 隱藏的檔案 input -->
+        <!-- 真正的檔案 input（藏起來） -->
         <input
-          type="file"
           id="file-input"
+          type="file"
           class="hidden"
-          accept="image/*,application/pdf"
+          accept="image/*,.pdf"
         />
 
+        <!-- 使用者點這個，才會跳出選檔視窗 -->
         <button
-          onclick="openFilePicker()"
+          type="button"
+          onclick="triggerUpload()"
           class="w-full border-2 border-dashed border-gray-300 py-4 rounded hover:border-[#0066cc] hover:bg-blue-50 transition-all text-gray-500 hover:text-[#0066cc] font-bold text-sm"
         >
           <span data-i18n="btn.upload">點擊上傳檔案</span>
         </button>
       </div>
 
-      <!-- Step 2: AI 分析動畫 -->
+      <!-- STEP 2：AI 分析中 -->
       <div id="modal-step-2" class="hidden relative h-64 bg-[#1a1a1a]">
         <div class="absolute inset-0 flex flex-col items-center justify-center z-10">
           <p class="text-white font-mono text-sm mb-2" data-i18n="modal.scanning">AI Processing...</p>
@@ -426,12 +428,12 @@
 
   <!-- ================= SCRIPT ================= -->
   <script>
+    // ====== 後端 API base（只存在 JS，不會再跑到畫面上） ======
+    const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
+
     const RATE = 32.5;
     let curr = 'TWD'; 
     let lang = 'zh';
-
-    // 之後真的要串 Cloudflare Worker 可以用這個
-    const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
 
     const assets = [
       { id: 1, name: {en:'Vanguard Total Stock (VTI)', zh:'Vanguard 全球股票 ETF (VTI)'}, type: {en:'ETF', zh:'指數型基金'}, region:'US', usd: 145200 },
@@ -514,6 +516,7 @@
     function changeLang(l) {
       lang = l;
       render();
+      // 點完語言後把語言選單收起來
       langMenu.classList.add('hidden');
     }
 
@@ -521,29 +524,61 @@
       modalOverlay.classList.remove('hidden');
       document.getElementById('modal-step-1').classList.remove('hidden');
       document.getElementById('modal-step-2').classList.add('hidden');
-      document.getElementById('scan-bar').style.width = '0';
-      document.getElementById('scan-log').innerHTML = '';
     }
     function closeModal() { modalOverlay.classList.add('hidden'); }
 
-    function openFilePicker() {
-      if (fileInput) fileInput.click();
+    // 使用者按「點擊上傳檔案」→ 觸發真正的 file input
+    function triggerUpload() {
+      const fi = document.getElementById('file-input');
+      if (fi) fi.click();
     }
-    
+
+    // 真正的「AI 分析」流程，會在選檔案後被呼叫
     async function startScan(file) {
-      console.log('selected file:', file ? file.name : '(no file)');
-      
+      // 切換到 Step 2
       document.getElementById('modal-step-1').classList.add('hidden');
       document.getElementById('modal-step-2').classList.remove('hidden');
-      setTimeout(() => document.getElementById('scan-bar').style.width = '100%', 100);
 
+      const bar = document.getElementById('scan-bar');
       const log = document.getElementById('scan-log');
-      setTimeout(()=> log.innerHTML = '&gt; Detecting Language: zh-TW', 800);
+      bar.style.width = '0%';
+      log.innerHTML = '&gt; Uploading file...';
+
+      // 讓進度條動一下
+      setTimeout(() => { bar.style.width = '100%'; }, 100);
+
+      // 假裝 OCR 出來的內容（之後你可以改成真的文字）
+      const fakeExtractedText = '富邦人壽 終身壽險 保單 現金價值 52,000 USD';
+
+      setTimeout(()=> log.innerHTML += '<br>&gt; Detecting Language: zh-TW', 800);
       setTimeout(()=> log.innerHTML += '<br>&gt; Parsing: "富邦人壽 (Fubon Life)"', 1600);
       setTimeout(()=> log.innerHTML += '<br>&gt; Match IRS Code: 8938', 2400);
 
-      setTimeout(async () => {
-        const newAsset = {
+      // 丟到 Cloudflare Worker（目前只是 demo，送文字與檔名）
+      try {
+        const payload = {
+          filename: file ? file.name : 'demo-policy.pdf',
+          size: file ? file.size : 0,
+          extractedText: fakeExtractedText,
+          assetsSnapshot: assets
+        };
+
+        const res = await fetch(`${API_BASE}/api/save-assets`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        console.log('save-assets response from worker:', data);
+      } catch (err) {
+        console.error('save-assets error:', err);
+        log.innerHTML += '<br>&gt; Error: 無法連線到 TAIMIC 伺服器';
+      }
+
+      // 3 秒後把新資產加進前端列表 + 顯示黃色 FATCA 卡片
+      setTimeout(() => {
+        assets.unshift({
           id: 99,
           name: {en:'Fubon Life (Whole Life)', zh:'富邦人壽 (終身壽險)'},
           type: {en:'Insurance', zh:'儲蓄險'},
@@ -551,42 +586,25 @@
           usd: 52000,
           new: true,
           risk: true
-        };
-
-        assets.unshift(newAsset);
+        });
 
         const tEl = document.getElementById('val-tw');
-        tEl.dataset.usd = parseFloat(tEl.dataset.usd) + newAsset.usd;
+        tEl.dataset.usd = parseFloat(tEl.dataset.usd) + 52000;
         const gEl = document.getElementById('val-global');
-        gEl.dataset.usd = parseFloat(gEl.dataset.usd) + newAsset.usd;
-
-        chart.data.datasets[0].data[1] += newAsset.usd;
+        gEl.dataset.usd = parseFloat(gEl.dataset.usd) + 52000;
+        chart.data.datasets[0].data[1] += 52000;
         chart.update();
-
         document.getElementById('ai-alert').classList.remove('hidden');
         render();
         closeModal();
         window.scrollTo({top:0, behavior:'smooth'});
-
-        // 把最新資產丟給 Cloudflare Worker（可選）
-        try {
-          const res = await fetch(`${API_BASE}/api/save-assets`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ assets })
-          });
-          const data = await res.json();
-          console.log('save-assets response from worker:', data);
-        } catch (err) {
-          console.error('save-assets error:', err);
-        }
       }, 3000);
     }
 
     // ====== 全局變數（DOM 快取） ======
     let chart;
     let btnUsd, btnTwd, optZh, optEn;
-    let langMenu, userMenu, modalOverlay, fileInput;
+    let langMenu, userMenu, modalOverlay;
 
     window.onload = function() {
       const ctx = document.getElementById('geoChart').getContext('2d');
@@ -614,23 +632,12 @@
       langMenu = document.getElementById('lang-menu');
       userMenu = document.getElementById('user-menu');
       modalOverlay = document.getElementById('modal-overlay');
-      fileInput = document.getElementById('file-input');
-
-      // 檔案選擇後才開始 AI 分析
-      if (fileInput) {
-        fileInput.addEventListener('change', () => {
-          const file = fileInput.files[0];
-          if (!file) return;
-          startScan(file);
-          // 讓同一個檔案可以再次觸發 change
-          fileInput.value = '';
-        });
-      }
 
       render();
 
       const langToggle = document.getElementById('lang-toggle');
       const userToggle = document.getElementById('user-toggle');
+      const fileInput = document.getElementById('file-input');
 
       // 一次關掉所有 dropdown
       function closeAllMenus() {
@@ -662,6 +669,15 @@
 
       // 點頁面其他地方就關掉所有
       document.addEventListener('click', closeAllMenus);
+
+      // 監聽「真的選檔案」這件事，選了才啟動 AI 分析
+      if (fileInput) {
+        fileInput.addEventListener('change', (e) => {
+          const file = e.target.files[0];
+          if (!file) return;      // 使用者取消就什麼都不做
+          startScan(file);
+        });
+      }
     };
   </script>
 </body>
