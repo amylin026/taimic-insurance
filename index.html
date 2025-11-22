@@ -385,6 +385,7 @@
         <i class="fa-solid fa-xmark cursor-pointer hover:opacity-75 text-lg" onclick="closeModal()"></i>
       </div>
 
+      <!-- Step 1: 選檔案 -->
       <div id="modal-step-1" class="p-8 text-center">
         <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-[#0066cc]">
           <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
@@ -392,11 +393,24 @@
         <p class="text-sm text-gray-600 mb-6 leading-relaxed" data-i18n="modal.desc">
           上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。
         </p>
-        <button onclick="startScan()" class="w-full border-2 border-dashed border-gray-300 py-4 rounded hover:border-[#0066cc] hover:bg-blue-50 transition-all text-gray-500 hover:text-[#0066cc] font-bold text-sm">
+
+        <!-- 隱藏的檔案 input -->
+        <input
+          type="file"
+          id="file-input"
+          class="hidden"
+          accept="image/*,application/pdf"
+        />
+
+        <button
+          onclick="openFilePicker()"
+          class="w-full border-2 border-dashed border-gray-300 py-4 rounded hover:border-[#0066cc] hover:bg-blue-50 transition-all text-gray-500 hover:text-[#0066cc] font-bold text-sm"
+        >
           <span data-i18n="btn.upload">點擊上傳檔案</span>
         </button>
       </div>
 
+      <!-- Step 2: AI 分析動畫 -->
       <div id="modal-step-2" class="hidden relative h-64 bg-[#1a1a1a]">
         <div class="absolute inset-0 flex flex-col items-center justify-center z-10">
           <p class="text-white font-mono text-sm mb-2" data-i18n="modal.scanning">AI Processing...</p>
@@ -411,11 +425,13 @@
   </div>
 
   <!-- ================= SCRIPT ================= -->
-  const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
   <script>
     const RATE = 32.5;
     let curr = 'TWD'; 
     let lang = 'zh';
+
+    // 之後真的要串 Cloudflare Worker 可以用這個
+    const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
 
     const assets = [
       { id: 1, name: {en:'Vanguard Total Stock (VTI)', zh:'Vanguard 全球股票 ETF (VTI)'}, type: {en:'ETF', zh:'指數型基金'}, region:'US', usd: 145200 },
@@ -498,7 +514,6 @@
     function changeLang(l) {
       lang = l;
       render();
-      // 點完語言後把語言選單收起來
       langMenu.classList.add('hidden');
     }
 
@@ -506,67 +521,72 @@
       modalOverlay.classList.remove('hidden');
       document.getElementById('modal-step-1').classList.remove('hidden');
       document.getElementById('modal-step-2').classList.add('hidden');
+      document.getElementById('scan-bar').style.width = '0';
+      document.getElementById('scan-log').innerHTML = '';
     }
     function closeModal() { modalOverlay.classList.add('hidden'); }
+
+    function openFilePicker() {
+      if (fileInput) fileInput.click();
+    }
     
-  function startScan() {
-  document.getElementById('modal-step-1').classList.add('hidden');
-  document.getElementById('modal-step-2').classList.remove('hidden');
-  setTimeout(() => document.getElementById('scan-bar').style.width = '100%', 100);
-  const log = document.getElementById('scan-log');
-  setTimeout(()=> log.innerHTML = '> Detecting Language: zh-TW', 800);
-  setTimeout(()=> log.innerHTML += '<br>> Parsing: "富邦人壽 (Fubon Life)"', 1600);
-  setTimeout(()=> log.innerHTML += '<br>> Match IRS Code: 8938', 2400);
+    async function startScan(file) {
+      console.log('selected file:', file ? file.name : '(no file)');
+      
+      document.getElementById('modal-step-1').classList.add('hidden');
+      document.getElementById('modal-step-2').classList.remove('hidden');
+      setTimeout(() => document.getElementById('scan-bar').style.width = '100%', 100);
 
-  setTimeout(() => {
-    assets.unshift({
-      id: 99,
-      name: {en:'Fubon Life (Whole Life)', zh:'富邦人壽 (終身壽險)'},
-      type: {en:'Insurance', zh:'儲蓄險'},
-      region:'TW',
-      usd: 52000,
-      new: true,
-      risk: true
-    });
+      const log = document.getElementById('scan-log');
+      setTimeout(()=> log.innerHTML = '&gt; Detecting Language: zh-TW', 800);
+      setTimeout(()=> log.innerHTML += '<br>&gt; Parsing: "富邦人壽 (Fubon Life)"', 1600);
+      setTimeout(()=> log.innerHTML += '<br>&gt; Match IRS Code: 8938', 2400);
 
-    const tEl = document.getElementById('val-tw');
-    tEl.dataset.usd = parseFloat(tEl.dataset.usd) + 52000;
-    const gEl = document.getElementById('val-global');
-    gEl.dataset.usd = parseFloat(gEl.dataset.usd) + 52000;
-    chart.data.datasets[0].data[1] += 52000;
-    chart.update();
-    document.getElementById('ai-alert').classList.remove('hidden');
-    render();
-    closeModal();
-    window.scrollTo({top:0, behavior:'smooth'});
+      setTimeout(async () => {
+        const newAsset = {
+          id: 99,
+          name: {en:'Fubon Life (Whole Life)', zh:'富邦人壽 (終身壽險)'},
+          type: {en:'Insurance', zh:'儲蓄險'},
+          region:'TW',
+          usd: 52000,
+          new: true,
+          risk: true
+        };
 
-    // ⭐ 新增這一行：掃完之後把最新 assets 丟給 Cloudflare Worker
-    syncAssetsToServer();
-  }, 3000);
-}
-    const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev"; // 換成你的 worker 網址
+        assets.unshift(newAsset);
 
-async function syncAssetsToServer() {
-  try {
-    const res = await fetch(`${API_BASE}/api/save-assets`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        assets,
-        baseCurrency: curr,
-      }),
-    });
+        const tEl = document.getElementById('val-tw');
+        tEl.dataset.usd = parseFloat(tEl.dataset.usd) + newAsset.usd;
+        const gEl = document.getElementById('val-global');
+        gEl.dataset.usd = parseFloat(gEl.dataset.usd) + newAsset.usd;
 
-    const data = await res.json();
-    console.log('save-assets response from worker:', data);
-  } catch (err) {
-    console.error('save-assets error:', err);
-  }
-}
+        chart.data.datasets[0].data[1] += newAsset.usd;
+        chart.update();
+
+        document.getElementById('ai-alert').classList.remove('hidden');
+        render();
+        closeModal();
+        window.scrollTo({top:0, behavior:'smooth'});
+
+        // 把最新資產丟給 Cloudflare Worker（可選）
+        try {
+          const res = await fetch(`${API_BASE}/api/save-assets`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ assets })
+          });
+          const data = await res.json();
+          console.log('save-assets response from worker:', data);
+        } catch (err) {
+          console.error('save-assets error:', err);
+        }
+      }, 3000);
+    }
+
     // ====== 全局變數（DOM 快取） ======
     let chart;
     let btnUsd, btnTwd, optZh, optEn;
-    let langMenu, userMenu, modalOverlay;
+    let langMenu, userMenu, modalOverlay, fileInput;
 
     window.onload = function() {
       const ctx = document.getElementById('geoChart').getContext('2d');
@@ -594,6 +614,18 @@ async function syncAssetsToServer() {
       langMenu = document.getElementById('lang-menu');
       userMenu = document.getElementById('user-menu');
       modalOverlay = document.getElementById('modal-overlay');
+      fileInput = document.getElementById('file-input');
+
+      // 檔案選擇後才開始 AI 分析
+      if (fileInput) {
+        fileInput.addEventListener('change', () => {
+          const file = fileInput.files[0];
+          if (!file) return;
+          startScan(file);
+          // 讓同一個檔案可以再次觸發 change
+          fileInput.value = '';
+        });
+      }
 
       render();
 
