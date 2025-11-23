@@ -86,9 +86,16 @@
 
     /* --- Nav --- */
     .nav-link {
-      font-size: 15px; font-weight: 500; color: #555;
-      padding: 0 20px; height: 80px; display: flex; align-items: center;
-      border-bottom: 4px solid transparent; transition: all .2s; text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      color: #555;
+      padding: 0 16px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      border-bottom: 3px solid transparent;
+      transition: all .2s;
+      text-decoration: none;
     }
     .nav-link:hover { color: var(--brand-blue); }
     .nav-link.active { color: #000; font-weight: 700; border-bottom-color: var(--brand-blue); }
@@ -196,7 +203,7 @@
 <body class="flex flex-col min-h-screen bg-[#f3f5f9]">
 
   <!-- ============= HEADER ============= -->
-  <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[80px]">
+  <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[64px]">
     <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center">
 
       <!-- Logo -->
@@ -231,6 +238,7 @@
         <a href="#" class="nav-link" data-i18n="nav.tax">稅務合規</a>
         <a href="#" class="nav-link" data-i18n="nav.estate">家族傳承</a>
         <a href="#" class="nav-link" data-i18n="nav.reports">分析報告</a>
+        <a href="#about" class="nav-link" data-i18n="nav.about">關於 TAIMIC</a>
       </nav>
 
       <!-- Right tools -->
@@ -445,6 +453,52 @@
     </div>
   </main>
 
+  <!-- ============= ABOUT TAIMIC ============= -->
+  <section id="about" class="mt-16">
+    <div class="max-w-[1440px] mx-auto px-6">
+      <div class="panel px-8 py-10 md:px-10 md:py-12 space-y-6">
+        <div class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">
+          About Taimic
+        </div>
+        <h2 class="text-2xl md:text-[26px] font-[700] text-[#111827] tracking-tight mb-2">
+          關於 TAIMIC
+        </h2>
+        <p class="text-sm md:text-[15px] text-gray-700 leading-relaxed">
+          TAIMIC 是一個專為台灣投資人打造的 <span class="font-semibold">跨國資產管理與投資分析平台</span>。我們希望讓持有台股、美股與其他海外資產的投資人，可以在同一個地方看清楚自己的整體財務狀況，而不是被分散在不同券商、銀行與 Excel 裡的數字搞到眼花撩亂。
+        </p>
+        <p class="text-sm md:text-[15px] text-gray-700 leading-relaxed">
+          多數人只看得到「單一帳戶」的損益，卻很難回答一個最重要的問題：<span class="font-semibold">「我現在整體資產的風險與配置健康嗎？」</span>
+          TAIMIC 的核心，就是把 <span class="font-semibold">資產整合、風險結構、區域與產業分布</span> 用清楚的視覺化呈現出來，讓你可以用數據做決策，而不是只靠情緒與消息面。
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-6 pt-4">
+          <div>
+            <h3 class="text-sm font-semibold text-[#111827] mb-2">跨國資產總覽</h3>
+            <p class="text-sm text-gray-700 leading-relaxed">
+              將台股、美股與其他資產整合到同一個 Dashboard，以同一幣別計算總淨值、集中度與各市場比例。
+            </p>
+          </div>
+          <div>
+            <h3 class="text-sm font-semibold text-[#111827] mb-2">風險與結構分析</h3>
+            <p class="text-sm text-gray-700 leading-relaxed">
+              協助檢視單一標的曝險、產業分布與區域配置，讓你看出「是不是壓太重」、「是不是太偏向某個題材」。
+            </p>
+          </div>
+          <div>
+            <h3 class="text-sm font-semibold text-[#111827] mb-2">AI 投資洞察（開發中）</h3>
+            <p class="text-sm text-gray-700 leading-relaxed">
+              未來將結合 AI，針對你的實際持股提供個人化提醒與情境分析，讓 TAIMIC 成為你跨國資產的第二顆大腦。
+            </p>
+          </div>
+        </div>
+
+        <p class="text-sm md:text-[15px] text-gray-700 leading-relaxed pt-2">
+          我們相信，看懂自己的資產結構，是邁向財務自由的第一步。TAIMIC 不取代你的判斷，而是希望成為那個 <span class="font-semibold">讓你判斷更清楚</span> 的工具。
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- ============= FOOTER ============= -->
   <footer class="bg-[#f4f6fb] border-t border-gray-200 mt-16">
     <div class="max-w-[1440px] mx-auto px-6 pt-10 pb-4">
@@ -598,26 +652,64 @@
 
     const I18N = {
       en: {
-        'nav.overview':'Overview','nav.tax':'Tax & Compliance','nav.estate':'Estate Plan','nav.reports':'Reports',
-        'page.title':'Cross-Border Wealth Platform','page.desc':'Integrated view of Taiwan & US assets with FATCA compliance checks.',
-        'btn.add':'Add Asset','btn.upload':'Click to Upload File',
-        'stat.us':'US Net Worth','stat.tw':'Taiwan Net Worth','stat.global':'Global Total','stat.safe':'Estate Tax Risk: Safe',
-        'table.title':'Portfolio Holdings','col.name':'Asset Name','col.region':'Region','col.type':'Category','col.val':'Value',
-        'alert.title':'AI Tax Alert: FATCA Risk Detected','alert.desc':'We detected a new "High Cash Value" insurance policy in Taiwan. This exceeds the $50,000 reporting threshold for IRS Form 8938.',
-        'chart.title':'Regional Allocation','chart.insight':'AI Insight','chart.desc':'Your Taiwan assets comprise 40% of your net worth. Consider hedging TWD currency risk.',
-        'modal.title':'Add Taiwan Asset (AI OCR)','modal.desc':'Upload policy or statement. AI will extract data.','modal.scanning':'AI Processing...',
-        'user.login':'Login','user.register':'Register'
+        'nav.overview':'Overview',
+        'nav.tax':'Tax & Compliance',
+        'nav.estate':'Estate Plan',
+        'nav.reports':'Reports',
+        'nav.about':'About Taimic',
+        'page.title':'Cross-Border Wealth Platform',
+        'page.desc':'Integrated view of Taiwan & US assets with FATCA compliance checks.',
+        'btn.add':'Add Asset',
+        'btn.upload':'Click to Upload File',
+        'stat.us':'US Net Worth',
+        'stat.tw':'Taiwan Net Worth',
+        'stat.global':'Global Total',
+        'stat.safe':'Estate Tax Risk: Safe',
+        'table.title':'Portfolio Holdings',
+        'col.name':'Asset Name',
+        'col.region':'Region',
+        'col.type':'Category',
+        'col.val':'Value',
+        'alert.title':'AI Tax Alert: FATCA Risk Detected',
+        'alert.desc':'We detected a new "High Cash Value" insurance policy in Taiwan. This exceeds the $50,000 reporting threshold for IRS Form 8938.',
+        'chart.title':'Regional Allocation',
+        'chart.insight':'AI Insight',
+        'chart.desc':'Your Taiwan assets comprise 40% of your net worth. Consider hedging TWD currency risk.',
+        'modal.title':'Add Taiwan Asset (AI OCR)',
+        'modal.desc':'Upload policy or statement. AI will extract data.',
+        'modal.scanning':'AI Processing...',
+        'user.login':'Login',
+        'user.register':'Register'
       },
       zh: {
-        'nav.overview':'資產總覽','nav.tax':'稅務合規','nav.estate':'家族傳承','nav.reports':'分析報告',
-        'page.title':'跨國資產整合平台','page.desc':'整合台灣與美國資產，提供即時淨值分析與跨境稅務風險檢測。',
-        'btn.add':'新增資產','btn.upload':'點擊上傳檔案',
-        'stat.us':'美國總資產','stat.tw':'台灣總資產','stat.global':'全球總淨值','stat.safe':'遺產稅風險：安全',
-        'table.title':'資產持有清單','col.name':'資產名稱','col.region':'地區','col.type':'類別','col.val':'現值',
-        'alert.title':'AI 稅務警示：偵測到 FATCA 風險','alert.desc':'系統掃描到一張新增的台灣高現金價值保單。此金額已超過 IRS Form 8938 的 5 萬美元申報門檻。',
-        'chart.title':'區域資產配置','chart.insight':'AI 智能分析','chart.desc':'您的台灣資產佔總淨值的 40%。建議針對台幣匯率風險進行避險。',
-        'modal.title':'新增台灣資產 (AI OCR)','modal.desc':'上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。','modal.scanning':'AI 分析中...',
-        'user.login':'登入','user.register':'註冊'
+        'nav.overview':'資產總覽',
+        'nav.tax':'稅務合規',
+        'nav.estate':'家族傳承',
+        'nav.reports':'分析報告',
+        'nav.about':'關於 TAIMIC',
+        'page.title':'跨國資產整合平台',
+        'page.desc':'整合台灣與美國資產，提供即時淨值分析與跨境稅務風險檢測。',
+        'btn.add':'新增資產',
+        'btn.upload':'點擊上傳檔案',
+        'stat.us':'美國總資產',
+        'stat.tw':'台灣總資產',
+        'stat.global':'全球總淨值',
+        'stat.safe':'遺產稅風險：安全',
+        'table.title':'資產持有清單',
+        'col.name':'資產名稱',
+        'col.region':'地區',
+        'col.type':'類別',
+        'col.val':'現值',
+        'alert.title':'AI 稅務警示：偵測到 FATCA 風險',
+        'alert.desc':'系統掃描到一張新增的台灣高現金價值保單。此金額已超過 IRS Form 8938 的 5 萬美元申報門檻。',
+        'chart.title':'區域資產配置',
+        'chart.insight':'AI 智能分析',
+        'chart.desc':'您的台灣資產佔總淨值的 40%。建議針對台幣匯率風險進行避險。',
+        'modal.title':'新增台灣資產 (AI OCR)',
+        'modal.desc':'上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。',
+        'modal.scanning':'AI 分析中...',
+        'user.login':'登入',
+        'user.register':'註冊'
       }
     };
 
