@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <title>TAIMIC | Global Wealth Management</title>
@@ -86,25 +86,12 @@
 
     /* --- Nav --- */
     .nav-link {
-      font-size: 15px; 
-      font-weight: 500; 
-      color: #555;
-      padding: 0 20px; 
-      height: 72px; 
-      display: flex; 
-      align-items: center;
-      border-bottom: 3px solid transparent; 
-      transition: all .2s; 
-      text-decoration: none;
+      font-size: 15px; font-weight: 500; color: #555;
+      padding: 0 20px; height: 80px; display: flex; align-items: center;
+      border-bottom: 4px solid transparent; transition: all .2s; text-decoration: none;
     }
-    .nav-link:hover { 
-      color: var(--brand-blue); 
-    }
-    .nav-link.active { 
-      color: #000; 
-      font-weight: 700; 
-      border-bottom-color: var(--brand-blue); 
-    }
+    .nav-link:hover { color: var(--brand-blue); }
+    .nav-link.active { color: #000; font-weight: 700; border-bottom-color: var(--brand-blue); }
 
     /* --- Dropdown --- */
     .dropdown-container {
@@ -209,7 +196,7 @@
 <body class="flex flex-col min-h-screen bg-[#f3f5f9]">
 
   <!-- ============= HEADER ============= -->
-  <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[72px]">
+  <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[80px]">
     <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center">
 
       <!-- Logo -->
@@ -240,10 +227,10 @@
 
       <!-- Nav -->
       <nav class="hidden lg:flex h-full items-center space-x-4">
-        <a href="#" class="nav-link active" data-section="overview" data-i18n="nav.overview">Overview</a>
-        <a href="#" class="nav-link" data-section="pricing" data-i18n="nav.pricing">Pricing</a>
-        <a href="#" class="nav-link" data-section="reports" data-i18n="nav.reports">Reports</a>
-        <a href="#" class="nav-link" data-section="about" data-i18n="nav.about">About Taimic</a>
+        <a href="#" class="nav-link" data-section="overview" data-i18n="nav.overview">資產總覽</a>
+        <a href="#" class="nav-link" data-i18n="nav.pricing">價格</a>
+        <a href="#" class="nav-link" data-i18n="nav.reports">分析報告</a>
+        <a href="#" class="nav-link" data-section="about" data-i18n="nav.about">關於 Taimic</a>
       </nav>
 
       <!-- Right tools -->
@@ -281,11 +268,11 @@
           <div id="user-menu" class="dropdown-menu hidden">
             <div class="dropdown-item" onclick="openAuthModal('login')">
               <i class="fa-solid fa-right-to-bracket"></i>
-              <span data-i18n="user.login">Login</span>
+              <span data-i18n="user.login">登入</span>
             </div>
             <div class="dropdown-item" onclick="openAuthModal('register')">
               <i class="fa-solid fa-user-plus"></i>
-              <span data-i18n="user.register">Sign up</span>
+              <span data-i18n="user.register">註冊</span>
             </div>
             <div class="border-t border-gray-100 my-1"></div>
             <div class="dropdown-item">
@@ -299,384 +286,203 @@
     </div>
   </header>
 
-  <!-- ============= MAIN (ALL SECTIONS) ============= -->
-  <main class="flex-grow">
-
-    <!-- ===== Overview (Dashboard) ===== -->
-    <section id="section-overview">
-      <!-- HERO / SUMMARY -->
-      <section class="border-b border-gray-200 bg-[#e5ebf5]">
-        <div class="max-w-[1440px] mx-auto px-6 py-8 md:py-10">
-          <div class="panel px-8 py-8 md:px-10 md:py-9 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-            <div>
-              <div class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-2">
-                Global Asset Management / Dashboard
-              </div>
-              <h1 class="text-[28px] md:text-[32px] font-[700] text-[#111827] tracking-tight mb-3" data-i18n="page.title">
-                Cross-border wealth platform
-              </h1>
-              <p class="text-gray-600 text-sm md:text-[15px] max-w-2xl leading-relaxed" data-i18n="page.desc">
-                Integrated view of Taiwan & US assets with FATCA / CRS compliance checks and AI insights.
-              </p>
+  <!-- ============= OVERVIEW SECTION ============= -->
+  <section id="overview-section">
+    <!-- HERO / SUMMARY -->
+    <section class="border-b border-gray-200 bg-[#e5ebf5]">
+      <div class="max-w-[1440px] mx-auto px-6 py-8 md:py-10">
+        <div class="panel px-8 py-8 md:px-10 md:py-9 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+          <div>
+            <div class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-2">
+              Global Asset Management / Dashboard
             </div>
+            <h1 class="text-[28px] md:text-[32px] font-[700] text-[#111827] tracking-tight mb-3" data-i18n="page.title">
+              跨國資產整合平台
+            </h1>
+            <p class="text-gray-600 text-sm md:text-[15px] max-w-2xl leading-relaxed" data-i18n="page.desc">
+              整合台灣與美國資產，提供即時淨值分析與跨境稅務風險檢測。
+            </p>
+          </div>
 
-            <div class="flex flex-col items-start md:items-end gap-3">
-              <button onclick="openUploadModal()" class="btn-corp flex items-center gap-2 shadow-sm">
-                <i class="fa-solid fa-plus"></i>
-                <span data-i18n="btn.add">Add asset</span>
-              </button>
-              <div class="text-[11px] text-gray-500 flex items-center gap-2">
-                <i class="fa-solid fa-shield-halved text-[#0066cc]"></i>
-                <span>FATCA / CRS real-time risk scan</span>
-              </div>
+          <div class="flex flex-col items-start md:items-end gap-3">
+            <button onclick="openUploadModal()" class="btn-corp flex items-center gap-2 shadow-sm">
+              <i class="fa-solid fa-plus"></i>
+              <span data-i18n="btn.add">新增資產</span>
+            </button>
+            <div class="text-[11px] text-gray-500 flex items-center gap-2">
+              <i class="fa-solid fa-shield-halved text-[#0066cc]"></i>
+              <span>FATCA / CRS 即時風險掃描</span>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- DASHBOARD BODY -->
-      <section class="py-10">
-        <div class="max-w-[1440px] mx-auto px-6 w-full">
-          <div class="panel px-6 md:px-8 lg:px-10 py-8 md:py-10">
+    <!-- MAIN -->
+    <main class="flex-grow py-10">
+      <div class="max-w-[1440px] mx-auto px-6 w-full">
+        <div class="panel px-6 md:px-8 lg:px-10 py-8 md:py-10">
 
-            <!-- Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-              <div class="p-6 border border-gray-200 rounded-xl hover:border-[#0066cc] transition-colors bg-white">
-                <div class="flex justify-between items-start mb-4">
-                  <h3 class="text-xs font-bold text-gray-500 uppercase tracking-[0.18em]" data-i18n="stat.us">US Net Worth</h3>
-                  <span class="text-xl">🇺🇸</span>
-                </div>
-                <div class="text-3xl font-bold text-[#111827] font-mono tracking-tight val-display" data-usd="482500">...</div>
-                <div class="mt-2 text-xs font-medium text-green-600 flex items-center gap-1">
-                  <i class="fa-solid fa-arrow-trend-up"></i> +4.2% YTD
-                </div>
+          <!-- Stats -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div class="p-6 border border-gray-200 rounded-xl hover:border-[#0066cc] transition-colors bg-white">
+              <div class="flex justify-between items-start mb-4">
+                <h3 class="text-xs font-bold text-gray-500 uppercase tracking-[0.18em]" data-i18n="stat.us">美國總資產</h3>
+                <span class="text-xl">🇺🇸</span>
               </div>
-
-              <div class="p-6 border border-gray-200 rounded-xl hover:border-[#0066cc] transition-colors bg-white">
-                <div class="flex justify-between items-start mb-4">
-                  <h3 class="text-xs font-bold text-gray-500 uppercase tracking-[0.18em]" data-i18n="stat.tw">Taiwan Net Worth</h3>
-                  <span class="text-xl">🇹🇼</span>
-                </div>
-                <div id="val-tw" class="text-3xl font-bold text-[#111827] font-mono tracking-tight val-display" data-usd="315200">...</div>
-                <div class="mt-2 text-xs font-medium text-green-600 flex items-center gap-1">
-                  <i class="fa-solid fa-arrow-trend-up"></i> +1.8% YTD
-                </div>
-              </div>
-
-              <div class="p-6 bg-[#eff4fb] border border-blue-100 rounded-xl">
-                <div class="flex justify-between items-start mb-4">
-                  <h3 class="text-xs font-bold text-[#0066cc] uppercase tracking-[0.2em]" data-i18n="stat.global">Global Net Worth</h3>
-                  <i class="fa-solid fa-globe text-[#0066cc]"></i>
-                </div>
-                <div id="val-global" class="text-3xl font-bold text-[#0066cc] font-mono tracking-tight val-display" data-usd="797700">...</div>
-                <div class="mt-2 text-xs font-medium text-gray-600 flex items-center gap-1">
-                  <i class="fa-solid fa-shield-check text-[#0066cc]"></i>
-                  <span data-i18n="stat.safe">Estate tax risk: safe</span>
-                </div>
+              <div class="text-3xl font-bold text-[#111827] font-mono tracking-tight val-display" data-usd="482500">...</div>
+              <div class="mt-2 text-xs font-medium text-green-600 flex items-center gap-1">
+                <i class="fa-solid fa-arrow-trend-up"></i> +4.2% YTD
               </div>
             </div>
 
-            <!-- Table + Chart -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <div class="p-6 border border-gray-200 rounded-xl hover:border-[#0066cc] transition-colors bg-white">
+              <div class="flex justify-between items-start mb-4">
+                <h3 class="text-xs font-bold text-gray-500 uppercase tracking-[0.18em]" data-i18n="stat.tw">台灣總資產</h3>
+                <span class="text-xl">🇹🇼</span>
+              </div>
+              <div id="val-tw" class="text-3xl font-bold text-[#111827] font-mono tracking-tight val-display" data-usd="315200">...</div>
+              <div class="mt-2 text-xs font-medium text-green-600 flex items-center gap-1">
+                <i class="fa-solid fa-arrow-trend-up"></i> +1.8% YTD
+              </div>
+            </div>
 
-              <!-- Table -->
-              <div class="lg:col-span-2">
+            <div class="p-6 bg-[#eff4fb] border border-blue-100 rounded-xl">
+              <div class="flex justify-between items-start mb-4">
+                <h3 class="text-xs font-bold text-[#0066cc] uppercase tracking-[0.2em]" data-i18n="stat.global">全球總淨值</h3>
+                <i class="fa-solid fa-globe text-[#0066cc]"></i>
+              </div>
+              <div id="val-global" class="text-3xl font-bold text-[#0066cc] font-mono tracking-tight val-display" data-usd="797700">...</div>
+              <div class="mt-2 text-xs font-medium text-gray-600 flex items-center gap-1">
+                <i class="fa-solid fa-shield-check text-[#0066cc]"></i>
+                <span data-i18n="stat.safe">遺產稅風險：安全</span>
+              </div>
+            </div>
+          </div>
 
-                <!-- AI Alert -->
-                <div id="ai-alert" class="hidden mb-8 bg-orange-50 border-l-4 border-orange-500 rounded-lg p-5 flex gap-4 animate-fade-in">
-                  <div class="text-orange-500 pt-1">
-                    <i class="fa-solid fa-triangle-exclamation text-lg"></i>
-                  </div>
-                  <div>
-                    <h4 class="font-bold text-[#111827] text-sm mb-1" data-i18n="alert.title">
-                      AI tax alert: potential FATCA risk detected
-                    </h4>
-                    <p class="text-sm text-gray-700 leading-relaxed" data-i18n="alert.desc">
-                      A new high cash-value policy in Taiwan may exceed the Form 8938 reporting threshold.
-                    </p>
-                    <button class="mt-3 text-xs font-bold text-[#0066cc] uppercase tracking-wide hover:underline">
-                      View detailed report &rarr;
-                    </button>
-                  </div>
+          <!-- Table + Chart -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+
+            <!-- Table -->
+            <div class="lg:col-span-2">
+
+              <!-- AI Alert -->
+              <div id="ai-alert" class="hidden mb-8 bg-orange-50 border-l-4 border-orange-500 rounded-lg p-5 flex gap-4 animate-fade-in">
+                <div class="text-orange-500 pt-1">
+                  <i class="fa-solid fa-triangle-exclamation text-lg"></i>
                 </div>
-
-                <div class="flex justify-between items-end mb-4 pb-2 border-b border-gray-200">
-                  <h3 class="text-lg font-bold text-[#111827]" data-i18n="table.title">Holdings</h3>
-                  <button class="text-xs text-[#0066cc] font-bold uppercase hover:text-[#004c99] flex items-center gap-1">
-                    <i class="fa-solid fa-file-export"></i> Export
+                <div>
+                  <h4 class="font-bold text-[#111827] text-sm mb-1" data-i18n="alert.title">
+                    AI 稅務警示：偵測到潛在申報風險
+                  </h4>
+                  <p class="text-sm text-gray-700 leading-relaxed" data-i18n="alert.desc">
+                    系統掃描發現一筆新增的「高現金價值保單（台灣）」。根據美國 IRS 規範，此資產可能需填寫 Form 8938。
+                  </p>
+                  <button class="mt-3 text-xs font-bold text-[#0066cc] uppercase tracking-wide hover:underline">
+                    檢視詳細分析報告 &rarr;
                   </button>
-                </div>
-
-                <div class="overflow-x-auto">
-                  <table class="w-full text-left text-sm">
-                    <thead>
-                      <tr class="text-xs text-gray-500 uppercase tracking-[0.16em]">
-                        <th class="pl-2 pb-3 border-b-2 border-gray-100" data-i18n="col.name">Asset</th>
-                        <th class="pb-3 border-b-2 border-gray-100" data-i18n="col.region">Region</th>
-                        <th class="pb-3 border-b-2 border-gray-100" data-i18n="col.type">Type</th>
-                        <th class="pr-2 pb-3 border-b-2 border-gray-100 text-right" data-i18n="col.val">Value</th>
-                      </tr>
-                    </thead>
-                    <tbody id="asset-list"></tbody>
-                  </table>
                 </div>
               </div>
 
-              <!-- Chart -->
-              <div class="space-y-8">
-                <div class="border border-gray-200 rounded-3xl p-8 bg-white shadow-sm">
-                  <h3 class="text-xs font-bold text-gray-500 uppercase mb-6 tracking-[0.18em]" data-i18n="chart.title">
-                    Regional allocation
-                  </h3>
+              <div class="flex justify-between items-end mb-4 pb-2 border-b border-gray-200">
+                <h3 class="text-lg font-bold text-[#111827]" data-i18n="table.title">資產持有清單</h3>
+                <button class="text-xs text-[#0066cc] font-bold uppercase hover:text-[#004c99] flex items-center gap-1">
+                  <i class="fa-solid fa-file-export"></i> Export
+                </button>
+              </div>
 
-                  <div class="relative w-full max-w-[320px] mx-auto aspect-square">
-                    <canvas id="geoChart"></canvas>
-                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div class="relative text-center">
-                        <div class="text-lg font-bold text-[#0f172a] leading-none">
-                          100%
-                        </div>
-                        <div
-                          class="absolute left-1/2 -translate-x-1/2 -top-4
-                                 text-[10px] text-gray-400 font-bold uppercase tracking-[0.18em]">
-                          TOTAL
-                        </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm">
+                  <thead>
+                    <tr class="text-xs text-gray-500 uppercase tracking-[0.16em]">
+                      <th class="pl-2 pb-3 border-b-2 border-gray-100" data-i18n="col.name">資產名稱</th>
+                      <th class="pb-3 border-b-2 border-gray-100" data-i18n="col.region">地區</th>
+                      <th class="pb-3 border-b-2 border-gray-100" data-i18n="col.type">類別</th>
+                      <th class="pr-2 pb-3 border-b-2 border-gray-100 text-right" data-i18n="col.val">現值</th>
+                    </tr>
+                  </thead>
+                  <tbody id="asset-list"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Chart -->
+            <div class="space-y-8">
+              <div class="border border-gray-200 rounded-3xl p-8 bg-white shadow-sm">
+                <h3 class="text-xs font-bold text-gray-500 uppercase mb-6 tracking-[0.18em]" data-i18n="chart.title">
+                  區域資產配置
+                </h3>
+
+                <!-- 正方形容器，圓心一定在正中央 -->
+                <div class="relative w-full max-w-[320px] mx-auto aspect-square">
+                  <canvas id="geoChart"></canvas>
+                  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="relative text-center">
+                      <div class="text-lg font-bold text-[#0f172a] leading-none">
+                        100%
+                      </div>
+                      <div
+                        class="absolute left-1/2 -translate-x-1/2 -top-4
+                               text-[10px] text-gray-400 font-bold uppercase tracking-[0.18em]">
+                        TOTAL
                       </div>
                     </div>
                   </div>
+                </div>
 
-                  <div class="bg-[#e6f0fa] p-4 rounded-2xl border border-blue-100 mt-6">
-                    <div class="text-[10px] font-bold text-[#0066cc] mb-1 uppercase flex items-center gap-1">
-                      <i class="fa-solid fa-robot"></i>
-                      <span data-i18n="chart.insight">AI insight</span>
-                    </div>
-                    <p class="text-xs text-gray-700 leading-relaxed" data-i18n="chart.desc">
-                      Taiwan assets make up 40% of your net worth. Consider hedging TWD FX risk.
-                    </p>
+                <div class="bg-[#e6f0fa] p-4 rounded-2xl border border-blue-100 mt-6">
+                  <div class="text-[10px] font-bold text-[#0066cc] mb-1 uppercase flex items-center gap-1">
+                    <i class="fa-solid fa-robot"></i>
+                    <span data-i18n="chart.insight">AI 智能分析</span>
                   </div>
+                  <p class="text-xs text-gray-700 leading-relaxed" data-i18n="chart.desc">
+                    您的台灣資產佔總淨值的 40%。建議針對台幣匯率風險進行避險。
+                  </p>
                 </div>
               </div>
-
             </div>
-          </div>
-        </div>
-      </section>
-    </section>
 
-    <!-- ===== Pricing (Cluely-style) ===== -->
-    <section id="section-pricing" class="hidden bg-[#eef2ff] border-t border-gray-200">
-      <div class="max-w-[1100px] mx-auto px-6 pt-14 pb-20">
-        <!-- Hero -->
-        <div class="text-center">
-          
-          <h1 class="text-[34px] md:text-[40px] font-extrabold tracking-tight text-[#0f172a] mb-3">
-            Start Taimic for free.
-          </h1>
-          <p class="text-sm md:text-base text-gray-600 max-w-2xl mx-auto">
-            Whether you’re just mapping your global balance sheet or preparing for FATCA / CRS, pick a plan that grows with your cross-border life.
-          </p>
-
-          <!-- Billing toggle -->
-          <div class="flex items-center justify-center gap-4 mt-7">
-            <span id="billing-label-monthly" class="text-sm font-medium text-gray-900">Monthly</span>
-            <button type="button"
-                    onclick="toggleBilling()"
-                    class="relative w-11 h-6 rounded-full bg-gray-300 flex items-center px-1 transition-colors">
-              <div id="billing-toggle-knob"
-                   class="w-4 h-4 bg-white rounded-full shadow transform transition-transform translate-x-0"></div>
-            </button>
-            <span id="billing-label-yearly" class="text-sm font-medium text-gray-500">Annually</span>
-            <span class="text-[11px] text-[#2563eb] font-semibold bg-blue-50 border border-blue-100 rounded-full px-2 py-0.5">
-              2 months free
-            </span>
-          </div>
-        </div>
-
-        <!-- Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-          <!-- Starter -->
-          <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col">
-            <h3 class="text-sm font-semibold text-gray-700 mb-1">Starter</h3>
-            <p class="text-xs text-gray-500 mb-4">For trying Taimic with a small cross-border portfolio.</p>
-            <div class="flex items-baseline gap-1 mb-1">
-              <div class="text-3xl font-bold text-gray-900" 
-                   data-plan-price 
-                   data-monthly="$0" 
-                   data-yearly="$0">
-                $0
-              </div>
-              <span class="text-sm text-gray-500">/ month</span>
-            </div>
-            <button class="mt-4 w-full py-2.5 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-black transition">
-              Get started
-            </button>
-            <ul class="mt-6 space-y-2 text-sm text-gray-600">
-              <li class="flex gap-2">
-                <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                <span>Up to 3 brokerage / bank accounts</span>
-              </li>
-              <li class="flex gap-2">
-                <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                <span>Basic global net-worth dashboard</span>
-              </li>
-              <li class="flex gap-2">
-                <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                <span>Single-currency view (USD or TWD)</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Pro -->
-          <div class="bg-white rounded-3xl border border-blue-400 shadow-[0_20px_50px_rgba(37,99,235,0.25)] p-8 flex flex-col relative overflow-hidden">
-            <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-50/70 to-transparent"></div>
-            <div class="relative z-10">
-              <div class="flex items-center justify-between mb-1">
-                <h3 class="text-sm font-semibold text-gray-800">Pro</h3>
-                <span class="text-[11px] font-semibold text-[#2563eb] bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">
-                  Most popular
-                </span>
-              </div>
-              <p class="text-xs text-gray-500 mb-4">
-                For globally mobile families who want full visibility across countries and currencies.
-              </p>
-              <div class="flex items-baseline gap-1 mb-1">
-                <div class="text-3xl font-bold text-gray-900" 
-                     data-plan-price 
-                     data-monthly="$29" 
-                     data-yearly="$290">
-                  $29
-                </div>
-                <span class="text-sm text-gray-500">/ month</span>
-              </div>
-              <p class="text-[11px] text-gray-500 mb-4">Billed annually as $290 when yearly is selected.</p>
-              <button class="mt-1 w-full py-2.5 rounded-xl bg-[#2563eb] text-white text-sm font-semibold hover:bg-[#1d4ed8] transition">
-                Subscribe
-              </button>
-              <ul class="mt-6 space-y-2 text-sm text-gray-700">
-                <li class="flex gap-2">
-                  <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                  <span>Unlimited accounts across multiple countries</span>
-                </li>
-                <li class="flex gap-2">
-                  <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                  <span>Multi-currency consolidated net-worth &amp; performance</span>
-                </li>
-                <li class="flex gap-2">
-                  <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                  <span>FATCA / FBAR / CRS threshold monitoring</span>
-                </li>
-                <li class="flex gap-2">
-                  <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                  <span>Basic inheritance &amp; “what-if” simulations</span>
-                </li>
-                <li class="flex gap-2">
-                  <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                  <span>Email support with cross-border specialists</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Pro+ -->
-          <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col">
-            <h3 class="text-sm font-semibold text-gray-700 mb-1">Family Office</h3>
-            <p class="text-xs text-gray-500 mb-4">
-              For families working with tax / legal advisors who need deeper structure &amp; export.
-            </p>
-            <div class="flex items-baseline gap-1 mb-1">
-              <div class="text-3xl font-bold text-gray-900" 
-                   data-plan-price 
-                   data-monthly="$79" 
-                   data-yearly="$790">
-                $79
-              </div>
-              <span class="text-sm text-gray-500">/ month</span>
-            </div>
-            <p class="text-[11px] text-gray-500 mb-4">Billed annually as $790 when yearly is selected.</p>
-            <button class="mt-1 w-full py-2.5 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-black transition">
-              Talk to us
-            </button>
-            <ul class="mt-6 space-y-2 text-sm text-gray-600">
-              <li class="flex gap-2">
-                <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                <span>Everything in Pro</span>
-              </li>
-              <li class="flex gap-2">
-                <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                <span>Advanced entity / trust / beneficiary mapping</span>
-              </li>
-              <li class="flex gap-2">
-                <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                <span>Downloadable reports for accountants &amp; lawyers</span>
-              </li>
-              <li class="flex gap-2">
-                <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                <span>Dedicated onboarding &amp; priority support</span>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
-    </section>
+    </main>
+  </section>
 
-    <!-- ===== About Taimic (簡版英文，你可之後改成中/英雙欄) ===== -->
-    <section id="section-about" class="hidden bg-[#e5ebf5] border-t border-gray-200">
-      <div class="max-w-[960px] mx-auto px-6 pt-14 pb-20">
-        <h1 class="text-[32px] font-extrabold tracking-tight text-[#111827] mb-3">
+  <!-- ============= ABOUT SECTION ============= -->
+  <section id="about-section" class="hidden bg-[#e5ebf5] border-t border-gray-200">
+    <div class="max-w-[1200px] mx-auto px-6 pt-10 pb-16">
+
+      <!-- Hero style like TSMC -->
+      <div class="mb-10">
+        <div class="text-xs tracking-[0.25em] text-gray-500 font-semibold mb-3">
+          ABOUT TAIMIC
+        </div>
+        <h1 id="about-title"
+            class="text-3xl md:text-4xl font-extrabold text-[#111827] mb-4">
           About Taimic
         </h1>
-        <p class="text-sm md:text-base text-gray-700 leading-relaxed mb-6">
-          Taimic is an AI-enabled cross-border wealth and legacy management platform built for globally
-          mobile families. We bring assets held in multiple countries back into a single view, reduce
-          compliance risk under complex tax regimes, and help you think ahead about how your wealth will
-          be structured and shared – without living inside Excel and manual FX calculations every day.
-        </p>
-
-        <h2 class="text-lg font-semibold text-[#111827] mt-8 mb-2">What problem we are solving</h2>
-        <p class="text-sm text-gray-700 leading-relaxed mb-3">
-          In reality, life for a cross-border family often looks like this:
-        </p>
-        <ul class="list-disc pl-5 text-sm text-gray-700 space-y-2 mb-6">
-          <li>Brokerage accounts in one country, pensions and insurance in another, property in a third.</li>
-          <li>Cash, deposits, funds and ETFs scattered across banks and platforms with different currencies.</li>
-          <li>To answer “what am I actually worth?” or “will I trigger FATCA / FBAR / CRS thresholds?” you have to download statements, check FX history and reconcile everything in Excel.</li>
-          <li>If something happens to one family member, the others may not even know what assets exist, let alone how they will be taxed and distributed.</li>
-        </ul>
-
-        <h2 class="text-lg font-semibold text-[#111827] mt-8 mb-2">How Taimic works</h2>
-        <p class="text-sm text-gray-700 leading-relaxed mb-3">
-          At its core, Taimic combines multi-country asset consolidation, compliance &amp; risk analytics and AI-driven insights.
-        </p>
-        <ul class="list-disc pl-5 text-sm text-gray-700 space-y-2 mb-6">
-          <li><strong>Consolidated multi-country view</strong> – bring brokerage, cash, insurance and property from different jurisdictions into one dashboard, with a single base currency.</li>
-          <li><strong>Compliance &amp; risk analytics</strong> – track FATCA / FBAR / CRS thresholds and see where risk is concentrated by country, asset class and single name exposure.</li>
-          <li><strong>AI-driven insights</strong> – surface regulation changes, “what-if” scenarios and questions you should ask your human advisors before you walk into the meeting room.</li>
-        </ul>
-
-        <h2 class="text-lg font-semibold text-[#111827] mt-8 mb-2">Who Taimic is for</h2>
-        <p class="text-sm text-gray-700 leading-relaxed mb-6">
-          Taimic is built for families who effectively live inside more than one system – long-term in more than
-          one country, with assets, pensions and policies spread across multiple jurisdictions – and who want a
-          clearer, calmer way to manage and eventually pass on that wealth.
+        <p id="about-lead"
+           class="text-sm md:text-base text-gray-600 leading-relaxed max-w-3xl">
+          <!-- JS 會依語言填入 -->
         </p>
       </div>
-    </section>
 
-    <!-- ===== Reports placeholder ===== -->
-    <section id="section-reports" class="hidden">
-      <div class="max-w-[960px] mx-auto px-6 pt-14 pb-20">
-        <h1 class="text-[28px] font-bold text-[#111827] mb-3">Reports</h1>
-        <p class="text-sm text-gray-700">
-          Analytics &amp; downloadable reports are coming soon. For now, use the dashboard and pricing plans while we keep building.
-        </p>
+      <!-- White content card -->
+      <div id="about-body"
+           class="bg-white rounded-2xl shadow-sm border border-gray-200
+                  p-6 md:p-10 text-gray-700 text-sm md:text-[15px]
+                  leading-relaxed space-y-6">
+        <!-- JS 會依語言填入 -->
       </div>
-    </section>
 
-  </main>
+    </div>
+  </section>
 
   <!-- ============= FOOTER ============= -->
-  <footer class="bg-[#f4f6fb] border-t border-gray-200">
+  <footer class="bg-[#f4f6fb] border-t border-gray-200 mt-16">
     <div class="max-w-[1440px] mx-auto px-6 pt-10 pb-4">
+
+      <!-- Top rows -->
       <div class="flex flex-col lg:flex-row gap-10 lg:gap-20 pb-8 border-b border-gray-200">
         <!-- brand -->
         <div class="flex-1">
@@ -692,31 +498,32 @@
             </div>
           </div>
           <p class="text-sm text-gray-600 mb-4">
-            Cross-border wealth OS for globally mobile families.
+            FATCA / CRS Compliant ・ Cross-Border Wealth Platform
           </p>
+          <!-- 狀態膠囊已刪除 -->
         </div>
 
         <!-- Columns -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
           <div>
             <div class="footer-col-title">SOLUTIONS</div>
-            <div class="footer-link">Cross-border families</div>
-            <div class="footer-link">Immigrants &amp; expats</div>
-            <div class="footer-link">Family offices</div>
-            <div class="footer-link">Advisors</div>
+            <div class="footer-link">Family Office</div>
+            <div class="footer-link">Cross-Border Clients</div>
+            <div class="footer-link">Entrepreneurs</div>
+            <div class="footer-link">Retirement</div>
           </div>
           <div>
             <div class="footer-col-title">PLATFORM</div>
-            <div class="footer-link">Global dashboard</div>
-            <div class="footer-link">Compliance checks</div>
-            <div class="footer-link">Scenario planning</div>
-            <div class="footer-link">AI insights</div>
+            <div class="footer-link">Global Dashboard</div>
+            <div class="footer-link">Tax &amp; Compliance</div>
+            <div class="footer-link">Estate Planning</div>
+            <div class="footer-link">Risk Monitoring</div>
           </div>
           <div>
             <div class="footer-col-title">RESOURCES</div>
             <div class="footer-link">Insights</div>
-            <div class="footer-link">Product updates</div>
-            <div class="footer-link">Partner program</div>
+            <div class="footer-link">Product Updates</div>
+            <div class="footer-link">Partner Program</div>
             <div class="footer-link">Status</div>
           </div>
           <div>
@@ -729,6 +536,7 @@
         </div>
       </div>
 
+      <!-- Bottom row -->
       <div class="flex flex-col md:flex-row items-center justify-between gap-4 pt-4 pb-2 text-xs text-gray-500">
         <div>© 2025 Taimic Inc. All Rights Reserved.</div>
         <div class="flex items-center gap-4 text-gray-400">
@@ -741,11 +549,11 @@
     </div>
   </footer>
 
-  <!-- ===== Upload Modal ===== -->
+  <!-- ============= UPLOAD MODAL (AI OCR Demo) ============= -->
   <div id="modal-overlay" class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-md shadow-2xl rounded-xl overflow-hidden relative transform transition-all">
       <div class="bg-[#0066cc] p-4 flex justify-between items-center text-white">
-        <h3 class="font-bold text-sm tracking-wide" data-i18n="modal.title">Add Taiwan asset (AI OCR)</h3>
+        <h3 class="font-bold text-sm tracking-wide" data-i18n="modal.title">新增台灣資產 (AI OCR)</h3>
         <i class="fa-solid fa-xmark cursor-pointer hover:opacity-80 text-lg" onclick="closeUploadModal()"></i>
       </div>
 
@@ -755,17 +563,17 @@
           <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
         </div>
         <p class="text-sm text-gray-600 mb-6 leading-relaxed" data-i18n="modal.desc">
-          Upload a policy front page or bank statement, Taimic will extract key data with AI.
+          上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。
         </p>
         <button onclick="startScan()" class="w-full border-2 border-dashed border-gray-300 py-4 rounded-xl hover:border-[#0066cc] hover:bg-blue-50 transition-all text-gray-500 hover:text-[#0066cc] font-bold text-sm">
-          <span data-i18n="btn.upload">Click to upload file</span>
+          <span data-i18n="btn.upload">點擊上傳檔案</span>
         </button>
       </div>
 
       <!-- step 2 -->
       <div id="modal-step-2" class="hidden relative h-64 bg-[#050816]">
         <div class="absolute inset-0 flex flex-col items-center justify-center z-10">
-          <p class="text-white font-mono text-sm mb-2" data-i18n="modal.scanning">AI processing...</p>
+          <p class="text-white font-mono text-sm mb-2" data-i18n="modal.scanning">AI 分析中...</p>
           <div class="w-48 h-1 bg-gray-700 rounded overflow-hidden mb-4">
             <div id="scan-bar" class="h-full bg-[#3b82f6] w-0 transition-all duration-[3000ms] ease-linear"></div>
           </div>
@@ -776,11 +584,11 @@
     </div>
   </div>
 
-  <!-- ===== Auth Modal ===== -->
+  <!-- ============= AUTH MODAL (登入 / 註冊) ============= -->
   <div id="auth-overlay" class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-lg rounded-xl shadow-2xl overflow-hidden">
       <div class="bg-[#1d4ed8] px-6 py-4 flex items-center justify-between text-white">
-        <h3 id="auth-title" class="font-bold text-base">Create a Taimic account</h3>
+        <h3 id="auth-title" class="font-bold text-base">註冊 TAIMIC 帳號</h3>
         <button onclick="closeAuthModal()" class="hover:opacity-80">
           <i class="fa-solid fa-xmark text-xl"></i>
         </button>
@@ -792,14 +600,14 @@
                  class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb] placeholder-gray-400" />
         </div>
         <div class="space-y-2">
-          <label class="block text-sm font-medium text-gray-700">Password</label>
-          <input id="auth-password" type="password" placeholder="At least 6 characters"
+          <label class="block text-sm font-medium text-gray-700">密碼</label>
+          <input id="auth-password" type="password" placeholder="請輸入至少 6 碼密碼"
                  class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]" />
         </div>
         <p id="auth-message" class="text-sm h-5 text-center"></p>
         <button id="auth-submit" class="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold text-sm py-3 rounded-full flex items-center justify-center gap-2 transition">
           <i class="fa-solid fa-arrow-right-to-bracket"></i>
-          <span id="auth-submit-text">Sign up</span>
+          <span id="auth-submit-text">註冊</span>
         </button>
       </div>
     </div>
@@ -809,9 +617,8 @@
   <script>
     const RATE = 32.5;
     let curr = 'TWD';
-    let lang = 'en';           // 預設英文
-    let currentSection = 'overview';
-    let billing = 'monthly';
+    let lang = 'en'; // 預設英文
+
     const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
 
     const assets = [
@@ -826,31 +633,302 @@
         'nav.pricing':'Pricing',
         'nav.reports':'Reports',
         'nav.about':'About Taimic',
-        'page.title':'Cross-border wealth platform',
-        'page.desc':'Integrated view of Taiwan & US assets with FATCA / CRS compliance checks and AI insights.',
-        'btn.add':'Add asset','btn.upload':'Click to upload file',
-        'stat.us':'US net worth','stat.tw':'Taiwan net worth','stat.global':'Global net worth','stat.safe':'Estate tax risk: safe',
-        'table.title':'Holdings','col.name':'Asset','col.region':'Region','col.type':'Type','col.val':'Value',
-        'alert.title':'AI tax alert: potential FATCA risk detected','alert.desc':'A new high cash-value policy in Taiwan may exceed the Form 8938 reporting threshold.',
-        'chart.title':'Regional allocation','chart.insight':'AI insight','chart.desc':'Taiwan assets make up 40% of your net worth. Consider hedging TWD FX risk.',
-        'modal.title':'Add Taiwan asset (AI OCR)','modal.desc':'Upload a policy front page or bank statement, Taimic will extract key data with AI.','modal.scanning':'AI processing...',
-        'user.login':'Login','user.register':'Sign up'
+        'nav.tax':'Tax & Compliance',
+        'nav.estate':'Estate Plan',
+        'page.title':'Cross-Border Wealth Platform',
+        'page.desc':'Integrated view of Taiwan & US assets with FATCA compliance checks.',
+        'btn.add':'Add Asset','btn.upload':'Click to Upload File',
+        'stat.us':'US Net Worth','stat.tw':'Taiwan Net Worth','stat.global':'Global Total','stat.safe':'Estate Tax Risk: Safe',
+        'table.title':'Portfolio Holdings','col.name':'Asset Name','col.region':'Region','col.type':'Category','col.val':'Value',
+        'alert.title':'AI Tax Alert: FATCA Risk Detected','alert.desc':'We detected a new "High Cash Value" insurance policy in Taiwan. This exceeds the $50,000 reporting threshold for IRS Form 8938.',
+        'chart.title':'Regional Allocation','chart.insight':'AI Insight','chart.desc':'Your Taiwan assets comprise 40% of your net worth. Consider hedging TWD currency risk.',
+        'modal.title':'Add Taiwan Asset (AI OCR)','modal.desc':'Upload policy or statement. AI will extract data.','modal.scanning':'AI Processing...',
+        'user.login':'Login','user.register':'Register'
       },
       zh: {
         'nav.overview':'資產總覽',
         'nav.pricing':'價格',
         'nav.reports':'分析報告',
         'nav.about':'關於 Taimic',
+        'nav.tax':'稅務合規',
+        'nav.estate':'家族傳承',
         'page.title':'跨國資產整合平台',
-        'page.desc':'整合台灣與海外資產，搭配 FATCA / CRS 稅務檢測與 AI 分析，讓跨境財務一眼看懂。',
+        'page.desc':'整合台灣與美國資產，提供即時淨值分析與跨境稅務風險檢測。',
         'btn.add':'新增資產','btn.upload':'點擊上傳檔案',
         'stat.us':'美國總資產','stat.tw':'台灣總資產','stat.global':'全球總淨值','stat.safe':'遺產稅風險：安全',
         'table.title':'資產持有清單','col.name':'資產名稱','col.region':'地區','col.type':'類別','col.val':'現值',
-        'alert.title':'AI 稅務警示：偵測到 FATCA 風險','alert.desc':'系統掃描到一張新增的台灣高現金價值保單，可能超過 IRS Form 8938 申報門檻。',
-        'chart.title':'區域資產配置','chart.insight':'AI 智能分析','chart.desc':'您的台灣資產佔總淨值約 40%，建議評估台幣匯率風險。',
+        'alert.title':'AI 稅務警示：偵測到 FATCA 風險','alert.desc':'系統掃描到一張新增的台灣高現金價值保單。此金額已超過 IRS Form 8938 的 5 萬美元申報門檻。',
+        'chart.title':'區域資產配置','chart.insight':'AI 智能分析','chart.desc':'您的台灣資產佔總淨值的 40%。建議針對台幣匯率風險進行避險。',
         'modal.title':'新增台灣資產 (AI OCR)','modal.desc':'上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。','modal.scanning':'AI 分析中...',
         'user.login':'登入','user.register':'註冊'
       }
+    };
+
+    const ABOUT_LEAD = {
+      zh: 'Taimic 是一個專為跨國移動家庭打造、結合 AI 的跨境資產與傳承管理平台。',
+      en: 'Taimic is an AI-enabled cross-border wealth and legacy management platform for families who live, work, and invest across multiple countries.'
+    };
+
+    const ABOUT_BODY = {
+      zh: `
+        <p>
+          我們協助在多國生活、工作與投資的家庭，把分散在不同國家的資產拉回同一個畫面，
+          降低複雜稅制帶來的合規風險，同時提早思考財富要如何被規劃與分配，
+          讓您不需要再每天沉在 Excel、截圖與人工換匯計算裡。
+        </p>
+
+        <p>對很多跨境家庭來說，真正的問題不是「有沒有在投資」，而是：</p>
+
+        <p class="font-semibold text-[#111827]">
+          「我到底有多少資產、分散在哪裡、風險和稅務長什麼樣子？」
+        </p>
+
+        <h2 class="text-lg md:text-xl font-semibold text-[#111827] mt-4">我們在解決的問題</h2>
+
+        <p>在真實生活裡，很多跨境家庭的樣子其實是這樣：</p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>券商帳戶在一個國家，退休金與保單在另一個國家，房產又在第三個地方。</li>
+          <li>現金、定存、基金、ETF 散落在不同銀行與平台，幣別也都不一樣。</li>
+          <li>只要想回答「我到底值多少？」或「會不會踩到 FATCA／FBAR／CRS 的門檻？」就得自己打開 Excel、下載對帳單、查歷史匯率，慢慢一格一格對。</li>
+          <li>一旦家裡有人發生意外，其他成員往往連有哪些跨國資產都不知道，更別說怎麼申請、怎麼被課稅與怎麼分配。</li>
+        </ul>
+
+        <p>
+          市面上的工具大多只處理其中一小塊：匯款 App 只管「錢怎麼從 A 到 B」，記帳 App 只管「你花了多少」，
+          也有服務只做單一國家的投資或線上遺囑。
+        </p>
+
+        <p>
+          真正把 <strong>「跨境資產＋合規風險＋傳承規劃」</strong>
+          當成同一個系統在處理的產品，幾乎不存在。Taimic 想做的，就是填補這塊被忽略、但對您至關重要的空白。
+        </p>
+
+        <h2 class="text-lg md:text-xl font-semibold text-[#111827] mt-4">我們怎麼做（產品核心）</h2>
+
+        <p>
+          Taimic 的核心，是一個結合 <strong>多國資產整合</strong>、
+          <strong>合規風險分析</strong> 以及 <strong>AI 洞察</strong> 的平台。
+          我們目前聚焦三個方向：
+        </p>
+
+        <h3 class="font-semibold text-[#111827] mt-3">1. 跨國資產整合（Consolidated Multi-Country View）</h3>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>整合不同國家的券商帳戶、現金、保單與房產到同一個儀表板 (Dashboard)。</li>
+          <li>以統一的幣別與視角呈現市值、成本、損益、資產配置與集中度。</li>
+          <li>讓使用者不再只看「單一平台損益」，而是真正看懂「整體結構」。</li>
+        </ul>
+
+        <h3 class="font-semibold text-[#111827] mt-3">2. 合規風險與結構分析（Compliance &amp; Risk Analytics）</h3>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>追蹤 FATCA／FBAR／CRS 相關門檻與關鍵餘額。</li>
+          <li>分析國家別、資產類別、產業與單一標的的曝險程度，幫你看出「資產壓在哪裡」。</li>
+          <li>讓稅務與風險不再是憑感覺的擔憂，而是清晰的數據。</li>
+        </ul>
+
+        <h3 class="font-semibold text-[#111827] mt-3">3. AI 賦能的財富洞察（AI-Driven Insights）</h3>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>利用 AI 針對您的實際持有部位，整理相關的法規更新、稅務重點與情境模擬。</li>
+          <li>從「如果我明天突然不在了，資產會怎麼流動？」到「現在這種資產結構對家人公平嗎？」都可以先預演。</li>
+          <li>我們的目標，是讓您在走進會計師或律師事務所之前，就已經搞懂現況、準備好要問的關鍵問題。</li>
+        </ul>
+
+        <h2 class="text-lg md:text-xl font-semibold text-[#111827] mt-4">Taimic 適合誰？</h2>
+
+        <p>Taimic 是為那些 <strong>「同時活在兩個以上制度裡」</strong> 的人設計的：</p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>長期在兩個以上國家之間生活、工作或退休的家庭。</li>
+          <li>同時持有多國資產（證券、保單、房產、現金），但覺得一切非常分散的人。</li>
+          <li>知道自己應該關心 FATCA／FBAR／CRS／遺產稅等議題，卻沒有時間、工具或精力每年重算一次的人。</li>
+          <li>想從「只看單一券商損益」進化到「理解整體跨境資產配置與風險結構」的自主人。</li>
+        </ul>
+
+        <p>
+          如果您心裡曾經浮現過：
+        </p>
+        <p class="font-semibold text-[#111827]">
+          「我知道該看整體資產跟風險，但我太忙，又沒有好工具。」
+        </p>
+        <p>那麼 Taimic 就是為您而做的。</p>
+
+        <h2 class="text-lg md:text-xl font-semibold text-[#111827] mt-4">我們相信的未來</h2>
+
+        <p>我們相信，跨境家庭值得比現在更好的選擇：</p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>不該只有超高淨值客戶，才拿得到 Family Office 等級的報表。</li>
+          <li>不該只有機構投資人，才用得起高規格的風險與結構分析工具。</li>
+          <li>也不該必須自己東拼西湊資料、到處詢問，才有辦法搞懂自己的跨國資產會怎麼被課稅、最後會怎麼被處理和分配。</li>
+        </ul>
+
+        <p>所以，Taimic 的長期目標是：</p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>讓跨國資產管理變得直覺、透明、可視化。</li>
+          <li>讓 AI 成為您的財務輔助大腦，而不是黑箱。</li>
+          <li>讓更多跨境家庭，在全球市場與多國制度之間，能用更聰明、更冷靜的方式管理與分配自己的資產，而不是只被新聞、情緒或恐懼推著走。</li>
+        </ul>
+
+        <h2 class="text-lg md:text-xl font-semibold text-[#111827] mt-4">現在的我們與下一步</h2>
+
+        <p>
+          我們從幾條「跨境複雜度最高」的走廊開始，例如亞洲與北美之間的家庭——那裡同時存在高資產密度、
+          嚴格稅制與真實的資產分配需求。
+        </p>
+        <p>
+          從第一天開始，我們就沒有把產品綁死在特定國家組合，而是設計成一套可擴展的跨境架構：
+          不論是亞洲 ↔ 北美、歐洲 ↔ 亞洲，或是其他組合，都可以被納入同一套邏輯之中。
+        </p>
+        <p>接下來，我們會依據實際使用者案例與需求，逐步加入：</p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>更細緻的資產分類與視覺化工具</li>
+          <li>對特定市場與跨境走廊的深度支援模組</li>
+          <li>與專業顧問（會計師／律師）的串接與轉介機制</li>
+        </ul>
+
+        <p>
+          我們希望成為那個讓您
+          <strong>「先看懂自己狀況、問對問題，再走進會議室」</strong>
+          的核心平台。
+        </p>
+
+        <p class="font-semibold text-[#111827]">
+          如果您也相信，看懂自己的全球資產，是邁向財務安全與長期資產規劃的第一步，
+          歡迎加入 Taimic，拿回您對全球財富的掌控權。
+        </p>
+      `,
+      en: `
+        <p>
+          We build Taimic for globally mobile families who live, work and invest across
+          multiple countries. Our goal is to bring scattered assets back into a single,
+          understandable picture, reduce compliance risk under complex tax regimes, and
+          help you think in advance about how your wealth will be structured and shared –
+          without living inside Excel and manual FX calculations every day.
+        </p>
+
+        <p>
+          For many cross-border families, the real question is not “am I investing enough?”,
+          but:
+        </p>
+
+        <p class="font-semibold text-[#111827]">
+          “How much do I actually own, where is it spread across countries,
+          and what do my risk and tax exposure really look like?”
+        </p>
+
+        <h2 class="text-lg md:text-xl font-semibold text-[#111827] mt-4">What problem we are solving</h2>
+
+        <p>In reality, life for a cross-border family often looks like this:</p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Brokerage accounts in one country, pensions and insurance in another, property in a third.</li>
+          <li>Cash, deposits, funds and ETFs scattered across banks and platforms, all in different currencies.</li>
+          <li>
+            To answer “what am I actually worth?” or “will I trigger FATCA / FBAR / CRS thresholds?”
+            you have to download statements, check FX history and reconcile everything in Excel.
+          </li>
+          <li>
+            If something happens to one family member, the others may not even know what assets exist,
+            let alone how they will be taxed and distributed.
+          </li>
+        </ul>
+
+        <p>
+          Existing tools only solve fragments of this problem: remittance apps only move money from A to B,
+          budgeting apps only track spending, and some services focus on a single country’s portfolio
+          or online wills.
+        </p>
+
+        <p>
+          A product that truly treats <strong>“cross-border assets + compliance risk + legacy planning”</strong>
+          as one connected system is almost non-existent. Taimic is built to fill exactly this gap.
+        </p>
+
+        <h2 class="text-lg md:text-xl font-semibold text-[#111827] mt-4">How Taimic works</h2>
+
+        <p>
+          At its core, Taimic combines <strong>multi-country asset consolidation</strong>,
+          <strong>compliance &amp; risk analytics</strong> and <strong>AI-driven insights</strong>.
+          We focus on three main directions:
+        </p>
+
+        <h3 class="font-semibold text-[#111827] mt-3">1. Multi-country asset consolidation</h3>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Connect brokerage accounts, cash, insurance and property from different countries into one dashboard.</li>
+          <li>Show market value, cost basis, P&amp;L, allocation and concentration in a unified currency.</li>
+          <li>Help you see the whole structure, not just the P&amp;L inside a single app.</li>
+        </ul>
+
+        <h3 class="font-semibold text-[#111827] mt-3">2. Compliance &amp; risk analytics</h3>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Track FATCA / FBAR / CRS thresholds and key balance levels.</li>
+          <li>Analyse exposure by country, asset class, sector and single position so you know where your wealth is concentrated.</li>
+          <li>Turn vague anxiety about “risk” into clear numbers you can reason about.</li>
+        </ul>
+
+        <h3 class="font-semibold text-[#111827] mt-3">3. AI-driven wealth insights</h3>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Use AI to surface relevant law changes, tax topics and scenario simulations tied to your actual holdings.</li>
+          <li>From “what happens if I’m suddenly not here tomorrow?” to “is this structure fair to my family?” – you can explore it in advance.</li>
+          <li>Our aim is that, before you walk into an accountant’s or lawyer’s office, you already understand your situation and know what to ask.</li>
+        </ul>
+
+        <h2 class="text-lg md:text-xl font-semibold text-[#111827] mt-4">Who Taimic is for</h2>
+
+        <p>Taimic is built for people who effectively live inside <strong>two or more legal systems</strong> at the same time:</p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Families who have lived, worked or retired across multiple countries.</li>
+          <li>Investors who simultaneously hold securities, insurance, property and cash in several jurisdictions.</li>
+          <li>People who know they should care about FATCA / FBAR / CRS / inheritance tax, but don’t have the time or tools to recompute everything every year.</li>
+          <li>Self-directed investors who want to graduate from “single broker P&amp;L” to understanding their full cross-border risk structure.</li>
+        </ul>
+
+        <p>If you’ve ever thought:</p>
+        <p class="font-semibold text-[#111827]">
+          “I know I should look at my overall risk and asset picture, but I’m too busy and nothing makes it easy.”
+        </p>
+        <p>Then Taimic is built for you.</p>
+
+        <h2 class="text-lg md:text-xl font-semibold text-[#111827] mt-4">The future we believe in</h2>
+
+        <p>We believe cross-border families deserve much better tools than what exists today:</p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Professional-grade reporting should not be reserved only for ultra high-net-worth clients.</li>
+          <li>Institutional-level risk and structure analytics should not be exclusive to asset managers.</li>
+          <li>You should not have to manually stitch together spreadsheets and screenshots just to understand how your assets will be taxed and distributed.</li>
+        </ul>
+
+        <p>Our long-term goals are:</p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Make cross-border asset management intuitive, transparent and visual.</li>
+          <li>Let AI act as your second brain for finance, not a black box making decisions for you.</li>
+          <li>Help more cross-border families manage and distribute their wealth calmly and intelligently, instead of being driven only by headlines and fear.</li>
+        </ul>
+
+        <h2 class="text-lg md:text-xl font-semibold text-[#111827] mt-4">Where we are today &amp; what’s next</h2>
+
+        <p>
+          We start from corridors with the highest complexity – for example families between Asia and North America,
+          where high asset density, strict tax regimes and real legacy needs all intersect.
+        </p>
+        <p>
+          From day one, we designed Taimic as an extensible cross-border architecture, not a tool locked to any single
+          country pair. Whether it is Asia ↔ North America, Europe ↔ Asia or other combinations, they can all fit into
+          the same logic.
+        </p>
+        <p>Next, based on real user cases and demand, we will gradually add:</p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Finer-grained classifications and visualisations for assets.</li>
+          <li>Deep support modules for specific markets and cross-border corridors.</li>
+          <li>Integration and referral flows with professional advisors (accountants / lawyers).</li>
+        </ul>
+
+        <p>
+          We want to be the platform that lets you
+          <strong>understand your situation, ask the right questions, and then walk into the meeting room prepared.</strong>
+        </p>
+
+        <p class="font-semibold text-[#111827]">
+          If you also believe that seeing your full global balance sheet is the first step toward financial security
+          and long-term planning, we’d love for you to build Taimic with us – and take back control of your global wealth.
+        </p>
+      `
     };
 
     function fmt(usd) {
@@ -864,8 +942,9 @@
       const t = I18N[lang];
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.dataset.i18n;
-        if (t[key]) el.textContent = t[key];
+        if (t[el.dataset.i18n]) {
+          el.textContent = t[el.dataset.i18n];
+        }
       });
 
       document.querySelectorAll('.val-display').forEach(el => {
@@ -911,7 +990,19 @@
       document.getElementById('opt-zh').classList.toggle('active', lang === 'zh');
       document.getElementById('opt-en').classList.toggle('active', lang === 'en');
 
-      updatePricing();
+      // About 區塊文字
+      const aboutTitleEl = document.getElementById('about-title');
+      const aboutLeadEl = document.getElementById('about-lead');
+      const aboutBodyEl = document.getElementById('about-body');
+      if (aboutTitleEl) {
+        aboutTitleEl.textContent = lang === 'zh' ? '關於 Taimic' : 'About Taimic';
+      }
+      if (aboutLeadEl) {
+        aboutLeadEl.textContent = ABOUT_LEAD[lang];
+      }
+      if (aboutBodyEl) {
+        aboutBodyEl.innerHTML = ABOUT_BODY[lang];
+      }
     }
 
     function setCurrency(c) {
@@ -923,46 +1014,6 @@
       lang = l;
       render();
       langMenu.classList.add('hidden');
-    }
-
-    function switchSection(section) {
-      const ids = ['overview','pricing','about','reports'];
-      ids.forEach(id => {
-        const el = document.getElementById(`section-${id}`);
-        if (el) el.classList.toggle('hidden', id !== section);
-      });
-      document.querySelectorAll('nav .nav-link').forEach(link => {
-        link.classList.toggle('active', link.dataset.section === section);
-      });
-      currentSection = section;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // pricing toggle
-    function updatePricing() {
-      document.querySelectorAll('[data-plan-price]').forEach(el => {
-        const m = el.dataset.monthly;
-        const y = el.dataset.yearly;
-        if (!m || !y) return;
-        el.textContent = billing === 'monthly' ? m : y;
-      });
-      const knob = document.getElementById('billing-toggle-knob');
-      if (knob) {
-        knob.classList.toggle('translate-x-0', billing === 'monthly');
-        knob.classList.toggle('translate-x-5', billing === 'yearly');
-      }
-      const mLabel = document.getElementById('billing-label-monthly');
-      const yLabel = document.getElementById('billing-label-yearly');
-      if (mLabel && yLabel) {
-        mLabel.classList.toggle('text-gray-900', billing === 'monthly');
-        mLabel.classList.toggle('text-gray-500', billing !== 'monthly');
-        yLabel.classList.toggle('text-gray-900', billing === 'yearly');
-        yLabel.classList.toggle('text-gray-500', billing !== 'yearly');
-      }
-    }
-    function toggleBilling() {
-      billing = billing === 'monthly' ? 'yearly' : 'monthly';
-      updatePricing();
     }
 
     function openUploadModal() {
@@ -1012,7 +1063,7 @@
       }, 3000);
     }
 
-    // Auth Modal
+    // ===== Auth Modal =====
     let authMode = 'register';
 
     function openAuthModal(mode) {
@@ -1024,11 +1075,11 @@
       msg.className = 'text-sm h-5 text-center';
 
       if (mode === 'login') {
-        title.textContent = 'Login to Taimic';
-        btnText.textContent = 'Login';
+        title.textContent = '登入 TAIMIC 帳號';
+        btnText.textContent = '登入';
       } else {
-        title.textContent = 'Create a Taimic account';
-        btnText.textContent = 'Sign up';
+        title.textContent = '註冊 TAIMIC 帳號';
+        btnText.textContent = '註冊';
       }
 
       document.getElementById('auth-email').value = '';
@@ -1058,7 +1109,7 @@
       msg.className = 'text-sm h-5 text-center';
 
       if (!email || !password) {
-        msg.textContent = lang === 'zh' ? '請輸入 email 與密碼。' : 'Please enter email and password.';
+        msg.textContent = '請輸入 email 與密碼。';
         msg.classList.add('text-red-500');
         return;
       }
@@ -1067,10 +1118,12 @@
         const path = authMode === 'register' ? '/api/register' : '/api/login';
         const data = await callAuthAPI(path, { email, password });
 
+        console.log('auth response', data);
+
         if (data.ok) {
           msg.textContent = authMode === 'register'
-            ? (lang === 'zh' ? '註冊成功，請重新登入。' : 'Sign up successful, please log in.')
-            : (lang === 'zh' ? `登入成功，歡迎 ${data.user?.email || email}` : `Welcome back, ${data.user?.email || email}`);
+            ? '註冊成功，請重新登入。'
+            : `登入成功，歡迎 ${data.user?.email || email}`;
           msg.classList.add('text-green-600');
 
           if (authMode === 'login') {
@@ -1078,14 +1131,32 @@
             setTimeout(closeAuthModal, 1200);
           }
         } else {
-          msg.textContent = data.message || (lang === 'zh' ? '操作失敗，請稍後再試。' : 'Something went wrong, please try again.');
+          msg.textContent = data.message || '操作失敗，請稍後再試。';
           msg.classList.add('text-red-500');
         }
       } catch (e) {
         console.error(e);
-        msg.textContent = lang === 'zh' ? '伺服器錯誤，請稍後再試。' : 'Server error, please try again.';
+        msg.textContent = '伺服器錯誤，請稍後再試。';
         msg.classList.add('text-red-500');
       }
+    }
+
+    // ===== Section 切換：Overview / About =====
+    function showSection(section) {
+      const overview = document.getElementById('overview-section');
+      const about = document.getElementById('about-section');
+
+      if (overview) overview.classList.toggle('hidden', section !== 'overview');
+      if (about) about.classList.toggle('hidden', section !== 'about');
+
+      document.querySelectorAll('.nav-link').forEach(link => {
+        const s = link.dataset.section;
+        if (!s) {
+          // 沒綁 section 的（價格 / 分析報告）不控制 active
+          return;
+        }
+        link.classList.toggle('active', s === section);
+      });
     }
 
     // ===== Global refs & init =====
@@ -1120,6 +1191,7 @@
       authOverlay = document.getElementById('auth-overlay');
 
       render();
+      showSection('overview');
 
       const langToggle = document.getElementById('lang-toggle');
       const userToggle = document.getElementById('user-toggle');
@@ -1149,17 +1221,19 @@
 
       document.getElementById('auth-submit').addEventListener('click', handleAuthSubmit);
 
-      // nav section switching
-      document.querySelectorAll('nav .nav-link').forEach(link => {
+      // Nav section 切換
+      document.querySelectorAll('.nav-link[data-section]').forEach(link => {
         link.addEventListener('click', e => {
           e.preventDefault();
-          const section = link.dataset.section;
-          if (section) switchSection(section);
+          const sec = link.dataset.section || 'overview';
+          showSection(sec);
         });
       });
 
-      // 一開始顯示 overview
-      switchSection('overview');
+      // 讓 Overview tab 預設 active
+      document.querySelectorAll('.nav-link[data-section="overview"]').forEach(link => {
+        link.classList.add('active');
+      });
     };
   </script>
 </body>
