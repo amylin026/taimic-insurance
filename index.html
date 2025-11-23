@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <title>TAIMIC | Global Wealth Management</title>
@@ -86,11 +86,11 @@
 
     /* --- Nav --- */
     .nav-link {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 500;
       color: #555;
       padding: 0 16px;
-      height: 56px;
+      height: 64px;
       display: flex;
       align-items: center;
       border-bottom: 3px solid transparent;
@@ -197,13 +197,17 @@
     .footer-link:hover {
       color: var(--brand-blue);
     }
+
+    html {
+      scroll-behavior: smooth;
+    }
   </style>
 </head>
 
 <body class="flex flex-col min-h-screen bg-[#f3f5f9]">
 
   <!-- ============= HEADER ============= -->
-  <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[64px]">
+  <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[72px]">
     <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center">
 
       <!-- Logo -->
@@ -233,12 +237,12 @@
       </div>
 
       <!-- Nav -->
-      <nav class="hidden lg:flex h-full items-center space-x-4">
-        <a href="#" class="nav-link active" data-i18n="nav.overview">資產總覽</a>
-        <a href="#" class="nav-link" data-i18n="nav.tax">稅務合規</a>
-        <a href="#" class="nav-link" data-i18n="nav.estate">家族傳承</a>
-        <a href="#" class="nav-link" data-i18n="nav.reports">分析報告</a>
-        <a href="#about" class="nav-link" data-i18n="nav.about">關於 TAIMIC</a>
+      <nav class="hidden lg:flex h-full items-center space-x-2">
+        <a href="#top" class="nav-link active" data-i18n="nav.overview">資產總覽</a>
+        <a href="#top" class="nav-link" data-i18n="nav.tax">稅務合規</a>
+        <a href="#top" class="nav-link" data-i18n="nav.estate">家族傳承</a>
+        <a href="#top" class="nav-link" data-i18n="nav.reports">分析報告</a>
+        <a href="#about" class="nav-link" data-i18n="nav.about">關於 Taimic</a>
       </nav>
 
       <!-- Right tools -->
@@ -294,20 +298,44 @@
     </div>
   </header>
 
+  <div id="top"></div>
+
   <!-- ============= HERO / SUMMARY ============= -->
   <section class="border-b border-gray-200 bg-[#e5ebf5]">
     <div class="max-w-[1440px] mx-auto px-6 py-8 md:py-10">
       <div class="panel px-8 py-8 md:px-10 md:py-9 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
         <div>
           <div class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-2">
-            Global Asset Management / Dashboard
+            跨境家庭的資產全景與傳承中樞
           </div>
-          <h1 class="text-[28px] md:text-[32px] font-[700] text-[#111827] tracking-tight mb-3" data-i18n="page.title">
-            跨國資產整合平台
+          <h1 class="text-[24px] md:text-[30px] font-[700] text-[#111827] tracking-tight mb-3 leading-snug" data-i18n="page.title">
+            不再碎片化。一眼看懂您的全球資產與風險結構。
           </h1>
           <p class="text-gray-600 text-sm md:text-[15px] max-w-2xl leading-relaxed" data-i18n="page.desc">
-            整合台灣與美國資產，提供即時淨值分析與跨境稅務風險檢測。
+            告別散落在不同國家的網銀與 Excel 表格。Taimic 專為跨國移動家庭打造，將分散的券商帳戶、房產與保單整合為單一全景，自動追蹤 FATCA、FBAR、CRS 稅務風險。讓複雜的跨國財務，變成清晰、可執行的決策。
           </p>
+
+          <!-- Hero bullets -->
+          <div class="mt-5 space-y-3 text-sm text-gray-700">
+            <div>
+              <div class="font-semibold text-[#111827] mb-1">全球資產．一站整合</div>
+              <p class="text-[13px] md:text-sm text-gray-600">
+                跨越國界與幣別，將分散的券商、現金、保單與房產統整為單一全景視角，真實呈現您的身價。
+              </p>
+            </div>
+            <div>
+              <div class="font-semibold text-[#111827] mb-1">稅務合規．主動監測</div>
+              <p class="text-[13px] md:text-sm text-gray-600">
+                即時追蹤 FATCA／FBAR／CRS 門檻與各國資產集中度，用實際數據取代「憑感覺」的風險焦慮。
+              </p>
+            </div>
+            <div>
+              <div class="font-semibold text-[#111827] mb-1">資產傳承．預先規劃</div>
+              <p class="text-[13px] md:text-sm text-gray-600">
+                超越帳面損益，協助您模擬資產分配情境與提醒重要法規變動，為家人建立清晰的財務未來。
+              </p>
+            </div>
+          </div>
         </div>
 
         <div class="flex flex-col items-start md:items-end gap-3">
@@ -317,7 +345,7 @@
           </button>
           <div class="text-[11px] text-gray-500 flex items-center gap-2">
             <i class="fa-solid fa-shield-halved text-[#0066cc]"></i>
-            <span>FATCA / CRS 即時風險掃描</span>
+            <span>FATCA / CRS 風險掃描示意</span>
           </div>
         </div>
       </div>
@@ -412,14 +440,15 @@
             </div>
           </div>
 
-          <!-- Chart -->
+          <!-- Right column -->
           <div class="space-y-8">
+            <!-- Chart card -->
             <div class="border border-gray-200 rounded-3xl p-8 bg-white shadow-sm">
               <h3 class="text-xs font-bold text-gray-500 uppercase mb-6 tracking-[0.18em]" data-i18n="chart.title">
                 區域資產配置
               </h3>
 
-              <!-- 正方形容器，圓心一定在正中央 -->
+              <!-- 正方形容器 -->
               <div class="relative w-full max-w-[320px] mx-auto aspect-square">
                 <canvas id="geoChart"></canvas>
                 <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -446,6 +475,33 @@
                 </p>
               </div>
             </div>
+
+            <!-- About Taimic side card -->
+            <div class="border border-gray-200 rounded-3xl p-7 bg-white shadow-sm">
+              <div class="text-xs font-bold text-gray-500 uppercase tracking-[0.18em] mb-1">
+                關於 TAIMIC
+              </div>
+              <h3 class="text-base font-bold text-[#111827] mb-2">
+                為「全球公民」打造的財富與傳承中樞
+              </h3>
+              <p class="text-xs md:text-sm text-gray-700 leading-relaxed mb-4">
+                Taimic 是專為「活在兩個以上制度裡」的家庭設計的作業系統。我們協助您將散落在多國的資產拼回完整的拼圖，降低稅務與合規風險，並提早規劃資產如何有條理地分配給家人，而不是只看今天的帳面漲跌。
+              </p>
+              <ul class="space-y-2 text-xs md:text-sm text-gray-700">
+                <li>
+                  <span class="font-semibold text-[#111827]">全景整合：</span>
+                  證券、房產、保單與現金，一目瞭然。
+                </li>
+                <li>
+                  <span class="font-semibold text-[#111827]">風險預警：</span>
+                  主動監測 FATCA／CRS 等跨境稅務門檻。
+                </li>
+                <li>
+                  <span class="font-semibold text-[#111827]">傳承導航：</span>
+                  從財富累積到代際分配的完整路徑。
+                </li>
+              </ul>
+            </div>
           </div>
 
         </div>
@@ -453,54 +509,161 @@
     </div>
   </main>
 
-  <!-- ============= ABOUT TAIMIC ============= -->
-  <section id="about" class="mt-16">
-    <div class="max-w-[1440px] mx-auto px-6">
-      <div class="panel px-8 py-10 md:px-10 md:py-12 space-y-6">
-        <div class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">
-          About Taimic
+  <!-- ============= ABOUT SECTION (長版) ============= -->
+  <section id="about" class="bg-[#f4f6fb] border-t border-gray-200 py-12 md:py-16">
+    <div class="max-w-[960px] mx-auto px-6">
+      <div class="mb-8">
+        <div class="text-xs font-bold text-gray-500 uppercase tracking-[0.2em] mb-2">
+          ABOUT TAIMIC
         </div>
-        <h2 class="text-2xl md:text-[26px] font-[700] text-[#111827] tracking-tight mb-2">
-          關於 TAIMIC
+        <h2 class="text-2xl md:text-3xl font-bold text-[#111827] mb-4">
+          關於 Taimic
         </h2>
-        <p class="text-sm md:text-[15px] text-gray-700 leading-relaxed">
-          TAIMIC 是一個專為台灣投資人打造的 <span class="font-semibold">跨國資產管理與投資分析平台</span>。我們希望讓持有台股、美股與其他海外資產的投資人，可以在同一個地方看清楚自己的整體財務狀況，而不是被分散在不同券商、銀行與 Excel 裡的數字搞到眼花撩亂。
+        <p class="text-sm md:text-base text-gray-700 leading-relaxed mb-4">
+          Taimic 是一個專為跨國移動家庭打造、結合 AI 的跨境資產與傳承管理平台。
+          我們協助在多國生活、工作與投資的家庭，把分散在不同國家的資產拉回同一個畫面，
+          降低複雜稅制帶來的合規風險，同時提早思考財富要如何被規劃與分配，
+          讓您不需要再每天沉在 Excel、截圖與人工換匯計算裡。
         </p>
-        <p class="text-sm md:text-[15px] text-gray-700 leading-relaxed">
-          多數人只看得到「單一帳戶」的損益，卻很難回答一個最重要的問題：<span class="font-semibold">「我現在整體資產的風險與配置健康嗎？」</span>
-          TAIMIC 的核心，就是把 <span class="font-semibold">資產整合、風險結構、區域與產業分布</span> 用清楚的視覺化呈現出來，讓你可以用數據做決策，而不是只靠情緒與消息面。
+        <p class="text-sm md:text-base text-gray-700 leading-relaxed">
+          對很多跨境家庭來說，真正的問題不是「有沒有在投資」，而是：<br />
+          <span class="font-semibold">
+            「我到底有多少資產、分散在哪裡、風險和稅務長什麼樣子？」
+          </span>
         </p>
+      </div>
 
-        <div class="grid md:grid-cols-3 gap-6 pt-4">
-          <div>
-            <h3 class="text-sm font-semibold text-[#111827] mb-2">跨國資產總覽</h3>
-            <p class="text-sm text-gray-700 leading-relaxed">
-              將台股、美股與其他資產整合到同一個 Dashboard，以同一幣別計算總淨值、集中度與各市場比例。
-            </p>
-          </div>
-          <div>
-            <h3 class="text-sm font-semibold text-[#111827] mb-2">風險與結構分析</h3>
-            <p class="text-sm text-gray-700 leading-relaxed">
-              協助檢視單一標的曝險、產業分布與區域配置，讓你看出「是不是壓太重」、「是不是太偏向某個題材」。
-            </p>
-          </div>
-          <div>
-            <h3 class="text-sm font-semibold text-[#111827] mb-2">AI 投資洞察（開發中）</h3>
-            <p class="text-sm text-gray-700 leading-relaxed">
-              未來將結合 AI，針對你的實際持股提供個人化提醒與情境分析，讓 TAIMIC 成為你跨國資產的第二顆大腦。
-            </p>
-          </div>
+      <div class="space-y-8 text-sm md:text-base text-gray-700 leading-relaxed">
+        <div>
+          <h3 class="text-lg font-bold text-[#111827] mb-3">我們在解決的問題</h3>
+          <p class="mb-3">
+            對很多跨境家庭來說，真實的生活其實長這樣：
+          </p>
+          <ul class="list-disc pl-5 space-y-1 mb-3">
+            <li>券商帳戶在一個國家，退休金與保單在另一個國家，房產又在第三個地方。</li>
+            <li>現金、定存、基金、ETF 散落在不同銀行與平台，幣別也都不一樣。</li>
+            <li>只要想回答「我到底值多少？」或「會不會踩到 FATCA／FBAR／CRS 的門檻？」就得自己打開 Excel、下載對帳單、查歷史匯率，慢慢一格一格對。</li>
+            <li>一旦家裡有人發生意外，其他成員往往連有哪些跨國資產都不知道，更別說怎麼申請、怎麼被課稅與怎麼分配。</li>
+          </ul>
+          <p class="mb-2">
+            市面上的工具大多只處理其中一小塊：
+          </p>
+          <ul class="list-disc pl-5 space-y-1 mb-3">
+            <li><span class="font-semibold">匯款 App</span> 只管「錢怎麼從 A 到 B」。</li>
+            <li><span class="font-semibold">記帳 App</span> 只管「你花了多少」。</li>
+            <li>有些服務只做單一國家的投資或線上遺囑。</li>
+          </ul>
+          <p>
+            真正把
+            <span class="font-semibold">「跨境資產＋合規風險＋傳承規劃」</span>
+            當成同一個系統在處理的產品，幾乎不存在。Taimic 想做的，就是填補這塊被忽略、但對您至關重要的空白。
+          </p>
         </div>
 
-        <p class="text-sm md:text-[15px] text-gray-700 leading-relaxed pt-2">
-          我們相信，看懂自己的資產結構，是邁向財務自由的第一步。TAIMIC 不取代你的判斷，而是希望成為那個 <span class="font-semibold">讓你判斷更清楚</span> 的工具。
-        </p>
+        <div>
+          <h3 class="text-lg font-bold text-[#111827] mb-3">我們怎麼做（產品核心）</h3>
+          <p class="mb-3">
+            Taimic 的核心，是一個結合
+            <span class="font-semibold">多國資產整合</span>、
+            <span class="font-semibold">合規風險分析</span> 以及
+            <span class="font-semibold">AI 洞察</span> 的平台。我們目前聚焦三個方向：
+          </p>
+
+          <h4 class="font-semibold text-[#111827] mb-1">1. 跨國資產整合（Consolidated Multi-Country View）</h4>
+          <ul class="list-disc pl-5 space-y-1 mb-3">
+            <li>整合不同國家的券商帳戶、現金、保單與房產到同一個儀表板 (Dashboard)。</li>
+            <li>以統一的幣別與視角呈現市值、成本、損益、資產配置與集中度。</li>
+            <li>讓使用者不再只看「單一平台損益」，而是真正看懂「整體結構」。</li>
+          </ul>
+
+          <h4 class="font-semibold text-[#111827] mb-1">2. 合規風險與結構分析（Compliance & Risk Analytics）</h4>
+          <ul class="list-disc pl-5 space-y-1 mb-3">
+            <li>追蹤 FATCA／FBAR／CRS 相關門檻與關鍵餘額。</li>
+            <li>分析國家別、資產類別、產業與單一標的的曝險程度，幫你看出「資產壓在哪裡」。</li>
+            <li>讓稅務與風險不再是憑感覺的擔憂，而是清晰的數據。</li>
+          </ul>
+
+          <h4 class="font-semibold text-[#111827] mb-1">3. AI 賦能的財富洞察（AI-Driven Insights）</h4>
+          <ul class="list-disc pl-5 space-y-1 mb-3">
+            <li>利用 AI 針對您的實際持有部位，整理相關的法規更新、稅務重點與情境模擬。</li>
+            <li>從「如果我明天突然不在了，資產會怎麼流動？」到「現在這種資產結構對家人公平嗎？」</li>
+            <li>我們的目標，是讓您在走進會計師或律師事務所之前，就已經搞懂現況、準備好要問的關鍵問題。</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-bold text-[#111827] mb-3">Taimic 適合誰？</h3>
+          <p class="mb-3">
+            Taimic 是為那些
+            <span class="font-semibold">「同時活在兩個以上制度裡」</span>
+            的人設計的：
+          </p>
+          <ul class="list-disc pl-5 space-y-1 mb-3">
+            <li>長期在兩個以上國家之間生活、工作或退休的家庭。</li>
+            <li>同時持有多國資產（證券、保單、房產、現金），但覺得一切非常分散的人。</li>
+            <li>知道自己應該關心 FATCA／FBAR／CRS／遺產稅等議題，卻沒有時間、工具或精力每年重算一次的人。</li>
+            <li>想從「只看單一券商損益」進化到「理解整體跨境資產配置與風險結構」的自主人。</li>
+          </ul>
+          <p>
+            如果您心裡曾經浮現過：<br />
+            <span class="font-semibold">「我知道該看整體資產跟風險，但我太忙，又沒有好工具。」</span><br />
+            那麼 Taimic 就是為您而做的。
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-bold text-[#111827] mb-3">我們相信的未來</h3>
+          <p class="mb-3">
+            我們相信，跨境家庭值得比現在更好的選擇：
+          </p>
+          <ul class="list-disc pl-5 space-y-1 mb-3">
+            <li>不該只有超高淨值客戶，才拿得到 Family Office 等級的報表。</li>
+            <li>不該只有機構投資人，才用得起高規格的風險與結構分析工具。</li>
+            <li>也不該必須自己東拼西湊資料、到處詢問，才有辦法搞懂自己的跨國資產會怎麼被課稅、最後會怎麼被處理和分配。</li>
+          </ul>
+          <p class="mb-3">
+            所以，Taimic 的長期目標是：
+          </p>
+          <ul class="list-disc pl-5 space-y-1 mb-3">
+            <li>讓跨國資產管理變得直覺、透明、可視化。</li>
+            <li>讓 AI 成為您的財務輔助大腦，而不是黑箱。</li>
+            <li>讓更多跨境家庭，在全球市場與多國制度之間，能用更聰明、更冷靜的方式管理與分配自己的資產，而不是只被新聞、情緒或恐懼推著走。</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-bold text-[#111827] mb-3">現在的我們與下一步</h3>
+          <p class="mb-3">
+            我們從幾條「跨境複雜度最高」的走廊開始，例如亞洲與北美之間的家庭——那裡同時存在高資產密度、嚴格稅制與真實的資產分配需求。
+          </p>
+          <p class="mb-3">
+            從第一天開始，我們就沒有把產品綁死在特定國家組合，而是設計成一套可擴展的跨境架構：
+            不論是亞洲 ↔ 北美、歐洲 ↔ 亞洲，或是其他組合，都可以被納入同一套邏輯之中。
+          </p>
+          <p class="mb-3">
+            接下來，我們會依據實際使用者案例與需求，逐步加入：
+          </p>
+          <ul class="list-disc pl-5 space-y-1 mb-3">
+            <li>更細緻的資產分類與視覺化工具</li>
+            <li>對特定市場與跨境走廊的深度支援模組</li>
+            <li>與專業顧問（會計師／律師）的串接與轉介機制</li>
+          </ul>
+          <p class="mb-3">
+            我們希望成為那個讓您
+            <span class="font-semibold">「先看懂自己狀況、問對問題，再走進會議室」</span>
+            的核心平台。
+          </p>
+          <p class="font-semibold">
+            如果您也相信，看懂自己的全球資產，是邁向財務安全與長期資產規劃的第一步，
+            歡迎加入 Taimic，拿回您對全球財富的掌控權。
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ============= FOOTER ============= -->
-  <footer class="bg-[#f4f6fb] border-t border-gray-200 mt-16">
+  <footer class="bg-[#f4f6fb] border-t border-gray-200">
     <div class="max-w-[1440px] mx-auto px-6 pt-10 pb-4">
 
       <!-- Top rows -->
@@ -519,7 +682,7 @@
             </div>
           </div>
           <p class="text-sm text-gray-600 mb-4">
-            FATCA / CRS Compliant ・ Cross-Border Wealth Platform
+            FATCA / CRS Demo ・ Cross-Border Wealth Platform
           </p>
           <div class="inline-flex items-center text-xs font-medium text-green-700 bg-green-50 border border-green-200 rounded-full px-3 py-1">
             <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
@@ -531,7 +694,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
           <div>
             <div class="footer-col-title">SOLUTIONS</div>
-            <div class="footer-link">Family Office</div>
+            <div class="footer-link">Global Families</div>
             <div class="footer-link">Cross-Border Clients</div>
             <div class="footer-link">Entrepreneurs</div>
             <div class="footer-link">Retirement</div>
@@ -562,7 +725,7 @@
 
       <!-- Bottom row -->
       <div class="flex flex-col md:flex-row items-center justify-between gap-4 pt-4 pb-2 text-xs text-gray-500">
-        <div>© 2025 Taimic Inc. All Rights Reserved.</div>
+        <div>© 2025 Taimic Inc. All Rights Reserved. (Demo)</div>
         <div class="flex items-center gap-4 text-gray-400">
           <i class="fa-brands fa-x-twitter"></i>
           <i class="fa-brands fa-discord"></i>
@@ -641,7 +804,7 @@
   <script>
     const RATE = 32.5;
     let curr = 'TWD';
-    let lang = 'en';
+    let lang = 'zh';  // 預設顯示中文
     const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
 
     const assets = [
@@ -652,64 +815,27 @@
 
     const I18N = {
       en: {
-        'nav.overview':'Overview',
-        'nav.tax':'Tax & Compliance',
-        'nav.estate':'Estate Plan',
-        'nav.reports':'Reports',
-        'nav.about':'About Taimic',
-        'page.title':'Cross-Border Wealth Platform',
-        'page.desc':'Integrated view of Taiwan & US assets with FATCA compliance checks.',
-        'btn.add':'Add Asset',
-        'btn.upload':'Click to Upload File',
-        'stat.us':'US Net Worth',
-        'stat.tw':'Taiwan Net Worth',
-        'stat.global':'Global Total',
-        'stat.safe':'Estate Tax Risk: Safe',
-        'table.title':'Portfolio Holdings',
-        'col.name':'Asset Name',
-        'col.region':'Region',
-        'col.type':'Category',
-        'col.val':'Value',
-        'alert.title':'AI Tax Alert: FATCA Risk Detected',
-        'alert.desc':'We detected a new "High Cash Value" insurance policy in Taiwan. This exceeds the $50,000 reporting threshold for IRS Form 8938.',
-        'chart.title':'Regional Allocation',
-        'chart.insight':'AI Insight',
-        'chart.desc':'Your Taiwan assets comprise 40% of your net worth. Consider hedging TWD currency risk.',
-        'modal.title':'Add Taiwan Asset (AI OCR)',
-        'modal.desc':'Upload policy or statement. AI will extract data.',
-        'modal.scanning':'AI Processing...',
-        'user.login':'Login',
-        'user.register':'Register'
+        'nav.overview':'Overview','nav.tax':'Tax & Compliance','nav.estate':'Estate Plan','nav.reports':'Reports','nav.about':'About Taimic',
+        'page.title':'Cross-Border Wealth Dashboard','page.desc':'Integrated view of global assets with FATCA / CRS risk demo.',
+        'btn.add':'Add Asset','btn.upload':'Click to Upload File',
+        'stat.us':'US Net Worth','stat.tw':'Taiwan Net Worth','stat.global':'Global Total','stat.safe':'Estate Tax Risk: Safe',
+        'table.title':'Portfolio Holdings','col.name':'Asset Name','col.region':'Region','col.type':'Category','col.val':'Value',
+        'alert.title':'AI Tax Alert: FATCA Risk Detected','alert.desc':'We detected a new high cash value policy in Taiwan. This may exceed IRS Form 8938 reporting thresholds.',
+        'chart.title':'Regional Allocation','chart.insight':'AI Insight','chart.desc':'Your Taiwan assets comprise 40% of your net worth. Consider hedging TWD currency risk.',
+        'modal.title':'Add Taiwan Asset (AI OCR)','modal.desc':'Upload a policy or statement. AI will extract key data.','modal.scanning':'AI Processing...',
+        'user.login':'Login','user.register':'Register'
       },
       zh: {
-        'nav.overview':'資產總覽',
-        'nav.tax':'稅務合規',
-        'nav.estate':'家族傳承',
-        'nav.reports':'分析報告',
-        'nav.about':'關於 TAIMIC',
-        'page.title':'跨國資產整合平台',
-        'page.desc':'整合台灣與美國資產，提供即時淨值分析與跨境稅務風險檢測。',
-        'btn.add':'新增資產',
-        'btn.upload':'點擊上傳檔案',
-        'stat.us':'美國總資產',
-        'stat.tw':'台灣總資產',
-        'stat.global':'全球總淨值',
-        'stat.safe':'遺產稅風險：安全',
-        'table.title':'資產持有清單',
-        'col.name':'資產名稱',
-        'col.region':'地區',
-        'col.type':'類別',
-        'col.val':'現值',
-        'alert.title':'AI 稅務警示：偵測到 FATCA 風險',
-        'alert.desc':'系統掃描到一張新增的台灣高現金價值保單。此金額已超過 IRS Form 8938 的 5 萬美元申報門檻。',
-        'chart.title':'區域資產配置',
-        'chart.insight':'AI 智能分析',
-        'chart.desc':'您的台灣資產佔總淨值的 40%。建議針對台幣匯率風險進行避險。',
-        'modal.title':'新增台灣資產 (AI OCR)',
-        'modal.desc':'上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。',
-        'modal.scanning':'AI 分析中...',
-        'user.login':'登入',
-        'user.register':'註冊'
+        'nav.overview':'資產總覽','nav.tax':'稅務合規','nav.estate':'家族傳承','nav.reports':'分析報告','nav.about':'關於 Taimic',
+        'page.title':'不再碎片化。一眼看懂您的全球資產與風險結構。',
+        'page.desc':'告別散落在不同國家的網銀與 Excel 表格。Taimic 專為跨國移動家庭打造，將分散的券商帳戶、房產與保單整合為單一全景，自動追蹤 FATCA、FBAR、CRS 稅務風險。讓複雜的跨國財務，變成清晰、可執行的決策。',
+        'btn.add':'新增資產','btn.upload':'點擊上傳檔案',
+        'stat.us':'美國總資產','stat.tw':'台灣總資產','stat.global':'全球總淨值','stat.safe':'遺產稅風險：安全',
+        'table.title':'資產持有清單','col.name':'資產名稱','col.region':'地區','col.type':'類別','col.val':'現值',
+        'alert.title':'AI 稅務警示：偵測到 FATCA 風險','alert.desc':'系統掃描到一張新增的台灣高現金價值保單。此金額已超過 IRS Form 8938 的 5 萬美元申報門檻。',
+        'chart.title':'區域資產配置','chart.insight':'AI 智能分析','chart.desc':'您的台灣資產佔總淨值的 40%。建議針對台幣匯率風險進行避險。',
+        'modal.title':'新增台灣資產 (AI OCR)','modal.desc':'上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。','modal.scanning':'AI 分析中...',
+        'user.login':'登入','user.register':'註冊'
       }
     };
 
@@ -724,7 +850,8 @@
       const t = I18N[lang];
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
-        el.textContent = t[el.dataset.i18n];
+        const key = el.dataset.i18n;
+        if (t[key]) el.textContent = t[key];
       });
 
       document.querySelectorAll('.val-display').forEach(el => {
