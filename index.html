@@ -105,7 +105,7 @@
     .nav-link.active {
       color: #000;
       font-weight: 700;
-      border-bottom-color: transparent; /* 只在 hover 時變藍色 */
+      border-bottom-color: transparent; /* 只有 hover 時才出現藍色底線 */
     }
 
     /* --- Dropdown --- */
@@ -185,6 +185,16 @@
       border-radius: 12px;
       border: 1px solid #e5e7eb;
       box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+    }
+
+    /* Pricing cards hover 狀態 */
+    .pricing-card {
+      transition: border-color .2s, box-shadow .2s, transform .2s;
+    }
+    .pricing-card:hover {
+      border-color: #2563eb !important;
+      box-shadow: 0 20px 50px rgba(37, 99, 235, 0.25) !important;
+      transform: translateY(-2px);
     }
 
     /* --- Footer --- */
@@ -520,40 +530,43 @@
         <!-- Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
           <!-- Starter -->
-          <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col">
-            <h3 class="text-sm font-semibold text-gray-700 mb-1">Starter</h3>
-            <p class="text-xs text-gray-500 mb-4">For trying Taimic with a small cross-border portfolio.</p>
-            <div class="flex items-baseline gap-1 mb-1">
-              <div class="text-3xl font-bold text-gray-900" 
-                   data-plan-price 
-                   data-monthly="$0" 
-                   data-yearly="$0">
-                $0
+          <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col relative overflow-hidden group pricing-card">
+            <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-50/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="relative z-10">
+              <h3 class="text-sm font-semibold text-gray-700 mb-1">Starter</h3>
+              <p class="text-xs text-gray-500 mb-4">For trying Taimic with a small cross-border portfolio.</p>
+              <div class="flex items-baseline gap-1 mb-1">
+                <div class="text-3xl font-bold text-gray-900" 
+                     data-plan-price 
+                     data-monthly="$0" 
+                     data-yearly="$0">
+                  $0
+                </div>
+                <span class="text-sm text-gray-500">/ month</span>
               </div>
-              <span class="text-sm text-gray-500">/ month</span>
+              <button class="mt-4 w-full py-2.5 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-black transition">
+                Get started
+              </button>
+              <ul class="mt-6 space-y-2 text-sm text-gray-600">
+                <li class="flex gap-2">
+                  <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
+                  <span>Up to 3 brokerage / bank accounts</span>
+                </li>
+                <li class="flex gap-2">
+                  <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
+                  <span>Basic global net-worth dashboard</span>
+                </li>
+                <li class="flex gap-2">
+                  <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
+                  <span>Single-currency view (USD or TWD)</span>
+                </li>
+              </ul>
             </div>
-            <button class="mt-4 w-full py-2.5 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-black transition">
-              Get started
-            </button>
-            <ul class="mt-6 space-y-2 text-sm text-gray-600">
-              <li class="flex gap-2">
-                <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                <span>Up to 3 brokerage / bank accounts</span>
-              </li>
-              <li class="flex gap-2">
-                <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                <span>Basic global net-worth dashboard</span>
-              </li>
-              <li class="flex gap-2">
-                <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                <span>Single-currency view (USD or TWD)</span>
-              </li>
-            </ul>
           </div>
 
           <!-- Pro -->
-          <div class="bg-white rounded-3xl border border-blue-400 shadow-[0_20px_50px_rgba(37,99,235,0.25)] p-8 flex flex-col relative overflow-hidden">
-            <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-50/70 to-transparent"></div>
+          <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col relative overflow-hidden group pricing-card">
+            <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-50/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <div class="relative z-10">
               <div class="flex items-center justify-between mb-1">
                 <h3 class="text-sm font-semibold text-gray-800">Pro</h3>
@@ -602,49 +615,52 @@
             </div>
           </div>
 
-          <!-- Pro+ -->
-          <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col">
-            <h3 class="text-sm font-semibold text-gray-700 mb-1">Family Office</h3>
-            <p class="text-xs text-gray-500 mb-4">
-              For families working with tax / legal advisors who need deeper structure &amp; export.
-            </p>
-            <div class="flex items-baseline gap-1 mb-1">
-              <div class="text-3xl font-bold text-gray-900" 
-                   data-plan-price 
-                   data-monthly="$79" 
-                   data-yearly="$790">
-                $79
+          <!-- Family Office -->
+          <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col relative overflow-hidden group pricing-card">
+            <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-50/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div class="relative z-10">
+              <h3 class="text-sm font-semibold text-gray-700 mb-1">Family Office</h3>
+              <p class="text-xs text-gray-500 mb-4">
+                For families working with tax / legal advisors who need deeper structure &amp; export.
+              </p>
+              <div class="flex items-baseline gap-1 mb-1">
+                <div class="text-3xl font-bold text-gray-900" 
+                     data-plan-price 
+                     data-monthly="$79" 
+                     data-yearly="$790">
+                  $79
+                </div>
+                <span class="text-sm text-gray-500">/ month</span>
               </div>
-              <span class="text-sm text-gray-500">/ month</span>
+              <p class="text-[11px] text-gray-500 mb-4">Billed annually as $790 when yearly is selected.</p>
+              <button class="mt-1 w-full py-2.5 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-black transition">
+                Talk to us
+              </button>
+              <ul class="mt-6 space-y-2 text-sm text-gray-600">
+                <li class="flex gap-2">
+                  <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
+                  <span>Everything in Pro</span>
+                </li>
+                <li class="flex gap-2">
+                  <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
+                  <span>Advanced entity / trust / beneficiary mapping</span>
+                </li>
+                <li class="flex gap-2">
+                  <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
+                  <span>Downloadable reports for accountants &amp; lawyers</span>
+                </li>
+                <li class="flex gap-2">
+                  <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
+                  <span>Dedicated onboarding &amp; priority support</span>
+                </li>
+              </ul>
             </div>
-            <p class="text-[11px] text-gray-500 mb-4">Billed annually as $790 when yearly is selected.</p>
-            <button class="mt-1 w-full py-2.5 rounded-xl bg-gray-900 text-white text-sm font-semibold hover:bg-black transition">
-              Talk to us
-            </button>
-            <ul class="mt-6 space-y-2 text-sm text-gray-600">
-              <li class="flex gap-2">
-                <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                <span>Everything in Pro</span>
-              </li>
-              <li class="flex gap-2">
-                <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                <span>Advanced entity / trust / beneficiary mapping</span>
-              </li>
-              <li class="flex gap-2">
-                <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                <span>Downloadable reports for accountants &amp; lawyers</span>
-              </li>
-              <li class="flex gap-2">
-                <i class="fa-solid fa-check text-[#16a34a] mt-1 text-xs"></i>
-                <span>Dedicated onboarding &amp; priority support</span>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== About Taimic (簡版英文，你可之後改成中/英雙欄) ===== -->
+    <!-- ===== About Taimic (暫時英文版) ===== -->
     <section id="section-about" class="hidden bg-[#e5ebf5] border-t border-gray-200">
       <div class="max-w-[960px] mx-auto px-6 pt-14 pb-20">
         <h1 class="text-[32px] font-extrabold tracking-tight text-[#111827] mb-3">
