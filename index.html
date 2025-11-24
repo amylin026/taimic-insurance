@@ -216,19 +216,21 @@
       color: var(--brand-blue);
     }
 
-    /* Reports Gate 背景用的 blur & 微動（只給 Reports 用） */
-    .reports-blur {
-      filter: blur(18px);
-      transform: scale(1.03);
+    /* Reports：Taimic 藍漸層背景 + 高度撐滿 */
+    .reports-section {
+      background: linear-gradient(
+        to bottom,
+        #f7fbff,
+        #E3F2FD,
+        #BFDBFE
+      );
     }
 
-    .reports-gate-bg {
-      animation: reports-bg-float 14s ease-in-out infinite alternate;
-    }
-
-    @keyframes reports-bg-float {
-      0%   { transform: translateY(0px) translateX(0px); }
-      100% { transform: translateY(-10px) translateX(6px); }
+    .reports-shell {
+      /* 100vh - header 72px - 預估 footer 約 220px */
+      min-height: calc(100vh - 72px - 220px);
+      display: flex;
+      align-items: center;
     }
   </style>
 </head>
@@ -686,33 +688,15 @@
             HOME
           </div>
 
-          <div class="mt-1 flex items-center gap-3">
-            <svg class="logo-clock-hero" viewBox="0 0 100 100">
-              <defs>
-                <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#bfdbfe" />
-                  <stop offset="100%" stop-color="#60a5fa" />
-                </linearGradient>
-              </defs>
-              <circle cx="50" cy="50" r="46" class="clock-outer" />
-              <circle cx="50" cy="50" r="38" class="clock-inner" />
-              <circle cx="50" cy="50" r="30" class="clock-core" />
-              <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
-              <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
-              <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
-              <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
-              <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
-              <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
-              <circle cx="50" cy="50" r="3.2" class="center-dot" />
-            </svg>
+          <h1 class="text-[34px] md:text-[42px] font-extrabold tracking-tight text-[#0f172a]">
+            About Taimic
+          </h1>
 
-            <h1 class="text-[34px] md:text-[42px] font-extrabold tracking-tight text-[#0f172a]">
-              About <span class="text-[#1a73e8]">Taimic</span>
-            </h1>
-          </div>
-
-          <p class="mt-4 text-[13px] md:text-[15px] text-gray-700/90 max-w-2xl leading-relaxed" data-i18n="about.hero">
-            Built for global families. Taimic brings your multi-country assets, compliance risks, and legacy plans into a single, AI-powered view.
+          <p class="mt-4 text-sm md:text-base text-gray-700 max-w-2xl leading-relaxed">
+            Taimic is an AI-enabled cross-border wealth and legacy management platform built for globally
+            mobile families. We help you bring assets held in multiple countries back into a single view,
+            reduce compliance risk under complex tax regimes, and think ahead about how your wealth will be
+            structured and shared.
           </p>
         </header>
 
@@ -1022,146 +1006,113 @@
       </div>
     </section>
 
-    <!-- ===== Reports (未登入 Gate 畫面) ===== -->
-    <section id="section-reports" class="hidden relative bg-[#020617] overflow-hidden">
-      <!-- 背景：模擬儀表板 + 重度 blur -->
-      <div class="reports-gate-bg absolute inset-0 pointer-events-none">
-        <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"></div>
-
-        <!-- 偽「左邊大曲線圖」 -->
-        <div class="reports-blur absolute -left-16 top-10 w-[420px] h-[260px] rounded-3xl border border-[#60a5fa]/40 bg-gradient-to-br from-[#020617] via-[#020617] to-[#0b1120]">
-          <div class="absolute inset-5 rounded-2xl border border-slate-700/70 overflow-hidden">
-            <div class="absolute inset-0 opacity-60">
-              <div class="h-[2px] w-full bg-gradient-to-r from-transparent via-[#38bdf8]/70 to-transparent mt-10"></div>
-              <div class="h-[2px] w-full bg-gradient-to-r from-transparent via-[#22c55e]/70 to-transparent mt-12"></div>
+    <!-- ===== Reports（Taimic Brand Blue 風格） ===== -->
+    <section id="section-reports" class="hidden reports-section">
+      <div class="reports-shell w-full">
+        <div class="max-w-[1100px] mx-auto px-6 py-16 flex items-center justify-center">
+          <div class="w-full max-w-md bg-white rounded-3xl border border-blue-100 shadow-xl md:shadow-2xl p-8 md:p-9 animate-fade-in">
+            
+            <!-- 小標籤：鎖頭 + Reports -->
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 mb-5">
+              <div class="w-6 h-6 rounded-full bg-[#e0edff] flex items-center justify-center text-[#1d4ed8]">
+                <i class="fa-solid fa-lock text-xs"></i>
+              </div>
+              <span class="text-[11px] font-semibold tracking-[0.16em] text-slate-600 uppercase">
+                Reports • Private area
+              </span>
             </div>
-            <div class="absolute inset-x-5 bottom-5 flex justify-between text-[10px] text-slate-400/80 font-mono">
-              <span>TW</span><span>US</span><span>Global</span>
-            </div>
-          </div>
-        </div>
 
-        <!-- 偽「右邊圓餅圖」 -->
-        <div class="reports-blur absolute -right-10 bottom-[-40px] w-[360px] h-[260px] rounded-3xl border border-[#4f46e5]/40 bg-gradient-to-tr from-[#020617] via-[#040718] to-[#0b1120]">
-          <div class="absolute inset-8 rounded-2xl border border-slate-700/80 flex items-center justify-center">
-            <div class="relative w-40 h-40 rounded-full bg-slate-900/80 border border-slate-600/80">
-              <div class="absolute inset-[22%] rounded-full bg-slate-900/90 border border-slate-700/80"></div>
-              <div class="absolute inset-[35%] rounded-full bg-slate-950/90"></div>
-              <!-- pie slices（只是視覺感，不要太明顯） -->
-              <div class="absolute inset-[8%] rounded-full border-t-4 border-l-4 border-[#38bdf8]/80 border-r-4 border-b-4 border-transparent rotate-[20deg]"></div>
-              <div class="absolute inset-[18%] rounded-full border-b-4 border-r-4 border-[#a855f7]/70 border-l-4 border-t-4 border-transparent rotate-[-40deg]"></div>
-            </div>
-          </div>
-        </div>
+            <!-- 英文版 -->
+            <div id="reports-gate-en" class="space-y-4 text-slate-900 text-sm md:text-[15px] leading-relaxed">
+              <h1 class="text-[22px] md:text-[24px] font-bold tracking-tight text-slate-900">
+                Unlock your asset insights.
+              </h1>
+              <p>
+                Sign in to see your full cross-border reports, tax thresholds and AI insights —
+                all based on your real holdings, not just demo data.
+              </p>
 
-        <!-- 整體再壓一層暗色 overlay，讓白卡是主角 -->
-        <div class="absolute inset-0 bg-slate-950/60"></div>
-      </div>
+              <ul class="list-disc pl-5 space-y-1.5 text-slate-700">
+                <li>Consolidated Taiwan + global positions in one private report room.</li>
+                <li>FATCA / FBAR / CRS threshold tracking and risk flags.</li>
+                <li>Scenario views for your family, legacy and cross-border structure.</li>
+              </ul>
 
-      <!-- 前景：白色卡片（Gate） -->
-      <div class="relative max-w-[1100px] mx-auto px-6 py-20 min-h-[70vh] flex items-center justify-center">
-        <div class="w-full max-w-md bg-white/95 border border-slate-200 rounded-3xl shadow-[0_24px_80px_rgba(15,23,42,0.55)] p-8 md:p-9 animate-fade-in">
-          
-          <!-- 小標籤：鎖頭 + Reports -->
-          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 mb-5">
-            <div class="w-6 h-6 rounded-full bg-[#e0edff] flex items-center justify-center text-[#1d4ed8]">
-              <i class="fa-solid fa-lock text-xs"></i>
-            </div>
-            <span class="text-[11px] font-semibold tracking-[0.16em] text-slate-500 uppercase">
-              Reports • Private area
-            </span>
-          </div>
+              <div class="pt-1">
+                <p class="text-xs text-slate-500">
+                  Reports are only available to logged-in Taimic users to protect your privacy.
+                </p>
+              </div>
 
-          <!-- 英文版 -->
-          <div id="reports-gate-en" class="space-y-4 text-slate-900 text-sm md:text-[15px] leading-relaxed">
-            <h1 class="text-[22px] md:text-[24px] font-bold tracking-tight text-slate-900">
-              Unlock your asset insights.
-            </h1>
-            <p>
-              Sign in to see your full cross-border reports, tax thresholds and AI insights —
-              all based on your real holdings, not just demo data.
-            </p>
+              <!-- 按鈕區 -->
+              <div class="pt-4 flex flex-col sm:flex-row gap-3">
+                <button
+                  type="button"
+                  onclick="openAuthModal('login')"
+                  class="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition">
+                  <i class="fa-solid fa-right-to-bracket text-xs"></i>
+                  <span>Log in to Taimic</span>
+                </button>
 
-            <ul class="list-disc pl-5 space-y-1.5 text-slate-700">
-              <li>Consolidated Taiwan + global positions in one private report room.</li>
-              <li>FATCA / FBAR / CRS threshold tracking and risk flags.</li>
-              <li>Scenario views for your family, legacy and cross-border structure.</li>
-            </ul>
+                <button
+                  type="button"
+                  onclick="openAuthModal('register')"
+                  class="flex-1 inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-sm font-semibold text-slate-800 py-2.5 transition">
+                  <i class="fa-solid fa-user-plus text-xs"></i>
+                  <span>Create an account</span>
+                </button>
+              </div>
 
-            <div class="pt-1">
-              <p class="text-xs text-slate-500">
-                Reports are only available to logged-in Taimic users to protect your privacy.
+              <p class="pt-2 text-[11px] text-slate-400 leading-relaxed">
+                No worries — we never access your bank accounts directly without your explicit consent.
               </p>
             </div>
 
-            <!-- 按鈕區 -->
-            <div class="pt-4 flex flex-col sm:flex-row gap-3">
-              <button
-                type="button"
-                onclick="openAuthModal('login')"
-                class="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition">
-                <i class="fa-solid fa-right-to-bracket text-xs"></i>
-                <span>Log in to Taimic</span>
-              </button>
+            <!-- 中文版 -->
+            <div id="reports-gate-zh" class="hidden space-y-4 text-slate-900 text-sm md:text-[15px] leading-relaxed">
+              <h1 class="text-[22px] md:text-[24px] font-bold tracking-tight text-slate-900">
+                解鎖你的跨境資產視角。
+              </h1>
+              <p>
+                登入後即可查看你的完整報表、跨國門檻追蹤與 AI 洞察 ——  
+                所有內容都建立在你真實持有的資產結構上，而不是示意數字。
+              </p>
 
-              <button
-                type="button"
-                onclick="openAuthModal('register')"
-                class="flex-1 inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 bg-white hover:bg-slate-50 text-sm font-semibold text-slate-800 py-2.5 transition">
-                <i class="fa-solid fa-user-plus text-xs"></i>
-                <span>Create an account</span>
-              </button>
-            </div>
+              <ul class="list-disc pl-5 space-y-1.5 text-slate-700">
+                <li>把台灣＋海外資產拉回同一個「私人報表室」。</li>
+                <li>追蹤 FATCA／FBAR／CRS 等關鍵門檻與風險標記。</li>
+                <li>針對家人與資產傳承做情境試算與結構檢視。</li>
+              </ul>
 
-            <p class="pt-2 text-[11px] text-slate-400 leading-relaxed">
-              No worries — we never access your bank accounts directly without your explicit consent.
-            </p>
-          </div>
+              <div class="pt-1">
+                <p class="text-xs text-slate-500">
+                  為保障你的隱私，報表僅提供登入用戶查看，不會對外公開。
+                </p>
+              </div>
 
-          <!-- 中文版 -->
-          <div id="reports-gate-zh" class="hidden space-y-4 text-slate-900 text-sm md:text-[15px] leading-relaxed">
-            <h1 class="text-[22px] md:text-[24px] font-bold tracking-tight text-slate-900">
-              解鎖你的跨境資產視角。
-            </h1>
-            <p>
-              登入後即可查看你的完整報表、跨國門檻追蹤與 AI 洞察 ——  
-              所有內容都建立在你真實持有的資產結構上，而不是示意數字。
-            </p>
+              <!-- 按鈕區 -->
+              <div class="pt-4 flex flex-col sm:flex-row gap-3">
+                <button
+                  type="button"
+                  onclick="openAuthModal('login')"
+                  class="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition">
+                  <i class="fa-solid fa-right-to-bracket text-xs"></i>
+                  <span>登入 Taimic</span>
+                </button>
 
-            <ul class="list-disc pl-5 space-y-1.5 text-slate-700">
-              <li>把台灣＋海外資產拉回同一個「私人報表室」。</li>
-              <li>追蹤 FATCA／FBAR／CRS 等關鍵門檻與風險標記。</li>
-              <li>針對家人與資產傳承做情境試算與結構檢視。</li>
-            </ul>
+                <button
+                  type="button"
+                  onclick="openAuthModal('register')"
+                  class="flex-1 inline-flex items-center justify-center gap-2 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-sm font-semibold text-slate-800 py-2.5 transition">
+                  <i class="fa-solid fa-user-plus text-xs"></i>
+                  <span>建立帳號</span>
+                </button>
+              </div>
 
-            <div class="pt-1">
-              <p class="text-xs text-slate-500">
-                為保障你的隱私，報表僅提供登入用戶查看，不會對外公開。
+              <p class="pt-2 text-[11px] text-slate-400 leading-relaxed">
+                請放心，我們不會在未經你授權的情況下，直接存取你的銀行或券商帳戶。
               </p>
             </div>
-
-            <!-- 按鈕區 -->
-            <div class="pt-4 flex flex-col sm:flex-row gap-3">
-              <button
-                type="button"
-                onclick="openAuthModal('login')"
-                class="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition">
-                <i class="fa-solid fa-right-to-bracket text-xs"></i>
-                <span>登入 Taimic</span>
-              </button>
-
-              <button
-                type="button"
-                onclick="openAuthModal('register')"
-                class="flex-1 inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 bg-white hover:bg-slate-50 text-sm font-semibold text-slate-800 py-2.5 transition">
-                <i class="fa-solid fa-user-plus text-xs"></i>
-                <span>建立帳號</span>
-              </button>
-            </div>
-
-            <p class="pt-2 text-[11px] text-slate-400 leading-relaxed">
-              請放心，我們不會在未經你授權的情況下，直接存取你的銀行或券商帳戶。
-            </p>
           </div>
         </div>
       </div>
@@ -1329,7 +1280,6 @@
         'alert.title':'AI tax alert: potential FATCA risk detected','alert.desc':'A new high cash-value policy in Taiwan may exceed the Form 8938 reporting threshold.',
         'chart.title':'Regional allocation','chart.insight':'AI insight','chart.desc':'Taiwan assets make up 40% of your net worth. Consider hedging TWD FX risk.',
         'modal.title':'Add Taiwan asset (AI OCR)','modal.desc':'Upload a policy front page or bank statement, Taimic will extract key data with AI.','modal.scanning':'AI processing...',
-        'about.hero':'Built for global families. Taimic brings your multi-country assets, compliance risks, and legacy plans into a single, AI-powered view.',
         'user.login':'Login','user.register':'Sign up'
       },
       zh: {
@@ -1345,7 +1295,6 @@
         'alert.title':'AI 稅務警示：偵測到 FATCA 風險','alert.desc':'系統掃描到一張新增的台灣高現金價值保單，可能超過 IRS Form 8938 申報門檻。',
         'chart.title':'區域資產配置','chart.insight':'AI 智能分析','chart.desc':'您的台灣資產佔總淨值約 40%，建議評估台幣匯率風險。',
         'modal.title':'新增台灣資產 (AI OCR)','modal.desc':'上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。','modal.scanning':'AI 分析中...',
-        'about.hero':'專為全球家庭打造。Taimic 將你分散在多國的資產、合規風險與傳承規劃，整合成一個由 AI 驅動的全局視圖。',
         'user.login':'登入','user.register':'註冊'
       }
     };
