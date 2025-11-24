@@ -31,60 +31,69 @@
       --text-main: #222222;
     }
 
-        /* --- Logo Clock --- */
-    .logo-clock { width: 44px; height: 44px; }
-    .logo-clock-hero { width: 40px; height: 40px; }
+     /* --- Logo Clock：統一成 Figma 扁平藍風格 --- */
+.logo-clock {
+  width: 44px;
+  height: 44px;
+}
+.logo-clock-hero {
+  width: 40px;
+  height: 40px;
+}
+.logo-clock-about {
+  width: 52px;  /* 想再大就調這裡 */
+  height: 52px;
+}
 
-    /* About 那顆專用（放大版） */
-    .logo-clock-about {
-      width: 52px;   /* 想再大一點就把 52 換成 56 / 60 都可以 */
-      height: 52px;
-    }
+/* 外圈：兩層淡淡的藍色圓環 */
+.clock-outer {
+  fill: none;
+  stroke: #e4edff;       /* 最外圈顏色 */
+  stroke-width: 4;
+}
 
-    .clock-outer {
-      fill: none;
-      stroke: #dbeafe;
-      stroke-width: 2.5;
-    }
+.clock-inner {
+  fill: #f5f7ff;         /* 中間白藍底 */
+  stroke: #e4edff;
+  stroke-width: 3;
+}
 
-    .clock-inner {
-      fill: #eff6ff;
-      stroke: #e5edff;
-      stroke-width: 1.5;
-    }
+/* 中心大圓：藍色漸層 */
+.clock-core {
+  fill: url(#clockGradient);
+}
 
-    .clock-core {
-      fill: url(#clockGradient);
-      opacity: 0.98;
-    }
+/* 四個刻度 */
+.clock-tick-line {
+  stroke: #d7e3ff;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
 
-    .clock-tick-line {
-      stroke: #cbd5f5;
-      stroke-width: 1.4;
-      stroke-linecap: round;
-    }
+/* 指針 */
+.hand {
+  stroke-linecap: round;
+  transform-origin: 50% 50%;
+}
 
-    .hand {
-      stroke-width: 2.6;
-      stroke-linecap: round;
-      transform-origin: 50% 50%;
-    }
+/* 小時針（黑色） */
+.hand-hour {
+  stroke: #111827;
+  stroke-width: 4.5;
+}
 
-    .hand-hour {
-      stroke: #1f2933;
-      animation: rotate 1800s linear infinite;
-    }
+/* 分針（藍色） */
+.hand-minute {
+  stroke: #2563eb;
+  stroke-width: 4;
+}
 
-    .hand-minute {
-      stroke: #3b82f6;
-      animation: rotate 300s linear infinite;
-    }
-
-    .center-dot {
-      fill: #ffffff;
-      stroke: #3b82f6;
-      stroke-width: 2;
-    }
+/* 中間小圓點：白底藍框 */
+.center-dot {
+  fill: #ffffff;
+  stroke: #2563eb;
+  stroke-width: 3;
+}
 
     @keyframes rotate {
       from { transform: rotate(0deg); }
