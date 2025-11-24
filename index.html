@@ -618,46 +618,352 @@
       </div>
     </section>
 
-    <!-- ===== About Taimic (簡版英文，你可之後改成中/英雙欄) ===== -->
+    <!-- ===== About Taimic (TSMC-style, full CN/EN) ===== -->
     <section id="section-about" class="hidden bg-[#e5ebf5] border-t border-gray-200">
-      <div class="max-w-[960px] mx-auto px-6 pt-14 pb-20">
-        <h1 class="text-[32px] font-extrabold tracking-tight text-[#111827] mb-3">
-          About Taimic
-        </h1>
-        <p class="text-sm md:text-base text-gray-700 leading-relaxed mb-6">
-          Taimic is an AI-enabled cross-border wealth and legacy management platform built for globally
-          mobile families. We bring assets held in multiple countries back into a single view, reduce
-          compliance risk under complex tax regimes, and help you think ahead about how your wealth will
-          be structured and shared – without living inside Excel and manual FX calculations every day.
-        </p>
+      <!-- 中文版 -->
+      <div id="about-zh" class="">
+        <!-- Hero -->
+        <div class="w-full bg-gradient-to-r from-[#2563eb] via-[#1d4ed8] to-[#0f172a]">
+          <div class="max-w-[1200px] mx-auto px-6 py-10 md:py-14 flex flex-col md:flex-row items-center gap-8">
+            <div class="flex-1">
+              <p class="text-xs text-blue-100 mb-2">首頁 / 關於 Taimic</p>
+              <h1 class="text-[30px] md:text-[36px] font-extrabold tracking-tight text-white mb-3">
+                關於 Taimic
+              </h1>
+              <p class="text-sm md:text-base text-blue-50 leading-relaxed">
+                Taimic 是一個專為跨國移動家庭打造、結合 AI 的跨境資產與傳承管理平台。
+              </p>
+            </div>
+            <div class="flex-1">
+              <div class="rounded-2xl overflow-hidden shadow-xl border border-white/20 bg-gradient-to-br from-blue-100 to-slate-200 h-[220px] md:h-[260px] flex items-center justify-center">
+                <div class="w-[80%] h-[70%] rounded-2xl bg-gradient-to-br from-[#0f172a] via-[#1d4ed8] to-[#60a5fa] opacity-90 shadow-2xl flex items-center justify-center">
+                  <span class="text-xs md:text-sm text-blue-50 tracking-[0.18em] uppercase">
+                    Cross-border Wealth • AI • Compliance
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <h2 class="text-lg font-semibold text-[#111827] mt-8 mb-2">What problem we are solving</h2>
-        <p class="text-sm text-gray-700 leading-relaxed mb-3">
-          In reality, life for a cross-border family often looks like this:
-        </p>
-        <ul class="list-disc pl-5 text-sm text-gray-700 space-y-2 mb-6">
-          <li>Brokerage accounts in one country, pensions and insurance in another, property in a third.</li>
-          <li>Cash, deposits, funds and ETFs scattered across banks and platforms with different currencies.</li>
-          <li>To answer “what am I actually worth?” or “will I trigger FATCA / FBAR / CRS thresholds?” you have to download statements, check FX history and reconcile everything in Excel.</li>
-          <li>If something happens to one family member, the others may not even know what assets exist, let alone how they will be taxed and distributed.</li>
-        </ul>
+        <!-- Content card -->
+        <div class="max-w-[1200px] mx-auto px-6 -mt-6 md:-mt-10 pb-16">
+          <div class="bg-white rounded-2xl shadow-md border border-gray-200 px-6 md:px-10 py-8 md:py-10 text-sm md:text-[15px] text-gray-800 leading-relaxed space-y-6">
+            <p>
+              我們協助在多國生活、工作與投資的家庭，把分散在不同國家的資產拉回同一個畫面，降低複雜稅制帶來的合規風險，同時提早思考財富要如何被規劃與分配，讓您不需要再每天沉在 Excel、截圖與人工換匯計算裡。
+            </p>
+            <p>
+              對很多跨境家庭來說，真正的問題不是「有沒有在投資」，而是：
+            </p>
+            <p class="font-semibold text-gray-900">
+              「我到底有多少資產、分散在哪裡、風險和稅務長什麼樣子？」
+            </p>
 
-        <h2 class="text-lg font-semibold text-[#111827] mt-8 mb-2">How Taimic works</h2>
-        <p class="text-sm text-gray-700 leading-relaxed mb-3">
-          At its core, Taimic combines multi-country asset consolidation, compliance &amp; risk analytics and AI-driven insights.
-        </p>
-        <ul class="list-disc pl-5 text-sm text-gray-700 space-y-2 mb-6">
-          <li><strong>Consolidated multi-country view</strong> – bring brokerage, cash, insurance and property from different jurisdictions into one dashboard, with a single base currency.</li>
-          <li><strong>Compliance &amp; risk analytics</strong> – track FATCA / FBAR / CRS thresholds and see where risk is concentrated by country, asset class and single name exposure.</li>
-          <li><strong>AI-driven insights</strong> – surface regulation changes, “what-if” scenarios and questions you should ask your human advisors before you walk into the meeting room.</li>
-        </ul>
+            <!-- 我們在解決的問題 -->
+            <h2 class="text-lg md:text-xl font-bold text-[#111827] mt-4">
+              我們在解決的問題
+            </h2>
+            <p>
+              對很多跨境家庭來說，真實的生活其實長這樣：
+            </p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>券商帳戶在一個國家，退休金與保單在另一個國家，房產又在第三個地方。</li>
+              <li>現金、定存、基金、ETF 散落在不同銀行與平台，幣別也都不一樣。</li>
+              <li>只要想回答「我到底值多少？」或「會不會踩到 FATCA／FBAR／CRS 的門檻？」就得自己打開 Excel、下載對帳單、查歷史匯率，慢慢一格一格對。</li>
+              <li>一旦家裡有人發生意外，其他成員往往連有哪些跨國資產都不知道，更別說怎麼申請、怎麼被課稅與怎麼分配。</li>
+            </ul>
+            <p>
+              市面上的工具大多只處理其中一小塊：
+            </p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>匯款 App 只管「錢怎麼從 A 到 B」。</li>
+              <li>記帳 App 只管「你花了多少」。</li>
+              <li>有些服務只做單一國家的投資或線上遺囑。</li>
+            </ul>
+            <p>
+              真正把 <strong>「跨境資產＋合規風險＋傳承規劃」</strong> 當成同一個系統在處理的產品，幾乎不存在。Taimic 想做的，就是填補這塊被忽略、但對您至關重要的空白。
+            </p>
 
-        <h2 class="text-lg font-semibold text-[#111827] mt-8 mb-2">Who Taimic is for</h2>
-        <p class="text-sm text-gray-700 leading-relaxed mb-6">
-          Taimic is built for families who effectively live inside more than one system – long-term in more than
-          one country, with assets, pensions and policies spread across multiple jurisdictions – and who want a
-          clearer, calmer way to manage and eventually pass on that wealth.
-        </p>
+            <!-- 我們怎麼做 -->
+            <h2 class="text-lg md:text-xl font-bold text-[#111827] mt-4">
+              我們怎麼做（產品核心）
+            </h2>
+            <p>
+              Taimic 的核心，是一個結合多國資產整合、合規風險分析以及 AI 洞察的平台。我們目前聚焦三個方向：
+            </p>
+
+            <h3 class="font-semibold text-[#111827] mt-3">
+              1. 跨國資產整合（Consolidated Multi-Country View）
+            </h3>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>整合不同國家的券商帳戶、現金、保單與房產到同一個儀表板 (Dashboard)。</li>
+              <li>以統一的幣別與視角呈現市值、成本、損益、資產配置與集中度。</li>
+              <li>讓使用者不再只看「單一平台損益」，而是真正看懂「整體結構」。</li>
+            </ul>
+
+            <h3 class="font-semibold text-[#111827] mt-3">
+              2. 合規風險與結構分析（Compliance &amp; Risk Analytics）
+            </h3>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>追蹤 FATCA／FBAR／CRS 相關門檻與關鍵餘額。</li>
+              <li>分析國家別、資產類別、產業與單一標的的曝險程度，幫你看出「資產壓在哪裡」。</li>
+              <li>讓稅務與風險不再是憑感覺的擔憂，而是清晰的數據。</li>
+            </ul>
+
+            <h3 class="font-semibold text-[#111827] mt-3">
+              3. AI 賦能的財富洞察（AI-Driven Insights）
+            </h3>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>利用 AI 針對您的實際持有部位，整理相關的法規更新、稅務重點與情境模擬。</li>
+              <li>從「如果我明天突然不在了，資產會怎麼流動？」到「現在這種資產結構對家人公平嗎？」</li>
+            </ul>
+            <p>
+              我們的目標，是讓您在走進會計師或律師事務所之前，就已經搞懂現況、準備好要問的關鍵問題。
+            </p>
+
+            <!-- Taimic 適合誰 -->
+            <h2 class="text-lg md:text-xl font-bold text-[#111827] mt-4">
+              Taimic 適合誰？
+            </h2>
+            <p>
+              Taimic 是為那些 <strong>「同時活在兩個以上制度裡」</strong> 的人設計的：
+            </p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>長期在兩個以上國家之間生活、工作或退休的家庭。</li>
+              <li>同時持有多國資產（證券、保單、房產、現金），但覺得一切非常分散的人。</li>
+              <li>知道自己應該關心 FATCA／FBAR／CRS／遺產稅等議題，卻沒有時間、工具或精力每年重算一次的人。</li>
+              <li>想從「只看單一券商損益」進化到「理解整體跨境資產配置與風險結構」的自主人。</li>
+            </ul>
+            <p>
+              如果您心裡曾經浮現過：
+            </p>
+            <p class="font-semibold text-gray-900">
+              「我知道該看整體資產跟風險，但我太忙，又沒有好工具。」
+            </p>
+            <p>
+              那麼 Taimic 就是為您而做的。
+            </p>
+
+            <!-- 我們相信的未來 -->
+            <h2 class="text-lg md:text-xl font-bold text-[#111827] mt-4">
+              我們相信的未來
+            </h2>
+            <p>
+              我們相信，跨境家庭值得比現在更好的選擇：
+            </p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>不該只有超高淨值客戶，才拿得到 Family Office 等級的報表。</li>
+              <li>不該只有機構投資人，才用得起高規格的風險與結構分析工具。</li>
+              <li>也不該必須自己東拼西湊資料、到處詢問，才有辦法搞懂自己的跨國資產會怎麼被課稅、最後會怎麼被處理和分配。</li>
+            </ul>
+            <p>
+              所以，Taimic 的長期目標是：
+            </p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>讓跨國資產管理變得直覺、透明、可視化。</li>
+              <li>讓 AI 成為您的財務輔助大腦，而不是黑箱。</li>
+              <li>讓更多跨境家庭，在全球市場與多國制度之間，能用更聰明、更冷靜的方式管理與分配自己的資產，而不是只被新聞、情緒或恐懼推著走。</li>
+            </ul>
+
+            <!-- 現在的我們與下一步 -->
+            <h2 class="text-lg md:text-xl font-bold text-[#111827] mt-4">
+              現在的我們與下一步
+            </h2>
+            <p>
+              我們從幾條「跨境複雜度最高」的走廊開始，例如亞洲與北美之間的家庭——那裡同時存在高資產密度、嚴格稅制與真實的資產分配需求。
+            </p>
+            <p>
+              從第一天開始，我們就沒有把產品綁死在特定國家組合，而是設計成一套可擴展的跨境架構：不論是亞洲 ↔ 北美、歐洲 ↔ 亞洲，或是其他組合，都可以被納入同一套邏輯之中。
+            </p>
+            <p>
+              接下來，我們會依據實際使用者案例與需求，逐步加入：
+            </p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>更細緻的資產分類與視覺化工具</li>
+              <li>對特定市場與跨境走廊的深度支援模組</li>
+              <li>與專業顧問（會計師／律師）的串接與轉介機制</li>
+            </ul>
+            <p class="font-semibold text-gray-900">
+              我們希望成為那個讓您「先看懂自己狀況、問對問題，再走進會議室」的核心平台。
+            </p>
+            <p>
+              如果您也相信，看懂自己的全球資產，是邁向財務安全與長期資產規劃的第一步，歡迎加入 Taimic，拿回您對全球財富的掌控權。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 英文版 -->
+      <div id="about-en" class="hidden">
+        <!-- Hero -->
+        <div class="w-full bg-gradient-to-r from-[#2563eb] via-[#1d4ed8] to-[#0f172a]">
+          <div class="max-w-[1200px] mx-auto px-6 py-10 md:py-14 flex flex-col md:flex-row items-center gap-8">
+            <div class="flex-1">
+              <p class="text-xs text-blue-100 mb-2">Home / About Taimic</p>
+              <h1 class="text-[30px] md:text-[36px] font-extrabold tracking-tight text-white mb-3">
+                About Taimic
+              </h1>
+              <p class="text-sm md:text-base text-blue-50 leading-relaxed">
+                Taimic is an AI-enabled cross-border wealth and legacy management platform built for globally mobile families.
+              </p>
+            </div>
+            <div class="flex-1">
+              <div class="rounded-2xl overflow-hidden shadow-xl border border-white/20 bg-gradient-to-br from-blue-100 to-slate-200 h-[220px] md:h-[260px] flex items-center justify-center">
+                <div class="w-[80%] h-[70%] rounded-2xl bg-gradient-to-br from-[#0f172a] via-[#1d4ed8] to-[#60a5fa] opacity-90 shadow-2xl flex items-center justify-center">
+                  <span class="text-xs md:text-sm text-blue-50 tracking-[0.18em] uppercase">
+                    Cross-border Wealth • AI • Compliance
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content card -->
+        <div class="max-w-[1200px] mx-auto px-6 -mt-6 md:-mt-10 pb-16">
+          <div class="bg-white rounded-2xl shadow-md border border-gray-200 px-6 md:px-10 py-8 md:py-10 text-sm md:text-[15px] text-gray-800 leading-relaxed space-y-6">
+            <p>
+              We help families who live, work and invest across multiple countries bring scattered assets back into a single view, reduce compliance risk under complex tax regimes, and think ahead about how their wealth will be structured and shared — without living inside Excel, screenshots and manual FX conversions every day.
+            </p>
+            <p>
+              For many cross-border families, the real question is not “am I investing enough?”, but:
+            </p>
+            <p class="font-semibold text-gray-900">
+              “How much am I actually worth, where is everything held, and what do my risk and tax exposure really look like?”
+            </p>
+
+            <!-- Problem -->
+            <h2 class="text-lg md:text-xl font-bold text-[#111827] mt-4">
+              The problem we are solving
+            </h2>
+            <p>
+              In reality, life for a cross-border family often looks like this:
+            </p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Brokerage accounts in one country, pensions and insurance policies in another, and property in a third.</li>
+              <li>Cash, deposits, funds and ETFs scattered across banks and platforms, all in different currencies.</li>
+              <li>To answer “what am I actually worth?” or “will I trigger FATCA / FBAR / CRS thresholds?”, you have to download statements, check historical FX and reconcile everything line by line in Excel.</li>
+              <li>If something happens to one family member, the others may not even know what cross-border assets exist, let alone how they will be claimed, taxed and distributed.</li>
+            </ul>
+            <p>
+              Most tools in the market only handle a small slice of this:
+            </p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Remittance apps only care about “how money moves from A to B”.</li>
+              <li>Budgeting apps only care about “how much you spent”.</li>
+              <li>Some services focus only on single-country investing or online wills.</li>
+            </ul>
+            <p>
+              A product that truly treats <strong>“cross-border assets + compliance risk + legacy planning”</strong> as one integrated system almost does not exist. Taimic aims to fill this overlooked — but critical — gap for you and your family.
+            </p>
+
+            <!-- How we do it -->
+            <h2 class="text-lg md:text-xl font-bold text-[#111827] mt-4">
+              How Taimic works (product core)
+            </h2>
+            <p>
+              At its core, Taimic is a platform that combines multi-country asset consolidation, compliance &amp; risk analytics, and AI-driven insights. We are currently focused on three main directions:
+            </p>
+
+            <h3 class="font-semibold text-[#111827] mt-3">
+              1. Consolidated multi-country view
+            </h3>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Bring brokerage accounts, cash, insurance and property from different jurisdictions into a single dashboard.</li>
+              <li>Show market value, cost, P&amp;L, allocation and concentration through one base currency and one coherent view.</li>
+              <li>Help users move from watching “one platform’s P&amp;L” to understanding the “overall structure” of their wealth.</li>
+            </ul>
+
+            <h3 class="font-semibold text-[#111827] mt-3">
+              2. Compliance &amp; risk analytics
+            </h3>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Track key balances and thresholds related to FATCA, FBAR and CRS.</li>
+              <li>Analyze exposure by country, asset class, sector and single-name position to reveal where risk is concentrated.</li>
+              <li>Turn tax and risk from vague worry into clear, data-backed insight.</li>
+            </ul>
+
+            <h3 class="font-semibold text-[#111827] mt-3">
+              3. AI-driven wealth insights
+            </h3>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Use AI to map regulations, tax points and scenario simulations directly to your actual positions.</li>
+              <li>Support questions from “If I were suddenly gone tomorrow, how would assets flow?” to “Is this portfolio structure fair to my family?”</li>
+            </ul>
+            <p>
+              Our goal is to help you understand your situation and prepare the right questions before you ever walk into an accountant’s or lawyer’s office.
+            </p>
+
+            <!-- Who Taimic is for -->
+            <h2 class="text-lg md:text-xl font-bold text-[#111827] mt-4">
+              Who Taimic is for
+            </h2>
+            <p>
+              Taimic is designed for people who effectively <strong>“live inside more than one system at the same time”</strong>:
+            </p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Families who live, work or retire long-term across two or more countries.</li>
+              <li>People who hold securities, policies, property and cash in multiple jurisdictions, but feel everything is fragmented.</li>
+              <li>Those who know they should care about FATCA, FBAR, CRS, inheritance tax and related topics, but lack the time, tools or energy to recalculate things every year.</li>
+              <li>Self-directed investors who want to move beyond “one broker’s P&amp;L” and towards a clear view of overall cross-border allocation and risk structure.</li>
+            </ul>
+            <p>
+              If you have ever thought:
+            </p>
+            <p class="font-semibold text-gray-900">
+              “I know I should look at my total assets and risk, but I’m too busy and don’t have the right tools.”
+            </p>
+            <p>
+              Then Taimic is built for you.
+            </p>
+
+            <!-- The future we believe in -->
+            <h2 class="text-lg md:text-xl font-bold text-[#111827] mt-4">
+              The future we believe in
+            </h2>
+            <p>
+              We believe cross-border families deserve better options than what exists today:
+            </p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Family Office–level reporting should not be reserved only for ultra-high-net-worth clients.</li>
+              <li>Institutional-grade risk and structure analysis tools should not be available only to large asset managers.</li>
+              <li>You should not have to stitch data together by yourself and ask around endlessly just to understand how your cross-border assets will be taxed, handled and distributed.</li>
+            </ul>
+            <p>
+              That is why Taimic’s long-term goals are to:
+            </p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>Make cross-border wealth management intuitive, transparent and visual.</li>
+              <li>Let AI act as your financial co-pilot — not as a black box.</li>
+              <li>Help more cross-border families navigate global markets and multi-country rules with calm, data-driven decisions, instead of being pushed around by headlines, emotions or fear.</li>
+            </ul>
+
+            <!-- Where we are & next steps -->
+            <h2 class="text-lg md:text-xl font-bold text-[#111827] mt-4">
+              Where we are today &amp; what’s next
+            </h2>
+            <p>
+              We are starting with some of the “highest-complexity corridors” — for example families moving between Asia and North America, where high asset density, strict tax regimes and real intergenerational planning needs intersect.
+            </p>
+            <p>
+              From day one, we have avoided locking the product to any single country pair. Instead, we designed a scalable cross-border architecture so that Asia ↔ North America, Europe ↔ Asia and other combinations can all be supported under one logical framework.
+            </p>
+            <p>
+              Going forward, we will expand based on real user cases and needs, gradually adding:
+            </p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li>More granular asset classifications and visualization tools</li>
+              <li>Deeper support modules for specific markets and cross-border corridors</li>
+              <li>Integration and referral flows with professional advisors (accountants and lawyers)</li>
+            </ul>
+            <p class="font-semibold text-gray-900">
+              We aim to become the core platform that helps you “understand your situation, ask the right questions, then walk into the meeting room”.
+            </p>
+            <p>
+              If you also believe that seeing your global assets clearly is the first step toward financial security and long-term planning, we invite you to join Taimic and take back control of your worldwide wealth.
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -909,6 +1215,14 @@
 
       document.getElementById('opt-zh').classList.toggle('active', lang === 'zh');
       document.getElementById('opt-en').classList.toggle('active', lang === 'en');
+
+      // About page CN / EN 切換
+      const aboutZh = document.getElementById('about-zh');
+      const aboutEn = document.getElementById('about-en');
+      if (aboutZh && aboutEn) {
+        aboutZh.classList.toggle('hidden', lang !== 'zh');
+        aboutEn.classList.toggle('hidden', lang !== 'en');
+      }
 
       updatePricing();
     }
