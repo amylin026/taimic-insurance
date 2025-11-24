@@ -5,16 +5,12 @@
   <title>TAIMIC | Global Wealth Management</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
 
   <style>
@@ -31,7 +27,7 @@
       --text-main: #222222;
     }
 
-     /* --- Logo Clock：統一成 Figma 扁平藍風格 --- */
+      /* --- Logo Clock：統一成 Figma 扁平藍風格 --- */
 .logo-clock {
   width: 44px;
   height: 44px;
@@ -121,6 +117,22 @@
       color: #000;
       font-weight: 700;
       border-bottom-color: transparent; /* 只有 hover 時才出現藍色底線 */
+    }
+
+    /* --- Mobile Menu Styles --- */
+    .mobile-nav-link {
+        display: block;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+        border-radius: 8px;
+        transition: background-color 0.2s;
+    }
+    .mobile-nav-link:hover, .mobile-nav-link.active {
+        background-color: #eff6ff;
+        color: var(--brand-blue);
+        font-weight: 700;
     }
 
     /* --- Dropdown --- */
@@ -252,12 +264,10 @@
 
 <body class="flex flex-col min-h-screen bg-[#f3f5f9]">
 
-  <!-- ============= HEADER ============= -->
   <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[72px]">
     <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center">
 
-      <!-- Logo -->
-      <div class="flex items-center gap-4 cursor-pointer">
+      <div class="flex items-center gap-4 cursor-pointer" onclick="switchSection('overview')">
         <svg class="logo-clock" viewBox="0 0 100 100">
           <defs>
             <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
@@ -282,7 +292,6 @@
         </div>
       </div>
 
-      <!-- Nav -->
       <nav class="hidden lg:flex h-full items-center space-x-4">
         <a href="#" class="nav-link active" data-section="overview" data-i18n="nav.overview">Overview</a>
         <a href="#" class="nav-link" data-section="pricing" data-i18n="nav.pricing">Pricing</a>
@@ -290,10 +299,8 @@
         <a href="#" class="nav-link" data-section="about" data-i18n="nav.about">About Taimic</a>
       </nav>
 
-      <!-- Right tools -->
-      <div class="flex items-center gap-6 h-full">
+      <div class="flex items-center gap-4 lg:gap-6 h-full">
 
-        <!-- Currency -->
         <div class="hidden sm:flex items-center text-xs font-medium text-gray-600 border border-gray-200 rounded-full overflow-hidden bg-gray-50 shadow-sm">
           <button id="btn-usd" onclick="setCurrency('USD')" class="px-4 py-2 transition-colors">
             USD
@@ -303,13 +310,12 @@
           </button>
         </div>
 
-        <!-- Language -->
         <div class="dropdown-container cursor-pointer h-full">
           <button id="lang-toggle" type="button" class="flex items-center gap-2 text-gray-600 hover:text-[#0066cc] transition-colors">
             <div class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-50 border border-gray-200">
               <i class="fa-solid fa-globe text-sm"></i>
             </div>
-            <i class="fa-solid fa-caret-down text-xs"></i>
+            <i class="fa-solid fa-caret-down text-xs hidden sm:block"></i>
           </button>
           <div id="lang-menu" class="dropdown-menu hidden">
             <div id="opt-zh" class="dropdown-item" onclick="changeLang('zh')">繁體中文</div>
@@ -317,7 +323,6 @@
           </div>
         </div>
 
-        <!-- User -->
         <div class="dropdown-container cursor-pointer h-full border-l border-gray-200 pl-4">
           <button id="user-toggle" type="button" class="w-10 h-10 bg-[#f3f4f6] text-gray-600 rounded-full flex items-center justify-center hover:bg-[#0066cc] hover:text-white transition-colors">
             <i class="fa-solid fa-user text-base"></i>
@@ -339,21 +344,30 @@
           </div>
         </div>
 
+        <button id="mobile-menu-btn" class="lg:hidden ml-2 text-gray-600 hover:text-[#0066cc] focus:outline-none">
+            <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+
       </div>
     </div>
   </header>
 
-  <!-- ============= MAIN (ALL SECTIONS) ============= -->
+  <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-gray-200 fixed top-[72px] left-0 w-full z-30 shadow-lg">
+    <div class="flex flex-col p-4 space-y-2">
+        <a href="#" class="mobile-nav-link" data-section="overview" data-i18n="nav.overview">Overview</a>
+        <a href="#" class="mobile-nav-link" data-section="pricing" data-i18n="nav.pricing">Pricing</a>
+        <a href="#" class="mobile-nav-link" data-section="reports" data-i18n="nav.reports">Reports</a>
+        <a href="#" class="mobile-nav-link" data-section="about" data-i18n="nav.about">About Taimic</a>
+    </div>
+  </div>
+
   <main class="flex-grow">
 
-       <!-- ===== Overview (Landing) ===== -->
-    <section id="section-overview">
-      <!-- Section A: Hero -->
+       <section id="section-overview">
       <section class="border-b border-gray-200 bg-[#e5ebf5]">
         <div class="max-w-[1440px] mx-auto px-6 py-16 md:py-20">
           <div class="flex flex-col md:flex-row items-center md:items-start gap-10">
 
-            <!-- Left: Copy -->
             <div class="w-full md:w-1/2 space-y-6">
               <p class="text-xs font-semibold tracking-[0.2em] text-gray-500 uppercase">
                 Cross-border Wealth OS
@@ -392,16 +406,13 @@
               </div>
             </div>
 
-           <!-- Right: 3D Dashboard Visual -->
-<div class="w-full md:w-1/2 mt-8 md:mt-0">
+           <div class="w-full md:w-1/2 mt-8 md:mt-0">
   <div class="relative w-full max-w-xl mx-auto" style="perspective: 1000px;">
     <div
       class="bg-white rounded-xl border-4 border-white shadow-2xl overflow-hidden transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_25px_80px_rgba(15,23,42,0.35)]"
       style="transform: rotateY(-12deg); transform-origin: center;"
     >
-      <!-- Mock Dashboard UI Start -->
       <div class="bg-slate-50">
-        <!-- Browser chrome -->
         <div class="flex items-center justify-between px-4 py-2 bg-slate-100 border-b border-slate-200">
           <div class="flex items-center gap-1.5">
             <span class="w-2.5 h-2.5 rounded-full bg-[#f87171]"></span>
@@ -414,9 +425,7 @@
           </div>
         </div>
 
-        <!-- Main content -->
         <div class="px-5 pt-4 pb-5 space-y-4">
-          <!-- Total Net Worth bar -->
           <div class="space-y-2">
             <div class="flex items-center justify-between text-[11px] text-slate-500">
               <span class="uppercase tracking-[0.14em]">Total net worth</span>
@@ -427,9 +436,7 @@
             </div>
           </div>
 
-          <!-- Global Assets row -->
           <div class="flex gap-3">
-            <!-- Card 1: Global portfolio -->
             <div class="flex-1 rounded-lg bg-blue-50 border border-blue-100 shadow-sm px-3 py-3 flex flex-col gap-2">
               <div class="flex items-center justify-between">
                 <div class="inline-flex items-center gap-2">
@@ -448,7 +455,6 @@
               </div>
             </div>
 
-            <!-- Card 2: Real estate -->
             <div class="flex-1 rounded-lg bg-indigo-50 border border-indigo-100 shadow-sm px-3 py-3 flex flex-col gap-2">
               <div class="flex items-center justify-between">
                 <div class="inline-flex items-center gap-2">
@@ -467,13 +473,11 @@
               </div>
             </div>
 
-            <!-- Card 3: Expansion slot -->
             <div class="flex-1 rounded-lg border-2 border-dashed border-slate-200 bg-slate-50/60 flex items-center justify-center shadow-inner">
               <span class="text-slate-300 text-2xl leading-none">+</span>
             </div>
           </div>
 
-          <!-- Bottom abstract chart -->
           <div class="mt-2 rounded-lg border border-slate-200 bg-white shadow-sm px-4 py-3">
             <div class="flex items-center justify-between mb-3 text-[11px] text-slate-500">
               <span class="uppercase tracking-[0.16em]">Global allocation</span>
@@ -483,11 +487,9 @@
             </div>
 
             <div class="flex items-center gap-5">
-              <!-- Donut chart -->
               <div class="relative w-20 h-20 md:w-24 md:h-24">
                 <div class="w-full h-full rounded-full bg-gradient-to-tr from-blue-400 via-blue-500 to-indigo-500 shadow-md"></div>
                 <div class="absolute inset-3 bg-white rounded-full"></div>
-                <!-- 中心小字 -->
                 <div class="absolute inset-0 flex items-center justify-center">
                   <div class="text-[10px] text-slate-600 text-center leading-tight">
                     <div class="font-semibold text-slate-900">100%</div>
@@ -498,7 +500,6 @@
                 </div>
               </div>
 
-              <!-- Legend / data lines -->
               <div class="flex-1 space-y-2">
                 <div class="flex items-center gap-2">
                   <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
@@ -531,19 +532,14 @@
           </div>
         </div>
       </div>
-      <!-- Mock Dashboard UI End -->
-    </div>
+      </div>
   </div>
 </div>
-                </div>
-              </div>
             </div>
-
           </div>
         </div>
       </section>
 
-      <!-- Section B: Features Grid -->
       <section class="py-16 md:py-20 bg-[#f3f5f9]">
         <div class="max-w-[1100px] mx-auto px-6">
           <div class="text-center max-w-2xl mx-auto mb-10">
@@ -560,7 +556,6 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            <!-- Card 1: Global View -->
             <div class="panel p-6 md:p-7 flex flex-col gap-3">
               <div class="w-10 h-10 rounded-full bg-blue-50 text-[#2563eb] flex items-center justify-center mb-1">
                 <i class="fa-solid fa-globe-asia text-sm"></i>
@@ -574,7 +569,6 @@
               </p>
             </div>
 
-            <!-- Card 2: Compliance -->
             <div class="panel p-6 md:p-7 flex flex-col gap-3">
               <div class="w-10 h-10 rounded-full bg-blue-50 text-[#2563eb] flex items-center justify-center mb-1">
                 <i class="fa-solid fa-shield-check text-sm"></i>
@@ -588,7 +582,6 @@
               </p>
             </div>
 
-            <!-- Card 3: AI Insight -->
             <div class="panel p-6 md:p-7 flex flex-col gap-3">
               <div class="w-10 h-10 rounded-full bg-blue-50 text-[#2563eb] flex items-center justify-center mb-1">
                 <i class="fa-solid fa-bolt text-sm"></i>
@@ -605,7 +598,6 @@
         </div>
       </section>
 
-      <!-- Section C: Bottom CTA -->
       <section class="py-16 md:py-20 bg-gradient-to-r from-[#e0f2fe] via-[#bfdbfe] to-[#93c5fd] border-t border-blue-100">
         <div class="max-w-[1100px] mx-auto px-6">
           <div
@@ -634,12 +626,10 @@
         </div>
       </section>
 
-      <!-- ===== Legacy Dashboard (kept hidden, for JS / data) ===== -->
       <section class="py-10 hidden">
         <div class="max-w-[1440px] mx-auto px-6 w-full">
           <div class="panel px-6 md:px-8 lg:px-10 py-8 md:py-10">
 
-            <!-- Stats -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
               <div class="p-6 border border-gray-200 rounded-xl hover:border-[#0066cc] transition-colors bg-white">
                 <div class="flex justify-between items-start mb-4">
@@ -676,13 +666,10 @@
               </div>
             </div>
 
-            <!-- Table + Chart -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
 
-              <!-- Table -->
               <div class="lg:col-span-2">
 
-                <!-- AI Alert -->
                 <div id="ai-alert" class="hidden mb-8 bg-orange-50 border-l-4 border-orange-500 rounded-lg p-5 flex gap-4 animate-fade-in">
                   <div class="text-orange-500 pt-1">
                     <i class="fa-solid fa-triangle-exclamation text-lg"></i>
@@ -722,7 +709,6 @@
                 </div>
               </div>
 
-              <!-- Chart -->
               <div class="space-y-8">
                 <div class="border border-gray-200 rounded-3xl p-8 bg-white shadow-sm">
                   <h3 class="text-xs font-bold text-gray-500 uppercase mb-6 tracking-[0.18em]" data-i18n="chart.title">
@@ -763,13 +749,10 @@
       </section>
     </section>
 
-    <!-- ===== Pricing (Cluely-style) ===== -->
     <section id="section-pricing" class="hidden bg-[#eef2ff] border-t border-gray-200">
       <div class="max-w-[1100px] mx-auto px-6 pt-14 pb-20">
-        <!-- Hero -->
         <div class="text-center">
           <div class="flex items-center justify-center gap-3 mb-3">
-            <!-- 小一點的時鐘 Logo -->
             <svg class="logo-clock-hero" viewBox="0 0 100 100">
               <defs>
                 <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
@@ -799,7 +782,6 @@
             pick a plan that grows with your cross-border life.
           </p>
 
-          <!-- Billing toggle -->
           <div class="flex items-center justify-center gap-4 mt-7">
             <span id="billing-label-monthly" class="text-sm font-medium text-gray-900">Monthly</span>
             <button type="button"
@@ -815,9 +797,7 @@
           </div>
         </div>
 
-        <!-- Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-          <!-- Starter -->
           <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col relative overflow-hidden group pricing-card">
             <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-50/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <div class="relative z-10">
@@ -852,7 +832,6 @@
             </div>
           </div>
 
-          <!-- Pro -->
           <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col relative overflow-hidden group pricing-card">
             <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-50/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <div class="relative z-10">
@@ -903,7 +882,6 @@
             </div>
           </div>
 
-          <!-- Family Office -->
           <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col relative overflow-hidden group pricing-card">
             <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-50/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <div class="relative z-10">
@@ -948,13 +926,10 @@
       </div>
     </section>
 
-    <!-- ===== About Taimic (TSMC 風格) ===== -->
     <section id="section-about" class="bg-[#dbeafe] border-t border-gray-200">
       <div class="max-w-[1100px] mx-auto px-6 pt-16 pb-20">
 
-        <!-- Hero 區塊 -->
         <header class="mb-10">
-          <!-- 上面那行改成 HOME，不再是 About Taimic -->
           <div class="text-xs md:text-sm font-bold tracking-[0.28em] text-gray-400 uppercase mb-1">
             HOME
           </div>
@@ -964,7 +939,6 @@
     About <span class="text-[#0066cc]">Taimic</span>
   </h1>
 
-  <!-- 跟主頁一樣的時鐘（含動畫） -->
   <svg class="logo-clock-hero logo-clock-about" viewBox="0 0 100 100">
     <defs>
       <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
@@ -993,11 +967,9 @@
           </p>
         </header>
 
-        <!-- 內文卡片：中文 / 英文 兩個版本，用 lang 切換顯示 -->
         <div class="bg-white/95 rounded-3xl shadow-sm border border-gray-200 p-6 md:p-8
-                    leading-relaxed text-sm md:text-[15px] text-gray-800 space-y-6">
+                   leading-relaxed text-sm md:text-[15px] text-gray-800 space-y-6">
 
-          <!-- 中文版 -->
           <div id="about-zh" class="space-y-6">
             <p>
               Taimic 是一個專為跨國移動家庭打造、結合 AI 的跨境資產與傳承管理平台。
@@ -1131,7 +1103,6 @@
             </p>
           </div>
 
-          <!-- 英文版 -->
           <div id="about-en" class="hidden space-y-6">
             <p>
               Taimic is an AI-enabled cross-border wealth and legacy management platform
@@ -1299,13 +1270,11 @@
       </div>
     </section>
 
-    <!-- ===== Reports（Taimic Brand Blue 風格） ===== -->
     <section id="section-reports" class="hidden reports-section">
       <div class="reports-shell w-full">
         <div class="max-w-[1100px] mx-auto px-6 py-16 flex items-center justify-center">
           <div class="w-full max-w-md bg-white rounded-3xl border border-blue-100 shadow-xl md:shadow-2xl p-8 md:p-9 animate-fade-in">
-            
-            <!-- 小標籤：鎖頭 + Reports -->
+             
             <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 mb-5">
               <div class="w-6 h-6 rounded-full bg-[#e0edff] flex items-center justify-center text-[#1d4ed8]">
                 <i class="fa-solid fa-lock text-xs"></i>
@@ -1315,7 +1284,6 @@
               </span>
             </div>
 
-            <!-- 英文版 -->
             <div id="reports-gate-en" class="space-y-4 text-slate-900 text-sm md:text-[15px] leading-relaxed">
               <h1 class="text-[22px] md:text-[24px] font-bold tracking-tight text-slate-900">
                 Unlock your asset insights.
@@ -1337,7 +1305,6 @@
                 </p>
               </div>
 
-              <!-- 按鈕區 -->
               <div class="pt-4 flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
@@ -1356,10 +1323,9 @@
                 </button>
               </div>
 
-              
+               
             </div>
 
-            <!-- 中文版 -->
             <div id="reports-gate-zh" class="hidden space-y-4 text-slate-900 text-sm md:text-[15px] leading-relaxed">
               <h1 class="text-[22px] md:text-[24px] font-bold tracking-tight text-slate-900">
                 解鎖你的跨境資產視角。
@@ -1381,7 +1347,6 @@
                 </p>
               </div>
 
-              <!-- 按鈕區 -->
               <div class="pt-4 flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
@@ -1400,7 +1365,7 @@
                 </button>
               </div>
 
-              
+               
             </div>
           </div>
         </div>
@@ -1409,11 +1374,9 @@
 
   </main>
 
-  <!-- ============= FOOTER ============= -->
   <footer class="bg-[#f4f6fb] border-t border-gray-200">
     <div class="max-w-[1440px] mx-auto px-6 pt-10 pb-4">
       <div class="flex flex-col lg:flex-row gap-10 lg:gap-20 pb-8 border-b border-gray-200">
-        <!-- brand -->
         <div class="flex-1">
           <div class="flex items-center gap-2 mb-4">
             <svg class="logo-clock" viewBox="0 0 100 100">
@@ -1431,7 +1394,6 @@
           </p>
         </div>
 
-        <!-- Columns -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
           <div>
             <div class="footer-col-title">SOLUTIONS</div>
@@ -1476,7 +1438,6 @@
     </div>
   </footer>
 
-  <!-- ===== Upload Modal ===== -->
   <div id="modal-overlay" class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-md shadow-2xl rounded-xl overflow-hidden relative transform transition-all">
       <div class="bg-[#0066cc] p-4 flex justify-between items-center text-white">
@@ -1484,7 +1445,6 @@
         <i class="fa-solid fa-xmark cursor-pointer hover:opacity-80 text-lg" onclick="closeUploadModal()"></i>
       </div>
 
-      <!-- step 1 -->
       <div id="modal-step-1" class="p-8 text-center">
         <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-[#0066cc]">
           <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
@@ -1497,7 +1457,6 @@
         </button>
       </div>
 
-      <!-- step 2 -->
       <div id="modal-step-2" class="hidden relative h-64 bg-[#050816]">
         <div class="absolute inset-0 flex flex-col items-center justify-center z-10">
           <p class="text-white font-mono text-sm mb-2" data-i18n="modal.scanning">AI processing...</p>
@@ -1511,7 +1470,6 @@
     </div>
   </div>
 
-  <!-- ===== Auth Modal ===== -->
   <div id="auth-overlay" class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="bg-white w-full max-w-lg rounded-xl shadow-2xl overflow-hidden">
       <div class="bg-[#1d4ed8] px-6 py-4 flex items-center justify-between text-white">
@@ -1540,7 +1498,6 @@
     </div>
   </div>
 
-  <!-- ============= SCRIPT ============= -->
   <script>
     const RATE = 32.5;
     let curr = 'TWD';
@@ -1692,10 +1649,17 @@
         const el = document.getElementById(`section-${id}`);
         if (el) el.classList.toggle('hidden', id !== section);
       });
+      // Update both desktop and mobile nav links
       document.querySelectorAll('nav .nav-link').forEach(link => {
         link.classList.toggle('active', link.dataset.section === section);
       });
+       document.querySelectorAll('#mobile-menu .mobile-nav-link').forEach(link => {
+        link.classList.toggle('active', link.dataset.section === section);
+      });
+
       currentSection = section;
+      // Close mobile menu if open
+      document.getElementById('mobile-menu').classList.add('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1852,6 +1816,8 @@
     // ===== Global refs & init =====
     let geoChart;
     let langMenu, userMenu, modalOverlay, authOverlay;
+    // New mobile menu ref
+    let mobileMenu;
 
     window.onload = function () {
       const ctx = document.getElementById('geoChart').getContext('2d');
@@ -1879,15 +1845,18 @@
       userMenu = document.getElementById('user-menu');
       modalOverlay = document.getElementById('modal-overlay');
       authOverlay = document.getElementById('auth-overlay');
+      mobileMenu = document.getElementById('mobile-menu'); // Get mobile menu
 
       render();
 
       const langToggle = document.getElementById('lang-toggle');
       const userToggle = document.getElementById('user-toggle');
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn'); // Get button
 
       function closeAllMenus() {
         langMenu.classList.add('hidden');
         userMenu.classList.add('hidden');
+        // Do not close mobile menu here, handle separately or let user click link
       }
 
       langToggle.addEventListener('click', e => {
@@ -1906,12 +1875,33 @@
       });
       userMenu.addEventListener('click', e => e.stopPropagation());
 
-      document.addEventListener('click', closeAllMenus);
+      // Mobile Menu Toggle Logic
+      mobileMenuBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      document.addEventListener('click', (e) => {
+        closeAllMenus();
+        // Click outside to close mobile menu
+        if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+           mobileMenu.classList.add('hidden');
+        }
+      });
 
       document.getElementById('auth-submit').addEventListener('click', handleAuthSubmit);
 
-      // nav section switching
+      // nav section switching (Desktop)
       document.querySelectorAll('nav .nav-link').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const section = link.dataset.section;
+          if (section) switchSection(section);
+        });
+      });
+
+      // nav section switching (Mobile)
+      document.querySelectorAll('#mobile-menu .mobile-nav-link').forEach(link => {
         link.addEventListener('click', e => {
           e.preventDefault();
           const section = link.dataset.section;
