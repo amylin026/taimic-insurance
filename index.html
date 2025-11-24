@@ -688,9 +688,31 @@
             HOME
           </div>
 
-          <h1 class="text-[34px] md:text-[42px] font-extrabold tracking-tight text-[#0f172a]">
-            About Taimic
-          </h1>
+         <div class="flex items-center gap-3">
+  <h1 class="text-[34px] md:text-[42px] font-extrabold tracking-tight text-[#0f172a]">
+    About <span class="text-[#0066cc]">Taimic</span>
+  </h1>
+
+  <!-- 跟主頁一樣的時鐘（含動畫） -->
+  <svg class="logo-clock-hero" viewBox="0 0 100 100">
+    <defs>
+      <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#bfdbfe" />
+        <stop offset="100%" stop-color="#60a5fa" />
+      </linearGradient>
+    </defs>
+    <circle cx="50" cy="50" r="46" class="clock-outer" />
+    <circle cx="50" cy="50" r="38" class="clock-inner" />
+    <circle cx="50" cy="50" r="30" class="clock-core" />
+    <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
+    <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
+    <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
+    <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
+    <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
+    <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
+    <circle cx="50" cy="50" r="3.2" class="center-dot" />
+  </svg>
+</div>
 
           <p class="mt-4 text-sm md:text-base text-gray-700 max-w-2xl leading-relaxed">
             Taimic is an AI-enabled cross-border wealth and legacy management platform built for globally
