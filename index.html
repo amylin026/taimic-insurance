@@ -346,40 +346,164 @@
   <!-- ============= MAIN (ALL SECTIONS) ============= -->
   <main class="flex-grow">
 
-    <!-- ===== Overview (Dashboard) ===== -->
+       <!-- ===== Overview (Landing) ===== -->
     <section id="section-overview">
-      <!-- HERO / SUMMARY -->
+      <!-- Section A: Hero -->
       <section class="border-b border-gray-200 bg-[#e5ebf5]">
-        <div class="max-w-[1440px] mx-auto px-6 py-8 md:py-10">
-          <div class="panel px-8 py-8 md:px-10 md:py-9 flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-            <div>
-              <div class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] mb-2">
-                Global Asset Management / Dashboard
-              </div>
-              <h1 class="text-[28px] md:text-[32px] font-[700] text-[#111827] tracking-tight mb-3" data-i18n="page.title">
-                Cross-border wealth platform
+        <div class="max-w-[1440px] mx-auto px-6 py-16 md:py-20">
+          <div class="flex flex-col md:flex-row items-center md:items-start gap-10">
+
+            <!-- Left: Copy -->
+            <div class="w-full md:w-1/2 space-y-6">
+              <p class="text-xs font-semibold tracking-[0.2em] text-gray-500 uppercase">
+                Cross-border Wealth OS
+              </p>
+              <h1 class="text-[32px] sm:text-[40px] md:text-[46px] font-extrabold tracking-tight text-slate-900 leading-tight">
+                The OS for your
+                <span class="text-[#0066cc]">Cross-border Wealth.</span>
               </h1>
-              <p class="text-gray-600 text-sm md:text-[15px] max-w-2xl leading-relaxed" data-i18n="page.desc">
-                Integrated view of Taiwan & US assets with FATCA / CRS compliance checks and AI insights.
+              <p class="text-sm md:text-base text-slate-600 max-w-xl leading-relaxed">
+                Automated FATCA compliance, real-time net worth tracking, and AI-driven insights
+                for global families who live between Taiwan, the US and the rest of the world.
+              </p>
+
+              <div class="flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm md:text-[15px] font-semibold shadow-sm transition">
+                  Get Started Free
+                </button>
+                <button
+                  type="button"
+                  class="inline-flex items-center justify-center px-6 py-3 rounded-full border border-slate-300 text-slate-700 hover:bg-white hover:border-slate-400 text-sm md:text-[15px] font-semibold bg-white/70 backdrop-blur-sm transition">
+                  View Demo
+                </button>
+              </div>
+
+              <div class="flex items-center gap-3 text-[11px] text-slate-500 pt-1">
+                <div class="flex items-center gap-1">
+                  <i class="fa-solid fa-check text-[#16a34a]"></i>
+                  <span>No credit card required</span>
+                </div>
+                <div class="hidden sm:flex items-center gap-1">
+                  <i class="fa-solid fa-shield-halved text-[#0066cc]"></i>
+                  <span>Bank-level data encryption</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: 3D Dashboard Visual -->
+            <div class="w-full md:w-1/2 mt-8 md:mt-0">
+              <div class="relative w-full max-w-xl mx-auto" style="perspective: 1000px;">
+                <div
+                  class="bg-white rounded-xl border-4 border-white shadow-2xl overflow-hidden transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_25px_80px_rgba(15,23,42,0.35)]"
+                  style="transform: rotateY(-12deg); transform-origin: center;">
+                  <!-- Placeholder image：之後你可以直接換成真正的 Dashboard 截圖 -->
+                  <img
+                    src="https://via.placeholder.com/900x560.png?text=Taimic+Dashboard+Preview"
+                    alt="Taimic cross-border wealth dashboard preview"
+                    class="w-full h-full object-cover">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Section B: Features Grid -->
+      <section class="py-16 md:py-20 bg-[#f3f5f9]">
+        <div class="max-w-[1100px] mx-auto px-6">
+          <div class="text-center max-w-2xl mx-auto mb-10">
+            <p class="text-xs font-semibold tracking-[0.22em] text-gray-500 uppercase mb-2">
+              Built for globally mobile families
+            </p>
+            <h2 class="text-2xl md:text-[28px] font-bold tracking-tight text-slate-900 mb-3">
+              See your global balance sheet in one place.
+            </h2>
+            <p class="text-sm md:text-base text-slate-600">
+              Taimic helps you stop guessing and finally see how your Taiwan, US and offshore assets
+              fit together — with compliance risks surfaced automatically.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            <!-- Card 1: Global View -->
+            <div class="panel p-6 md:p-7 flex flex-col gap-3">
+              <div class="w-10 h-10 rounded-full bg-blue-50 text-[#2563eb] flex items-center justify-center mb-1">
+                <i class="fa-solid fa-globe-asia text-sm"></i>
+              </div>
+              <h3 class="text-base font-semibold text-slate-900">
+                Global View
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                整合台美與多國資產，統一以單一幣別呈現市值與資產配置，
+                並自動套用實時匯率，讓你一眼看懂整體淨值結構。
               </p>
             </div>
 
-            <div class="flex flex-col items-start md:items-end gap-3">
-              <button onclick="openUploadModal()" class="btn-corp flex items-center gap-2 shadow-sm">
-                <i class="fa-solid fa-plus"></i>
-                <span data-i18n="btn.add">Add asset</span>
-              </button>
-              <div class="text-[11px] text-gray-500 flex items-center gap-2">
-                <i class="fa-solid fa-shield-halved text-[#0066cc]"></i>
-                <span>FATCA / CRS real-time risk scan</span>
+            <!-- Card 2: Compliance -->
+            <div class="panel p-6 md:p-7 flex flex-col gap-3">
+              <div class="w-10 h-10 rounded-full bg-blue-50 text-[#2563eb] flex items-center justify-center mb-1">
+                <i class="fa-solid fa-shield-check text-sm"></i>
               </div>
+              <h3 class="text-base font-semibold text-slate-900">
+                Compliance Radar
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                自動化 FATCA / FBAR / CRS 風險檢測，追蹤關鍵門檻與餘額，
+                讓稅務不再憑印象，而是有數據、有提醒、有脈絡。
+              </p>
+            </div>
+
+            <!-- Card 3: AI Insight -->
+            <div class="panel p-6 md:p-7 flex flex-col gap-3">
+              <div class="w-10 h-10 rounded-full bg-blue-50 text-[#2563eb] flex items-center justify-center mb-1">
+                <i class="fa-solid fa-bolt text-sm"></i>
+              </div>
+              <h3 class="text-base font-semibold text-slate-900">
+                AI Insights
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                針對你實際持有的部位，提供 AI 驅動的稅務風險提示、
+                資產集中度分析與情境模擬，幫你提前看見問題與機會。
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- DASHBOARD BODY -->
-      <section class="py-10">
+      <!-- Section C: Bottom CTA -->
+      <section class="py-16 md:py-20 bg-gradient-to-r from-[#e0f2fe] via-[#bfdbfe] to-[#93c5fd] border-t border-blue-100">
+        <div class="max-w-[1100px] mx-auto px-6">
+          <div
+            class="bg-white/95 rounded-3xl shadow-lg px-8 py-10 md:px-10 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-center md:text-left space-y-2">
+              <p class="text-xs font-semibold tracking-[0.2em] text-[#2563eb] uppercase">
+                Stop living in spreadsheets
+              </p>
+              <h2 class="text-2xl md:text-[28px] font-bold tracking-tight text-slate-900">
+                Stop managing your millions in spreadsheets.
+              </h2>
+              <p class="text-sm md:text-base text-slate-600 max-w-xl">
+                Bring your Taiwan, US and offshore assets回到同一個畫面，
+                讓 Taimic 幫你處理匯率、稅務門檻與結構風險，你只需要專心做決策。
+              </p>
+            </div>
+
+            <div class="flex justify-center md:justify-end w-full md:w-auto">
+              <button
+                type="button"
+                class="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-white text-slate-900 text-sm md:text-base font-semibold shadow-md border border-slate-200 hover:shadow-lg hover:-translate-y-0.5 transition">
+                Create your Taimic account
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== Legacy Dashboard (kept hidden, for JS / data) ===== -->
+      <section class="py-10 hidden">
         <div class="max-w-[1440px] mx-auto px-6 w-full">
           <div class="panel px-6 md:px-8 lg:px-10 py-8 md:py-10">
 
