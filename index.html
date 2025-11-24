@@ -31,9 +31,15 @@
       --text-main: #222222;
     }
 
-    /* --- Logo Clock --- */
+        /* --- Logo Clock --- */
     .logo-clock { width: 44px; height: 44px; }
     .logo-clock-hero { width: 40px; height: 40px; }
+
+    /* About 那顆專用（放大版） */
+    .logo-clock-about {
+      width: 52px;   /* 想再大一點就把 52 換成 56 / 60 都可以 */
+      height: 52px;
+    }
 
     .clock-outer {
       fill: none;
@@ -499,7 +505,7 @@
         <div class="text-center">
           <div class="flex items-center justify-center gap-3 mb-3">
             <!-- 小一點的時鐘 Logo -->
-            <svg class="logo-clock-hero" viewBox="0 0 100 100">
+            <svg class="logo-clock-about" viewBox="0 0 100 100">
               <defs>
                 <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
                   <stop offset="0%" stop-color="#bfdbfe" />
