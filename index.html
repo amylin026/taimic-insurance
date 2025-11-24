@@ -686,15 +686,33 @@
             HOME
           </div>
 
-          <h1 class="text-[34px] md:text-[42px] font-extrabold tracking-tight text-[#0f172a]">
-            About Taimic
-          </h1>
+          <div class="mt-1 flex items-center gap-3">
+            <svg class="logo-clock-hero" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#bfdbfe" />
+                  <stop offset="100%" stop-color="#60a5fa" />
+                </linearGradient>
+              </defs>
+              <circle cx="50" cy="50" r="46" class="clock-outer" />
+              <circle cx="50" cy="50" r="38" class="clock-inner" />
+              <circle cx="50" cy="50" r="30" class="clock-core" />
+              <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
+              <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
+              <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
+              <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
+              <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
+              <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
+              <circle cx="50" cy="50" r="3.2" class="center-dot" />
+            </svg>
 
-          <p class="mt-4 text-sm md:text-base text-gray-700 max-w-2xl leading-relaxed">
-            Taimic is an AI-enabled cross-border wealth and legacy management platform built for globally
-            mobile families. We help you bring assets held in multiple countries back into a single view,
-            reduce compliance risk under complex tax regimes, and think ahead about how your wealth will be
-            structured and shared.
+            <h1 class="text-[34px] md:text-[42px] font-extrabold tracking-tight text-[#0f172a]">
+              About <span class="text-[#1a73e8]">Taimic</span>
+            </h1>
+          </div>
+
+          <p class="mt-4 text-[13px] md:text-[15px] text-gray-700/90 max-w-2xl leading-relaxed" data-i18n="about.hero">
+            Built for global families. Taimic brings your multi-country assets, compliance risks, and legacy plans into a single, AI-powered view.
           </p>
         </header>
 
@@ -1311,6 +1329,7 @@
         'alert.title':'AI tax alert: potential FATCA risk detected','alert.desc':'A new high cash-value policy in Taiwan may exceed the Form 8938 reporting threshold.',
         'chart.title':'Regional allocation','chart.insight':'AI insight','chart.desc':'Taiwan assets make up 40% of your net worth. Consider hedging TWD FX risk.',
         'modal.title':'Add Taiwan asset (AI OCR)','modal.desc':'Upload a policy front page or bank statement, Taimic will extract key data with AI.','modal.scanning':'AI processing...',
+        'about.hero':'Built for global families. Taimic brings your multi-country assets, compliance risks, and legacy plans into a single, AI-powered view.',
         'user.login':'Login','user.register':'Sign up'
       },
       zh: {
@@ -1326,6 +1345,7 @@
         'alert.title':'AI 稅務警示：偵測到 FATCA 風險','alert.desc':'系統掃描到一張新增的台灣高現金價值保單，可能超過 IRS Form 8938 申報門檻。',
         'chart.title':'區域資產配置','chart.insight':'AI 智能分析','chart.desc':'您的台灣資產佔總淨值約 40%，建議評估台幣匯率風險。',
         'modal.title':'新增台灣資產 (AI OCR)','modal.desc':'上傳保單首頁或銀行對帳單，AI 將自動提取關鍵數據。','modal.scanning':'AI 分析中...',
+        'about.hero':'專為全球家庭打造。Taimic 將你分散在多國的資產、合規風險與傳承規劃，整合成一個由 AI 驅動的全局視圖。',
         'user.login':'登入','user.register':'註冊'
       }
     };
