@@ -1240,18 +1240,7 @@
 
       updatePricing();
     }
-         // About Taimic：依照語言切換中 / 英版本
-      const aboutZh = document.getElementById('about-zh');
-      const aboutEn = document.getElementById('about-en');
-      if (aboutZh && aboutEn) {
-        if (lang === 'zh') {
-          aboutZh.classList.remove('hidden');
-          aboutEn.classList.add('hidden');
-        } else {
-          aboutEn.classList.remove('hidden');
-          aboutZh.classList.add('hidden');
-        }
-      }
+       
     function setCurrency(c) {
       curr = c;
       render();
