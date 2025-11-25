@@ -5,19 +5,15 @@
   <title>TAIMIC | Global Wealth Management</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- FontAwesome -->
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
   />
 
-  <!-- Fonts -->
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
     rel="stylesheet"
@@ -271,15 +267,13 @@
 </head>
 
 <body class="flex flex-col min-h-screen bg-[#f3f5f9]">
-  <!-- ============= HEADER ============= -->
   <header
     class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[72px]"
   >
     <div
-      class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center"
+      class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center relative"
     >
-      <!-- Logo -->
-      <div class="flex items-center gap-4 cursor-pointer">
+      <div class="flex items-center gap-4 cursor-pointer" onclick="switchSection('overview')">
         <svg class="logo-clock" viewBox="0 0 100 100">
           <defs>
             <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
@@ -322,7 +316,6 @@
         </div>
       </div>
 
-      <!-- Nav -->
       <nav class="hidden lg:flex h-full items-center space-x-4">
         <a
           href="#"
@@ -354,9 +347,7 @@
         >
       </nav>
 
-      <!-- Right tools -->
       <div class="flex items-center gap-6 h-full">
-        <!-- Currency -->
         <div
           class="hidden sm:flex items-center text-xs font-medium text-gray-600 border border-gray-200 rounded-full overflow-hidden bg-gray-50 shadow-sm"
         >
@@ -376,7 +367,6 @@
           </button>
         </div>
 
-        <!-- Language -->
         <div class="dropdown-container cursor-pointer h-full">
           <button
             id="lang-toggle"
@@ -404,7 +394,6 @@
           </div>
         </div>
 
-        <!-- User -->
         <div
           class="dropdown-container cursor-pointer h-full border-l border-gray-200 pl-4"
         >
@@ -431,21 +420,61 @@
             </div>
           </div>
         </div>
+
+        <button
+          id="mobile-menu-btn"
+          class="lg:hidden pl-2 text-gray-600 hover:text-[#0066cc] focus:outline-none"
+        >
+          <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="mobile-menu"
+      class="hidden lg:hidden bg-white border-t border-gray-100 absolute top-[72px] left-0 w-full shadow-lg z-30"
+    >
+      <div class="flex flex-col p-4 space-y-2">
+        <a
+          href="#"
+          class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]"
+          data-section="overview"
+          data-i18n="nav.overview"
+        >Overview</a>
+        <a
+          href="#"
+          class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]"
+          data-section="pricing"
+          data-i18n="nav.pricing"
+        >Pricing</a>
+        <a
+          href="#"
+          class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]"
+          data-section="reports"
+          data-i18n="nav.reports"
+        >Reports</a>
+        <a
+          href="#"
+          class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]"
+          data-section="about"
+          data-i18n="nav.about"
+        >About Taimic</a>
+        
+        <div class="pt-2 mt-2 border-t border-gray-100 flex gap-2">
+          <button onclick="setCurrency('USD')" class="flex-1 py-2 text-xs font-bold border border-gray-200 rounded text-center hover:bg-gray-50">USD</button>
+          <button onclick="setCurrency('TWD')" class="flex-1 py-2 text-xs font-bold border border-gray-200 rounded text-center hover:bg-gray-50">TWD</button>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- ============= MAIN (ALL SECTIONS) ============= -->
   <main class="flex-grow">
-    <!-- ===== Overview (Landing) ===== -->
     <section id="section-overview">
-      <!-- Section A: Hero -->
       <section class="border-b border-gray-200 bg-[#e5ebf5]">
         <div class="max-w-[1440px] mx-auto px-6 py-16 md:py-20">
           <div
             class="flex flex-col md:flex-row items-center md:items-start gap-10"
           >
-            <!-- Left: Copy -->
             <div class="w-full md:w-1/2 space-y-6">
               <p
                 class="text-xs font-semibold tracking-[0.2em] text-gray-500 uppercase"
@@ -493,7 +522,6 @@
               </div>
             </div>
 
-            <!-- Right: 3D Dashboard Visual -->
             <div class="w-full md:w-1/2 mt-8 md:mt-0">
               <div
                 class="relative w-full max-w-xl mx-auto"
@@ -503,9 +531,7 @@
                   class="bg-white rounded-xl border-4 border-white shadow-2xl overflow-hidden transform transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_25px_80px_rgba(15,23,42,0.35)]"
                   style="transform: rotateY(-12deg); transform-origin: center;"
                 >
-                  <!-- Mock Dashboard UI Start -->
                   <div class="bg-slate-50">
-                    <!-- Browser chrome -->
                     <div
                       class="flex items-center justify-between px-4 py-2 bg-slate-100 border-b border-slate-200"
                     >
@@ -530,9 +556,7 @@
                       </div>
                     </div>
 
-                    <!-- Main content -->
                     <div class="px-5 pt-4 pb-5 space-y-4">
-                      <!-- Total Net Worth bar -->
                       <div class="space-y-2">
                         <div
                           class="flex items-center justify-between text-[11px] text-slate-500"
@@ -554,9 +578,7 @@
                         </div>
                       </div>
 
-                      <!-- Global Assets row -->
                       <div class="flex gap-3">
-                        <!-- Card 1: Global portfolio -->
                         <div
                           class="flex-1 rounded-lg bg-blue-50 border border-blue-100 shadow-sm px-3 py-3 flex flex-col gap-2"
                         >
@@ -600,7 +622,6 @@
                           </div>
                         </div>
 
-                        <!-- Card 2: Real estate -->
                         <div
                           class="flex-1 rounded-lg bg-indigo-50 border border-indigo-100 shadow-sm px-3 py-3 flex flex-col gap-2"
                         >
@@ -644,7 +665,6 @@
                           </div>
                         </div>
 
-                        <!-- Card 3: Expansion slot -->
                         <div
                           class="flex-1 rounded-lg border-2 border-dashed border-slate-200 bg-slate-50/60 flex items-center justify-center shadow-inner"
                         >
@@ -655,7 +675,6 @@
                         </div>
                       </div>
 
-                      <!-- Bottom abstract chart -->
                       <div
                         class="mt-2 rounded-lg border border-slate-200 bg-white shadow-sm px-4 py-3"
                       >
@@ -674,7 +693,6 @@
                         </div>
 
                         <div class="flex items-center gap-5">
-                          <!-- Donut chart -->
                           <div
                             class="relative w-20 h-20 md:w-24 md:h-24"
                           >
@@ -684,7 +702,6 @@
                             <div
                               class="absolute inset-3 bg-white rounded-full"
                             ></div>
-                            <!-- 中心小字 -->
                             <div
                               class="absolute inset-0 flex items-center justify-center"
                             >
@@ -705,7 +722,6 @@
                             </div>
                           </div>
 
-                          <!-- Legend / data lines -->
                           <div class="flex-1 space-y-2">
                             <div class="flex items-center gap-2">
                               <span
@@ -765,15 +781,13 @@
                       </div>
                     </div>
                   </div>
-                  <!-- Mock Dashboard UI End -->
-                </div>
+                  </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Section B: Features Grid -->
       <section class="py-16 md:py-20 bg-[#f3f5f9]">
         <div class="max-w-[1100px] mx-auto px-6">
           <div class="text-center max-w-2xl mx-auto mb-10">
@@ -795,7 +809,6 @@
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            <!-- Card 1: Global View -->
             <div class="panel p-6 md:p-7 flex flex-col gap-3">
               <div
                 class="w-10 h-10 rounded-full bg-blue-50 text-[#2563eb] flex items-center justify-center mb-1"
@@ -811,7 +824,6 @@
               </p>
             </div>
 
-            <!-- Card 2: Compliance -->
             <div class="panel p-6 md:p-7 flex flex-col gap-3">
               <div
                 class="w-10 h-10 rounded-full bg-blue-50 text-[#2563eb] flex items-center justify-center mb-1"
@@ -827,7 +839,6 @@
               </p>
             </div>
 
-            <!-- Card 3: AI Insight -->
             <div class="panel p-6 md:p-7 flex flex-col gap-3">
               <div
                 class="w-10 h-10 rounded-full bg-blue-50 text-[#2563eb] flex items-center justify-center mb-1"
@@ -846,7 +857,6 @@
         </div>
       </section>
 
-      <!-- Section C: Bottom CTA -->
       <section
         class="py-16 md:py-20 bg-gradient-to-r from-[#e0f2fe] via-[#bfdbfe] to-[#93c5fd] border-t border-blue-100"
       >
@@ -883,11 +893,9 @@
         </div>
       </section>
 
-      <!-- ===== Legacy Dashboard (kept hidden, for JS / data) ===== -->
       <section class="py-10 hidden">
         <div class="max-w-[1440px] mx-auto px-6 w-full">
           <div class="panel px-6 md:px-8 lg:px-10 py-8 md:py-10">
-            <!-- Stats -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
               <div
                 class="p-6 border border-gray-200 rounded-xl hover:border-[#0066cc] transition-colors bg-white"
@@ -968,11 +976,8 @@
               </div>
             </div>
 
-            <!-- Table + Chart -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-              <!-- Table -->
               <div class="lg:col-span-2">
-                <!-- AI Alert -->
                 <div
                   id="ai-alert"
                   class="hidden mb-8 bg-orange-50 border-l-4 border-orange-500 rounded-lg p-5 flex gap-4 animate-fade-in"
@@ -1055,7 +1060,6 @@
                 </div>
               </div>
 
-              <!-- Chart -->
               <div class="space-y-8">
                 <div
                   class="border border-gray-200 rounded-3xl p-8 bg-white shadow-sm"
@@ -1114,16 +1118,13 @@
       </section>
     </section>
 
-    <!-- ===== Pricing (Cluely-style) ===== -->
     <section
       id="section-pricing"
       class="hidden bg-[#eef2ff] border-t border-gray-200"
     >
       <div class="max-w-[1100px] mx-auto px-6 pt-14 pb-20">
-        <!-- Hero -->
         <div class="text-center">
           <div class="flex items-center justify-center gap-3 mb-3">
-            <!-- 小一點的時鐘 Logo -->
             <svg class="logo-clock-hero" viewBox="0 0 100 100">
               <defs>
                 <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
@@ -1194,7 +1195,6 @@
             life.
           </p>
 
-          <!-- Billing toggle -->
           <div class="flex items-center justify-center gap-4 mt-7">
             <span
               id="billing-label-monthly"
@@ -1224,9 +1224,7 @@
           </div>
         </div>
 
-        <!-- Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-          <!-- Starter -->
           <div
             class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col relative overflow-hidden group pricing-card"
           >
@@ -1279,7 +1277,6 @@
             </div>
           </div>
 
-          <!-- Pro -->
           <div
             class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col relative overflow-hidden group pricing-card"
           >
@@ -1353,7 +1350,6 @@
             </div>
           </div>
 
-          <!-- Family Office -->
           <div
             class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col relative overflow-hidden group pricing-card"
           >
@@ -1419,12 +1415,9 @@
       </div>
     </section>
 
-    <!-- ===== About Taimic (TSMC 風格) ===== -->
     <section id="section-about" class="bg-[#dbeafe] border-t border-gray-200">
       <div class="max-w-[1100px] mx-auto px-6 pt-16 pb-20">
-        <!-- Hero 區塊 -->
         <header class="mb-10">
-          <!-- 上面那行改成 HOME，不再是 About Taimic -->
           <div
             class="text-xs md:text-sm font-bold tracking-[0.28em] text-gray-400 uppercase mb-1"
           >
@@ -1438,7 +1431,6 @@
               About <span class="text-[#0066cc]">Taimic</span>
             </h1>
 
-            <!-- 跟主頁一樣的時鐘（含動畫） -->
             <svg class="logo-clock-hero logo-clock-about" viewBox="0 0 100 100">
               <defs>
                 <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
@@ -1506,11 +1498,9 @@
           </p>
         </header>
 
-        <!-- 內文卡片：中文 / 英文 兩個版本，用 lang 切換顯示 -->
         <div
           class="bg-white/95 rounded-3xl shadow-sm border border-gray-200 p-6 md:p-8 leading-relaxed text-sm md:text-[15px] text-gray-800 space-y-6"
         >
-          <!-- 中文版 -->
           <div id="about-zh" class="space-y-6">
             <p>
               Taimic 是一個專為跨國移動家庭打造、結合 AI 的跨境資產與傳承管理平台。
@@ -1687,7 +1677,6 @@
             </p>
           </div>
 
-          <!-- 英文版 -->
           <div id="about-en" class="hidden space-y-6">
             <p>
               Taimic is an AI-enabled cross-border wealth and legacy management
@@ -1926,14 +1915,12 @@
       </div>
     </section>
 
-    <!-- ===== Reports（Taimic Brand Blue 風格） ===== -->
     <section id="section-reports" class="hidden reports-section">
       <div class="reports-shell w-full">
         <div class="max-w-[1100px] mx-auto px-6 py-16 flex items-center justify-center">
           <div
             class="w-full max-w-md bg-white rounded-3xl border border-blue-100 shadow-xl md:shadow-2xl p-8 md:p-9 animate-fade-in"
           >
-            <!-- 小標籤：鎖頭 + Reports -->
             <div
               class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 mb-5"
             >
@@ -1949,7 +1936,6 @@
               </span>
             </div>
 
-            <!-- 英文版 -->
             <div
               id="reports-gate-en"
               class="space-y-4 text-slate-900 text-sm md:text-[15px] leading-relaxed"
@@ -1978,7 +1964,6 @@
                 </p>
               </div>
 
-              <!-- 按鈕區 -->
               <div class="pt-4 flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
@@ -2000,7 +1985,6 @@
               </div>
             </div>
 
-            <!-- 中文版 -->
             <div
               id="reports-gate-zh"
               class="hidden space-y-4 text-slate-900 text-sm md:text-[15px] leading-relaxed"
@@ -2026,7 +2010,6 @@
                 </p>
               </div>
 
-              <!-- 按鈕區 -->
               <div class="pt-4 flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
@@ -2053,13 +2036,11 @@
     </section>
   </main>
 
-  <!-- ============= FOOTER ============= -->
   <footer class="bg-[#f4f6fb] border-t border-gray-200">
     <div class="max-w-[1440px] mx-auto px-6 pt-10 pb-4">
       <div
         class="flex flex-col lg:flex-row gap-10 lg:gap-20 pb-8 border-b border-gray-200"
       >
-        <!-- brand -->
         <div class="flex-1">
           <div class="flex items-center gap-2 mb-4">
             <svg class="logo-clock" viewBox="0 0 100 100">
@@ -2083,7 +2064,6 @@
           </p>
         </div>
 
-        <!-- Columns -->
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm">
           <div>
             <div class="footer-col-title">SOLUTIONS</div>
@@ -2130,7 +2110,6 @@
     </div>
   </footer>
 
-  <!-- ===== Upload Modal ===== -->
   <div
     id="modal-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
@@ -2151,7 +2130,6 @@
         ></i>
       </div>
 
-      <!-- step 1 -->
       <div id="modal-step-1" class="p-8 text-center">
         <div
           class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-[#0066cc]"
@@ -2173,7 +2151,6 @@
         </button>
       </div>
 
-      <!-- step 2 -->
       <div id="modal-step-2" class="hidden relative h-64 bg-[#050816]">
         <div
           class="absolute inset-0 flex flex-col items-center justify-center z-10"
@@ -2200,7 +2177,6 @@
     </div>
   </div>
 
-  <!-- ===== Auth Modal ===== -->
   <div
     id="auth-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
@@ -2251,7 +2227,6 @@
     </div>
   </div>
 
-  <!-- ============= SCRIPT ============= -->
   <script>
     const RATE = 32.5;
     let curr = "TWD";
@@ -2660,7 +2635,7 @@
 
     // ===== Global refs & init =====
     let geoChart;
-    let langMenu, userMenu, modalOverlay, authOverlay;
+    let langMenu, userMenu, modalOverlay, authOverlay, mobileMenu;
 
     window.onload = function () {
       const ctx = document.getElementById("geoChart").getContext("2d");
@@ -2688,6 +2663,7 @@
 
       langMenu = document.getElementById("lang-menu");
       userMenu = document.getElementById("user-menu");
+      mobileMenu = document.getElementById("mobile-menu");
       modalOverlay = document.getElementById("modal-overlay");
       authOverlay = document.getElementById("auth-overlay");
 
@@ -2695,10 +2671,12 @@
 
       const langToggle = document.getElementById("lang-toggle");
       const userToggle = document.getElementById("user-toggle");
+      const mobileBtn = document.getElementById("mobile-menu-btn");
 
       function closeAllMenus() {
         langMenu.classList.add("hidden");
         userMenu.classList.add("hidden");
+        if(mobileMenu) mobileMenu.classList.add("hidden");
       }
 
       langToggle.addEventListener("click", (e) => {
@@ -2716,6 +2694,24 @@
         if (open) userMenu.classList.remove("hidden");
       });
       userMenu.addEventListener("click", (e) => e.stopPropagation());
+
+      // Mobile Menu Logic
+      mobileBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const open = mobileMenu.classList.contains("hidden");
+        closeAllMenus(); // This ensures dropdowns close when mobile menu opens
+        if(open) mobileMenu.classList.remove("hidden");
+      });
+      
+      // Close menu when clicking a mobile link
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+             e.preventDefault();
+             const section = link.dataset.section;
+             if(section) switchSection(section);
+             mobileMenu.classList.add('hidden');
+        });
+      });
 
       document.addEventListener("click", closeAllMenus);
 
