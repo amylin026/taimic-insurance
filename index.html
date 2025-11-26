@@ -380,9 +380,7 @@
           </div>
         </div>
 
-        <div
-          class="dropdown-container cursor-pointer h-full border-l border-gray-200 pl-4"
-        >
+        <div class="dropdown-container cursor-pointer h-full border-l border-gray-200 pl-4">
           <button
             id="user-toggle"
             type="button"
@@ -455,12 +453,13 @@
   </header>
 
   <main class="flex-grow">
+    <!-- OVERVIEW SECTION -->
     <section id="section-overview">
+      <!-- HERO + SMART COMPLIANCE RISK SCREENER -->
       <section class="border-b border-gray-200 bg-[#e5ebf5]">
         <div class="max-w-[1440px] mx-auto px-6 py-16 md:py-20">
-          <div
-            class="flex flex-col md:flex-row items-center md:items-start gap-10"
-          >
+          <div class="flex flex-col md:flex-row items-center md:items-start gap-10">
+            <!-- Hero Copy -->
             <div class="w-full md:w-1/2 space-y-6">
               <p
                 class="text-xs font-semibold tracking-[0.2em] text-gray-500 uppercase"
@@ -508,7 +507,7 @@
               </div>
             </div>
 
-            <!-- Hero Right Side: 合規風險快篩器 -->
+            <!-- Hero Right Side: 智能合規風險快篩引擎 -->
             <div class="w-full md:w-1/2 mt-8 md:mt-0">
               <div class="max-w-md mx-auto">
                 <div class="bg-white rounded-2xl shadow-2xl border border-slate-200/80 px-6 py-6 md:px-7 md:py-7">
@@ -516,24 +515,24 @@
                   <div class="flex items-center justify-between mb-4">
                     <div>
                       <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
-                        Quick Check
+                        Smart Screener
                       </p>
                       <h3 class="text-lg md:text-xl font-bold text-slate-900 mt-1">
-                        Cross-border compliance risk screener
+                        Compliance Risk Screener · 智能合規風險快篩
                       </h3>
                     </div>
                     <span
                       class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-[#1d4ed8] border border-blue-100 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.14em]"
                     >
                       <i class="fa-solid fa-microchip text-xs"></i>
-                      AI Risk Engine
+                      AI Engine
                     </span>
                   </div>
 
-                  <!-- 三段式身分過濾器 -->
+                  <!-- 三段式身分過濾器 + 金額輸入 -->
                   <div class="space-y-4">
 
-                    <!-- A. 身分選擇 Identity -->
+                    <!-- A. 稅務身分 + 居住地 -->
                     <div class="space-y-3">
                       <div class="space-y-2">
                         <label for="hero-identity" class="block text-xs font-medium text-slate-600">
@@ -544,7 +543,7 @@
                           onchange="calculateHeroTotal()"
                           class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
                         >
-                          <option value="us">US Citizen / Green Card</option>
+                          <option value="us">US Citizen / Green Card Holder</option>
                           <option value="non-us" selected>Non-US Person (非美籍人士)</option>
                         </select>
                       </div>
@@ -567,7 +566,7 @@
                     <!-- B. 資產構成 Asset Composition -->
                     <div class="space-y-2">
                       <p class="block text-xs font-medium text-slate-600">
-                        Asset Composition / 資產類型（必填，可複選）
+                        Asset Types / 資產類型（必填，可複選）
                       </p>
                       <div class="flex flex-wrap gap-3">
                         <label class="inline-flex items-center gap-2 text-xs md:text-[13px] text-slate-600">
@@ -577,7 +576,7 @@
                             class="rounded border-slate-300"
                             onchange="calculateHeroTotal()"
                           />
-                          <span>現金 Cash <span class="text-[10px] text-slate-400">(低風險)</span></span>
+                          <span>現金存款 Cash</span>
                         </label>
                         <label class="inline-flex items-center gap-2 text-xs md:text-[13px] text-slate-600">
                           <input
@@ -586,7 +585,7 @@
                             class="rounded border-slate-300"
                             onchange="calculateHeroTotal()"
                           />
-                          <span>股票 Stocks <span class="text-[10px] text-slate-400">(中風險)</span></span>
+                          <span>股票 Stocks</span>
                         </label>
                         <label class="inline-flex items-center gap-2 text-xs md:text-[13px] text-slate-600">
                           <input
@@ -595,7 +594,7 @@
                             class="rounded border-slate-300"
                             onchange="calculateHeroTotal()"
                           />
-                          <span>基金 / ETF Funds <span class="text-[10px] text-red-500">(高風險)</span></span>
+                          <span>基金 / ETF Funds <span class="text-[10px] text-red-500">（PFIC 高風險）</span></span>
                         </label>
                         <label class="inline-flex items-center gap-2 text-xs md:text-[13px] text-slate-600">
                           <input
@@ -604,7 +603,7 @@
                             class="rounded border-slate-300"
                             onchange="calculateHeroTotal()"
                           />
-                          <span>保險 / 年金 Insurance <span class="text-[10px] text-red-500">(高風險)</span></span>
+                          <span>保險 / 年金 Insurance <span class="text-[10px] text-red-500">（PFIC / Excise Tax）</span></span>
                         </label>
                       </div>
                       <p id="hero-assets-error" class="hidden text-[11px] text-red-500 mt-1">
@@ -638,7 +637,7 @@
 
                       <div>
                         <label for="hero-usd" class="block text-xs font-medium text-slate-600 mb-1.5">
-                          US Assets (USD) / 美國資產
+                          US / Overseas Assets (USD) / 美國・海外資產
                         </label>
                         <div class="relative">
                           <span
@@ -659,13 +658,13 @@
                       </div>
                     </div>
 
-                    <!-- Primary CTA -->
+                    <!-- Step 1 CTA -->
                     <button
                       type="button"
                       onclick="calculateHeroTotal()"
                       class="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#111827] hover:bg-black text-white text-sm font-semibold py-2.5 shadow-sm transition mt-1"
                     >
-                      <span>Analyze My Risk（分析我的風險）</span>
+                      <span>Analyze My Risks（開始分析風險）</span>
                       <i class="fa-solid fa-magnifying-glass-chart text-xs"></i>
                     </button>
                   </div>
@@ -683,21 +682,21 @@
                       >
                         $0
                       </div>
-                      <p class="mt-1 text-[11px] text-slate-500">
-                        Converted using an indicative rate of 1 USD = 32.5 TWD.
+                      <p id="hero-rate-label" class="mt-1 text-[11px] text-slate-500">
+                        <!-- 動態填入：1 USD ≈ XX TWD・匯率更新於：剛剛 / Rates updated: Just now -->
                       </p>
                     </div>
 
                     <!-- 雙邊風險儀表板 US / TW -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <!-- US Status -->
+                      <!-- US Compliance Panel -->
                       <div
                         id="hero-us-status"
                         class="rounded-2xl border border-slate-200 bg-white px-4 py-3 flex flex-col gap-2"
                       >
                         <div class="flex items-center justify-between">
                           <div class="text-[11px] font-semibold tracking-[0.18em] text-slate-600 uppercase">
-                            🇺🇸 US Status
+                            🇺🇸 US Compliance
                           </div>
                           <div id="hero-us-tag" class="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide bg-slate-100 text-slate-600">
                             —
@@ -708,14 +707,14 @@
                         </div>
                       </div>
 
-                      <!-- TW Status -->
+                      <!-- TW Optimization Panel -->
                       <div
                         id="hero-tw-status"
                         class="rounded-2xl border border-slate-200 bg-white px-4 py-3 flex flex-col gap-2"
                       >
                         <div class="flex items-center justify-between">
                           <div class="text-[11px] font-semibold tracking-[0.18em] text-slate-600 uppercase">
-                            🇹🇼 TW Status
+                            🇹🇼 TW Optimization
                           </div>
                           <div id="hero-tw-tag" class="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide bg-slate-100 text-slate-600">
                             —
@@ -727,14 +726,14 @@
                       </div>
                     </div>
 
-                    <!-- 有風險時才出現的 CTA -->
+                    <!-- Step 2 CTA：有風險時才出現 -->
                     <button
                       id="hero-cta-btn"
                       type="button"
                       onclick="openAuthModal('register')"
                       class="hidden w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-md transition"
                     >
-                      <span>View Full Report &amp; Solutions</span>
+                      <span>View Full Report &amp; Solutions（查看完整報告與解決方案）</span>
                       <i class="fa-solid fa-arrow-right-long text-xs"></i>
                     </button>
                   </div>
@@ -746,6 +745,7 @@
         </div>
       </section>
 
+      <!-- OVERVIEW BODY CONTENT BELOW - UNCHANGED -->
       <section class="py-16 md:py-20 bg-[#f3f5f9]">
         <div class="max-w-[1100px] mx-auto px-6">
           <div class="text-center max-w-2xl mx-auto mb-10">
@@ -851,6 +851,7 @@
         </div>
       </section>
 
+      <!-- 原本的表格 / 圖表區塊保留（設為 hidden，不動結構，只隱藏） -->
       <section class="py-10 hidden">
         <div class="max-w-[1440px] mx-auto px-6 w-full">
           <div class="panel px-6 md:px-8 lg:px-10 py-8 md:py-10">
@@ -1076,6 +1077,7 @@
       </section>
     </section>
 
+    <!-- PRICING SECTION -->
     <section
       id="section-pricing"
       class="hidden bg-[#eef2ff] border-t border-gray-200"
@@ -1373,6 +1375,7 @@
       </div>
     </section>
 
+    <!-- ABOUT SECTION -->
     <section id="section-about" class="bg-[#dbeafe] border-t border-gray-200">
       <div class="max-w-[1100px] mx-auto px-6 pt-16 pb-20">
         <header class="mb-10">
@@ -1459,6 +1462,7 @@
         <div
           class="bg-white/95 rounded-3xl shadow-sm border border-gray-200 p-6 md:p-8 leading-relaxed text-sm md:text-[15px] text-gray-800 space-y-6"
         >
+          <!-- 中文 About -->
           <div id="about-zh" class="space-y-6">
             <p>
               Taimic 是一個專為跨國移動家庭打造、結合 AI 的跨境資產與傳承管理平台。
@@ -1635,6 +1639,7 @@
             </p>
           </div>
 
+          <!-- English About -->
           <div id="about-en" class="hidden space-y-6">
             <p>
               Taimic is an AI-enabled cross-border wealth and legacy management
@@ -1873,6 +1878,7 @@
       </div>
     </section>
 
+    <!-- REPORTS SECTION -->
     <section id="section-reports" class="hidden reports-section">
       <div class="reports-shell w-full">
         <div class="max-w-[1100px] mx-auto px-6 py-16 flex items-center justify-center">
@@ -1894,6 +1900,7 @@
               </span>
             </div>
 
+            <!-- Reports EN -->
             <div
               id="reports-gate-en"
               class="space-y-4 text-slate-900 text-sm md:text-[15px] leading-relaxed"
@@ -1943,6 +1950,7 @@
               </div>
             </div>
 
+            <!-- Reports ZH -->
             <div
               id="reports-gate-zh"
               class="hidden space-y-4 text-slate-900 text-sm md:text-[15px] leading-relaxed"
@@ -1994,6 +2002,7 @@
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="bg-[#f4f6fb] border-t border-gray-200">
     <div class="max-w-[1440px] mx-auto px-6 pt-10 pb-4">
       <div
@@ -2068,6 +2077,7 @@
     </div>
   </footer>
 
+  <!-- MODALS -->
   <div
     id="modal-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
@@ -2186,39 +2196,18 @@
   </div>
 
   <script>
-    const RATE = 32.5;
-    let curr = "TWD";
-    let lang = "en";
-    let currentSection = "overview";
-    let billing = "monthly";
-    const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
+    // 匯率：優先 API，備援常數 31.0（嚴格認定）
+    const RATE_FALLBACK = 31.0;
+    let RATE = RATE_FALLBACK;
 
-    const assets = [
-      {
-        id: 1,
-        name: {
-          en: "Vanguard Total Stock (VTI)",
-          zh: "Vanguard 全球股票 ETF (VTI)",
-        },
-        type: { en: "ETF", zh: "指數型基金" },
-        region: "US",
-        usd: 145200,
-      },
-      {
-        id: 2,
-        name: { en: "Taipei Xinyi Condo", zh: "台北信義區公寓" },
-        type: { en: "Real Estate", zh: "房地產" },
-        region: "TW",
-        usd: 280000,
-      },
-      {
-        id: 3,
-        name: { en: "Fidelity 401(k)", zh: "富達退休金 401(k)" },
-        type: { en: "Retirement", zh: "退休金" },
-        region: "US",
-        usd: 98500,
-      },
-    ];
+    const FX_API = "https://open.er-api.com/v6/latest/USD";
+
+    const RATE_LABEL_TEXT = {
+      en: "Rates updated: Just now",
+      zh: "匯率更新於：剛剛",
+    };
+
+    const RATE_LABEL_PREFIX = "1 USD ≈ ";
 
     const I18N = {
       en: {
@@ -2288,6 +2277,39 @@
       },
     };
 
+    const assets = [
+      {
+        id: 1,
+        name: {
+          en: "Vanguard Total Stock (VTI)",
+          zh: "Vanguard 全球股票 ETF (VTI)",
+        },
+        type: { en: "ETF", zh: "指數型基金" },
+        region: "US",
+        usd: 145200,
+      },
+      {
+        id: 2,
+        name: { en: "Taipei Xinyi Condo", zh: "台北信義區公寓" },
+        type: { en: "Real Estate", zh: "房地產" },
+        region: "TW",
+        usd: 280000,
+      },
+      {
+        id: 3,
+        name: { en: "Fidelity 401(k)", zh: "富達退休金 401(k)" },
+        type: { en: "Retirement", zh: "退休金" },
+        region: "US",
+        usd: 98500,
+      },
+    ];
+
+    let curr = "TWD";
+    let lang = "en";
+    let currentSection = "overview";
+    let billing = "monthly";
+    const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
+
     function fmt(usd) {
       const val = curr === "USD" ? usd : usd * RATE;
       return new Intl.NumberFormat(
@@ -2298,6 +2320,35 @@
           maximumFractionDigits: 0,
         }
       ).format(val);
+    }
+
+    function updateRateLabel() {
+      const label = document.getElementById("hero-rate-label");
+      if (!label) return;
+      const prefix = `${RATE_LABEL_PREFIX}${RATE.toFixed(2)} TWD`;
+      const suffix = RATE_LABEL_TEXT[lang] || RATE_LABEL_TEXT.en;
+      label.textContent = `${prefix} • ${suffix}`;
+    }
+
+    async function fetchFXRate() {
+      try {
+        const res = await fetch(FX_API);
+        if (!res.ok) throw new Error("FX API error");
+        const data = await res.json();
+        const r = data && data.rates && data.rates.TWD;
+        if (typeof r === "number" && r > 0) {
+          RATE = r;
+        } else {
+          RATE = RATE_FALLBACK;
+        }
+      } catch (e) {
+        RATE = RATE_FALLBACK;
+      } finally {
+        // 匯率更新後重新 render & 重算一次
+        updateRateLabel();
+        render();
+        calculateHeroTotal();
+      }
     }
 
     function render() {
@@ -2313,50 +2364,47 @@
       });
 
       const tbody = document.getElementById("asset-list");
-      tbody.innerHTML = "";
-      assets.forEach((a) => {
-        const n = a.name[lang];
-        const tp = a.type[lang];
-        const flag = a.region === "US" ? "🇺🇸" : "🇹🇼";
-        const badge =
-          a.region === "US"
-            ? "bg-blue-50 text-blue-700"
-            : "bg-green-50 text-green-700";
-        const hl = a.new ? "bg-orange-50 animate-fade-in" : "";
-        const riskTag = a.risk
-          ? `<span class="ml-2 inline-flex items-center px-2 py-0.5 bg-orange-100 text-orange-700 text-[10px] font-bold rounded-full border border-orange-200">FATCA</span>`
-          : "";
-        tbody.innerHTML += `
-          <tr class="group transition-colors hover:bg-gray-50 border-b border-gray-100 last:border-0 ${hl}">
-            <td class="py-4 pl-2">
-              <div class="font-semibold text-[#111827] group-hover:text-[#0066cc] transition-colors">${n}</div>
-            </td>
-            <td class="py-4">
-              <span class="px-2 py-1 rounded-full text-xs font-bold ${badge}">${flag} ${a.region}</span>${riskTag}
-            </td>
-            <td class="py-4 text-sm text-gray-600">${tp}</td>
-            <td class="py-4 pr-2 text-right font-mono font-bold text-[#111827] tracking-tight">${fmt(
-              a.usd
-            )}</td>
-          </tr>`;
-      });
+      if (tbody) {
+        tbody.innerHTML = "";
+        assets.forEach((a) => {
+          const n = a.name[lang];
+          const tp = a.type[lang];
+          const flag = a.region === "US" ? "🇺🇸" : "🇹🇼";
+          const badge =
+            a.region === "US"
+              ? "bg-blue-50 text-blue-700"
+              : "bg-green-50 text-green-700";
+          const hl = a.new ? "bg-orange-50 animate-fade-in" : "";
+          const riskTag = a.risk
+            ? `<span class="ml-2 inline-flex items-center px-2 py-0.5 bg-orange-100 text-orange-700 text-[10px] font-bold rounded-full border border-orange-200">FATCA</span>`
+            : "";
+          tbody.innerHTML += `
+            <tr class="group transition-colors hover:bg-gray-50 border-b border-gray-100 last:border-0 ${hl}">
+              <td class="py-4 pl-2">
+                <div class="font-semibold text-[#111827] group-hover:text-[#0066cc] transition-colors">${n}</div>
+              </td>
+              <td class="py-4">
+                <span class="px-2 py-1 rounded-full text-xs font-bold ${badge}">${flag} ${a.region}</span>${riskTag}
+              </td>
+              <td class="py-4 text-sm text-gray-600">${tp}</td>
+              <td class="py-4 pr-2 text-right font-mono font-bold text-[#111827] tracking-tight">${fmt(
+                a.usd
+              )}</td>
+            </tr>`;
+        });
+      }
 
       const btnUsd = document.getElementById("btn-usd");
       const btnTwd = document.getElementById("btn-twd");
-      if (curr === "USD") {
-        btnUsd.className = "px-4 py-2 bg-white text-[#0066cc] font-semibold";
-        btnTwd.className = "px-4 py-2 text-gray-500 hover:bg-gray-100";
-      } else {
-        btnTwd.className = "px-4 py-2 bg-white text-[#0066cc] font-semibold";
-        btnUsd.className = "px-4 py-2 text-gray-500 hover:bg-gray-100";
+      if (btnUsd && btnTwd) {
+        if (curr === "USD") {
+          btnUsd.className = "px-4 py-2 bg-white text-[#0066cc] font-semibold";
+          btnTwd.className = "px-4 py-2 text-gray-500 hover:bg-gray-100";
+        } else {
+          btnTwd.className = "px-4 py-2 bg-white text-[#0066cc] font-semibold";
+          btnUsd.className = "px-4 py-2 text-gray-500 hover:bg-gray-100";
+        }
       }
-
-      document
-        .getElementById("opt-zh")
-        .classList.toggle("active", lang === "zh");
-      document
-        .getElementById("opt-en")
-        .classList.toggle("active", lang === "en");
 
       const aboutZh = document.getElementById("about-zh");
       const aboutEn = document.getElementById("about-en");
@@ -2383,17 +2431,20 @@
       }
 
       updatePricing();
+      updateRateLabel();
     }
 
     function setCurrency(c) {
       curr = c;
       render();
+      calculateHeroTotal();
     }
 
     function changeLang(l) {
       lang = l;
       render();
       langMenu.classList.add("hidden");
+      calculateHeroTotal();
     }
 
     function switchSection(section) {
@@ -2452,7 +2503,7 @@
       updatePricing();
     }
 
-    // 總額縮寫顯示：避免位數太長爆版
+    // Hero 金額顯示縮寫：避免位數太長爆版
     function formatUSDAbbrev(value) {
       const n = Number(value) || 0;
       const abs = Math.abs(n);
@@ -2476,7 +2527,7 @@
       }).format(n);
     }
 
-    // Hero 合規風險快篩器：身分 + 資產 + 金額 = 診斷
+    // 核心：Overview 智能合規風險快篩引擎（2025 最終版）
     function calculateHeroTotal() {
       const twdInput = document.getElementById("hero-twd");
       const usdInput = document.getElementById("hero-usd");
@@ -2525,208 +2576,324 @@
         assetsError.classList.add("hidden");
       }
 
-      // 沒填金額或沒勾資產 -> 不顯示結果
+      // 無金額或無資產，直接隱藏結果
+      const ctaBtn = document.getElementById("hero-cta-btn");
       if (!hasAmount || !assetsSelected) {
         resultBox.classList.add("hidden");
-        const ctaBtn = document.getElementById("hero-cta-btn");
         if (ctaBtn) ctaBtn.classList.add("hidden");
         return;
       }
 
       const identity = identityEl.value; // "us" or "non-us"
       const residence = residenceEl.value; // "tw" or "us"
-      const hasFunds = !!fundsChk.checked;
-      const hasInsurance = !!insuranceChk.checked;
-      const hasHighRiskAsset = hasFunds || hasInsurance;
-
-      const totalUsd = twd / RATE + usd;
-      const foreignUsd = twd / RATE;
-      const usAssetsUsd = usd;
-
-      // 總額顯示：自動縮寫
-      totalEl.textContent = formatUSDAbbrev(totalUsd);
-
       const isUSPerson = identity === "us";
 
-      let usSeverity = "safe"; // safe | medium | high | info
+      const hasFunds = !!fundsChk.checked;
+      const hasInsurance = !!insuranceChk.checked;
+      const hasHighRiskPFIC = hasFunds || hasInsurance;
+
+      const globalUsd = twd / RATE + usd;   // 全球資產總額 (USD)
+      const usAssetsUsd = usd;              // US/Overseas 資產 (USD)
+      const totalTwd = globalUsd * RATE;    // 全球資產 (TWD)
+
+      // 台灣最低稅負制估算：假設 US Assets ROI = 5%
+      const overseasROIusd = usAssetsUsd * 0.05;
+      const overseasROItwd = overseasROIusd * RATE;
+
+      // 顯示總額（含縮寫）
+      totalEl.textContent = formatUSDAbbrev(globalUsd);
+      updateRateLabel();
+
+      // --- US Compliance 判斷 ---
+      let usStatus = "safe"; // safe | warning | critical
       let hasUsRisk = false;
 
-      if (isUSPerson) {
-        // 情境一：US Citizen / Green Card
-        const flagPFIC = hasHighRiskAsset; // 規則 3
-        const flagFATCA =
-          residence === "tw" && totalUsd > 200000; // 規則 2
-        const flagFBAR = foreignUsd > 10000; // 規則 1
+      // 規則集 (2025)：
+      // 情境 A：US Person (全球資產)
+      let hitFBAR = false;
+      let hitFATCA = false;
+      let hitPFIC = false;
+      let hitEstateNonUS = false;
 
-        if (flagPFIC || flagFATCA) {
-          usSeverity = "high";
+      if (isUSPerson) {
+        // FBAR: 全球資產 > 10,000 USD
+        hitFBAR = globalUsd > 10000;
+
+        // FATCA: 居住地 = 台灣 & 全球資產 > 200,000 USD
+        hitFATCA = residence === "tw" && globalUsd > 200000;
+
+        // PFIC: 勾選基金 or 保險
+        hitPFIC = hasHighRiskPFIC;
+
+        if (hitPFIC || hitFATCA) {
+          usStatus = "critical";
           hasUsRisk = true;
-        } else if (flagFBAR) {
-          usSeverity = "medium";
+        } else if (hitFBAR) {
+          usStatus = "warning";
           hasUsRisk = true;
         } else {
-          usSeverity = "safe";
+          usStatus = "safe";
           hasUsRisk = false;
         }
       } else {
-        // 情境二：Non-US Person
-        const estateRisk = usAssetsUsd > 60000; // 規則 1
-        if (estateRisk) {
-          usSeverity = "high";
+        // 情境 B：Non-US Person，只看 US Assets
+        hitEstateNonUS = usAssetsUsd > 60000;
+        if (hitEstateNonUS) {
+          usStatus = "critical";
           hasUsRisk = true;
-        } else if (totalUsd < 60000 && !hasHighRiskAsset) {
-          // 規則 2：金額 < 60k 且無高風險資產 => 美國端安全
-          usSeverity = "safe";
-          hasUsRisk = false;
         } else {
-          // 介於中間：沒有明顯美國遺產／申報門檻，但結構值得長期關注
-          usSeverity = "info";
+          usStatus = "safe";
           hasUsRisk = false;
         }
       }
 
-      // 情境三：台灣端 AMT / CFC 提醒
-      const totalTwd = totalUsd * RATE;
-      const twRisk = totalTwd > 7500000;
+      // --- Taiwan 稅務檢查 (情境 C：所有人適用) ---
+      const hitAMT = overseasROItwd > 1000000;        // 最低稅負制：海外所得推估 > NT 1,000,000
+      const hitTWEstate = totalTwd > 13330000;        // 台灣遺產稅門檻：全球資產 > 1333 萬
+      let twStatus = (hitAMT || hitTWEstate) ? "review" : "optimized";
+      let hasTwRisk = hitAMT || hitTWEstate;
 
-      // 更新雙邊儀表板 UI
+      // --- 更新 US / TW 儀表板 UI ---
       const usCard = document.getElementById("hero-us-status");
       const usTag = document.getElementById("hero-us-tag");
       const usBody = document.getElementById("hero-us-body");
       const twCard = document.getElementById("hero-tw-status");
       const twTag = document.getElementById("hero-tw-tag");
       const twBody = document.getElementById("hero-tw-body");
-      const ctaBtn = document.getElementById("hero-cta-btn");
 
-      // 顯示結果容器
+      // 開啟結果容器
       resultBox.classList.remove("hidden");
 
-      // US 卡片 base class
+      // US 卡片樣式
       if (usCard) {
-        usCard.className =
-          "rounded-2xl border px-4 py-3 flex flex-col gap-2 " +
-          (usSeverity === "high"
-            ? "border-red-200 bg-red-50"
-            : usSeverity === "medium"
-            ? "border-amber-200 bg-amber-50"
-            : usSeverity === "safe"
-            ? "border-emerald-200 bg-emerald-50"
-            : "border-slate-200 bg-white");
+        let cls =
+          "rounded-2xl border px-4 py-3 flex flex-col gap-2 ";
+        if (usStatus === "critical") {
+          cls += "border-red-200 bg-red-50";
+        } else if (usStatus === "warning") {
+          cls += "border-amber-200 bg-amber-50";
+        } else {
+          cls += "border-emerald-200 bg-emerald-50";
+        }
+        usCard.className = cls;
       }
       if (usTag) {
         usTag.className =
           "text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide";
-        if (usSeverity === "high") {
+        if (usStatus === "critical") {
           usTag.classList.add("bg-red-100", "text-red-700");
-          usTag.textContent = "HIGH RISK";
-        } else if (usSeverity === "medium") {
+          usTag.textContent = "🚨 Critical";
+        } else if (usStatus === "warning") {
           usTag.classList.add("bg-amber-100", "text-amber-700");
-          usTag.textContent = "ALERT";
-        } else if (usSeverity === "safe") {
-          usTag.classList.add("bg-emerald-100", "text-emerald-700");
-          usTag.textContent = "SAFE";
+          usTag.textContent = "⚠️ Warning";
         } else {
-          usTag.classList.add("bg-slate-100", "text-slate-700");
-          usTag.textContent = "MONITOR";
+          usTag.classList.add("bg-emerald-100", "text-emerald-700");
+          usTag.textContent = "✅ Safe";
         }
       }
 
       if (usBody) {
-        if (usSeverity === "safe") {
-          usBody.innerHTML = `
-            <p class="text-xs font-semibold text-emerald-900">
-              ✅ No US Reporting Required
-            </p>
-            <p class="text-xs text-emerald-800 mt-1">
-              依照目前輸入的身分、資產組合與金額，尚未偵測到明確的美國端申報門檻或遺產稅觸發點。
-            </p>
-            <p class="text-[11px] text-emerald-700 mt-1">
-              本結果僅為初步快篩，不構成稅務或法律建議。
-            </p>
-          `;
-        } else if (usSeverity === "medium" || usSeverity === "high") {
-          usBody.innerHTML = `
-            <p class="text-xs font-semibold text-slate-900">
-              ⚠️ Compliance Risk Detected
-            </p>
-            <p class="text-xs text-slate-800 mt-1">
-              你的跨境資產結構中，可能已經接近或超過美國端的申報或課稅門檻，未妥善處理時，長期可能產生持續性的稅負與罰則風險。
-            </p>
-            <p class="mt-2 text-[11px] font-medium text-slate-900">
-              Est. Potential Penalty: <span class="font-bold">$10,000+ / Year</span>
-            </p>
-            <p class="mt-1 text-[11px] text-slate-500">
-              Risk Source: <span class="font-semibold text-slate-700">[🔒 Login to view]</span>
-            </p>
-          `;
+        // US Panel 內容
+        if (isUSPerson) {
+          if (usStatus === "safe") {
+            // US Person 完全安全：尚未觸發 FBAR / FATCA / PFIC
+            usBody.innerHTML = `
+              <p class="text-xs font-semibold text-emerald-900">
+                ✅ Safe • Compliant: No US Reporting Required
+              </p>
+              <p class="text-[11px] text-emerald-800 mt-1">
+                合規：目前無須向美國申報（尚未觸發 FBAR、FATCA 或 PFIC 相關門檻）。
+              </p>
+              <p class="mt-1 text-[11px] text-emerald-700">
+                本結果為智能快篩，實際申報義務與細節請與合格稅務顧問確認。
+              </p>
+            `;
+          } else if (usStatus === "warning") {
+            // 只有 FBAR 被觸發
+            usBody.innerHTML = `
+              <p class="text-xs font-semibold text-amber-900">
+                ⚠️ Warning — FBAR Threshold Reached
+              </p>
+              <p class="text-[11px] mt-1 text-slate-800">
+                Filing Required: FinCEN Form 114 (FBAR)
+              </p>
+              <p class="text-[11px] text-slate-800">
+                需申報：肥咖條款 FBAR (Form 114)
+              </p>
+              <p class="mt-2 text-[11px] font-medium text-slate-900">
+                Est. Penalty Risk: <span class="font-bold">$10,000+ USD / Year</span>
+              </p>
+              <p class="mt-1 text-[11px] text-slate-500">
+                Form details: <span class="font-semibold text-slate-700">[🔒 Login to view]</span>
+              </p>
+            `;
+          } else {
+            // critical：可能有 FATCA / PFIC / 也可能同時含 FBAR
+            let lines = `
+              <p class="text-xs font-semibold text-red-900">
+                🚨 Critical — US Compliance Risk Detected
+              </p>
+            `;
+
+            if (hitFATCA) {
+              lines += `
+                <p class="text-[11px] mt-1 text-slate-800">
+                  Critical Alert: Form 8938 Filing Required
+                </p>
+                <p class="text-[11px] text-slate-800">
+                  高風險警告：需申報 FATCA (Form 8938)
+                </p>
+              `;
+            }
+
+            if (hitPFIC) {
+              lines += `
+                <p class="text-[11px] mt-1 text-slate-800">
+                  Complex Tax Risk: PFIC / Excise Tax Detected
+                </p>
+                <p class="text-[11px] text-slate-800">
+                  複雜稅務風險：檢測到 PFIC / 海外保單稅務問題
+                </p>
+              `;
+            }
+
+            if (hitFBAR) {
+              lines += `
+                <p class="text-[11px] mt-1 text-slate-800">
+                  Filing Required: FinCEN Form 114 (FBAR)
+                </p>
+                <p class="text-[11px] text-slate-800">
+                  需申報：肥咖條款 FBAR (Form 114)
+                </p>
+              `;
+            }
+
+            lines += `
+              <p class="mt-2 text-[11px] font-medium text-slate-900">
+                Est. Penalty Risk: <span class="font-bold">$10,000+ USD / Year</span>
+              </p>
+              <p class="mt-1 text-[11px] text-slate-500">
+                Key Forms / 關鍵表單：<span class="font-semibold text-slate-700">[🔒 Login to view]</span>
+              </p>
+            `;
+
+            usBody.innerHTML = lines;
+          }
         } else {
-          // info: Non-US Person，金額較高或有高風險資產，但尚未明確觸發美國門檻
-          usBody.innerHTML = `
-            <p class="text-xs font-semibold text-slate-900">
-              ℹ️ No clear US trigger, but monitor
-            </p>
-            <p class="text-xs text-slate-800 mt-1">
-              目前尚未偵測到明確的美國遺產稅或申報門檻，但你的資產金額或結構仍建議長期關注，必要時可與專業顧問討論。
-            </p>
-            <p class="mt-1 text-[11px] text-slate-500">
-              Risk Source: <span class="font-semibold text-slate-700">[🔒 Login to view]</span>
-            </p>
-          `;
+          // Non-US Person 的 US Compliance
+          if (usStatus === "critical" && hitEstateNonUS) {
+            usBody.innerHTML = `
+              <p class="text-xs font-semibold text-red-900">
+                🚨 Critical — US Estate Tax Exposure
+              </p>
+              <p class="text-[11px] mt-1 text-slate-800">
+                Critical: Exceeds $60k Estate Tax Exemption (40% Tax Risk)
+              </p>
+              <p class="text-[11px] text-slate-800">
+                嚴重警告：超過非美籍免稅額（面臨約 40% 美國遺產稅風險）。
+              </p>
+              <p class="mt-2 text-[11px] font-medium text-slate-900">
+                Est. Penalty Risk: <span class="font-bold">$10,000+ USD / Year</span>
+              </p>
+              <p class="mt-1 text-[11px] text-slate-500">
+                IRS exposure details: <span class="font-semibold text-slate-700">[🔒 Login to view]</span>
+              </p>
+            `;
+          } else {
+            usBody.innerHTML = `
+              <p class="text-xs font-semibold text-emerald-900">
+                ✅ Safe • Compliant: No US Reporting Required
+              </p>
+              <p class="text-[11px] text-emerald-800 mt-1">
+                合規：目前無須向美國申報（非美籍且美國境內資產未超過 $60,000 USD 遺產稅免稅額）。
+              </p>
+              <p class="mt-1 text-[11px] text-emerald-700">
+                本結果為初步快篩，實際稅務影響仍建議與專業顧問確認。
+              </p>
+            `;
+          }
         }
       }
 
-      // TW 卡片
+      // TW 卡片樣式
       if (twCard) {
-        twCard.className =
-          "rounded-2xl border px-4 py-3 flex flex-col gap-2 " +
-          (twRisk
-            ? "border-amber-200 bg-amber-50"
-            : "border-emerald-200 bg-emerald-50");
+        let cls = "rounded-2xl border px-4 py-3 flex flex-col gap-2 ";
+        if (twStatus === "review") {
+          cls += "border-sky-200 bg-sky-50";
+        } else {
+          cls += "border-emerald-200 bg-emerald-50";
+        }
+        twCard.className = cls;
       }
       if (twTag) {
         twTag.className =
           "text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide";
-        if (twRisk) {
-          twTag.classList.add("bg-amber-100", "text-amber-700");
-          twTag.textContent = "ALERT";
+        if (twStatus === "review") {
+          twTag.classList.add("bg-sky-100", "text-sky-800");
+          twTag.textContent = "ℹ️ Review Needed";
         } else {
           twTag.classList.add("bg-emerald-100", "text-emerald-700");
-          twTag.textContent = "SAFE";
+          twTag.textContent = "✅ Optimized";
         }
       }
+
       if (twBody) {
-        if (twRisk) {
-          twBody.innerHTML = `
-            <p class="text-xs font-semibold text-slate-900">
-              ⚠️ Compliance Risk Detected
-            </p>
-            <p class="text-xs text-slate-800 mt-1">
-              你的全球資產折算已超過約新台幣 750 萬，可能落入台灣最低稅負制或 CFC（受控外國公司）相關討論範圍，需要更精細的結構與申報評估。
-            </p>
-            <p class="mt-2 text-[11px] font-medium text-slate-900">
-              Est. Potential Penalty: <span class="font-bold">$10,000+ / Year</span>
-            </p>
-            <p class="mt-1 text-[11px] text-slate-500">
-              Risk Source: <span class="font-semibold text-slate-700">[🔒 Login to view]</span>
+        if (twStatus === "review") {
+          let lines = `
+            <p class="text-xs font-semibold text-sky-900">
+              ℹ️ Review Needed — Taiwan Tax Exposure
             </p>
           `;
+
+          if (hitAMT) {
+            lines += `
+              <p class="text-[11px] mt-1 text-slate-800">
+                Attention: Overseas Income may require AMT Filing
+              </p>
+              <p class="text-[11px] text-slate-800">
+                留意：海外所得可能達最低稅負制申報門檻（推估 US Assets × 5% 已超過 NT$ 1,000,000）。
+              </p>
+            `;
+          }
+
+          if (hitTWEstate) {
+            lines += `
+              <p class="text-[11px] mt-1 text-slate-800">
+                Planning Recommended: TW Estate Tax Exposure
+              </p>
+              <p class="text-[11px] text-slate-800">
+                建議規劃：全球資產總額已達台灣遺產稅課稅門檻（約 NT$ 13,330,000 以上）。
+              </p>
+            `;
+          }
+
+          lines += `
+            <p class="mt-2 text-[11px] font-medium text-slate-900">
+              Potential Tax Exposure: <span class="font-bold">20% AMT / Estate Tax</span>
+            </p>
+            <p class="mt-1 text-[11px] text-slate-500">
+              Rule details: <span class="font-semibold text-slate-700">[🔒 Login to view]</span>
+            </p>
+          `;
+
+          twBody.innerHTML = lines;
         } else {
           twBody.innerHTML = `
             <p class="text-xs font-semibold text-emerald-900">
-              ✅ No TW AMT / CFC Signal Detected
+              ✅ Optimized — No Immediate TW Tax Signal
             </p>
-            <p class="text-xs text-emerald-800 mt-1">
-              以目前輸入的總資產規模來看，尚未明顯落入台灣最低稅負制或 CFC 監管的高壓區間。
+            <p class="text-[11px] text-emerald-800 mt-1">
+              目前估算下，尚未明顯落入台灣最低稅負制或遺產稅的高壓區間，資產結構相對健康。
             </p>
             <p class="mt-1 text-[11px] text-emerald-700">
-              實際適用與申報義務仍須由專業稅務顧問依你完整資料確認。
+              若未來海外資產或全球總額進一步放大，建議提前與顧問討論 CFC、AMT 與傳承規劃。
             </p>
           `;
         }
       }
 
-      // 只要任一邊有風險，就打開「View Full Report & Solutions」
-      const hasAnyRisk = hasUsRisk || twRisk;
+      // Step 2 CTA：只要 US 或 TW 任一側有風險 / 暗示，就打開
+      const hasAnyRisk = hasUsRisk || hasTwRisk;
       if (ctaBtn) {
         ctaBtn.classList.toggle("hidden", !hasAnyRisk);
       }
@@ -2801,13 +2968,14 @@
         });
 
         const tEl = document.getElementById("val-tw");
-        tEl.dataset.usd = parseFloat(tEl.dataset.usd) + 52000;
+        if (tEl) tEl.dataset.usd = parseFloat(tEl.dataset.usd) + 52000;
         const gEl = document.getElementById("val-global");
-        gEl.dataset.usd = parseFloat(gEl.dataset.usd) + 52000;
+        if (gEl) gEl.dataset.usd = parseFloat(gEl.dataset.usd) + 52000;
         geoChart.data.datasets[0].data[1] += 52000;
         geoChart.update();
 
-        document.getElementById("ai-alert").classList.remove("hidden");
+        const aiAlert = document.getElementById("ai-alert");
+        if (aiAlert) aiAlert.classList.remove("hidden");
         render();
         closeUploadModal();
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -2986,9 +3154,10 @@
 
       document.addEventListener("click", closeAllMenus);
 
-      document
-        .getElementById("auth-submit")
-        .addEventListener("click", handleAuthSubmit);
+      const authSubmitBtn = document.getElementById("auth-submit");
+      if (authSubmitBtn) {
+        authSubmitBtn.addEventListener("click", handleAuthSubmit);
+      }
 
       document.querySelectorAll("nav .nav-link").forEach((link) => {
         link.addEventListener("click", (e) => {
@@ -2999,6 +3168,8 @@
       });
 
       switchSection("overview");
+      // 取得即時匯率（失敗時使用 31.0）
+      fetchFXRate();
     };
   </script>
 </body>
