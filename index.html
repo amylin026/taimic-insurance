@@ -522,7 +522,7 @@
               </div>
             </div>
 
-            <!-- Hero Right Side: Interactive Calculator Card -->
+            <!-- Hero Right Side: Risk Screener Card -->
             <div class="w-full md:w-1/2 mt-8 md:mt-0">
               <div class="max-w-md mx-auto">
                 <div class="bg-white rounded-2xl shadow-2xl border border-slate-200/80 px-6 py-6 md:px-7 md:py-7">
@@ -533,7 +533,7 @@
                         Quick Check
                       </p>
                       <h3 class="text-lg md:text-xl font-bold text-slate-900 mt-1">
-                        Estimate your cross-border net worth
+                        Cross-border compliance risk screener
                       </h3>
                     </div>
                     <span
@@ -546,6 +546,67 @@
 
                   <!-- Inputs -->
                   <div class="space-y-4">
+                    <!-- 身分選擇 -->
+                    <div class="space-y-2">
+                      <label for="hero-identity" class="block text-xs font-medium text-slate-600">
+                        Tax status / 身分類型
+                      </label>
+                      <select
+                        id="hero-identity"
+                        onchange="calculateHeroTotal()"
+                        class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
+                      >
+                        <option value="us">US Citizen / Green Card Holder</option>
+                        <option value="non-us" selected>Non-US Tax Resident</option>
+                      </select>
+                    </div>
+
+                    <!-- 資產類型多選 -->
+                    <div class="space-y-2">
+                      <p class="block text-xs font-medium text-slate-600">
+                        Asset types involved / 資產類型（可複選）
+                      </p>
+                      <div class="flex flex-wrap gap-3">
+                        <label class="inline-flex items-center gap-2 text-xs md:text-[13px] text-slate-600">
+                          <input
+                            id="hero-asset-cash"
+                            type="checkbox"
+                            class="rounded border-slate-300"
+                            onchange="calculateHeroTotal()"
+                          />
+                          <span>現金存款 (Cash deposits)</span>
+                        </label>
+                        <label class="inline-flex items-center gap-2 text-xs md:text-[13px] text-slate-600">
+                          <input
+                            id="hero-asset-stocks"
+                            type="checkbox"
+                            class="rounded border-slate-300"
+                            onchange="calculateHeroTotal()"
+                          />
+                          <span>股票 (Stocks)</span>
+                        </label>
+                        <label class="inline-flex items-center gap-2 text-xs md:text-[13px] text-slate-600">
+                          <input
+                            id="hero-asset-funds"
+                            type="checkbox"
+                            class="rounded border-slate-300"
+                            onchange="calculateHeroTotal()"
+                          />
+                          <span>基金 / ETF (Funds / ETF)</span>
+                        </label>
+                        <label class="inline-flex items-center gap-2 text-xs md:text-[13px] text-slate-600">
+                          <input
+                            id="hero-asset-insurance"
+                            type="checkbox"
+                            class="rounded border-slate-300"
+                            onchange="calculateHeroTotal()"
+                          />
+                          <span>保險 / 年金 (Insurance / Annuity)</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <!-- 金額輸入 -->
                     <div>
                       <label for="hero-twd" class="block text-xs font-medium text-slate-600 mb-1.5">
                         Taiwan Assets (TWD)
@@ -593,6 +654,7 @@
 
                   <!-- Result Area (hidden by default) -->
                   <div id="hero-result" class="mt-6 hidden space-y-4 animate-fade-in">
+                    <!-- Net Worth Display -->
                     <div>
                       <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
                         Est. Net Worth (USD)
@@ -608,31 +670,74 @@
                       </p>
                     </div>
 
-                    <!-- Warning Hook -->
+                    <!-- SAFE 狀態 -->
                     <div
-                      class="flex items-start gap-3 rounded-2xl border border-orange-200 bg-orange-50 px-4 py-3"
+                      id="hero-status-safe"
+                      class="flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3"
                     >
-                      <div class="mt-0.5 text-orange-500">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
+                      <div class="mt-0.5 text-emerald-500">
+                        <i class="fa-solid fa-circle-check"></i>
                       </div>
                       <div>
-                        <p class="text-xs font-semibold text-orange-700">
-                          Potential Compliance Risk Detected
+                        <p class="text-xs font-semibold text-emerald-800">
+                          Safe / 無須申報
                         </p>
-                        <p class="text-xs text-orange-700/90 mt-1">
-                          Your combined Taiwan + US assets may cross key FATCA / FBAR / CRS thresholds.
-                          See exactly how your structure looks before you talk to an advisor.
+                        <p class="text-xs text-emerald-800/90 mt-1">
+                          以目前輸入的金額與資產組合來看，未偵測到明顯的美國跨境稅務申報風險。
                         </p>
                       </div>
                     </div>
 
-                    <!-- CTA -->
-                    <button
-                      type="button"
-                      onclick="saveAndRedirect()"
-                      class="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-md transition"
+                    <!-- FBAR / 門檻警示（條件 B）-->
+                    <div
+                      id="hero-status-fbar"
+                      class="hidden flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3"
                     >
-                      <span>View Full Analysis</span>
+                      <div class="mt-0.5 text-amber-500">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                      </div>
+                      <div>
+                        <p class="text-xs font-semibold text-amber-800">
+                          檢測到潛在稅務合規風險
+                        </p>
+                        <p class="text-xs text-amber-800/90 mt-1">
+                          你的跨國金融帳戶總額可能已達到美國對海外帳戶的申報門檻，未妥善處理時，可能面臨較高的罰則與追繳風險。
+                        </p>
+                        <p class="mt-2 text-[11px] font-medium text-amber-800">
+                          預估潛在罰款風險：<span class="font-bold">$10,000 USD</span> 起
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- PFIC / 高風險資產警示（條件 C）-->
+                    <div
+                      id="hero-status-pfic"
+                      class="hidden flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3"
+                    >
+                      <div class="mt-0.5 text-red-500">
+                        <i class="fa-solid fa-radiation"></i>
+                      </div>
+                      <div>
+                        <p class="text-xs font-semibold text-red-800">
+                          檢測到潛在稅務合規風險
+                        </p>
+                        <p class="text-xs text-red-800/90 mt-1">
+                          你的組合中包含可能屬於高稅務複雜度的資產（例如部分基金、ETF 或保險／年金結構），若未正確申報，長期可能產生累積稅負與罰則。
+                        </p>
+                        <p class="mt-2 text-[11px] font-medium text-red-800">
+                          預估潛在罰款風險：<span class="font-bold">$10,000 USD</span> 起
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- CTA：僅在有風險時顯示 -->
+                    <button
+                      id="hero-cta-btn"
+                      type="button"
+                      onclick="openAuthModal('register')"
+                      class="hidden w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-md transition"
+                    >
+                      <span>查看完整風險分析 (View Full Analysis)</span>
                       <i class="fa-solid fa-arrow-right-long text-xs"></i>
                     </button>
                   </div>
@@ -2354,7 +2459,7 @@
       updatePricing();
     }
 
-    // Hero calculator logic
+    // Hero calculator -> 合規風險快篩器
     function calculateHeroTotal() {
       const twdInput = document.getElementById("hero-twd");
       const usdInput = document.getElementById("hero-usd");
@@ -2363,14 +2468,27 @@
 
       if (!twdInput || !usdInput || !resultBox || !totalEl) return;
 
+      const identityEl = document.getElementById("hero-identity");
+      const assetFunds = document.getElementById("hero-asset-funds");
+      const assetInsurance = document.getElementById("hero-asset-insurance");
+
+      const identity = identityEl ? identityEl.value : "non-us";
+      const hasFunds = !!(assetFunds && assetFunds.checked);
+      const hasInsurance = !!(assetInsurance && assetInsurance.checked);
+      const hasHighRisk = hasFunds || hasInsurance;
+
       const twdRaw = (twdInput.value || "").replace(/,/g, "");
       const usdRaw = (usdInput.value || "").replace(/,/g, "");
 
       const twd = parseFloat(twdRaw) || 0;
       const usd = parseFloat(usdRaw) || 0;
 
-      if (twdRaw || usdRaw) {
+      const hasAmountInput = !!(twdRaw || usdRaw);
+
+      if (hasAmountInput || hasHighRisk) {
         resultBox.classList.remove("hidden");
+      } else {
+        resultBox.classList.add("hidden");
       }
 
       const totalUsd = twd / RATE + usd;
@@ -2382,6 +2500,36 @@
       }).format(totalUsd);
 
       totalEl.textContent = formatted;
+
+      // 風險判斷邏輯
+      let riskLevel = "safe";
+
+      // 條件 C：只要有基金/ETF 或 保險 -> 紅色高風險
+      if (hasHighRisk) {
+        riskLevel = "pfic";
+      }
+      // 條件 B：美國公民/綠卡 + 總金額 > 10,000 美金 -> 黃色 FBAR 警告
+      else if (identity === "us" && totalUsd > 10000) {
+        riskLevel = "fbar";
+      }
+      // 其餘情況（非美國稅務居民，或金額低且未勾高風險）-> 綠色安全
+      else {
+        riskLevel = "safe";
+      }
+
+      const safeBox = document.getElementById("hero-status-safe");
+      const fbarBox = document.getElementById("hero-status-fbar");
+      const pficBox = document.getElementById("hero-status-pfic");
+      const ctaBtn = document.getElementById("hero-cta-btn");
+
+      if (!safeBox || !fbarBox || !pficBox || !ctaBtn) return;
+
+      safeBox.classList.toggle("hidden", riskLevel !== "safe");
+      fbarBox.classList.toggle("hidden", riskLevel !== "fbar");
+      pficBox.classList.toggle("hidden", riskLevel !== "pfic");
+
+      // 只有在條件 B 或 C 有風險時才顯示 CTA
+      ctaBtn.classList.toggle("hidden", riskLevel === "safe");
     }
 
     function saveAndRedirect() {
