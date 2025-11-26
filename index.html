@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <script src="https://cdn.tailwindcss.com"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <link
@@ -43,54 +42,47 @@
       height: 40px;
     }
     .logo-clock-about {
-      width: 52px; /* 想再大就調這裡 */
+      width: 52px;
       height: 52px;
     }
 
-    /* 外圈：兩層淡淡的藍色圓環 */
     .clock-outer {
       fill: none;
-      stroke: #e4edff; /* 最外圈顏色 */
+      stroke: #e4edff;
       stroke-width: 4;
     }
 
     .clock-inner {
-      fill: #f5f7ff; /* 中間白藍底 */
+      fill: #f5f7ff;
       stroke: #e4edff;
       stroke-width: 3;
     }
 
-    /* 中心大圓：藍色漸層 */
     .clock-core {
       fill: url(#clockGradient);
     }
 
-    /* 四個刻度 */
     .clock-tick-line {
       stroke: #d7e3ff;
       stroke-width: 3;
       stroke-linecap: round;
     }
 
-    /* 指針 */
     .hand {
       stroke-linecap: round;
       transform-origin: 50% 50%;
     }
 
-    /* 小時針（黑色） */
     .hand-hour {
       stroke: #111827;
       stroke-width: 4.5;
     }
 
-    /* 分針（藍色） */
     .hand-minute {
       stroke: #2563eb;
       stroke-width: 4;
     }
 
-    /* 中間小圓點：白底藍框 */
     .center-dot {
       fill: #ffffff;
       stroke: #2563eb;
@@ -126,10 +118,9 @@
     .nav-link.active {
       color: #000;
       font-weight: 700;
-      border-bottom-color: transparent; /* 只有 hover 時才出現藍色底線 */
+      border-bottom-color: transparent;
     }
 
-    /* --- Dropdown --- */
     .dropdown-container {
       position: relative;
       height: 100%;
@@ -215,7 +206,6 @@
       }
     }
 
-    /* --- Card --- */
     .panel {
       background: white;
       border-radius: 12px;
@@ -223,7 +213,6 @@
       box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
     }
 
-    /* Pricing cards hover 狀態 */
     .pricing-card {
       transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     }
@@ -233,7 +222,6 @@
       transform: translateY(-2px);
     }
 
-    /* --- Footer --- */
     .footer-col-title {
       font-size: 13px;
       font-weight: 700;
@@ -252,13 +240,11 @@
       color: var(--brand-blue);
     }
 
-    /* Reports：Taimic 藍漸層背景 + 高度撐滿 */
     .reports-section {
       background: linear-gradient(to bottom, #f7fbff, #e3f2fd, #bfdbfe);
     }
 
     .reports-shell {
-      /* 100vh - header 72px - 預估 footer 約 220px */
       min-height: calc(100vh - 72px - 220px);
       display: flex;
       align-items: center;
@@ -522,7 +508,7 @@
               </div>
             </div>
 
-            <!-- Hero Right Side: Risk Screener Card -->
+            <!-- Hero Right Side: 合規風險快篩器 -->
             <div class="w-full md:w-1/2 mt-8 md:mt-0">
               <div class="max-w-md mx-auto">
                 <div class="bg-white rounded-2xl shadow-2xl border border-slate-200/80 px-6 py-6 md:px-7 md:py-7">
@@ -544,27 +530,44 @@
                     </span>
                   </div>
 
-                  <!-- Inputs -->
+                  <!-- 三段式身分過濾器 -->
                   <div class="space-y-4">
-                    <!-- 身分選擇 -->
-                    <div class="space-y-2">
-                      <label for="hero-identity" class="block text-xs font-medium text-slate-600">
-                        Tax status / 身分類型
-                      </label>
-                      <select
-                        id="hero-identity"
-                        onchange="calculateHeroTotal()"
-                        class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
-                      >
-                        <option value="us">US Citizen / Green Card Holder</option>
-                        <option value="non-us" selected>Non-US Tax Resident</option>
-                      </select>
+
+                    <!-- A. 身分選擇 Identity -->
+                    <div class="space-y-3">
+                      <div class="space-y-2">
+                        <label for="hero-identity" class="block text-xs font-medium text-slate-600">
+                          Tax Status / 稅務身分 <span class="text-red-500">*</span>
+                        </label>
+                        <select
+                          id="hero-identity"
+                          onchange="calculateHeroTotal()"
+                          class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
+                        >
+                          <option value="us">US Citizen / Green Card</option>
+                          <option value="non-us" selected>Non-US Person (非美籍人士)</option>
+                        </select>
+                      </div>
+
+                      <div class="space-y-2">
+                        <label for="hero-residence" class="block text-xs font-medium text-slate-600">
+                          Residence / 居住地 <span class="text-red-500">*</span>
+                        </label>
+                        <select
+                          id="hero-residence"
+                          onchange="calculateHeroTotal()"
+                          class="w-full rounded-xl border border-slate-200 bg-slate-50/60 px-3 py-2.5 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
+                        >
+                          <option value="tw" selected>Living in Taiwan (居住於台灣)</option>
+                          <option value="us">Living in US (居住於美國)</option>
+                        </select>
+                      </div>
                     </div>
 
-                    <!-- 資產類型多選 -->
+                    <!-- B. 資產構成 Asset Composition -->
                     <div class="space-y-2">
                       <p class="block text-xs font-medium text-slate-600">
-                        Asset types involved / 資產類型（可複選）
+                        Asset Composition / 資產類型（必填，可複選）
                       </p>
                       <div class="flex flex-wrap gap-3">
                         <label class="inline-flex items-center gap-2 text-xs md:text-[13px] text-slate-600">
@@ -574,7 +577,7 @@
                             class="rounded border-slate-300"
                             onchange="calculateHeroTotal()"
                           />
-                          <span>現金存款 (Cash deposits)</span>
+                          <span>現金 Cash <span class="text-[10px] text-slate-400">(低風險)</span></span>
                         </label>
                         <label class="inline-flex items-center gap-2 text-xs md:text-[13px] text-slate-600">
                           <input
@@ -583,7 +586,7 @@
                             class="rounded border-slate-300"
                             onchange="calculateHeroTotal()"
                           />
-                          <span>股票 (Stocks)</span>
+                          <span>股票 Stocks <span class="text-[10px] text-slate-400">(中風險)</span></span>
                         </label>
                         <label class="inline-flex items-center gap-2 text-xs md:text-[13px] text-slate-600">
                           <input
@@ -592,7 +595,7 @@
                             class="rounded border-slate-300"
                             onchange="calculateHeroTotal()"
                           />
-                          <span>基金 / ETF (Funds / ETF)</span>
+                          <span>基金 / ETF Funds <span class="text-[10px] text-red-500">(高風險)</span></span>
                         </label>
                         <label class="inline-flex items-center gap-2 text-xs md:text-[13px] text-slate-600">
                           <input
@@ -601,63 +604,78 @@
                             class="rounded border-slate-300"
                             onchange="calculateHeroTotal()"
                           />
-                          <span>保險 / 年金 (Insurance / Annuity)</span>
+                          <span>保險 / 年金 Insurance <span class="text-[10px] text-red-500">(高風險)</span></span>
                         </label>
                       </div>
+                      <p id="hero-assets-error" class="hidden text-[11px] text-red-500 mt-1">
+                        請至少勾選一項資產類型 / Please select at least one asset type.
+                      </p>
                     </div>
 
-                    <!-- 金額輸入 -->
-                    <div>
-                      <label for="hero-twd" class="block text-xs font-medium text-slate-600 mb-1.5">
-                        Taiwan Assets (TWD)
-                      </label>
-                      <div class="relative">
-                        <span
-                          class="absolute left-3 top-1/2 -translate-y-1/2 text-[11px] text-slate-400"
-                        >
-                          NT$
-                        </span>
-                        <input
-                          id="hero-twd"
-                          type="number"
-                          inputmode="decimal"
-                          min="0"
-                          oninput="calculateHeroTotal()"
-                          class="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/60 focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb] text-sm text-slate-900"
-                          placeholder="e.g. 12,000,000"
-                        />
+                    <!-- C. 金額輸入 Value Input -->
+                    <div class="space-y-3">
+                      <div>
+                        <label for="hero-twd" class="block text-xs font-medium text-slate-600 mb-1.5">
+                          Taiwan Assets (TWD) / 台灣資產
+                        </label>
+                        <div class="relative">
+                          <span
+                            class="absolute left-3 top-1/2 -translate-y-1/2 text-[11px] text-slate-400"
+                          >
+                            NT$
+                          </span>
+                          <input
+                            id="hero-twd"
+                            type="number"
+                            inputmode="decimal"
+                            min="0"
+                            oninput="calculateHeroTotal()"
+                            class="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/60 focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb] text-sm text-slate-900"
+                            placeholder="e.g. 12,000,000"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label for="hero-usd" class="block text-xs font-medium text-slate-600 mb-1.5">
+                          US Assets (USD) / 美國資產
+                        </label>
+                        <div class="relative">
+                          <span
+                            class="absolute left-3 top-1/2 -translate-y-1/2 text-[11px] text-slate-400"
+                          >
+                            $
+                          </span>
+                          <input
+                            id="hero-usd"
+                            type="number"
+                            inputmode="decimal"
+                            min="0"
+                            oninput="calculateHeroTotal()"
+                            class="w-full pl-7 pr-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/60 focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb] text-sm text-slate-900"
+                            placeholder="e.g. 450,000"
+                          />
+                        </div>
                       </div>
                     </div>
 
-                    <div>
-                      <label for="hero-usd" class="block text-xs font-medium text-slate-600 mb-1.5">
-                        US Assets (USD)
-                      </label>
-                      <div class="relative">
-                        <span
-                          class="absolute left-3 top-1/2 -translate-y-1/2 text-[11px] text-slate-400"
-                        >
-                          $
-                        </span>
-                        <input
-                          id="hero-usd"
-                          type="number"
-                          inputmode="decimal"
-                          min="0"
-                          oninput="calculateHeroTotal()"
-                          class="w-full pl-7 pr-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50/60 focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb] text-sm text-slate-900"
-                          placeholder="e.g. 450,000"
-                        />
-                      </div>
-                    </div>
+                    <!-- Primary CTA -->
+                    <button
+                      type="button"
+                      onclick="calculateHeroTotal()"
+                      class="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#111827] hover:bg-black text-white text-sm font-semibold py-2.5 shadow-sm transition mt-1"
+                    >
+                      <span>Analyze My Risk（分析我的風險）</span>
+                      <i class="fa-solid fa-magnifying-glass-chart text-xs"></i>
+                    </button>
                   </div>
 
-                  <!-- Result Area (hidden by default) -->
+                  <!-- Result Area -->
                   <div id="hero-result" class="mt-6 hidden space-y-4 animate-fade-in">
                     <!-- Net Worth Display -->
                     <div>
                       <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                        Est. Net Worth (USD)
+                        Est. Global Net Worth (USD)
                       </p>
                       <div
                         id="hero-total"
@@ -670,74 +688,53 @@
                       </p>
                     </div>
 
-                    <!-- SAFE 狀態 -->
-                    <div
-                      id="hero-status-safe"
-                      class="flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3"
-                    >
-                      <div class="mt-0.5 text-emerald-500">
-                        <i class="fa-solid fa-circle-check"></i>
+                    <!-- 雙邊風險儀表板 US / TW -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <!-- US Status -->
+                      <div
+                        id="hero-us-status"
+                        class="rounded-2xl border border-slate-200 bg-white px-4 py-3 flex flex-col gap-2"
+                      >
+                        <div class="flex items-center justify-between">
+                          <div class="text-[11px] font-semibold tracking-[0.18em] text-slate-600 uppercase">
+                            🇺🇸 US Status
+                          </div>
+                          <div id="hero-us-tag" class="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide bg-slate-100 text-slate-600">
+                            —
+                          </div>
+                        </div>
+                        <div id="hero-us-body" class="text-xs text-slate-700 space-y-1.5">
+                          <!-- filled by JS -->
+                        </div>
                       </div>
-                      <div>
-                        <p class="text-xs font-semibold text-emerald-800">
-                          Safe / 無須申報
-                        </p>
-                        <p class="text-xs text-emerald-800/90 mt-1">
-                          以目前輸入的金額與資產組合來看，未偵測到明顯的美國跨境稅務申報風險。
-                        </p>
+
+                      <!-- TW Status -->
+                      <div
+                        id="hero-tw-status"
+                        class="rounded-2xl border border-slate-200 bg-white px-4 py-3 flex flex-col gap-2"
+                      >
+                        <div class="flex items-center justify-between">
+                          <div class="text-[11px] font-semibold tracking-[0.18em] text-slate-600 uppercase">
+                            🇹🇼 TW Status
+                          </div>
+                          <div id="hero-tw-tag" class="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide bg-slate-100 text-slate-600">
+                            —
+                          </div>
+                        </div>
+                        <div id="hero-tw-body" class="text-xs text-slate-700 space-y-1.5">
+                          <!-- filled by JS -->
+                        </div>
                       </div>
                     </div>
 
-                    <!-- FBAR / 門檻警示（條件 B）-->
-                    <div
-                      id="hero-status-fbar"
-                      class="hidden flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3"
-                    >
-                      <div class="mt-0.5 text-amber-500">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                      </div>
-                      <div>
-                        <p class="text-xs font-semibold text-amber-800">
-                          檢測到潛在稅務合規風險
-                        </p>
-                        <p class="text-xs text-amber-800/90 mt-1">
-                          你的跨國金融帳戶總額可能已達到美國對海外帳戶的申報門檻，未妥善處理時，可能面臨較高的罰則與追繳風險。
-                        </p>
-                        <p class="mt-2 text-[11px] font-medium text-amber-800">
-                          預估潛在罰款風險：<span class="font-bold">$10,000 USD</span> 起
-                        </p>
-                      </div>
-                    </div>
-
-                    <!-- PFIC / 高風險資產警示（條件 C）-->
-                    <div
-                      id="hero-status-pfic"
-                      class="hidden flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 px-4 py-3"
-                    >
-                      <div class="mt-0.5 text-red-500">
-                        <i class="fa-solid fa-radiation"></i>
-                      </div>
-                      <div>
-                        <p class="text-xs font-semibold text-red-800">
-                          檢測到潛在稅務合規風險
-                        </p>
-                        <p class="text-xs text-red-800/90 mt-1">
-                          你的組合中包含可能屬於高稅務複雜度的資產（例如部分基金、ETF 或保險／年金結構），若未正確申報，長期可能產生累積稅負與罰則。
-                        </p>
-                        <p class="mt-2 text-[11px] font-medium text-red-800">
-                          預估潛在罰款風險：<span class="font-bold">$10,000 USD</span> 起
-                        </p>
-                      </div>
-                    </div>
-
-                    <!-- CTA：僅在有風險時顯示 -->
+                    <!-- 有風險時才出現的 CTA -->
                     <button
                       id="hero-cta-btn"
                       type="button"
                       onclick="openAuthModal('register')"
                       class="hidden w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-md transition"
                     >
-                      <span>查看完整風險分析 (View Full Analysis)</span>
+                      <span>View Full Report &amp; Solutions</span>
                       <i class="fa-solid fa-arrow-right-long text-xs"></i>
                     </button>
                   </div>
@@ -2191,7 +2188,7 @@
   <script>
     const RATE = 32.5;
     let curr = "TWD";
-    let lang = "en"; // 預設英文
+    let lang = "en";
     let currentSection = "overview";
     let billing = "monthly";
     const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
@@ -2361,7 +2358,6 @@
         .getElementById("opt-en")
         .classList.toggle("active", lang === "en");
 
-      // About Taimic：依照語言切換中 / 英版本
       const aboutZh = document.getElementById("about-zh");
       const aboutEn = document.getElementById("about-en");
       if (aboutZh && aboutEn) {
@@ -2374,7 +2370,6 @@
         }
       }
 
-      // Reports Gate：未登入畫面的中 / 英切換
       const reportsZh = document.getElementById("reports-gate-zh");
       const reportsEn = document.getElementById("reports-gate-en");
       if (reportsZh && reportsEn) {
@@ -2412,7 +2407,6 @@
       });
       currentSection = section;
 
-      // 個人化 Reports：如果有 demo data，就改上鎖頁面的標題
       if (section === "reports") {
         try {
           const raw = localStorage.getItem("taimic_demo_data");
@@ -2431,7 +2425,6 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    // pricing toggle
     function updatePricing() {
       document.querySelectorAll("[data-plan-price]").forEach((el) => {
         const m = el.dataset.monthly;
@@ -2459,77 +2452,284 @@
       updatePricing();
     }
 
-    // Hero calculator -> 合規風險快篩器
+    // 總額縮寫顯示：避免位數太長爆版
+    function formatUSDAbbrev(value) {
+      const n = Number(value) || 0;
+      const abs = Math.abs(n);
+      if (abs >= 1e9) {
+        const v = n / 1e9;
+        const num = v >= 100 ? v.toFixed(0) : v.toFixed(1);
+        return `$${num}B`;
+      } else if (abs >= 1e6) {
+        const v = n / 1e6;
+        const num = v >= 100 ? v.toFixed(0) : v.toFixed(1);
+        return `$${num}M`;
+      } else if (abs >= 1e3) {
+        const v = n / 1e3;
+        const num = v >= 100 ? v.toFixed(0) : v.toFixed(1);
+        return `$${num}K`;
+      }
+      return new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: 0,
+      }).format(n);
+    }
+
+    // Hero 合規風險快篩器：身分 + 資產 + 金額 = 診斷
     function calculateHeroTotal() {
       const twdInput = document.getElementById("hero-twd");
       const usdInput = document.getElementById("hero-usd");
       const resultBox = document.getElementById("hero-result");
       const totalEl = document.getElementById("hero-total");
 
-      if (!twdInput || !usdInput || !resultBox || !totalEl) return;
-
       const identityEl = document.getElementById("hero-identity");
-      const assetFunds = document.getElementById("hero-asset-funds");
-      const assetInsurance = document.getElementById("hero-asset-insurance");
+      const residenceEl = document.getElementById("hero-residence");
+      const cashChk = document.getElementById("hero-asset-cash");
+      const stocksChk = document.getElementById("hero-asset-stocks");
+      const fundsChk = document.getElementById("hero-asset-funds");
+      const insuranceChk = document.getElementById("hero-asset-insurance");
+      const assetsError = document.getElementById("hero-assets-error");
 
-      const identity = identityEl ? identityEl.value : "non-us";
-      const hasFunds = !!(assetFunds && assetFunds.checked);
-      const hasInsurance = !!(assetInsurance && assetInsurance.checked);
-      const hasHighRisk = hasFunds || hasInsurance;
+      if (
+        !twdInput ||
+        !usdInput ||
+        !resultBox ||
+        !totalEl ||
+        !identityEl ||
+        !residenceEl ||
+        !cashChk ||
+        !stocksChk ||
+        !fundsChk ||
+        !insuranceChk
+      ) {
+        return;
+      }
 
       const twdRaw = (twdInput.value || "").replace(/,/g, "");
       const usdRaw = (usdInput.value || "").replace(/,/g, "");
 
       const twd = parseFloat(twdRaw) || 0;
       const usd = parseFloat(usdRaw) || 0;
+      const hasAmount = twd > 0 || usd > 0;
 
-      const hasAmountInput = !!(twdRaw || usdRaw);
+      const assetsSelected =
+        cashChk.checked ||
+        stocksChk.checked ||
+        fundsChk.checked ||
+        insuranceChk.checked;
 
-      if (hasAmountInput || hasHighRisk) {
-        resultBox.classList.remove("hidden");
-      } else {
-        resultBox.classList.add("hidden");
+      if (!assetsSelected) {
+        if (assetsError) assetsError.classList.remove("hidden");
+      } else if (assetsError) {
+        assetsError.classList.add("hidden");
       }
+
+      // 沒填金額或沒勾資產 -> 不顯示結果
+      if (!hasAmount || !assetsSelected) {
+        resultBox.classList.add("hidden");
+        const ctaBtn = document.getElementById("hero-cta-btn");
+        if (ctaBtn) ctaBtn.classList.add("hidden");
+        return;
+      }
+
+      const identity = identityEl.value; // "us" or "non-us"
+      const residence = residenceEl.value; // "tw" or "us"
+      const hasFunds = !!fundsChk.checked;
+      const hasInsurance = !!insuranceChk.checked;
+      const hasHighRiskAsset = hasFunds || hasInsurance;
 
       const totalUsd = twd / RATE + usd;
+      const foreignUsd = twd / RATE;
+      const usAssetsUsd = usd;
 
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 0,
-      }).format(totalUsd);
+      // 總額顯示：自動縮寫
+      totalEl.textContent = formatUSDAbbrev(totalUsd);
 
-      totalEl.textContent = formatted;
+      const isUSPerson = identity === "us";
 
-      // 風險判斷邏輯
-      let riskLevel = "safe";
+      let usSeverity = "safe"; // safe | medium | high | info
+      let hasUsRisk = false;
 
-      // 條件 C：只要有基金/ETF 或 保險 -> 紅色高風險
-      if (hasHighRisk) {
-        riskLevel = "pfic";
+      if (isUSPerson) {
+        // 情境一：US Citizen / Green Card
+        const flagPFIC = hasHighRiskAsset; // 規則 3
+        const flagFATCA =
+          residence === "tw" && totalUsd > 200000; // 規則 2
+        const flagFBAR = foreignUsd > 10000; // 規則 1
+
+        if (flagPFIC || flagFATCA) {
+          usSeverity = "high";
+          hasUsRisk = true;
+        } else if (flagFBAR) {
+          usSeverity = "medium";
+          hasUsRisk = true;
+        } else {
+          usSeverity = "safe";
+          hasUsRisk = false;
+        }
+      } else {
+        // 情境二：Non-US Person
+        const estateRisk = usAssetsUsd > 60000; // 規則 1
+        if (estateRisk) {
+          usSeverity = "high";
+          hasUsRisk = true;
+        } else if (totalUsd < 60000 && !hasHighRiskAsset) {
+          // 規則 2：金額 < 60k 且無高風險資產 => 美國端安全
+          usSeverity = "safe";
+          hasUsRisk = false;
+        } else {
+          // 介於中間：沒有明顯美國遺產／申報門檻，但結構值得長期關注
+          usSeverity = "info";
+          hasUsRisk = false;
+        }
       }
-      // 條件 B：美國公民/綠卡 + 總金額 > 10,000 美金 -> 黃色 FBAR 警告
-      else if (identity === "us" && totalUsd > 10000) {
-        riskLevel = "fbar";
-      }
-      // 其餘情況（非美國稅務居民，或金額低且未勾高風險）-> 綠色安全
-      else {
-        riskLevel = "safe";
-      }
 
-      const safeBox = document.getElementById("hero-status-safe");
-      const fbarBox = document.getElementById("hero-status-fbar");
-      const pficBox = document.getElementById("hero-status-pfic");
+      // 情境三：台灣端 AMT / CFC 提醒
+      const totalTwd = totalUsd * RATE;
+      const twRisk = totalTwd > 7500000;
+
+      // 更新雙邊儀表板 UI
+      const usCard = document.getElementById("hero-us-status");
+      const usTag = document.getElementById("hero-us-tag");
+      const usBody = document.getElementById("hero-us-body");
+      const twCard = document.getElementById("hero-tw-status");
+      const twTag = document.getElementById("hero-tw-tag");
+      const twBody = document.getElementById("hero-tw-body");
       const ctaBtn = document.getElementById("hero-cta-btn");
 
-      if (!safeBox || !fbarBox || !pficBox || !ctaBtn) return;
+      // 顯示結果容器
+      resultBox.classList.remove("hidden");
 
-      safeBox.classList.toggle("hidden", riskLevel !== "safe");
-      fbarBox.classList.toggle("hidden", riskLevel !== "fbar");
-      pficBox.classList.toggle("hidden", riskLevel !== "pfic");
+      // US 卡片 base class
+      if (usCard) {
+        usCard.className =
+          "rounded-2xl border px-4 py-3 flex flex-col gap-2 " +
+          (usSeverity === "high"
+            ? "border-red-200 bg-red-50"
+            : usSeverity === "medium"
+            ? "border-amber-200 bg-amber-50"
+            : usSeverity === "safe"
+            ? "border-emerald-200 bg-emerald-50"
+            : "border-slate-200 bg-white");
+      }
+      if (usTag) {
+        usTag.className =
+          "text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide";
+        if (usSeverity === "high") {
+          usTag.classList.add("bg-red-100", "text-red-700");
+          usTag.textContent = "HIGH RISK";
+        } else if (usSeverity === "medium") {
+          usTag.classList.add("bg-amber-100", "text-amber-700");
+          usTag.textContent = "ALERT";
+        } else if (usSeverity === "safe") {
+          usTag.classList.add("bg-emerald-100", "text-emerald-700");
+          usTag.textContent = "SAFE";
+        } else {
+          usTag.classList.add("bg-slate-100", "text-slate-700");
+          usTag.textContent = "MONITOR";
+        }
+      }
 
-      // 只有在條件 B 或 C 有風險時才顯示 CTA
-      ctaBtn.classList.toggle("hidden", riskLevel === "safe");
+      if (usBody) {
+        if (usSeverity === "safe") {
+          usBody.innerHTML = `
+            <p class="text-xs font-semibold text-emerald-900">
+              ✅ No US Reporting Required
+            </p>
+            <p class="text-xs text-emerald-800 mt-1">
+              依照目前輸入的身分、資產組合與金額，尚未偵測到明確的美國端申報門檻或遺產稅觸發點。
+            </p>
+            <p class="text-[11px] text-emerald-700 mt-1">
+              本結果僅為初步快篩，不構成稅務或法律建議。
+            </p>
+          `;
+        } else if (usSeverity === "medium" || usSeverity === "high") {
+          usBody.innerHTML = `
+            <p class="text-xs font-semibold text-slate-900">
+              ⚠️ Compliance Risk Detected
+            </p>
+            <p class="text-xs text-slate-800 mt-1">
+              你的跨境資產結構中，可能已經接近或超過美國端的申報或課稅門檻，未妥善處理時，長期可能產生持續性的稅負與罰則風險。
+            </p>
+            <p class="mt-2 text-[11px] font-medium text-slate-900">
+              Est. Potential Penalty: <span class="font-bold">$10,000+ / Year</span>
+            </p>
+            <p class="mt-1 text-[11px] text-slate-500">
+              Risk Source: <span class="font-semibold text-slate-700">[🔒 Login to view]</span>
+            </p>
+          `;
+        } else {
+          // info: Non-US Person，金額較高或有高風險資產，但尚未明確觸發美國門檻
+          usBody.innerHTML = `
+            <p class="text-xs font-semibold text-slate-900">
+              ℹ️ No clear US trigger, but monitor
+            </p>
+            <p class="text-xs text-slate-800 mt-1">
+              目前尚未偵測到明確的美國遺產稅或申報門檻，但你的資產金額或結構仍建議長期關注，必要時可與專業顧問討論。
+            </p>
+            <p class="mt-1 text-[11px] text-slate-500">
+              Risk Source: <span class="font-semibold text-slate-700">[🔒 Login to view]</span>
+            </p>
+          `;
+        }
+      }
+
+      // TW 卡片
+      if (twCard) {
+        twCard.className =
+          "rounded-2xl border px-4 py-3 flex flex-col gap-2 " +
+          (twRisk
+            ? "border-amber-200 bg-amber-50"
+            : "border-emerald-200 bg-emerald-50");
+      }
+      if (twTag) {
+        twTag.className =
+          "text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide";
+        if (twRisk) {
+          twTag.classList.add("bg-amber-100", "text-amber-700");
+          twTag.textContent = "ALERT";
+        } else {
+          twTag.classList.add("bg-emerald-100", "text-emerald-700");
+          twTag.textContent = "SAFE";
+        }
+      }
+      if (twBody) {
+        if (twRisk) {
+          twBody.innerHTML = `
+            <p class="text-xs font-semibold text-slate-900">
+              ⚠️ Compliance Risk Detected
+            </p>
+            <p class="text-xs text-slate-800 mt-1">
+              你的全球資產折算已超過約新台幣 750 萬，可能落入台灣最低稅負制或 CFC（受控外國公司）相關討論範圍，需要更精細的結構與申報評估。
+            </p>
+            <p class="mt-2 text-[11px] font-medium text-slate-900">
+              Est. Potential Penalty: <span class="font-bold">$10,000+ / Year</span>
+            </p>
+            <p class="mt-1 text-[11px] text-slate-500">
+              Risk Source: <span class="font-semibold text-slate-700">[🔒 Login to view]</span>
+            </p>
+          `;
+        } else {
+          twBody.innerHTML = `
+            <p class="text-xs font-semibold text-emerald-900">
+              ✅ No TW AMT / CFC Signal Detected
+            </p>
+            <p class="text-xs text-emerald-800 mt-1">
+              以目前輸入的總資產規模來看，尚未明顯落入台灣最低稅負制或 CFC 監管的高壓區間。
+            </p>
+            <p class="mt-1 text-[11px] text-emerald-700">
+              實際適用與申報義務仍須由專業稅務顧問依你完整資料確認。
+            </p>
+          `;
+        }
+      }
+
+      // 只要任一邊有風險，就打開「View Full Report & Solutions」
+      const hasAnyRisk = hasUsRisk || twRisk;
+      if (ctaBtn) {
+        ctaBtn.classList.toggle("hidden", !hasAnyRisk);
+      }
     }
 
     function saveAndRedirect() {
@@ -2614,7 +2814,6 @@
       }, 3000);
     }
 
-    // Auth Modal
     let authMode = "register";
 
     function openAuthModal(mode) {
@@ -2708,7 +2907,6 @@
       }
     }
 
-    // ===== Global refs & init =====
     let geoChart;
     let langMenu, userMenu, modalOverlay, authOverlay, mobileMenu;
 
@@ -2751,7 +2949,7 @@
       function closeAllMenus() {
         langMenu.classList.add("hidden");
         userMenu.classList.add("hidden");
-        if(mobileMenu) mobileMenu.classList.add("hidden");
+        if (mobileMenu) mobileMenu.classList.add("hidden");
       }
 
       langToggle.addEventListener("click", (e) => {
@@ -2770,21 +2968,19 @@
       });
       userMenu.addEventListener("click", (e) => e.stopPropagation());
 
-      // Mobile Menu Logic
       mobileBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         const open = mobileMenu.classList.contains("hidden");
-        closeAllMenus(); // This ensures dropdowns close when mobile menu opens
-        if(open) mobileMenu.classList.remove("hidden");
+        closeAllMenus();
+        if (open) mobileMenu.classList.remove("hidden");
       });
-      
-      // Close menu when clicking a mobile link
-      document.querySelectorAll('.mobile-nav-link').forEach(link => {
-        link.addEventListener('click', (e) => {
-             e.preventDefault();
-             const section = link.dataset.section;
-             if(section) switchSection(section);
-             mobileMenu.classList.add('hidden');
+
+      document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          const section = link.dataset.section;
+          if (section) switchSection(section);
+          mobileMenu.classList.add("hidden");
         });
       });
 
@@ -2794,7 +2990,6 @@
         .getElementById("auth-submit")
         .addEventListener("click", handleAuthSubmit);
 
-      // nav section switching
       document.querySelectorAll("nav .nav-link").forEach((link) => {
         link.addEventListener("click", (e) => {
           e.preventDefault();
@@ -2803,7 +2998,6 @@
         });
       });
 
-      // 一開始顯示 overview
       switchSection("overview");
     };
   </script>
