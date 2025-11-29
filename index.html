@@ -259,22 +259,22 @@
   transform: translateY(0);
 }
 
-/* 桌機：往上拉比較多，讓它蓋到 hero 下面那一塊 */
+/* 桌機：往上拉更多，確保遮住 CROSS-BORDER WEALTH OS */
 .hero-card-outer.hero-card-open {
-  transform: translateY(-230px);
+  transform: translateY(-290px);
 }
 
 /* 平板寬度：稍微少一點，避免頂到最上面 */
 @media (max-width: 1023px) {
   .hero-card-outer.hero-card-open {
-    transform: translateY(-190px);
+    transform: translateY(-240px);
   }
 }
 
 /* 手機寬度：再少一點 */
 @media (max-width: 767px) {
   .hero-card-outer.hero-card-open {
-    transform: translateY(-150px);
+    transform: translateY(-180px);
   }
 }
 
@@ -456,25 +456,25 @@
           class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]"
           data-section="overview"
           data-i18n="nav.overview"
-        >Overview</a>
+          >Overview</a>
         <a
           href="#"
           class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]"
           data-section="pricing"
           data-i18n="nav.pricing"
-        >Pricing</a>
+          >Pricing</a>
         <a
           href="#"
           class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]"
           data-section="reports"
           data-i18n="nav.reports"
-        >Reports</a>
+          >Reports</a>
         <a
           href="#"
           class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]"
           data-section="about"
           data-i18n="nav.about"
-        >About Taimic</a>
+          >About Taimic</a>
         
         <div class="pt-2 mt-2 border-t border-gray-100 flex gap-2">
           <button onclick="setCurrency('USD')" class="flex-1 py-2 text-xs font-bold border border-gray-200 rounded text-center hover:bg-gray-50">USD</button>
@@ -485,18 +485,14 @@
   </header>
 
   <main class="flex-grow">
-    <!-- OVERVIEW SECTION -->
     <section id="section-overview">
-         <!-- HERO + FLOATING COMPLIANCE RISK SCREENER (SLIDE-UP VERSION) -->
-      <section class="relative border-b border-slate-200 bg-gradient-to-b from-[#ecf3ff] via-[#f7f9ff] to-[#e5edf9]">
-        <!-- 背景點擊區：只有卡片拉上來時才會啟用 -->
+       <section class="relative border-b border-slate-200 bg-gradient-to-b from-[#ecf3ff] via-[#f7f9ff] to-[#e5edf9]">
         <div
           id="hero-overlay"
           class="absolute inset-0 z-20 hidden cursor-pointer"
         ></div>
 
         <div class="max-w-[1440px] mx-auto px-6 pt-16 pb-10 md:pt-20 md:pb-24">
-          <!-- Hero Copy -->
           <div class="max-w-3xl mx-auto text-center space-y-6 relative z-30">
             <p
               class="text-xs font-semibold tracking-[0.28em] text-slate-500 uppercase"
@@ -525,24 +521,21 @@
               >
                 Run Free Risk Scan
               </button>
-              <!-- 白色 "How it works" 按鈕依照需求移除 -->
-            </div>
+              </div>
 
-            <div class="flex itemscenter justify-center gap-2 text-[11px] text-slate-500 pt-1">
+            <div class="flex items-center justify-center gap-2 text-[11px] text-slate-500 pt-1">
               <span>No sign-up for first scan</span>
               <span class="hidden sm:inline">·</span>
               <span>Takes 60 seconds</span>
             </div>
           </div>
 
-          <!-- Floating Screener Card：預設在下面，點擊後往上滑 -->
           <div class="mt-10 md:mt-12 flex justify-center relative">
             <div
               id="hero-card-outer"
-              class="w-full max-w-4xl hero-card-outer relative z-30"
+              class="w-full max-w-4xl hero-card-outer relative z-50"
             >
-              <div class="bg-white rounded-3xl border border-blue-100 shadow-xl md:shadow-2xl px-6 py-6 md:px-8 md:py-7">
-                <!-- Header -->
+              <div class="bg-white rounded-3xl shadow-xl md:shadow-2xl border border-blue-100 px-6 py-6 md:px-8 md:py-7">
                 <div class="flex items-center justify-between mb-5">
                   <div>
                     <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
@@ -567,12 +560,9 @@
                   </div>
                 </div>
 
-                <!-- Input Mode Body -->
                 <div class="space-y-5">
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Left Column: TAX STATUS / RESIDENCE -->
                     <div class="space-y-4">
-                      <!-- Hidden inputs for JS compatibility -->
                       <input id="hero-identity" type="hidden" value="non-us" />
                       <input id="hero-residence" type="hidden" value="tw" />
 
@@ -704,7 +694,6 @@
                       </div>
                     </div>
 
-                    <!-- Right Column: ASSETS INPUTS -->
                     <div class="space-y-4">
                       <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
                         Assets (TWD / USD)
@@ -756,7 +745,6 @@
                     </div>
                   </div>
 
-                  <!-- Footer Action -->
                   <div class="pt-4 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-3">
                     <p class="text-[11px] text-slate-500 flex items-center gap-1">
                       <i class="fa-solid fa-circle-info text-[10px] text-slate-400"></i>
@@ -773,9 +761,7 @@
                   </div>
                 </div>
 
-                <!-- Result Mode -->
                 <div id="hero-result" class="mt-6 hidden space-y-5 animate-fade-in">
-                  <!-- Net Worth Summary -->
                   <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
                     <div>
                       <p class="text-[11px] font-semibold tracking-[0.2em] text-slate-500 uppercase mb-1">
@@ -788,8 +774,7 @@
                         $0
                       </div>
                       <p class="mt-1 text-[11px] text-slate-500" id="hero-rate-label">
-                        <!-- 1 USD ≈ XX TWD • Rates updated: Just now -->
-                      </p>
+                        </p>
                     </div>
                     <p class="text-[11px] text-slate-600 max-w-xs">
                       Across Taiwan, US and offshore accounts based on the amounts you entered.  
@@ -797,9 +782,7 @@
                     </p>
                   </div>
 
-                  <!-- US / TW Status Cards -->
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <!-- US Compliance Panel -->
                     <div
                       id="hero-us-status"
                       class="rounded-2xl border border-slate-200 bg-white px-4 py-3 flex flex-col gap-2"
@@ -813,11 +796,9 @@
                         </div>
                       </div>
                       <div id="hero-us-body" class="text-xs text-slate-700 space-y-1.5">
-                        <!-- filled by JS -->
-                      </div>
+                        </div>
                     </div>
 
-                    <!-- TW Optimization Panel -->
                     <div
                       id="hero-tw-status"
                       class="rounded-2xl border border-slate-200 bg-white px-4 py-3 flex flex-col gap-2"
@@ -831,12 +812,10 @@
                         </div>
                       </div>
                       <div id="hero-tw-body" class="text-xs text-slate-700 space-y-1.5">
-                        <!-- filled by JS -->
-                      </div>
+                        </div>
                     </div>
                   </div>
 
-                  <!-- Locked / Blurred Bottom Half -->
                   <div class="relative mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50/80">
                     <div class="absolute inset-0 bg-slate-100/70 backdrop-blur-sm pointer-events-none"></div>
                     <div class="relative p-4 md:p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -880,14 +859,12 @@
                     </div>
                   </div>
                 </div>
-                <!-- End Result Mode -->
-              </div>
+                </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- OVERVIEW BODY CONTENT BELOW - UNCHANGED -->
       <section class="py-16 md:py-20 bg-[#f3f5f9]">
         <div class="max-w-[1100px] mx-auto px-6">
           <div class="text-center max-w-2xl mx-auto mb-10">
@@ -984,7 +961,7 @@
             <div class="flex justify-center md:justify-end w-full md:w-auto">
               <button
                 type="button"
-                class="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg白 text-slate-900 text-sm md:text-base font-semibold shadow-md border border-slate-200 hover:shadow-lg hover:-translate-y-0.5 transition"
+                class="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-white text-slate-900 text-sm md:text-base font-semibold shadow-md border border-slate-200 hover:shadow-lg hover:-translate-y-0.5 transition"
               >
                 Create your Taimic account
               </button>
@@ -993,7 +970,6 @@
         </div>
       </section>
 
-      <!-- 原本的表格 / 圖表區塊保留（設為 hidden，不動結構，只隱藏） -->
       <section class="py-10 hidden">
         <div class="max-w-[1440px] mx-auto px-6 w-full">
           <div class="panel px-6 md:px-8 lg:px-10 py-8 md:py-10">
@@ -1219,7 +1195,6 @@
       </section>
     </section>
 
-    <!-- PRICING SECTION -->
     <section
       id="section-pricing"
       class="hidden bg-[#eef2ff] border-t border-gray-200"
@@ -1383,7 +1358,7 @@
             class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col relative overflow-hidden group pricing-card"
           >
             <div
-              class="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-50/70 to透明 opacity-0 group-hover:opacity-100 transition-opacity"
+              class="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-50/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
             ></div>
             <div class="relative z-10">
               <div class="flex items-center justify-between mb-1">
@@ -1517,7 +1492,6 @@
       </div>
     </section>
 
-    <!-- ABOUT SECTION -->
     <section id="section-about" class="bg-[#dbeafe] border-t border-gray-200">
       <div class="max-w-[1100px] mx-auto px-6 pt-16 pb-20">
         <header class="mb-10">
@@ -1604,7 +1578,6 @@
         <div
           class="bg-white/95 rounded-3xl shadow-sm border border-gray-200 p-6 md:p-8 leading-relaxed text-sm md:text-[15px] text-gray-800 space-y-6"
         >
-          <!-- 中文 About -->
           <div id="about-zh" class="space-y-6">
             <p>
               Taimic 是一個專為跨國移動家庭打造、結合 AI 的跨境資產與傳承管理平台。
@@ -1645,7 +1618,7 @@
             </p>
             <ul class="list-disc pl-5 space-y-2">
               <li>匯款 App 只管「錢怎麼從 A 到 B」。</li>
-              <li>記帳 App 只管「你花了多少」。li>
+              <li>記帳 App 只管「你花了多少」。</li>
               <li>有些服務只做單一國家的投資或線上遺囑。</li>
             </ul>
             <p>
@@ -1781,7 +1754,6 @@
             </p>
           </div>
 
-          <!-- English About -->
           <div id="about-en" class="hidden space-y-6">
             <p>
               Taimic is an AI-enabled cross-border wealth and legacy management
@@ -2020,7 +1992,6 @@
       </div>
     </section>
 
-    <!-- REPORTS SECTION -->
     <section id="section-reports" class="hidden reports-section">
       <div class="reports-shell w-full">
         <div class="max-w-[1100px] mx-auto px-6 py-16 flex items-center justify-center">
@@ -2042,7 +2013,6 @@
               </span>
             </div>
 
-            <!-- Reports EN -->
             <div
               id="reports-gate-en"
               class="space-y-4 text-slate-900 text-sm md:text-[15px] leading-relaxed"
@@ -2092,7 +2062,6 @@
               </div>
             </div>
 
-            <!-- Reports ZH -->
             <div
               id="reports-gate-zh"
               class="hidden space-y-4 text-slate-900 text-sm md:text-[15px] leading-relaxed"
@@ -2144,7 +2113,6 @@
     </section>
   </main>
 
-  <!-- FOOTER -->
   <footer class="bg-[#f4f6fb] border-t border-gray-200">
     <div class="max-w-[1440px] mx-auto px-6 pt-10 pb-4">
       <div
@@ -2219,7 +2187,6 @@
     </div>
   </footer>
 
-  <!-- MODALS -->
   <div
     id="modal-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
@@ -2453,27 +2420,27 @@
     const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
     
     // Hero Screener slide-up 狀態（讓卡片可以滑上來 / 滑回去）
-let heroCardOpen = false;
-let heroCardOuterEl = null;
-let heroOverlayEl = null;
+    let heroCardOpen = false;
+    let heroCardOuterEl = null;
+    let heroOverlayEl = null;
 
-function openHeroCard() {
-  if (!heroCardOuterEl || !heroOverlayEl) return;
+    function openHeroCard() {
+      if (!heroCardOuterEl || !heroOverlayEl) return;
 
-  heroCardOuterEl.classList.add("hero-card-open");
-  heroOverlayEl.classList.remove("hidden");
-  heroOverlayEl.classList.add("hero-overlay-active");
-  heroCardOpen = true;
-}
+      heroCardOuterEl.classList.add("hero-card-open");
+      heroOverlayEl.classList.remove("hidden");
+      heroOverlayEl.classList.add("hero-overlay-active");
+      heroCardOpen = true;
+    }
 
-function closeHeroCard() {
-  if (!heroCardOuterEl || !heroOverlayEl) return;
+    function closeHeroCard() {
+      if (!heroCardOuterEl || !heroOverlayEl) return;
 
-  heroCardOuterEl.classList.remove("hero-card-open");
-  heroOverlayEl.classList.add("hidden");
-  heroOverlayEl.classList.remove("hero-overlay-active");
-  heroCardOpen = false;
-}
+      heroCardOuterEl.classList.remove("hero-card-open");
+      heroOverlayEl.classList.add("hidden");
+      heroOverlayEl.classList.remove("hero-overlay-active");
+      heroCardOpen = false;
+    }
 
     function fmt(usd) {
       const val = curr === "USD" ? usd : usd * RATE;
@@ -2773,6 +2740,7 @@ function closeHeroCard() {
       let usStatus = "safe"; // safe | warning | critical
       let hasUsRisk = false;
 
+      // 規則集 (2025)：
       // 情境 A：US Person (全球資產)
       let hitFBAR = false;
       let hitFATCA = false;
@@ -3273,32 +3241,33 @@ function closeHeroCard() {
       authOverlay = document.getElementById("auth-overlay");
 
       render();
-            // Hero Screener slide-up 初始化
-     // Hero Screener slide-up 初始化
-heroCardOuterEl = document.getElementById("hero-card-outer");
-heroOverlayEl = document.getElementById("hero-overlay");
-const heroRunScanBtn = document.getElementById("hero-run-scan-btn");
+      
+      // Hero Screener slide-up 初始化
+      heroCardOuterEl = document.getElementById("hero-card-outer");
+      heroOverlayEl = document.getElementById("hero-overlay");
+      const heroRunScanBtn = document.getElementById("hero-run-scan-btn");
 
-if (heroRunScanBtn && heroCardOuterEl && heroOverlayEl) {
-  heroRunScanBtn.addEventListener("click", function () {
-    // 1️⃣ 先把畫面捲到卡片附近（置中）
-    heroCardOuterEl.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
+      if (heroRunScanBtn && heroCardOuterEl && heroOverlayEl) {
+        heroRunScanBtn.addEventListener("click", function () {
+          // 1️⃣ 先把畫面捲到卡片附近（置中）
+          heroCardOuterEl.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
 
-    // 2️⃣ 等畫面捲動一下，再讓卡片往上滑
-    setTimeout(() => {
-      openHeroCard();
-    }, 300); // 300ms 你不喜歡可以自己調
-  });
+          // 2️⃣ 等畫面捲動一下，再讓卡片往上滑
+          setTimeout(() => {
+            openHeroCard();
+          }, 300); // 300ms 你不喜歡可以自己調
+        });
 
-  heroOverlayEl.addEventListener("click", function () {
-    if (heroCardOpen) {
-      closeHeroCard();
-    }
-  });
-}
+        heroOverlayEl.addEventListener("click", function () {
+          if (heroCardOpen) {
+            closeHeroCard();
+          }
+        });
+      }
+
       const langToggle = document.getElementById("lang-toggle");
       const userToggle = document.getElementById("user-toggle");
       const mobileBtn = document.getElementById("mobile-menu-btn");
