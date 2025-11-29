@@ -255,20 +255,28 @@
     }
         /* Hero Screener Slide-Up Interaction */
     .hero-card-outer {
-      transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
-      transform: translateY(0);
-      z-index: 30;
-    }
+  transition: transform 0.35s ease, box-shadow 0.25s ease;
+  transform: translateY(0);
+}
 
-    .hero-card-outer.hero-card-open {
-      transform: translateY(-140px);
-    }
+/* 桌機：往上拉比較多，讓它蓋到 hero 下面那一塊 */
+.hero-card-outer.hero-card-open {
+  transform: translateY(-230px);
+}
 
-    @media (max-width: 767px) {
-      .hero-card-outer.hero-card-open {
-        transform: translateY(-110px);
-      }
-    }
+/* 平板寬度：稍微少一點，避免頂到最上面 */
+@media (max-width: 1023px) {
+  .hero-card-outer.hero-card-open {
+    transform: translateY(-190px);
+  }
+}
+
+/* 手機寬度：再少一點 */
+@media (max-width: 767px) {
+  .hero-card-outer.hero-card-open {
+    transform: translateY(-150px);
+  }
+}
 
     .hero-overlay-active {
       display: block !important;
