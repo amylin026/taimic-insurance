@@ -2443,6 +2443,29 @@
     let currentSection = "overview";
     let billing = "monthly";
     const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
+    
+    // Hero Screener slide-up 狀態（讓卡片可以滑上來 / 滑回去）
+let heroCardOpen = false;
+let heroCardOuterEl = null;
+let heroOverlayEl = null;
+
+function openHeroCard() {
+  if (!heroCardOuterEl || !heroOverlayEl) return;
+
+  heroCardOuterEl.classList.add("hero-card-open");
+  heroOverlayEl.classList.remove("hidden");
+  heroOverlayEl.classList.add("hero-overlay-active");
+  heroCardOpen = true;
+}
+
+function closeHeroCard() {
+  if (!heroCardOuterEl || !heroOverlayEl) return;
+
+  heroCardOuterEl.classList.remove("hero-card-open");
+  heroOverlayEl.classList.add("hidden");
+  heroOverlayEl.classList.remove("hero-overlay-active");
+  heroCardOpen = false;
+}
 
     function fmt(usd) {
       const val = curr === "USD" ? usd : usd * RATE;
