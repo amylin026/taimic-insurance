@@ -3275,22 +3275,31 @@ function closeHeroCard() {
 
       render();
             // Hero Screener slide-up 初始化
-      heroCardOuterEl = document.getElementById("hero-card-outer");
-      heroOverlayEl = document.getElementById("hero-overlay");
-      const heroRunScanBtn = document.getElementById("hero-run-scan-btn");
+     // Hero Screener slide-up 初始化
+heroCardOuterEl = document.getElementById("hero-card-outer");
+heroOverlayEl = document.getElementById("hero-overlay");
+const heroRunScanBtn = document.getElementById("hero-run-scan-btn");
 
-      if (heroRunScanBtn && heroCardOuterEl && heroOverlayEl) {
-        heroRunScanBtn.addEventListener("click", function () {
-          openHeroCard();
-        });
+if (heroRunScanBtn && heroCardOuterEl && heroOverlayEl) {
+  heroRunScanBtn.addEventListener("click", function () {
+    // 1️⃣ 先把畫面捲到卡片附近（置中）
+    heroCardOuterEl.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
 
-        heroOverlayEl.addEventListener("click", function () {
-          if (heroCardOpen) {
-            closeHeroCard();
-          }
-        });
-      }
+    // 2️⃣ 等畫面捲動一下，再讓卡片往上滑
+    setTimeout(() => {
+      openHeroCard();
+    }, 300); // 300ms 你不喜歡可以自己調
+  });
 
+  heroOverlayEl.addEventListener("click", function () {
+    if (heroCardOpen) {
+      closeHeroCard();
+    }
+  });
+}
       const langToggle = document.getElementById("lang-toggle");
       const userToggle = document.getElementById("user-toggle");
       const mobileBtn = document.getElementById("mobile-menu-btn");
