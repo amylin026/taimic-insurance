@@ -3121,5 +3121,49 @@
       fetchFXRate();
     };
   </script>
+<script>
+  (function () {
+    const runScanBtn = document.getElementById('hero-run-scan-btn');
+    const complianceCard = document.getElementById('compliance-card');
+
+    if (!runScanBtn || !complianceCard) return;
+
+    let isOpen = false;
+
+    function openCard() {
+      complianceCard.style.transform = 'translateY(-80px)'; // 往上浮一點
+      complianceCard.style.zIndex = '40'; // 蓋住 CROSS-BORDER WEALTH OS 那一行
+      isOpen = true;
+    }
+
+    function closeCard() {
+      complianceCard.style.transform = 'translateY(0)'; // 回原位
+      complianceCard.style.zIndex = '30';
+      isOpen = false;
+    }
+
+    // 點藍色 Run Free Risk Scan
+    runScanBtn.addEventListener('click', function (e) {
+      e.stopPropagation(); // 不要被「點空白關閉」事件吃掉
+      if (!isOpen) {
+        openCard();
+      } else {
+        closeCard();
+      }
+    });
+
+    // 點頁面其他空白，卡片回去
+    document.addEventListener('click', function (e) {
+      if (!isOpen) return;
+
+      const clickInsideCard = complianceCard.contains(e.target);
+      const clickOnButton = runScanBtn.contains(e.target);
+
+      if (!clickInsideCard && !clickOnButton) {
+        closeCard();
+      }
+    });
+  })();
+</script>
 </body>
 </html> 
