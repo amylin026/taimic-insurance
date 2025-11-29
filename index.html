@@ -174,20 +174,29 @@
     .reports-shell { min-height: calc(100vh - 72px - 220px); display: flex; align-items: center; }
 
     /* Hero Screener Slide-Up Interaction */
-    .hero-card-outer {
-      transition: transform 0.35s ease, box-shadow 0.25s ease;
-      transform: translateY(0);
-    }
-    /* 桌機：往上拉比較多，讓它蓋到 hero 下面那一塊 */
-    .hero-card-outer.hero-card-open { transform: translateY(-230px); }
-    /* 平板寬度：稍微少一點，避免頂到最上面 */
-    @media (max-width: 1023px) {
-      .hero-card-outer.hero-card-open { transform: translateY(-190px); }
-    }
-    /* 手機寬度：再少一點 */
-    @media (max-width: 767px) {
-      .hero-card-outer.hero-card-open { transform: translateY(-150px); }
-    }
+.hero-card-outer {
+  transition: transform 0.35s ease, box-shadow 0.25s ease;
+  transform: translateY(0);
+}
+
+/* 桌機：往上拉更多，剛好蓋到 CROSS-BORDER WEALTH OS 那一行 */
+.hero-card-outer.hero-card-open { 
+  transform: translateY(-280px);
+}
+
+/* 平板：少一點，避免頂到最上面 */
+@media (max-width: 1023px) {
+  .hero-card-outer.hero-card-open { 
+    transform: translateY(-220px);
+  }
+}
+
+/* 手機：再少一點 */
+@media (max-width: 767px) {
+  .hero-card-outer.hero-card-open { 
+    transform: translateY(-180px);
+  }
+}
     .hero-overlay-active { display: block !important; }
   </style>
 </head>
