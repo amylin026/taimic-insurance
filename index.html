@@ -253,6 +253,26 @@
       display: flex;
       align-items: center;
     }
+        /* Hero Screener Slide-Up Interaction */
+    .hero-card-outer {
+      transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+      transform: translateY(0);
+      z-index: 30;
+    }
+
+    .hero-card-outer.hero-card-open {
+      transform: translateY(-140px);
+    }
+
+    @media (max-width: 767px) {
+      .hero-card-outer.hero-card-open {
+        transform: translateY(-110px);
+      }
+    }
+
+    .hero-overlay-active {
+      display: block !important;
+    }
   </style>
 </head>
 
@@ -459,11 +479,17 @@
   <main class="flex-grow">
     <!-- OVERVIEW SECTION -->
     <section id="section-overview">
-      <!-- HERO + FLOATING COMPLIANCE RISK SCREENER (NEW LAYOUT) -->
+         <!-- HERO + FLOATING COMPLIANCE RISK SCREENER (SLIDE-UP VERSION) -->
       <section class="relative border-b border-slate-200 bg-gradient-to-b from-[#ecf3ff] via-[#f7f9ff] to-[#e5edf9]">
+        <!-- 背景點擊區：只有卡片拉上來時才會啟用 -->
+        <div
+          id="hero-overlay"
+          class="absolute inset-0 z-20 hidden cursor-pointer"
+        ></div>
+
         <div class="max-w-[1440px] mx-auto px-6 pt-16 pb-10 md:pt-20 md:pb-24">
           <!-- Hero Copy -->
-          <div class="max-w-3xl mx-auto text-center space-y-6">
+          <div class="max-w-3xl mx-auto text-center space-y-6 relative z-30">
             <p
               class="text-xs font-semibold tracking-[0.28em] text-slate-500 uppercase"
             >
@@ -485,17 +511,13 @@
 
             <div class="flex flex-wrap items-center justify-center gap-3">
               <button
+                id="hero-run-scan-btn"
                 type="button"
                 class="inline-flex items-center justify-center px-7 py-3 rounded-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white text-sm md:text-[15px] font-semibold shadow-md transition"
               >
                 Run Free Risk Scan
               </button>
-              <button
-                type="button"
-                class="inline-flex items-center justify-center px-7 py-3 rounded-full border border-slate-300 text-slate-800 hover:bg-white hover:border-slate-400 text-sm md:text-[15px] font-semibold bg-white/70 backdrop-blur-sm transition"
-              >
-                How it works
-              </button>
+              <!-- 白色 "How it works" 按鈕依照需求移除 -->
             </div>
 
             <div class="flex items-center justify-center gap-2 text-[11px] text-slate-500 pt-1">
@@ -505,9 +527,12 @@
             </div>
           </div>
 
-          <!-- Floating Screener Card -->
-          <div class="mt-10 md:mt-12 flex justify-center">
-            <div class="w-full max-w-4xl">
+          <!-- Floating Screener Card：預設在下面，點擊後往上滑 -->
+          <div class="mt-10 md:mt-12 flex justify-center relative">
+            <div
+              id="hero-card-outer"
+              class="w-full max-w-4xl hero-card-outer"
+            >
               <div class="bg-white/95 rounded-3xl shadow-[0_24px_80px_rgba(37,99,235,0.26)] border border-blue-100 px-6 py-6 md:px-8 md:py-7">
                 <!-- Header -->
                 <div class="flex items-center justify-between mb-5">
@@ -3218,6 +3243,22 @@
       authOverlay = document.getElementById("auth-overlay");
 
       render();
+            // Hero Screener slide-up 初始化
+      heroCardOuterEl = document.getElementById("hero-card-outer");
+      heroOverlayEl = document.getElementById("hero-overlay");
+      const heroRunScanBtn = document.getElementById("hero-run-scan-btn");
+
+      if (heroRunScanBtn && heroCardOuterEl && heroOverlayEl) {
+        heroRunScanBtn.addEventListener("click", function () {
+          openHeroCard();
+        });
+
+        heroOverlayEl.addEventListener("click", function () {
+          if (heroCardOpen) {
+            closeHeroCard();
+          }
+        });
+      }
 
       const langToggle = document.getElementById("lang-toggle");
       const userToggle = document.getElementById("user-toggle");
