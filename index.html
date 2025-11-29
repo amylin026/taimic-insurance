@@ -253,33 +253,30 @@
       display: flex;
       align-items: center;
     }
-
-    /* Hero Screener Slide-Up Interaction */
+        /* Hero Screener Slide-Up Interaction */
     .hero-card-outer {
-      transition: transform 0.35s ease, box-shadow 0.25s ease;
-      transform: translateY(0);
-      position: relative;
-      z-index: 30; /* 讓卡片浮起來時壓過上面的文字與 tagline */
-    }
+  transition: transform 0.35s ease, box-shadow 0.25s ease;
+  transform: translateY(0);
+}
 
-    /* 桌機：往上拉到 CROSS-BORDER WEALTH OS 附近 */
-    .hero-card-outer.hero-card-open {
-      transform: translateY(-260px);
-    }
+/* 桌機：往上拉比較多，讓它蓋到 hero 下面那一塊 */
+.hero-card-outer.hero-card-open {
+  transform: translateY(-230px);
+}
 
-    /* 平板寬度：稍微少一點，避免頂到最上面 */
-    @media (max-width: 1023px) {
-      .hero-card-outer.hero-card-open {
-        transform: translateY(-220px);
-      }
-    }
+/* 平板寬度：稍微少一點，避免頂到最上面 */
+@media (max-width: 1023px) {
+  .hero-card-outer.hero-card-open {
+    transform: translateY(-190px);
+  }
+}
 
-    /* 手機寬度：再少一點 */
-    @media (max-width: 767px) {
-      .hero-card-outer.hero-card-open {
-        transform: translateY(-180px);
-      }
-    }
+/* 手機寬度：再少一點 */
+@media (max-width: 767px) {
+  .hero-card-outer.hero-card-open {
+    transform: translateY(-150px);
+  }
+}
 
     .hero-overlay-active {
       display: block !important;
@@ -873,7 +870,7 @@
                         <button
                           id="hero-cta-btn"
                           type="button"
-                          onclick="openAuthModal('register')"
+                          onclick="saveAndRedirect()"
                           class="hidden inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold px-6 py-2.5 shadow-md transition"
                         >
                           <span>Create a free Taimic account</span>
@@ -987,7 +984,7 @@
             <div class="flex justify-center md:justify-end w-full md:w-auto">
               <button
                 type="button"
-                class="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-white text-slate-900 text-sm md:text-base font-semibold shadow-md border border-slate-200 hover:shadow-lg hover:-translate-y-0.5 transition"
+                class="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg白 text-slate-900 text-sm md:text-base font-semibold shadow-md border border-slate-200 hover:shadow-lg hover:-translate-y-0.5 transition"
               >
                 Create your Taimic account
               </button>
