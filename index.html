@@ -3,8 +3,7 @@
 <head>
   <title>Taimic – Operating System for Cross-Border Families | 跨國家庭的作業系統</title>
 
-<meta name="description"
-  content="Taimic is the operating system for cross-border families and global citizens with assets in multiple countries. We consolidate bank accounts, insurance policies and properties across borders, track your global net worth, and use AI to help with tax, insurance and legacy planning. Taimic 專為在美台灣人與 Global Citizens 設計，一個 App 整合台灣與美國資產，追蹤全球淨值，並用 AI 幫你處理跨境稅務、保險配置與資產傳承。">
+  <meta name="description" content="Taimic is the operating system for cross-border families and global citizens with assets in multiple countries. We consolidate bank accounts, insurance policies and properties across borders, track your global net worth, and use AI to help with tax, insurance and legacy planning. Taimic 專為在美台灣人與 Global Citizens 設計，一個 App 整合台灣與美國資產，追蹤全球淨值，並用 AI 幫你處理跨境稅務、保險配置與資產傳承。">
 
   <meta name="google-site-verification" content="gV1-KrDsf1kP8p7LjdDUhNCEhEJXMG9gvrFhZU9Ab_0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,15 +11,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
   <style>
     body {
@@ -37,69 +30,23 @@
     }
 
     /* --- Logo Clock：統一成 Figma 扁平藍風格 --- */
-    .logo-clock {
-      width: 44px;
-      height: 44px;
-    }
-    .logo-clock-hero {
-      width: 40px;
-      height: 40px;
-    }
-    .logo-clock-about {
-      width: 52px;
-      height: 52px;
-    }
+    .logo-clock { width: 44px; height: 44px; }
+    .logo-clock-hero { width: 40px; height: 40px; }
+    .logo-clock-about { width: 52px; height: 52px; }
 
-    .clock-outer {
-      fill: none;
-      stroke: #e4edff;
-      stroke-width: 4;
-    }
+    .clock-outer { fill: none; stroke: #e4edff; stroke-width: 4; }
+    .clock-inner { fill: #f5f7ff; stroke: #e4edff; stroke-width: 3; }
+    .clock-core { fill: url(#clockGradient); }
+    .clock-tick-line { stroke: #d7e3ff; stroke-width: 3; stroke-linecap: round; }
 
-    .clock-inner {
-      fill: #f5f7ff;
-      stroke: #e4edff;
-      stroke-width: 3;
-    }
-
-    .clock-core {
-      fill: url(#clockGradient);
-    }
-
-    .clock-tick-line {
-      stroke: #d7e3ff;
-      stroke-width: 3;
-      stroke-linecap: round;
-    }
-
-    .hand {
-      stroke-linecap: round;
-      transform-origin: 50% 50%;
-    }
-
-    .hand-hour {
-      stroke: #111827;
-      stroke-width: 4.5;
-    }
-
-    .hand-minute {
-      stroke: #2563eb;
-      stroke-width: 4;
-    }
-
-    .center-dot {
-      fill: #ffffff;
-      stroke: #2563eb;
-      stroke-width: 3;
-    }
+    .hand { stroke-linecap: round; transform-origin: 50% 50%; }
+    .hand-hour { stroke: #111827; stroke-width: 4.5; }
+    .hand-minute { stroke: #2563eb; stroke-width: 4; }
+    .center-dot { fill: #ffffff; stroke: #2563eb; stroke-width: 3; }
 
     @keyframes rotate {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     /* --- Nav --- */
@@ -179,35 +126,18 @@
     }
 
     .scan-overlay {
-      background: linear-gradient(
-        to bottom,
-        transparent,
-        rgba(0, 102, 204, 0.15),
-        transparent
-      );
+      background: linear-gradient(to bottom, transparent, rgba(0, 102, 204, 0.15), transparent);
       animation: scan 2s linear infinite;
     }
     @keyframes scan {
-      0% {
-        transform: translateY(-100%);
-      }
-      100% {
-        transform: translateY(100%);
-      }
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
     }
 
-    .animate-fade-in {
-      animation: fadeIn 0.4s ease-out forwards;
-    }
+    .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(4px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .panel {
@@ -217,9 +147,7 @@
       box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
     }
 
-    .pricing-card {
-      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-    }
+    .pricing-card { transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
     .pricing-card:hover {
       border-color: #2563eb !important;
       box-shadow: 0 20px 50px rgba(37, 99, 235, 0.25) !important;
@@ -240,57 +168,33 @@
       padding: 4px 0;
       cursor: pointer;
     }
-    .footer-link:hover {
-      color: var(--brand-blue);
-    }
+    .footer-link:hover { color: var(--brand-blue); }
 
-    .reports-section {
-      background: linear-gradient(to bottom, #f7fbff, #e3f2fd, #bfdbfe);
-    }
+    .reports-section { background: linear-gradient(to bottom, #f7fbff, #e3f2fd, #bfdbfe); }
+    .reports-shell { min-height: calc(100vh - 72px - 220px); display: flex; align-items: center; }
 
-    .reports-shell {
-      min-height: calc(100vh - 72px - 220px);
-      display: flex;
-      align-items: center;
-    }
-        /* Hero Screener Slide-Up Interaction */
+    /* Hero Screener Slide-Up Interaction */
     .hero-card-outer {
-  transition: transform 0.35s ease, box-shadow 0.25s ease;
-  transform: translateY(0);
-}
-
-/* 桌機：往上拉更多，確保遮住 CROSS-BORDER WEALTH OS */
-.hero-card-outer.hero-card-open {
-  transform: translateY(-290px);
-}
-
-/* 平板寬度：稍微少一點，避免頂到最上面 */
-@media (max-width: 1023px) {
-  .hero-card-outer.hero-card-open {
-    transform: translateY(-240px);
-  }
-}
-
-/* 手機寬度：再少一點 */
-@media (max-width: 767px) {
-  .hero-card-outer.hero-card-open {
-    transform: translateY(-180px);
-  }
-}
-
-    .hero-overlay-active {
-      display: block !important;
+      transition: transform 0.35s ease, box-shadow 0.25s ease;
+      transform: translateY(0);
     }
+    /* 桌機：往上拉比較多，讓它蓋到 hero 下面那一塊 */
+    .hero-card-outer.hero-card-open { transform: translateY(-230px); }
+    /* 平板寬度：稍微少一點，避免頂到最上面 */
+    @media (max-width: 1023px) {
+      .hero-card-outer.hero-card-open { transform: translateY(-190px); }
+    }
+    /* 手機寬度：再少一點 */
+    @media (max-width: 767px) {
+      .hero-card-outer.hero-card-open { transform: translateY(-150px); }
+    }
+    .hero-overlay-active { display: block !important; }
   </style>
 </head>
 
 <body class="flex flex-col min-h-screen bg-[#f3f5f9]">
-  <header
-    class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[72px]"
-  >
-    <div
-      class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center relative"
-    >
+  <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[72px]">
+    <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center relative">
       <div class="flex items-center gap-4 cursor-pointer" onclick="switchSection('overview')">
         <svg class="logo-clock" viewBox="0 0 100 100">
           <defs>
@@ -306,118 +210,44 @@
           <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
           <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
           <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
-          <line
-            x1="50"
-            y1="50"
-            x2="50"
-            y2="30"
-            class="hand hand-hour"
-          />
-          <line
-            x1="50"
-            y1="50"
-            x2="66"
-            y2="34"
-            class="hand hand-minute"
-          />
+          <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
+          <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
           <circle cx="50" cy="50" r="3.2" class="center-dot" />
         </svg>
         <div class="flex flex-col justify-center">
-          <span
-            class="text-[22px] font-[700] tracking-tight text-[#0066cc] leading-none"
-            >TAIMIC</span
-          >
-          <span
-            class="text-[10px] font-[600] tracking-[0.2em] text-gray-500 mt-1 uppercase"
-            >Global Wealth</span
-          >
+          <span class="text-[22px] font-[700] tracking-tight text-[#0066cc] leading-none">TAIMIC</span>
+          <span class="text-[10px] font-[600] tracking-[0.2em] text-gray-500 mt-1 uppercase">Global Wealth</span>
         </div>
       </div>
 
       <nav class="hidden lg:flex h-full items-center space-x-4">
-        <a
-          href="#"
-          class="nav-link active"
-          data-section="overview"
-          data-i18n="nav.overview"
-          >Overview</a
-        >
-        <a
-          href="#"
-          class="nav-link"
-          data-section="pricing"
-          data-i18n="nav.pricing"
-          >Pricing</a
-        >
-        <a
-          href="#"
-          class="nav-link"
-          data-section="reports"
-          data-i18n="nav.reports"
-          >Reports</a
-        >
-        <a
-          href="#"
-          class="nav-link"
-          data-section="about"
-          data-i18n="nav.about"
-          >About Taimic</a
-        >
+        <a href="#" class="nav-link active" data-section="overview" data-i18n="nav.overview">Overview</a>
+        <a href="#" class="nav-link" data-section="pricing" data-i18n="nav.pricing">Pricing</a>
+        <a href="#" class="nav-link" data-section="reports" data-i18n="nav.reports">Reports</a>
+        <a href="#" class="nav-link" data-section="about" data-i18n="nav.about">About Taimic</a>
       </nav>
 
       <div class="flex items-center gap-6 h-full">
-        <div
-          class="hidden sm:flex items-center text-xs font-medium text-gray-600 border border-gray-200 rounded-full overflow-hidden bg-gray-50 shadow-sm"
-        >
-          <button
-            id="btn-usd"
-            onclick="setCurrency('USD')"
-            class="px-4 py-2 transition-colors"
-          >
-            USD
-          </button>
-          <button
-            id="btn-twd"
-            onclick="setCurrency('TWD')"
-            class="px-4 py-2 transition-colors"
-          >
-            TWD
-          </button>
+        <div class="hidden sm:flex items-center text-xs font-medium text-gray-600 border border-gray-200 rounded-full overflow-hidden bg-gray-50 shadow-sm">
+          <button id="btn-usd" onclick="setCurrency('USD')" class="px-4 py-2 transition-colors">USD</button>
+          <button id="btn-twd" onclick="setCurrency('TWD')" class="px-4 py-2 transition-colors">TWD</button>
         </div>
 
         <div class="dropdown-container cursor-pointer h-full">
-          <button
-            id="lang-toggle"
-            type="button"
-            class="flex items-center gap-2 text-gray-600 hover:text-[#0066cc] transition-colors"
-          >
-            <div
-              class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-50 border border-gray-200"
-            >
+          <button id="lang-toggle" type="button" class="flex items-center gap-2 text-gray-600 hover:text-[#0066cc] transition-colors">
+            <div class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-50 border border-gray-200">
               <i class="fa-solid fa-globe text-sm"></i>
             </div>
             <i class="fa-solid fa-caret-down text-xs"></i>
           </button>
           <div id="lang-menu" class="dropdown-menu hidden">
-            <div id="opt-zh" class="dropdown-item" onclick="changeLang('zh')">
-              繁體中文
-            </div>
-            <div
-              id="opt-en"
-              class="dropdown-item active"
-              onclick="changeLang('en')"
-            >
-              English
-            </div>
+            <div id="opt-zh" class="dropdown-item" onclick="changeLang('zh')">繁體中文</div>
+            <div id="opt-en" class="dropdown-item active" onclick="changeLang('en')">English</div>
           </div>
         </div>
 
         <div class="dropdown-container cursor-pointer h-full border-l border-gray-200 pl-4">
-          <button
-            id="user-toggle"
-            type="button"
-            class="w-10 h-10 bg-[#f3f4f6] text-gray-600 rounded-full flex items-center justify-center hover:bg-[#0066cc] hover:text-white transition-colors"
-          >
+          <button id="user-toggle" type="button" class="w-10 h-10 bg-[#f3f4f6] text-gray-600 rounded-full flex items-center justify-center hover:bg-[#0066cc] hover:text-white transition-colors">
             <i class="fa-solid fa-user text-base"></i>
           </button>
           <div id="user-menu" class="dropdown-menu hidden">
@@ -437,44 +267,18 @@
           </div>
         </div>
 
-        <button
-          id="mobile-menu-btn"
-          class="lg:hidden pl-2 text-gray-600 hover:text-[#0066cc] focus:outline-none"
-        >
+        <button id="mobile-menu-btn" class="lg:hidden pl-2 text-gray-600 hover:text-[#0066cc] focus:outline-none">
           <i class="fa-solid fa-bars text-xl"></i>
         </button>
       </div>
     </div>
 
-    <div
-      id="mobile-menu"
-      class="hidden lg:hidden bg-white border-t border-gray-100 absolute top-[72px] left-0 w-full shadow-lg z-30"
-    >
+    <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 absolute top-[72px] left-0 w-full shadow-lg z-30">
       <div class="flex flex-col p-4 space-y-2">
-        <a
-          href="#"
-          class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]"
-          data-section="overview"
-          data-i18n="nav.overview"
-          >Overview</a>
-        <a
-          href="#"
-          class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]"
-          data-section="pricing"
-          data-i18n="nav.pricing"
-          >Pricing</a>
-        <a
-          href="#"
-          class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]"
-          data-section="reports"
-          data-i18n="nav.reports"
-          >Reports</a>
-        <a
-          href="#"
-          class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]"
-          data-section="about"
-          data-i18n="nav.about"
-          >About Taimic</a>
+        <a href="#" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]" data-section="overview" data-i18n="nav.overview">Overview</a>
+        <a href="#" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]" data-section="pricing" data-i18n="nav.pricing">Pricing</a>
+        <a href="#" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]" data-section="reports" data-i18n="nav.reports">Reports</a>
+        <a href="#" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]" data-section="about" data-i18n="nav.about">About Taimic</a>
         
         <div class="pt-2 mt-2 border-t border-gray-100 flex gap-2">
           <button onclick="setCurrency('USD')" class="flex-1 py-2 text-xs font-bold border border-gray-200 rounded text-center hover:bg-gray-50">USD</button>
@@ -487,38 +291,25 @@
   <main class="flex-grow">
     <section id="section-overview">
        <section class="relative border-b border-slate-200 bg-gradient-to-b from-[#ecf3ff] via-[#f7f9ff] to-[#e5edf9]">
-        <div
-          id="hero-overlay"
-          class="absolute inset-0 z-20 hidden cursor-pointer"
-        ></div>
+        <div id="hero-overlay" class="absolute inset-0 z-20 hidden cursor-pointer"></div>
 
         <div class="max-w-[1440px] mx-auto px-6 pt-16 pb-10 md:pt-20 md:pb-24">
           <div class="max-w-3xl mx-auto text-center space-y-6 relative z-30">
-            <p
-              class="text-xs font-semibold tracking-[0.28em] text-slate-500 uppercase"
-            >
+            <p class="text-xs font-semibold tracking-[0.28em] text-slate-500 uppercase">
               CROSS-BORDER WEALTH OS
             </p>
-            <h1
-              class="text-[32px] sm:text-[40px] md:text-[46px] font-extrabold tracking-tight text-slate-900 leading-tight"
-            >
+            <h1 class="text-[32px] sm:text-[40px] md:text-[46px] font-extrabold tracking-tight text-slate-900 leading-tight">
               The OS for your
               <span class="text-[#0066cc]">Cross-border Wealth.</span>
             </h1>
-            <p
-              class="text-sm md:text-base text-slate-600 leading-relaxed max-w-xl mx-auto"
-            >
+            <p class="text-sm md:text-base text-slate-600 leading-relaxed max-w-xl mx-auto">
               <span class="block">Automated FATCA compliance.</span>
               <span class="block">Real-time net worth tracking.</span>
               <span class="block">AI insights for global families.</span>
             </p>
 
             <div class="flex flex-wrap items-center justify-center gap-3">
-              <button
-                id="hero-run-scan-btn"
-                type="button"
-                class="inline-flex items-center justify-center px-7 py-3 rounded-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white text-sm md:text-[15px] font-semibold shadow-md transition"
-              >
+              <button id="hero-run-scan-btn" type="button" class="inline-flex items-center justify-center px-7 py-3 rounded-full bg-[#1d4ed8] hover:bg-[#1e40af] text-white text-sm md:text-[15px] font-semibold shadow-md transition">
                 Run Free Risk Scan
               </button>
               </div>
@@ -531,19 +322,14 @@
           </div>
 
           <div class="mt-10 md:mt-12 flex justify-center relative">
-            <div
-              id="hero-card-outer"
-              class="w-full max-w-4xl hero-card-outer relative z-50"
-            >
-              <div class="bg-white rounded-3xl shadow-xl md:shadow-2xl border border-blue-100 px-6 py-6 md:px-8 md:py-7">
+            <div id="hero-card-outer" class="w-full max-w-4xl hero-card-outer">
+              <div class="bg-white/95 rounded-3xl shadow-[0_24px_80px_rgba(37,99,235,0.26)] border border-blue-100 px-6 py-6 md:px-8 md:py-7">
                 <div class="flex items-center justify-between mb-5">
                   <div>
                     <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
                       Compliance Risk Screener
                     </p>
-                    <div
-                      class="mt-2 inline-flex items-center gap-2 rounded-full bg-blue-50 border border-blue-100 px-2.5 py-1"
-                    >
+                    <div class="mt-2 inline-flex items-center gap-2 rounded-full bg-blue-50 border border-blue-100 px-2.5 py-1">
                       <span class="inline-flex w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                       <span class="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#1d4ed8]">
                         Powered by Taimic AI
@@ -3331,4 +3117,4 @@
     };
   </script>
 </body>
-</html>
+</html> 
