@@ -198,336 +198,6 @@
   }
 }
     .hero-overlay-active { display: block !important; }
-    /* === Dashboard Design System for post-login (A/B/C/D blocks) === */
-:root {
-  --tm-bg-canvas: #F5F7FA;
-  --tm-bg-alt: #F8F9FA;
-  --tm-primary: #0066cc;       /* Logo Deep Blue */
-  --tm-primary-dark: #004c99;
-  --tm-accent: #60a5fa;        /* Clock Light Blue */
-  --tm-text-main: #1E293B;
-  --tm-text-muted: #64748B;
-}
-
-.dashboard-canvas {
-  background-color: var(--tm-bg-canvas);
-}
-
-.shadow-soft {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-}
-
-.card-elevated {
-  background-color: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-}
-
-.card-elevated-12 {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-}
-
-.sidebar-shell {
-  background-color: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  border-right: 1px solid rgba(148, 163, 184, 0.25);
-}
-
-.sidebar-link {
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 14px;
-  font-size: 13px;
-  color: var(--tm-text-muted);
-  border-radius: 9999px;
-  cursor: pointer;
-  transition: background-color 0.18s ease, color 0.18s ease;
-}
-
-.sidebar-link:hover {
-  background-color: rgba(96, 165, 250, 0.12);
-  color: var(--tm-primary);
-}
-
-.sidebar-link-active {
-  background-color: rgba(96, 165, 250, 0.12);
-  color: var(--tm-primary);
-  font-weight: 600;
-}
-
-.sidebar-link-active::after {
-  content: "";
-  position: absolute;
-  right: -18px;
-  top: 16%;
-  bottom: 16%;
-  width: 3px;
-  border-radius: 9999px;
-  background-color: var(--tm-primary);
-}
-
-.dash-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.dash-breadcrumb {
-  font-size: 12px;
-  color: var(--tm-text-muted);
-}
-
-.dash-breadcrumb span {
-  color: var(--tm-text-main);
-  font-weight: 500;
-}
-
-.btn-ghost-primary {
-  background: transparent;
-  border-radius: 9999px;
-  padding: 8px 14px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--tm-primary);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  transition: background-color 0.18s ease, color 0.18s ease;
-}
-
-.btn-ghost-primary:hover {
-  background-color: rgba(96, 165, 250, 0.12);
-  color: var(--tm-primary-dark);
-}
-
-.networth-hero {
-  position: relative;
-  overflow: hidden;
-}
-
-.networth-bg-orbit {
-  position: absolute;
-  right: -120px;
-  top: -80px;
-  width: 260px;
-  height: 260px;
-  border-radius: 9999px;
-  background: radial-gradient(circle at 30% 30%, rgba(96, 165, 250, 0.14), transparent 60%);
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-.networth-bg-orbit::after {
-  content: "";
-  position: absolute;
-  inset: 32px;
-  border-radius: inherit;
-  border: 1px dashed rgba(148, 163, 184, 0.4);
-}
-
-.networth-kpi-label {
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--tm-text-muted);
-  font-weight: 600;
-}
-
-.networth-value {
-  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 40px;
-  line-height: 1.05;
-  letter-spacing: -0.04em;
-  color: var(--tm-primary-dark);
-}
-
-@media (min-width: 1024px) {
-  .networth-value {
-    font-size: 48px;
-  }
-}
-
-.networth-change {
-  font-size: 13px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 8px;
-  border-radius: 9999px;
-  background-color: rgba(22, 163, 74, 0.08);
-  color: #15803d;
-  font-weight: 500;
-}
-
-.networth-change.neg {
-  background-color: rgba(248, 113, 113, 0.08);
-  color: #b91c1c;
-}
-
-/* Geo Asset Map */
-.geo-map {
-  position: relative;
-  border-radius: 16px;
-  background-color: #E2E8F0;
-  overflow: hidden;
-  min-height: 260px;
-}
-
-.geo-map::before {
-  content: "";
-  position: absolute;
-  inset: 18%;
-  border-radius: 9999px;
-  background: radial-gradient(circle at 20% 20%, rgba(148, 163, 184, 0.7), transparent 60%),
-              radial-gradient(circle at 80% 60%, rgba(148, 163, 184, 0.6), transparent 70%);
-  opacity: 0.45;
-}
-
-.geo-dot {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  border-radius: 9999px;
-  background-color: var(--tm-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.5);
-  animation: geo-ripple 2.1s ease-out infinite;
-  cursor: pointer;
-}
-
-.geo-dot-inner {
-  width: 6px;
-  height: 6px;
-  border-radius: inherit;
-  background-color: #ffffff;
-}
-
-@keyframes geo-ripple {
-  from {
-    box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.6);
-    opacity: 1;
-  }
-  to {
-    box-shadow: 0 0 0 18px rgba(96, 165, 250, 0);
-    opacity: 0;
-  }
-}
-
-.geo-tooltip {
-  position: absolute;
-  min-width: 180px;
-  max-width: 220px;
-  padding: 8px 10px;
-  border-radius: 12px;
-  background-color: #0f172a;
-  color: #e5e7eb;
-  font-size: 11px;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.35);
-  pointer-events: none;
-  opacity: 0;
-  transform: translate(-50%, -110%);
-  transition: opacity 0.12s ease;
-  z-index: 20;
-}
-
-/* Currency Impact Bar */
-.currency-bar-bg {
-  position: relative;
-  height: 10px;
-  border-radius: 9999px;
-  background: linear-gradient(to right, #f97373, #e5e7eb, #22c55e);
-  overflow: hidden;
-}
-
-.currency-bar-indicator {
-  position: absolute;
-  top: 50%;
-  width: 2px;
-  height: 18px;
-  background-color: #0f172a;
-  border-radius: 9999px;
-  transform: translate(-50%, -50%);
-}
-
-/* Compliance timeline */
-.timeline-rail {
-  position: relative;
-  height: 2px;
-  background-color: #e5e7eb;
-}
-
-.timeline-node {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  min-width: 140px;
-}
-
-.timeline-dot {
-  width: 16px;
-  height: 16px;
-  border-radius: 9999px;
-  border-width: 2px;
-  border-style: solid;
-  background-color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-}
-
-.timeline-dot-upcoming {
-  border-color: var(--tm-primary);
-}
-
-.timeline-dot-done {
-  border-color: #9ca3af;
-  background-color: #9ca3af;
-  color: #f9fafb;
-}
-
-.timeline-dot-urgent {
-  border-color: #f97316;
-  background-color: #f97316;
-  color: #fff7ed;
-}
-
-.timeline-label {
-  font-size: 11px;
-  color: var(--tm-text-muted);
-}
-
-.timeline-tag {
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 9999px;
-  background-color: #e5e7eb;
-  color: #374151;
-  font-weight: 500;
-}
-
-.timeline-tag-urgent {
-  background-color: #f97316;
-  color: #fff7ed;
-}
-
-@media (max-width: 1023px) {
-  .sidebar-shell {
-    border-radius: 12px;
-  }
-}
   </style>
 </head>
 
@@ -628,343 +298,6 @@
   </header>
 
   <main class="flex-grow">
-        <!-- === Post-login Dashboard Layout for Taimic (Stripe / Amex 風格) === -->
-    <section id="section-dashboard" class="dashboard-canvas py-10">
-      <div class="max-w-[1440px] mx-auto px-6">
-        <div class="flex flex-col lg:flex-row gap-6 lg:gap-8">
-          <!-- Sidebar Navigation -->
-          <aside class="sidebar-shell w-full max-w-full lg:w-64 flex flex-col justify-between">
-            <div class="p-5 pb-3 border-b border-slate-100">
-              <div class="flex items-center gap-3">
-                <!-- 直接重用你現有的 Logo Clock 樣式 -->
-                <svg class="logo-clock" viewBox="0 0 100 100">
-                  <defs>
-                    <linearGradient id="clockGradientDashboard" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0%" stop-color="#bfdbfe" />
-                      <stop offset="100%" stop-color="#60a5fa" />
-                    </linearGradient>
-                  </defs>
-                  <circle cx="50" cy="50" r="46" class="clock-outer" />
-                  <circle cx="50" cy="50" r="38" class="clock-inner" />
-                  <circle cx="50" cy="50" r="30" class="clock-core" />
-                  <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
-                  <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
-                  <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
-                  <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
-                  <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
-                  <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
-                  <circle cx="50" cy="50" r="3.2" class="center-dot" />
-                </svg>
-                <div class="flex flex-col">
-                  <span class="text-[18px] font-[700] tracking-tight text-[#0066cc] leading-none">TAIMIC</span>
-                  <span class="text-[9px] font-[600] tracking-[0.2em] text-gray-500 mt-1 uppercase">Family OS</span>
-                </div>
-              </div>
-            </div>
-
-            <nav class="px-4 py-4 space-y-1">
-              <button class="sidebar-link sidebar-link-active">
-                <i class="fa-solid fa-chart-line text-xs"></i>
-                <span>Dashboard</span>
-              </button>
-              <button class="sidebar-link">
-                <i class="fa-solid fa-layer-group text-xs"></i>
-                <span>Accounts &amp; Entities</span>
-              </button>
-              <button class="sidebar-link">
-                <i class="fa-solid fa-shield-halved text-xs"></i>
-                <span>Compliance</span>
-              </button>
-              <button class="sidebar-link">
-                <i class="fa-solid fa-folder-open text-xs"></i>
-                <span>Documents</span>
-              </button>
-              <button class="sidebar-link">
-                <i class="fa-solid fa-gear text-xs"></i>
-                <span>Settings</span>
-              </button>
-            </nav>
-
-            <div class="px-4 py-4 border-t border-slate-100 text-[11px] text-slate-400 flex items-center justify-between">
-              <span>v0.1 • Taimic</span>
-              <span class="inline-flex items-center gap-1">
-                <i class="fa-solid fa-shield-check text-[10px]"></i>
-                <span>Bank-grade</span>
-              </span>
-            </div>
-          </aside>
-
-          <!-- Main Dashboard Area -->
-          <div class="flex-1 flex flex-col gap-6">
-            <!-- Top header (Breadcrumb + 按鈕) -->
-            <header class="dash-header">
-              <div class="space-y-1">
-                <div class="dash-breadcrumb">
-                  Home &gt; <span>Global Dashboard</span>
-                </div>
-                <h1 class="text-[20px] md:text-[22px] font-semibold text-[#0f172a] tracking-tight">
-                  Cross-border wealth overview
-                </h1>
-                <p class="text-[12px] text-slate-500">
-                  Consolidated view of your Taiwan, US and offshore positions — refreshed daily.
-                </p>
-              </div>
-              <div class="flex items-center gap-3">
-                <!-- 無邊框文字按鈕：聯絡理財顧問 -->
-                <button class="btn-ghost-primary">
-                  <i class="fa-solid fa-user-tie text-xs"></i>
-                  <span>聯絡理財顧問</span>
-                </button>
-                <button class="w-9 h-9 rounded-full bg-white shadow-soft flex items-center justify-center text-slate-500">
-                  <i class="fa-regular fa-bell text-xs"></i>
-                </button>
-                <div class="w-9 h-9 rounded-full bg-slate-900 text-slate-50 text-[11px] font-semibold flex items-center justify-center">
-                  YC
-                </div>
-              </div>
-            </header>
-
-            <!-- 區塊 A：總覽與核心指標 -->
-            <section class="card-elevated networth-hero p-5 md:p-7">
-              <div class="networth-bg-orbit"></div>
-              <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-5 relative z-10">
-                <div class="space-y-3">
-                  <div class="networth-kpi-label">
-                    TOTAL NET WORTH
-                  </div>
-                  <div class="flex items-baseline gap-3 flex-wrap">
-                    <div class="networth-value">
-                      $1,245,800
-                    </div>
-                    <div class="networth-change">
-                      <i class="fa-solid fa-arrow-trend-up text-[11px]"></i>
-                      <span>+$12,500</span>
-                      <span class="text-[11px] text-emerald-700/90">Today</span>
-                    </div>
-                  </div>
-                  <div class="flex flex-wrap gap-4 text-[11px] text-slate-500">
-                    <div class="flex items-center gap-1.5">
-                      <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#2563eb]"></span>
-                      <span>TWD • US • SGD consolidated at live FX</span>
-                    </div>
-                    <div class="flex items-center gap-1.5">
-                      <i class="fa-solid fa-shield-check text-[10px] text-emerald-600"></i>
-                      <span>Estate &amp; gift tax exposure monitored</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="space-y-3 min-w-[220px] max-w-xs">
-                  <div class="flex items-center justify-between text-[11px] text-slate-500">
-                    <span>Liquidity (next 30 days)</span>
-                    <span class="font-medium text-slate-700">$180,000</span>
-                  </div>
-                  <div class="w-full h-1.5 rounded-full bg-slate-100 overflow-hidden">
-                    <div class="h-full w-2/3 bg-gradient-to-r from-[#2563eb] to-[#60a5fa]"></div>
-                  </div>
-                  <div class="flex items-center justify-between text-[11px] text-slate-500">
-                    <span>FX sensitivity (TWD vs USD)</span>
-                    <span class="font-medium text-slate-700">1% move ≈ $9,200</span>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <!-- 區塊 B + C -->
-            <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <!-- 區塊 B：全球資產地圖 -->
-              <div id="geo-asset-map" class="card-elevated p-5 md:p-6 lg:col-span-2">
-                <div class="flex items-center justify-between mb-4">
-                  <div>
-                    <div class="networth-kpi-label">GLOBAL ASSET MAP</div>
-                    <p class="mt-1 text-[12px] text-slate-500">
-                      Countries with positions • hover for breakdown
-                    </p>
-                  </div>
-                  <div class="flex items-center gap-2 text-[11px] text-slate-500">
-                    <div class="w-2.5 h-2.5 rounded-full bg-[#0066cc]"></div>
-                    <span>Has assets</span>
-                  </div>
-                </div>
-                <div class="geo-map">
-                  <!-- Taiwan -->
-                  <button
-                    type="button"
-                    class="geo-dot"
-                    style="left: 64%; top: 54%;"
-                    data-country="Taiwan"
-                    data-amount="$350,000"
-                    data-breakdown="Cash, brokerages, real estate"
-                  >
-                    <span class="geo-dot-inner"></span>
-                  </button>
-
-                  <!-- United States -->
-                  <button
-                    type="button"
-                    class="geo-dot"
-                    style="left: 23%; top: 48%; animation-delay: 0.4s;"
-                    data-country="United States"
-                    data-amount="$620,000"
-                    data-breakdown="Brokerages, 401(k), RSUs"
-                  >
-                    <span class="geo-dot-inner"></span>
-                  </button>
-
-                  <!-- Singapore -->
-                  <button
-                    type="button"
-                    class="geo-dot"
-                    style="left: 57%; top: 66%; animation-delay: 0.8s;"
-                    data-country="Singapore"
-                    data-amount="$95,800"
-                    data-breakdown="Cash &amp; private banking"
-                  >
-                    <span class="geo-dot-inner"></span>
-                  </button>
-
-                  <!-- Tooltip -->
-                  <div id="geo-tooltip" class="geo-tooltip"></div>
-                </div>
-              </div>
-
-              <!-- 區塊 C：風險與配置 -->
-              <div class="space-y-4">
-                <!-- 卡片 1：Currency Impact -->
-                <div class="card-elevated-12 p-4 md:p-5">
-                  <div class="flex items-center justify-between mb-2">
-                    <div class="networth-kpi-label">CURRENCY IMPACT</div>
-                    <span class="text-[11px] text-slate-500">Rolling 30 days</span>
-                  </div>
-                  <p class="text-[12px] text-slate-600 mb-3">
-                    Current FX moves have <span class="font-semibold text-emerald-700">+NT$280,000</span> impact on your total net worth.
-                  </p>
-                  <div class="space-y-2">
-                    <div class="currency-bar-bg">
-                      <!-- 中間是 neutral，往左紅、往右綠 -->
-                      <div id="currency-bar-indicator" class="currency-bar-indicator" style="left: 58%;"></div>
-                    </div>
-                    <div class="flex justify-between text-[11px] text-slate-500">
-                      <span>TWD stronger</span>
-                      <span>Neutral</span>
-                      <span>USD stronger</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- 卡片 2：Asset Allocation Donut -->
-                <div class="card-elevated-12 p-4 md:p-5">
-                  <div class="flex items-center justify-between mb-3">
-                    <div class="networth-kpi-label">ASSET ALLOCATION</div>
-                    <span class="text-[11px] text-slate-500">By net worth</span>
-                  </div>
-                  <div class="flex items-center gap-4">
-                    <div class="w-28 h-28 md:w-32 md:h-32 relative">
-                      <canvas id="allocationDonut"></canvas>
-                      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <div class="text-center">
-                          <div class="text-[15px] font-semibold text-slate-900 leading-none">100%</div>
-                          <div class="mt-1 text-[9px] uppercase tracking-[0.18em] text-slate-400">Allocated</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="flex-1 space-y-1.5 text-[11px] text-slate-600">
-                      <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                          <span class="inline-block w-2 h-2 rounded-full bg-[#0066cc]"></span>
-                          <span>Core holdings (public markets)</span>
-                        </div>
-                        <span class="font-medium text-slate-900">55%</span>
-                      </div>
-                      <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                          <span class="inline-block w-2 h-2 rounded-full" style="background-color: rgba(0,102,204,0.6);"></span>
-                          <span>Satellite / alternatives</span>
-                        </div>
-                        <span class="font-medium text-slate-900">30%</span>
-                      </div>
-                      <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                          <span class="inline-block w-2 h-2 rounded-full bg-[#60a5fa]"></span>
-                          <span>Cash &amp; buffers</span>
-                        </div>
-                        <span class="font-medium text-slate-900">15%</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <!-- 區塊 D：智能合規日曆 -->
-            <section class="card-elevated p-5 md:p-6">
-              <div class="flex items-center justify-between mb-4">
-                <div>
-                  <div class="networth-kpi-label">UPCOMING COMPLIANCE DEADLINES</div>
-                  <p class="mt-1 text-[12px] text-slate-500">
-                    Key filings based on your current structure. Dates are based on US &amp; Taiwan rules.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  class="inline-flex items-center gap-2 rounded-full px-3 py-2 text-[12px] font-semibold bg-[#e0edff] text-[#1d4ed8] hover:bg-[#d0e3ff]"
-                >
-                  <i class="fa-solid fa-file-arrow-up text-xs"></i>
-                  <span>Upload Documents</span>
-                </button>
-              </div>
-
-              <div class="mt-3 overflow-x-auto">
-                <div class="min-w-max pb-1">
-                  <div class="timeline-rail mb-6"></div>
-                  <div class="flex items-start gap-10">
-                    <!-- 已完成 -->
-                    <div class="timeline-node">
-                      <div class="timeline-dot timeline-dot-done">
-                        <i class="fa-solid fa-check"></i>
-                      </div>
-                      <div class="timeline-label">Jan 31</div>
-                      <div class="timeline-tag">TW withholding summary</div>
-                    </div>
-
-                    <!-- 緊急 (<7 天) -->
-                    <div class="timeline-node">
-                      <div class="timeline-dot timeline-dot-urgent">
-                        <i class="fa-solid fa-exclamation"></i>
-                      </div>
-                      <div class="timeline-label">Apr 15 • 6 days</div>
-                      <div class="timeline-tag timeline-tag-urgent">US Form 1040 + 8938</div>
-                    </div>
-
-                    <!-- FBAR -->
-                    <div class="timeline-node">
-                      <div class="timeline-dot timeline-dot-upcoming"></div>
-                      <div class="timeline-label">Apr 15</div>
-                      <div class="timeline-tag">FBAR (FinCEN 114)</div>
-                    </div>
-
-                    <!-- 台灣綜所稅 -->
-                    <div class="timeline-node">
-                      <div class="timeline-dot timeline-dot-upcoming"></div>
-                      <div class="timeline-label">May 31</div>
-                      <div class="timeline-tag">TW individual filing</div>
-                    </div>
-
-                    <!-- Q2 預估稅 -->
-                    <div class="timeline-node">
-                      <div class="timeline-dot timeline-dot-upcoming"></div>
-                      <div class="timeline-label">Jun 15</div>
-                      <div class="timeline-tag">US quarterly tax</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-          </div>
-        </div>
-      </div>
-    </section>
     <section id="section-overview">
        <section class="relative border-b border-slate-200 bg-gradient-to-b from-[#ecf3ff] via-[#f7f9ff] to-[#e5edf9]">
         <div id="hero-overlay" class="absolute inset-0 z-20 hidden cursor-pointer"></div>
@@ -1605,8 +938,56 @@
               </div>
 
               <div class="space-y-8">
-               
-                
+                <div
+                  class="border border-gray-200 rounded-3xl p-8 bg-white shadow-sm"
+                >
+                  <h3
+                    class="text-xs font-bold text-gray-500 uppercase mb-6 tracking-[0.18em]"
+                    data-i18n="chart.title"
+                  >
+                    Regional allocation
+                  </h3>
+
+                  <div
+                    class="relative w-full max-w-[320px] mx-auto aspect-square"
+                  >
+                    <canvas id="geoChart"></canvas>
+                    <div
+                      class="absolute inset-0 flex items-center justify-center pointer-events-none"
+                    >
+                      <div class="relative text-center">
+                        <div
+                          class="text-lg font-bold text-[#0f172a] leading-none"
+                        >
+                          100%
+                        </div>
+                        <div
+                          class="absolute left-1/2 -translate-x-1/2 -top-4 text-[10px] text-gray-400 font-bold uppercase tracking-[0.18em]"
+                        >
+                          TOTAL
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="bg-[#e6f0fa] p-4 rounded-2xl border border-blue-100 mt-6"
+                  >
+                    <div
+                      class="text-[10px] font-bold text-[#0066cc] mb-1 uppercase flex items-center gap-1"
+                    >
+                      <i class="fa-solid fa-robot"></i>
+                      <span data-i18n="chart.insight">AI insight</span>
+                    </div>
+                    <p
+                      class="text-xs text-gray-700 leading-relaxed"
+                      data-i18n="chart.desc"
+                    >
+                      Taiwan assets make up 40% of your net worth. Consider
+                      hedging TWD FX risk.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -3652,16 +3033,6 @@
           },
         },
       });
-          window.onload = function () {
-      const ctx = document.getElementById("geoChart").getContext("2d");
-      geoChart = new Chart(ctx, {
-        ...
-      });
-
-      langMenu = ...
-      ...
-      fetchFXRate();
-    };
 
       langMenu = document.getElementById("lang-menu");
       userMenu = document.getElementById("user-menu");
@@ -3753,4 +3124,3 @@ if (heroRunScanBtn && heroCardOuterEl && heroOverlayEl) {
     };
   </script>
 </body>
-</html> 
