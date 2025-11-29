@@ -3130,21 +3130,5 @@
       fetchFXRate();
     };
   </script>
-  <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const runScanBtn = document.querySelector('#hero-run-scan-btn');
-    const screenerSection = document.querySelector('#risk-screener'); // 換成你剛剛真的加的 id
-
-    if (runScanBtn && screenerSection) {
-      runScanBtn.addEventListener('click', (event) => {
-        event.preventDefault(); // 保險，避免有預設行為
-        screenerSection.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      });
-    }
-  });
-</script>
 </body>
 </html> 
