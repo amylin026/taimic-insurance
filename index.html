@@ -528,7 +528,7 @@
               <!-- 白色 "How it works" 按鈕依照需求移除 -->
             </div>
 
-            <div class="flex items-center justify-center gap-2 text-[11px] text-slate-500 pt-1">
+            <div class="flex itemscenter justify-center gap-2 text-[11px] text-slate-500 pt-1">
               <span>No sign-up for first scan</span>
               <span class="hidden sm:inline">·</span>
               <span>Takes 60 seconds</span>
@@ -539,9 +539,9 @@
           <div class="mt-10 md:mt-12 flex justify-center relative">
             <div
               id="hero-card-outer"
-              class="w-full max-w-4xl hero-card-outer"
+              class="w-full max-w-4xl hero-card-outer relative z-30"
             >
-              <div class="bg-white/95 rounded-3xl shadow-[0_24px_80px_rgba(37,99,235,0.26)] border border-blue-100 px-6 py-6 md:px-8 md:py-7">
+              <div class="bg-white rounded-3xl border border-blue-100 shadow-xl md:shadow-2xl px-6 py-6 md:px-8 md:py-7">
                 <!-- Header -->
                 <div class="flex items-center justify-between mb-5">
                   <div>
@@ -870,7 +870,7 @@
                         <button
                           id="hero-cta-btn"
                           type="button"
-                          onclick="saveAndRedirect()"
+                          onclick="openAuthModal('register')"
                           class="hidden inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold px-6 py-2.5 shadow-md transition"
                         >
                           <span>Create a free Taimic account</span>
@@ -1383,7 +1383,7 @@
             class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col relative overflow-hidden group pricing-card"
           >
             <div
-              class="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-50/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+              class="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-50/70 to透明 opacity-0 group-hover:opacity-100 transition-opacity"
             ></div>
             <div class="relative z-10">
               <div class="flex items-center justify-between mb-1">
@@ -1645,7 +1645,7 @@
             </p>
             <ul class="list-disc pl-5 space-y-2">
               <li>匯款 App 只管「錢怎麼從 A 到 B」。</li>
-              <li>記帳 App 只管「你花了多少」。</li>
+              <li>記帳 App 只管「你花了多少」。li>
               <li>有些服務只做單一國家的投資或線上遺囑。</li>
             </ul>
             <p>
@@ -2773,7 +2773,6 @@ function closeHeroCard() {
       let usStatus = "safe"; // safe | warning | critical
       let hasUsRisk = false;
 
-      // 規則集 (2025)：
       // 情境 A：US Person (全球資產)
       let hitFBAR = false;
       let hitFATCA = false;
