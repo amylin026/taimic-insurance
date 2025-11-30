@@ -255,23 +255,44 @@
           </div>
         </div>
 
+        <!-- ✅ 這裡是「登入後 UI」有改的地方 -->
         <div class="dropdown-container cursor-pointer h-full border-l border-gray-200 pl-4">
           <button id="user-toggle" type="button" class="w-10 h-10 bg-[#f3f4f6] text-gray-600 rounded-full flex items-center justify-center hover:bg-[#0066cc] hover:text-white transition-colors">
             <i class="fa-solid fa-user text-base"></i>
           </button>
           <div id="user-menu" class="dropdown-menu hidden">
-            <div class="dropdown-item" onclick="openAuthModal('login')">
-              <i class="fa-solid fa-right-to-bracket"></i>
-              <span data-i18n="user.login">Login</span>
+            <!-- 未登入狀態 -->
+            <div id="user-menu-guest">
+              <div class="dropdown-item" onclick="openAuthModal('login')">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <span data-i18n="user.login">Login</span>
+              </div>
+              <div class="dropdown-item" onclick="openAuthModal('register')">
+                <i class="fa-solid fa-user-plus"></i>
+                <span data-i18n="user.register">Sign up</span>
+              </div>
+              <div class="border-t border-gray-100 my-1"></div>
+              <div class="dropdown-item">
+                <i class="fa-solid fa-circle-question"></i>
+                <span>Help</span>
+              </div>
             </div>
-            <div class="dropdown-item" onclick="openAuthModal('register')">
-              <i class="fa-solid fa-user-plus"></i>
-              <span data-i18n="user.register">Sign up</span>
-            </div>
-            <div class="border-t border-gray-100 my-1"></div>
-            <div class="dropdown-item">
-              <i class="fa-solid fa-circle-question"></i>
-              <span>Help</span>
+
+            <!-- 已登入狀態 -->
+            <div id="user-menu-loggedin" class="hidden">
+              <div class="px-4 py-3 border-b border-gray-100">
+                <p class="text-[10px] text-slate-500 uppercase tracking-[0.16em]">Signed in as</p>
+                <p id="user-email-label" class="text-xs font-semibold text-slate-800 truncate"></p>
+              </div>
+              <div class="dropdown-item" onclick="goToReports()">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Open my reports</span>
+              </div>
+              <div class="border-t border-gray-100 my-1"></div>
+              <div class="dropdown-item" onclick="handleLogout()">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <span>Logout</span>
+              </div>
             </div>
           </div>
         </div>
@@ -1841,7 +1862,15 @@
                 </p>
               </div>
 
-              <div class="pt-4 flex flex-col sm:flex-row gap-3">
+              <!-- ✅ 登入後在 Reports 顯示的文字（英文） -->
+              <div id="reports-loggedin-note-en" class="hidden pt-2 text-xs text-emerald-700">
+                You are signed in as
+                <span id="reports-email-en" class="font-semibold"></span>.
+                This is a demo front-end – your real reports will appear here after we connect live data.
+              </div>
+
+              <!-- 原本 Login / Sign-up 按鈕，登入後會被隱藏 -->
+              <div id="reports-auth-actions-en" class="pt-4 flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
                   onclick="openAuthModal('login')"
@@ -1887,7 +1916,15 @@
                 </p>
               </div>
 
-              <div class="pt-4 flex flex-col sm:flex-row gap-3">
+              <!-- ✅ 登入後在 Reports 顯示的文字（中文） -->
+              <div id="reports-loggedin-note-zh" class="hidden pt-2 text-xs text-emerald-700">
+                目前以
+                <span id="reports-email-zh" class="font-semibold"></span>
+                身分登入。此頁為示範介面，未來連上真實資料後，你的專屬報表會顯示在這裡。
+              </div>
+
+              <!-- 原本 Login / Sign-up 按鈕，登入後會被隱藏 -->
+              <div id="reports-auth-actions-zh" class="pt-4 flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
                   onclick="openAuthModal('login')"
@@ -2223,6 +2260,9 @@
     let heroCardOpen = false;
     let heroCardOuterEl = null;
     let heroOverlayEl = null;
+
+    // ✅ 登入狀態
+    let loggedInEmail = null;
 
     function openHeroCard() {
       if (!heroCardOuterEl || !heroOverlayEl) return;
@@ -2916,6 +2956,88 @@
 
     let authMode = "register";
 
+    // ✅ 套用登入 / 登出後 UI
+    function applyAuthUI(email) {
+      loggedInEmail = email || null;
+
+      const userToggleBtn = document.getElementById("user-toggle");
+      const userMenuGuest = document.getElementById("user-menu-guest");
+      const userMenuLogged = document.getElementById("user-menu-loggedin");
+      const userEmailLabel = document.getElementById("user-email-label");
+
+      if (userToggleBtn) {
+        if (email) {
+          userToggleBtn.className =
+            "w-10 h-10 bg-emerald-500 text-white rounded-full flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-colors";
+          const initial = email.charAt(0).toUpperCase();
+          userToggleBtn.innerHTML = `<span class="text-sm font-semibold">${initial}</span>`;
+        } else {
+          userToggleBtn.className =
+            "w-10 h-10 bg-[#f3f4f6] text-gray-600 rounded-full flex items-center justify-center hover:bg-[#0066cc] hover:text-white transition-colors";
+          userToggleBtn.innerHTML = `<i class="fa-solid fa-user text-base"></i>`;
+        }
+      }
+
+      if (userMenuGuest && userMenuLogged) {
+        if (email) {
+          userMenuGuest.classList.add("hidden");
+          userMenuLogged.classList.remove("hidden");
+        } else {
+          userMenuGuest.classList.remove("hidden");
+          userMenuLogged.classList.add("hidden");
+        }
+      }
+      if (userEmailLabel) {
+        userEmailLabel.textContent = email || "";
+      }
+
+      // Reports 區塊的登入提示 / 按鈕切換
+      const noteEn = document.getElementById("reports-loggedin-note-en");
+      const noteZh = document.getElementById("reports-loggedin-note-zh");
+      const actionsEn = document.getElementById("reports-auth-actions-en");
+      const actionsZh = document.getElementById("reports-auth-actions-zh");
+      const reportsEmailEn = document.getElementById("reports-email-en");
+      const reportsEmailZh = document.getElementById("reports-email-zh");
+
+      if (email) {
+        if (actionsEn) actionsEn.classList.add("hidden");
+        if (actionsZh) actionsZh.classList.add("hidden");
+        if (noteEn) noteEn.classList.remove("hidden");
+        if (noteZh) noteZh.classList.remove("hidden");
+        if (reportsEmailEn) reportsEmailEn.textContent = email;
+        if (reportsEmailZh) reportsEmailZh.textContent = email;
+      } else {
+        if (actionsEn) actionsEn.classList.remove("hidden");
+        if (actionsZh) actionsZh.classList.remove("hidden");
+        if (noteEn) noteEn.classList.add("hidden");
+        if (noteZh) noteZh.classList.add("hidden");
+        if (reportsEmailEn) reportsEmailEn.textContent = "";
+        if (reportsEmailZh) reportsEmailZh.textContent = "";
+      }
+    }
+
+    function handleLogout() {
+      try {
+        localStorage.removeItem("taimic-user-email");
+      } catch (e) {
+        console.error(e);
+      }
+      applyAuthUI(null);
+      if (authOverlay) {
+        closeAuthModal();
+      }
+      if (userMenu) {
+        userMenu.classList.add("hidden");
+      }
+    }
+
+    function goToReports() {
+      switchSection("reports");
+      if (userMenu) {
+        userMenu.classList.add("hidden");
+      }
+    }
+
     function openAuthModal(mode) {
       authMode = mode;
       const title = document.getElementById("auth-title");
@@ -2983,10 +3105,13 @@
           msg.classList.add("text-green-600");
 
           if (authMode === "login") {
-            localStorage.setItem(
-              "taimic-user-email",
-              data.user?.email || email
-            );
+            const savedEmail = data.user?.email || email;
+            try {
+              localStorage.setItem("taimic-user-email", savedEmail);
+            } catch (e) {
+              console.error(e);
+            }
+            applyAuthUI(savedEmail);
             setTimeout(closeAuthModal, 1200);
           }
         } else {
@@ -3041,6 +3166,18 @@
       authOverlay = document.getElementById("auth-overlay");
 
       render();
+      
+      // ✅ 一進頁面就看 localStorage 有沒有登入過
+      try {
+        const storedEmail = localStorage.getItem("taimic-user-email");
+        if (storedEmail) {
+          applyAuthUI(storedEmail);
+        } else {
+          applyAuthUI(null);
+        }
+      } catch (e) {
+        console.error(e);
+      }
       
      // Hero Screener slide-up 初始化
 heroCardOuterEl = document.getElementById("compliance-card");
@@ -3124,4 +3261,4 @@ if (heroRunScanBtn && heroCardOuterEl && heroOverlayEl) {
     };
   </script>
 </body>
-</html> 
+</html>
