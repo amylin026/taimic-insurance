@@ -27,18 +27,14 @@
       --brand-blue: #0066cc;
       --brand-dark: #004c99;
       --text-main: #222222;
+    }
 
-      /* Design system additions */
-      --ds-bg: #F5F7FA;
-      --ds-card-bg: #FFFFFF;
-      --ds-primary: #0066cc;               /* Logo Deep Blue */
-      --ds-primary-deep: #004c99;
-      --ds-primary-accent: #bfdbfe;        /* Clock Light Blue */
-      --ds-heading: #1E293B;               /* Main titles */
-      --ds-text-muted: #64748B;            /* Secondary text */
-      --ds-shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
-      --ds-radius-md: 12px;
-      --ds-radius-lg: 16px;
+    /* ✅ 這裡新增 Dashboard 專用 Design System 變數（不動舊的） */
+    :root {
+      --dash-deep-blue: #2563eb;  /* Logo Deep Blue */
+      --dash-light-blue: #dbeafe; /* Clock Light Blue */
+      --dash-title: #1e293b;      /* 主要標題色（非純黑） */
+      --dash-muted: #64748b;      /* 次要文字 */
     }
 
     /* --- Logo Clock：統一成 Figma 扁平藍風格 --- */
@@ -192,633 +188,334 @@
     }
 
     /* 桌機：往上拉更多，剛好蓋到 CROSS-BORDER WEALTH OS 那一行 */
-    .hero-card-outer.hero-card-open { 
+    .hero-card-outer.hero-card-open {
       transform: translateY(-430px);
     }
 
     /* 平板：少一點，避免頂到最上面 */
     @media (max-width: 1023px) {
-      .hero-card-outer.hero-card-open { 
+      .hero-card-outer.hero-card-open {
         transform: translateY(-430px);
       }
     }
 
     /* 手機：再少一點 */
     @media (max-width: 767px) {
-      .hero-card-outer.hero-card-open { 
+      .hero-card-outer.hero-card-open {
         transform: translateY(-370px);
       }
     }
     .hero-overlay-active { display: block !important; }
 
-    /* ------------------------------ */
-    /* Design System: Logged-in Dashboard (Not Overview) */
-    /* ------------------------------ */
+    /* ==========================
+       ✅ Logged-in Dashboard (Design System & Layout)
+       ========================== */
 
-    .dashboard-shell {
-      background: var(--ds-bg);
+    /* Global canvas for dashboard: soft grey/blue background, dark navy text */
+    .dash-shell {
       min-height: calc(100vh - 72px);
-      display: flex;
-      gap: 24px;
-      padding-top: 24px;
-      padding-bottom: 32px;
+      background:
+        radial-gradient(circle at top right, rgba(219, 234, 254, 0.7), transparent 55%),
+        #f5f7fa;
+      color: var(--dash-title);
     }
 
-    .dashboard-sidebar {
-      width: 240px;
+    /* Sidebar: pure white with right divider */
+    .dash-sidebar {
       background: #ffffff;
-      box-shadow: var(--ds-shadow-soft);
-      border-right: 1px solid #E5E7EB;
-      border-radius: var(--ds-radius-lg);
-      padding: 18px 16px 20px;
-      display: flex;
-      flex-direction: column;
+      border-right: 1px solid #e5e7eb;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
 
-    .dashboard-sidebar-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
+    /* Soft diffusion card: no border, only shadow */
+    .dash-card {
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
 
-    .dashboard-sidebar-title-main {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--ds-primary);
-      line-height: 1.1;
+    .dash-card-tight {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
 
-    .dashboard-sidebar-title-sub {
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #9ca3af;
-      margin-top: 3px;
-    }
-
-    .dashboard-nav {
-      margin-top: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .dashboard-nav-item {
-      width: 100%;
+    /* Sidebar nav items */
+    .dash-nav-item {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 10px;
+      padding: 0.55rem 0.9rem;
       border-radius: 9999px;
       font-size: 13px;
-      color: var(--ds-text-muted);
+      color: var(--dash-muted);
       cursor: pointer;
-      position: relative;
-      background: transparent;
-      border: none;
-      text-align: left;
+      transition: background 0.2s ease, color 0.2s ease;
     }
 
-    .dashboard-nav-item .nav-left {
-      display: flex;
+    .dash-nav-item span {
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 0.55rem;
     }
 
-    .dashboard-nav-item i {
-      font-size: 12px;
+    .dash-nav-item:hover {
+      background: rgba(219, 234, 254, 0.7); /* Clock light blue 10–15% */
+      color: var(--dash-deep-blue);
     }
 
-    .dashboard-nav-item:hover {
-      background: rgba(191, 219, 254, 0.25);
-      color: var(--ds-heading);
-    }
-
-    .dashboard-nav-item-active {
-      color: var(--ds-primary);
-      background: rgba(191, 219, 254, 0.32);
+    .dash-nav-item-active {
+      background: rgba(219, 234, 254, 0.7);
+      color: var(--dash-deep-blue);
       font-weight: 600;
     }
 
-    .dashboard-nav-item-active::after {
+    .dash-nav-item-active::after {
       content: "";
       position: absolute;
-      right: 6px;
+      right: -8px;
       top: 50%;
       transform: translateY(-50%);
       width: 3px;
-      height: 22px;
+      height: 18px;
       border-radius: 9999px;
-      background: var(--ds-primary);
+      background: var(--dash-deep-blue); /* Blue vertical indicator on right side */
     }
 
-    .dashboard-nav-section-label {
-      margin-top: 18px;
-      margin-bottom: 4px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: #cbd5f5;
-    }
-
-    .dashboard-main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .dashboard-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .dashboard-header-left {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .breadcrumb {
-      font-size: 12px;
-      color: var(--ds-text-muted);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .breadcrumb span:last-child {
-      color: var(--ds-heading);
-      font-weight: 600;
-    }
-
-    .dashboard-title-main {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--ds-heading);
-    }
-
-    .dashboard-header-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .dashboard-icon-circle {
-      width: 32px;
-      height: 32px;
-      border-radius: 9999px;
-      background: #ffffff;
-      box-shadow: var(--ds-shadow-soft);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--ds-text-muted);
-      font-size: 14px;
-    }
-
-    .dashboard-avatar {
-      width: 34px;
-      height: 34px;
-      border-radius: 9999px;
-      background: linear-gradient(135deg, #bfdbfe, #60a5fa);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      color: #0f172a;
-      font-weight: 700;
-      box-shadow: var(--ds-shadow-soft);
-    }
-
-    .btn-ghost-advisor {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--ds-primary);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 6px 10px;
-      border-radius: 9999px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-ghost-advisor:hover {
-      background: rgba(191, 219, 254, 0.35);
-    }
-
-    .ds-card {
-      background: var(--ds-card-bg);
-      border-radius: var(--ds-radius-lg);
-      box-shadow: var(--ds-shadow-soft);
-      padding: 20px 20px 18px;
-    }
-
-    .ds-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-
-    .ds-card-title-eyebrow {
+    /* Small muted label */
+    .dash-label-muted {
       font-size: 11px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: #94a3b8;
-      margin-bottom: 4px;
+      color: var(--dash-muted);
     }
 
-    .ds-card-title-main {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--ds-heading);
-    }
-
-    .ds-card-title-sub {
-      font-size: 12px;
-      color: var(--ds-text-muted);
-      margin-top: 2px;
-    }
-
-    .ds-hero-grid {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    .ds-hero-total {
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    /* Hero total net worth typography (48px on desktop) */
+    .dash-total {
       font-size: 36px;
       line-height: 1.1;
-      font-weight: 800;
-      color: var(--ds-primary);
+      font-weight: 700;
+      color: var(--dash-deep-blue);
     }
 
     @media (min-width: 1024px) {
-      .ds-hero-total {
+      .dash-total {
         font-size: 48px;
       }
     }
 
-    .ds-hero-change-positive,
-    .ds-hero-change-negative {
-      font-size: 13px;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 9999px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .ds-hero-change-positive {
-      color: #16a34a;
-      background: rgba(22, 163, 74, 0.08);
-    }
-
-    .ds-hero-change-negative {
-      color: #dc2626;
-      background: rgba(220, 38, 38, 0.08);
-    }
-
-    .ds-hero-subtitle {
-      font-size: 12px;
-      color: var(--ds-text-muted);
-      margin-top: 4px;
-    }
-
-    .ds-hero-metrics {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 16px;
-    }
-
-    .ds-hero-metric {
-      min-width: 140px;
-    }
-
-    .ds-hero-metric-label {
-      font-size: 11px;
-      color: var(--ds-text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 3px;
-    }
-
-    .ds-hero-metric-value {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--ds-heading);
-    }
-
-    .ds-hero-decoration {
-      position: relative;
-      flex: 1 1 220px;
-      min-height: 120px;
-    }
-
-    .ds-hero-bubble {
+    /* Hero background decorative light blue circle */
+    .dash-hero-decoration {
       position: absolute;
-      right: -40px;
-      top: -40px;
-      width: 220px;
-      height: 220px;
-      background: radial-gradient(circle at 30% 20%, rgba(191, 219, 254, 0.95), rgba(191, 219, 254, 0));
-      opacity: 0.7;
-      border-radius: 9999px;
+      inset: 0;
+      overflow: hidden;
       pointer-events: none;
     }
 
-    .ds-main-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-      gap: 24px;
-    }
-
-    @media (max-width: 1023px) {
-      .ds-main-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    .ds-map-wrapper {
-      margin-top: 8px;
-    }
-
-    .ds-map {
-      position: relative;
-      background: #E2E8F0;
-      border-radius: var(--ds-radius-lg);
-      min-height: 260px;
-      overflow: hidden;
-    }
-
-    .ds-map::after {
+    .dash-hero-decoration::before {
       content: "";
       position: absolute;
-      inset: 18% 10%;
+      width: 420px;
+      height: 420px;
       border-radius: 9999px;
-      border: 1px dashed rgba(148, 163, 184, 0.6);
+      background: radial-gradient(circle, rgba(219, 234, 254, 0.9), rgba(191, 219, 254, 0.1));
+      right: -120px;
+      top: -120px;
     }
 
-    .ds-map-dot-group {
-      position: absolute;
-      transform: translate(-50%, -50%);
-    }
-
-    .ds-map-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 9999px;
-      background: var(--ds-primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+    /* Geo-Asset Map */
+    .geo-map {
       position: relative;
+      overflow: hidden;
+      background: #e2e8f0; /* light grey canvas */
+      border-radius: 16px;
+    }
+
+    .geo-map::before {
+      /* abstract minimal world “shape” */
+      content: "";
+      position: absolute;
+      inset: 16%;
+      background:
+        radial-gradient(ellipse at center, #f8fafc 0, #e2e8f0 55%, #cbd5e1 100%);
+      opacity: 0.85;
+    }
+
+    .geo-dot {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 9999px;
+      background: var(--dash-deep-blue); /* solid deep blue dot */
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
       z-index: 2;
     }
 
-    .ds-map-dot-ripple {
+    .geo-dot::after {
+      content: "";
       position: absolute;
-      inset: -6px;
-      border-radius: 9999px;
-      border: 2px solid rgba(191, 219, 254, 0.9);
-      opacity: 0.9;
-      animation: ds-ripple 2.2s infinite ease-out;
-      z-index: 1;
+      inset: -8px;
+      border-radius: inherit;
+      border: 2px solid rgba(129, 178, 255, 0.85); /* Clock light blue ripple */
+      animation: geo-ripple 1.8s ease-out infinite;
     }
 
-    @keyframes ds-ripple {
+    @keyframes geo-ripple {
       0% {
         transform: scale(0.6);
-        opacity: 0.8;
+        opacity: 0.9;
       }
       100% {
-        transform: scale(2.4);
+        transform: scale(1.4);
         opacity: 0;
       }
     }
 
-    .ds-map-tooltip {
+    .geo-tooltip {
       position: absolute;
-      top: -8px;
-      left: 14px;
-      transform: translateY(-100%);
-      background: #ffffff;
-      box-shadow: var(--ds-shadow-soft);
-      border-radius: 10px;
-      padding: 6px 8px;
+      transform: translate(-50%, -110%);
+      background: #0f172a;
+      color: #e5e7eb;
       font-size: 11px;
-      color: var(--ds-heading);
+      padding: 4px 8px;
+      border-radius: 9999px;
       white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.4);
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.12s ease, transform 0.12s ease;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      z-index: 3;
     }
 
-    .ds-map-tooltip-sub {
-      margin-top: 2px;
-      font-size: 10px;
-      color: var(--ds-text-muted);
-    }
-
-    .ds-map-dot-group:hover .ds-map-tooltip {
+    .geo-dot:hover .geo-tooltip {
       opacity: 1;
-      transform: translate(0, -110%);
+      transform: translate(-50%, -130%);
     }
 
-    .ds-fx-bar {
+    /* FX Exposure bar */
+    .fx-bar-track {
       position: relative;
-      margin-top: 12px;
       height: 10px;
       border-radius: 9999px;
-      background: linear-gradient(
-        90deg,
-        rgba(220, 38, 38, 0.15),
-        rgba(148, 163, 184, 0.35),
-        rgba(22, 163, 74, 0.18)
-      );
+      background: linear-gradient(to right, #b91c1c, #e5e7eb 50%, #15803d);
+      overflow: hidden;
     }
 
-    .ds-fx-bar-center {
+    .fx-bar-midline {
       position: absolute;
       left: 50%;
       top: -4px;
       bottom: -4px;
       width: 1px;
-      background: rgba(148, 163, 184, 0.9);
+      background: rgba(15, 23, 42, 0.18);
     }
 
-    .ds-fx-indicator {
+    .fx-bar-marker {
       position: absolute;
       top: 50%;
+      width: 2px;
+      height: 18px;
+      border-radius: 9999px;
+      background: #0f172a;
       transform: translate(-50%, -50%);
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.12);
     }
 
-    .ds-fx-indicator-dot {
+    /* Compliance Timeline */
+    .timeline-wrapper {
+      position: relative;
+    }
+
+    .timeline-line {
+      position: absolute;
+      top: 18px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #e5e7eb;
+    }
+
+    .timeline-items {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      z-index: 1;
+    }
+
+    .timeline-item {
+      flex: 1;
+      text-align: center;
+      min-width: 0;
+    }
+
+    .timeline-node {
       width: 16px;
       height: 16px;
       border-radius: 9999px;
-      background: #ffffff;
-      box-shadow: var(--ds-shadow-soft);
-      border: 1px solid rgba(22, 163, 74, 0.7);
-    }
-
-    .ds-fx-indicator-label {
-      font-size: 12px;
-      color: #16a34a;
-      font-weight: 600;
-    }
-
-    .ds-fx-footnote {
-      margin-top: 8px;
-      font-size: 11px;
-      color: var(--ds-text-muted);
-    }
-
-    .ds-donut-legend {
-      margin-top: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      font-size: 12px;
-      color: var(--ds-text-muted);
-    }
-
-    .ds-legend-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .ds-legend-label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .ds-legend-swatch {
-      width: 10px;
-      height: 10px;
-      border-radius: 9999px;
-    }
-
-    .ds-legend-value {
-      font-weight: 600;
-      color: var(--ds-heading);
-    }
-
-    .ds-timeline {
-      margin-top: 16px;
-    }
-
-    .ds-timeline-track {
-      position: relative;
-      height: 2px;
-      background: #E5E7EB;
-      margin: 14px 8px 0 8px;
-    }
-
-    .ds-timeline-nodes {
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      margin-top: -8px;
-    }
-
-    .ds-timeline-node {
-      position: relative;
-      text-align: center;
-      flex: 1;
-    }
-
-    .ds-node-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 9999px;
       margin: 0 auto;
-      background: #F9FAFB;
-      border: 2px solid var(--ds-primary);
-      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
     }
 
-    .ds-node-dot-completed {
-      background: #CBD5F5;
-      border-color: #CBD5F5;
+    .timeline-node-upcoming {
+      border: 2px solid var(--dash-deep-blue); /* hollow blue circle */
+      background: #f8fafc;
+      color: var(--dash-deep-blue);
     }
 
-    .ds-node-dot-completed::after {
-      content: "\f00c";
-      font-family: "Font Awesome 6 Free";
-      font-weight: 900;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -54%);
-      font-size: 8px;
-      color: #4B5563;
+    .timeline-node-complete {
+      background: #e5e7eb; /* solid grey with check */
+      color: #4b5563;
     }
 
-    .ds-node-dot-urgent {
-      border-color: #f97316;
+    .timeline-node-urgent {
+      border: 2px solid #f97316; /* orange border */
+      background: #fff7ed;
+      color: #c2410c;
     }
 
-    .ds-node-dot-urgent::after {
-      content: "!";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -52%);
-      font-size: 9px;
-      color: #EA580C;
-      font-weight: 700;
-    }
-
-    .ds-node-label {
-      margin-top: 6px;
+    .timeline-date {
+      margin-top: 0.4rem;
       font-size: 11px;
-      color: var(--ds-heading);
       font-weight: 500;
+      color: var(--dash-muted);
     }
 
-    .ds-node-sub {
-      font-size: 11px;
-      color: var(--ds-text-muted);
-    }
-
-    .ds-btn-upload {
+    .timeline-label {
+      margin-top: 0.1rem;
       font-size: 12px;
-      font-weight: 600;
-      padding: 6px 12px;
-      border-radius: 9999px;
-      background: rgba(191, 219, 254, 0.92);
-      color: var(--ds-heading);
-      border: none;
-      cursor: pointer;
+      color: #0f172a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .timeline-tag {
+      margin-top: 0.2rem;
+      font-size: 10px;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 0.2rem;
+      padding: 2px 6px;
+      border-radius: 9999px;
+      background: rgba(219, 234, 254, 0.6);
+      color: #1d4ed8;
     }
 
-    .ds-btn-upload:hover {
-      background: rgba(191, 219, 254, 1);
-    }
-
-    @media (max-width: 1023px) {
-      .dashboard-shell {
-        padding-top: 20px;
+    @media (max-width: 768px) {
+      .timeline-items {
+        gap: 0.4rem;
       }
-      .dashboard-sidebar {
-        display: none;
+      .timeline-label {
+        font-size: 11px;
+      }
+      .timeline-date {
+        font-size: 10px;
       }
     }
   </style>
@@ -2436,344 +2133,6 @@
       </div>
     </section>
 
-    <!-- Logged-in Dashboard (NOT Overview) -->
-    <!-- Summary Prompt:
-         Create a high-end Fintech dashboard for Taimic using a clean, white-based design language reminiscent of Stripe or American Express.
-         Use [Deep Blue Code] as the primary authoritative color and [Light Blue Code] for accents and backgrounds.
-         The layout must be spacious, utilizing soft shadows instead of borders.
-         Focus on data visualization (Map, Donut Chart) that looks professional, not gamified. -->
-    <section id="section-dashboard" class="hidden bg-[#F5F7FA]">
-      <div class="max-w-[1440px] mx-auto px-6">
-        <div class="dashboard-shell">
-          <!-- Sidebar Navigation -->
-          <aside class="dashboard-sidebar hidden md:flex">
-            <div class="dashboard-sidebar-header">
-              <svg class="logo-clock" viewBox="0 0 100 100">
-                <defs>
-                  <linearGradient id="clockGradientSidebar" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stop-color="#bfdbfe" />
-                    <stop offset="100%" stop-color="#60a5fa" />
-                  </linearGradient>
-                </defs>
-                <circle cx="50" cy="50" r="46" class="clock-outer" />
-                <circle cx="50" cy="50" r="38" class="clock-inner" />
-                <circle cx="50" cy="50" r="30" class="clock-core" />
-                <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
-                <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
-                <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
-                <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
-                <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
-                <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
-                <circle cx="50" cy="50" r="3.2" class="center-dot" />
-              </svg>
-              <div>
-                <div class="dashboard-sidebar-title-main">Taimic</div>
-                <div class="dashboard-sidebar-title-sub">Client Console</div>
-              </div>
-            </div>
-
-            <nav class="dashboard-nav">
-              <button type="button" class="dashboard-nav-item dashboard-nav-item-active">
-                <div class="nav-left">
-                  <i class="fa-solid fa-gauge-high"></i>
-                  <span>Dashboard</span>
-                </div>
-              </button>
-              <button type="button" class="dashboard-nav-item">
-                <div class="nav-left">
-                  <i class="fa-solid fa-layer-group"></i>
-                  <span>Holdings</span>
-                </div>
-              </button>
-              <button type="button" class="dashboard-nav-item">
-                <div class="nav-left">
-                  <i class="fa-solid fa-earth-americas"></i>
-                  <span>Regions &amp; FX</span>
-                </div>
-              </button>
-              <button type="button" class="dashboard-nav-item">
-                <div class="nav-left">
-                  <i class="fa-solid fa-scale-balanced"></i>
-                  <span>Compliance</span>
-                </div>
-              </button>
-
-              <div class="dashboard-nav-section-label">Reports</div>
-              <button type="button" class="dashboard-nav-item">
-                <div class="nav-left">
-                  <i class="fa-solid fa-file-lines"></i>
-                  <span>Tax packages</span>
-                </div>
-              </button>
-              <button type="button" class="dashboard-nav-item">
-                <div class="nav-left">
-                  <i class="fa-solid fa-user-tie"></i>
-                  <span>Advisor view</span>
-                </div>
-              </button>
-            </nav>
-          </aside>
-
-          <!-- Main Dashboard Area -->
-          <div class="dashboard-main">
-            <!-- Header / Breadcrumb -->
-            <header class="dashboard-header">
-              <div class="dashboard-header-left">
-                <div class="breadcrumb">
-                  <span>Home</span>
-                  <span>›</span>
-                  <span>Dashboard</span>
-                </div>
-                <div class="dashboard-title-main">Cross-border wealth overview</div>
-              </div>
-              <div class="dashboard-header-actions">
-                <button type="button" class="btn-ghost-advisor">
-                  <i class="fa-regular fa-comments"></i>
-                  <span>聯絡理財顧問</span>
-                </button>
-                <div class="dashboard-icon-circle">
-                  <i class="fa-regular fa-bell"></i>
-                </div>
-                <div class="dashboard-avatar">
-                  <span>LY</span>
-                </div>
-              </div>
-            </header>
-
-            <div class="space-y-5 mt-4">
-              <!-- Block A: Hero Total Net Worth -->
-              <section class="ds-card">
-                <div class="ds-hero-grid">
-                  <div style="flex: 1 1 260px;">
-                    <div class="ds-card-title-eyebrow">Total Net Worth</div>
-                    <div class="flex items-end gap-3">
-                      <div class="ds-hero-total">$865,400</div>
-                      <div class="ds-hero-change-positive">
-                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
-                        <span>+$1,250 Today</span>
-                      </div>
-                    </div>
-                    <p class="ds-hero-subtitle">
-                      Consolidated across Taiwan, US and offshore entities, net of liabilities.
-                    </p>
-
-                    <div class="ds-hero-metrics">
-                      <div class="ds-hero-metric">
-                        <div class="ds-hero-metric-label">Taiwan</div>
-                        <div class="ds-hero-metric-value">NT$ 9.8M</div>
-                        <div class="text-[11px] text-[#22c55e] mt-0.5">+2.1% MTD</div>
-                      </div>
-                      <div class="ds-hero-metric">
-                        <div class="ds-hero-metric-label">US &amp; Overseas</div>
-                        <div class="ds-hero-metric-value">$425,000</div>
-                        <div class="text-[11px] text-[#22c55e] mt-0.5">+5.4% YTD</div>
-                      </div>
-                      <div class="ds-hero-metric">
-                        <div class="ds-hero-metric-label">Last 12 months</div>
-                        <div class="ds-hero-metric-value">+7.8%</div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">Risk-adjusted</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="ds-hero-decoration">
-                    <div class="ds-hero-bubble"></div>
-                  </div>
-                </div>
-              </section>
-
-              <!-- Middle Grid: Geo Map & Risk / Allocation -->
-              <section class="ds-main-grid">
-                <!-- Block B: Geo Asset Map -->
-                <div class="ds-card">
-                  <div class="ds-card-header">
-                    <div>
-                      <div class="ds-card-title-eyebrow">Global Asset Map</div>
-                      <div class="ds-card-title-main">Where your wealth is located</div>
-                      <p class="ds-card-title-sub">
-                        Shaded regions are approximate. Pins represent countries with reportable holdings.
-                      </p>
-                    </div>
-                    <div class="text-[11px] text-slate-400">
-                      Hover pins for details
-                    </div>
-                  </div>
-                  <div class="ds-map-wrapper">
-                    <div class="ds-map">
-                      <!-- United States -->
-                      <div class="ds-map-dot-group" style="top: 48%; left: 22%;">
-                        <div class="ds-map-dot"></div>
-                        <div class="ds-map-dot-ripple"></div>
-                        <div class="ds-map-tooltip">
-                          United States · $425,000
-                          <div class="ds-map-tooltip-sub">
-                            Brokerage · 401(k) · Cash
-                          </div>
-                        </div>
-                      </div>
-                      <!-- Taiwan -->
-                      <div class="ds-map-dot-group" style="top: 62%; left: 78%;">
-                        <div class="ds-map-dot"></div>
-                        <div class="ds-map-dot-ripple"></div>
-                        <div class="ds-map-tooltip">
-                          Taiwan · NT$ 9,800,000
-                          <div class="ds-map-tooltip-sub">
-                            Cash · Equities · Real Estate
-                          </div>
-                        </div>
-                      </div>
-                      <!-- Singapore -->
-                      <div class="ds-map-dot-group" style="top: 73%; left: 70%;">
-                        <div class="ds-map-dot"></div>
-                        <div class="ds-map-dot-ripple"></div>
-                        <div class="ds-map-tooltip">
-                          Singapore · $88,000
-                          <div class="ds-map-tooltip-sub">
-                            Private bank · Funds
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Block C: Risk & Allocation (two stacked cards) -->
-                <div class="space-y-5">
-                  <!-- Card 1: Currency Impact -->
-                  <div class="ds-card">
-                    <div class="ds-card-header">
-                      <div>
-                        <div class="ds-card-title-eyebrow">Currency Impact</div>
-                        <div class="ds-card-title-main">TWD / USD sensitivity</div>
-                        <p class="ds-card-title-sub">
-                          Estimated P&amp;L impact on your global net worth for near-term FX moves.
-                        </p>
-                      </div>
-                      <div class="text-[11px] text-slate-400 text-right">
-                        24h move: +0.4% USD/TWD
-                      </div>
-                    </div>
-                    <div class="ds-fx-bar">
-                      <div class="ds-fx-bar-center"></div>
-                      <!-- Indicator positioned slightly to the right (benefit from USD strength) -->
-                      <div class="ds-fx-indicator" style="left: 63%;">
-                        <div class="ds-fx-indicator-dot"></div>
-                        <div class="ds-fx-indicator-label">+$3,200</div>
-                      </div>
-                    </div>
-                    <p class="ds-fx-footnote">
-                      Each <span class="font-semibold text-slate-700">+1%</span> move in
-                      <span class="font-semibold text-slate-700">USD/TWD</span> is estimated to change your total net worth by
-                      <span class="font-semibold text-slate-700">$8,000 USD</span>, based on current asset mix.
-                    </p>
-                  </div>
-
-                  <!-- Card 2: Asset Allocation (Donut) -->
-                  <div class="ds-card">
-                    <div class="ds-card-header">
-                      <div>
-                        <div class="ds-card-title-eyebrow">Asset Allocation</div>
-                        <div class="ds-card-title-main">Current mix by asset class</div>
-                        <p class="ds-card-title-sub">
-                          Simple view of your high-level structure to support portfolio and tax planning.
-                        </p>
-                      </div>
-                    </div>
-                    <div class="mt-3 flex items-center gap-4">
-                      <div class="relative w-32 h-32 md:w-40 md:h-40">
-                        <canvas id="allocationChart"></canvas>
-                        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                          <div class="text-center">
-                            <div class="text-[10px] text-slate-400 uppercase tracking-[0.14em]">
-                              Equities
-                            </div>
-                            <div class="text-lg font-semibold text-slate-900">
-                              52%
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="flex-1 ds-donut-legend">
-                        <div class="ds-legend-row">
-                          <div class="ds-legend-label">
-                            <span class="ds-legend-swatch" style="background:#0066cc;"></span>
-                            <span>Global Equities</span>
-                          </div>
-                          <div class="ds-legend-value">52%</div>
-                        </div>
-                        <div class="ds-legend-row">
-                          <div class="ds-legend-label">
-                            <span class="ds-legend-swatch" style="background:rgba(0,102,204,0.6);"></span>
-                            <span>Cash &amp; Deposits</span>
-                          </div>
-                          <div class="ds-legend-value">28%</div>
-                        </div>
-                        <div class="ds-legend-row">
-                          <div class="ds-legend-label">
-                            <span class="ds-legend-swatch" style="background:#bfdbfe;"></span>
-                            <span>Real Estate &amp; Others</span>
-                          </div>
-                          <div class="ds-legend-value">20%</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              <!-- Block D: Compliance Timeline -->
-              <section>
-                <div class="ds-card">
-                  <div class="ds-card-header">
-                    <div>
-                      <div class="ds-card-title-eyebrow">Upcoming Compliance Deadlines</div>
-                      <div class="ds-card-title-main">Next 90 days across regimes</div>
-                      <p class="ds-card-title-sub">
-                        High-level reminders for FBAR, CRS and local filings. Final obligations may vary by advisor.
-                      </p>
-                    </div>
-                    <button type="button" class="ds-btn-upload">
-                      <i class="fa-solid fa-file-arrow-up text-xs"></i>
-                      <span>Upload Documents</span>
-                    </button>
-                  </div>
-                  <div class="ds-timeline">
-                    <div class="ds-timeline-track"></div>
-                    <div class="ds-timeline-nodes">
-                      <div class="ds-timeline-node">
-                        <div class="ds-node-dot ds-node-dot-completed"></div>
-                        <div class="ds-node-label">FBAR Filing</div>
-                        <div class="ds-node-sub text-[10px]">Apr 12 · Completed</div>
-                      </div>
-                      <div class="ds-timeline-node">
-                        <div class="ds-node-dot"></div>
-                        <div class="ds-node-label">Quarterly Tax (US)</div>
-                        <div class="ds-node-sub text-[10px]">Jun 15 · 23 days</div>
-                      </div>
-                      <div class="ds-timeline-node">
-                        <div class="ds-node-dot ds-node-dot-urgent"></div>
-                        <div class="ds-node-label">CRS Reporting</div>
-                        <div class="ds-node-sub text-[10px] text-orange-600 font-medium">
-                          Due in 5 days
-                        </div>
-                      </div>
-                      <div class="ds-timeline-node">
-                        <div class="ds-node-dot"></div>
-                        <div class="ds-node-label">TW AMT Review</div>
-                        <div class="ds-node-sub text-[10px]">Jul 31 · Planned</div>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="mt-3 text-[11px] text-slate-500">
-                    Dates are indicative and should be confirmed with your tax professionals. Taimic centralizes reminders and documentation, but does not provide legal or tax advice.
-                  </p>
-                </div>
-              </section>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section id="section-reports" class="hidden reports-section">
       <div class="reports-shell w-full">
         <div class="max-w-[1100px] mx-auto px-6 py-16 flex items-center justify-center">
@@ -2904,6 +2263,415 @@
                   <span>建立帳號</span>
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ✅ 登入後 Dashboard 畫面（全新 section，不放在 overview） -->
+    <section id="section-dashboard" class="hidden">
+      <div class="dash-shell">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 py-6 lg:py-8">
+          <div class="grid grid-cols-1 lg:grid-cols-[260px,minmax(0,1fr)] gap-6 lg:gap-8">
+            <!-- Sidebar -->
+            <aside class="dash-sidebar p-4 lg:p-5 flex flex-col gap-6">
+              <div>
+                <div class="text-[11px] font-semibold tracking-[0.18em] text-slate-400 uppercase mb-2">
+                  Navigation
+                </div>
+                <nav class="space-y-1">
+                  <button class="dash-nav-item dash-nav-item-active w-full text-left">
+                    <span>
+                      <i class="fa-solid fa-grid-2 text-xs"></i>
+                      <span>Dashboard</span>
+                    </span>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                      Live
+                    </span>
+                  </button>
+                  <button class="dash-nav-item w-full text-left">
+                    <span>
+                      <i class="fa-solid fa-wallet text-xs"></i>
+                      <span>Holdings</span>
+                    </span>
+                  </button>
+                  <button class="dash-nav-item w-full text-left">
+                    <span>
+                      <i class="fa-solid fa-shield-heart text-xs"></i>
+                      <span>Compliance</span>
+                    </span>
+                  </button>
+                  <button class="dash-nav-item w-full text-left">
+                    <span>
+                      <i class="fa-solid fa-user-group text-xs"></i>
+                      <span>Family &amp; Legacy</span>
+                    </span>
+                  </button>
+                  <button class="dash-nav-item w-full text-left">
+                    <span>
+                      <i class="fa-solid fa-gear text-xs"></i>
+                      <span>Settings</span>
+                    </span>
+                  </button>
+                </nav>
+              </div>
+
+              <div class="mt-auto pt-3 border-t border-dashed border-slate-200">
+                <div class="flex items-start gap-3">
+                  <div class="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center text-slate-50">
+                    <i class="fa-solid fa-robot text-xs"></i>
+                  </div>
+                  <div class="space-y-1">
+                    <p class="text-xs font-semibold text-slate-800">
+                      Taimic AI Copilot
+                    </p>
+                    <p class="text-[11px] text-slate-500">
+                      Ask about FATCA, FX impact or estate scenarios directly from your data.
+                    </p>
+                    <button class="mt-1 text-[11px] font-semibold text-[color:var(--dash-deep-blue)] hover:underline">
+                      Open AI panel →
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            <!-- Main content -->
+            <div class="flex flex-col gap-6 lg:gap-7">
+              <!-- Top header -->
+              <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div class="space-y-1">
+                  <nav class="text-[11px] text-slate-400 flex items-center gap-1">
+                    <span>Home</span>
+                    <span class="text-slate-500">›</span>
+                    <span class="text-slate-500 font-medium">Dashboard</span>
+                  </nav>
+                  <div class="flex items-center gap-2">
+                    <h1 class="text-lg sm:text-xl font-semibold text-[color:var(--dash-title)]">
+                      Cross-border family dashboard
+                    </h1>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-semibold px-2 py-0.5">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      Reconciled
+                    </span>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3 sm:gap-4">
+                  <button class="text-[12px] font-semibold text-[color:var(--dash-deep-blue)] hover:underline">
+                    聯絡理財顧問
+                  </button>
+                  <button class="relative w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-500 hover:text-slate-800">
+                    <i class="fa-regular fa-bell text-sm"></i>
+                    <span class="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-rose-500 border border-white"></span>
+                  </button>
+                  <div class="w-9 h-9 rounded-full bg-slate-900 flex items-center justify-center text-slate-50 text-xs font-semibold">
+                    Y
+                  </div>
+                </div>
+              </header>
+
+              <!-- Block A: Hero total net worth -->
+              <section class="dash-card relative overflow-hidden px-5 sm:px-7 py-5 sm:py-6">
+                <div class="dash-hero-decoration"></div>
+                <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+                  <div class="space-y-2">
+                    <p class="dash-label-muted">
+                      Total Net Worth
+                    </p>
+                    <div class="flex items-baseline gap-3 flex-wrap">
+                      <div class="dash-total font-mono tracking-tight">
+                        $3,420,500
+                      </div>
+                      <div class="flex items-center gap-2 text-xs">
+                        <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 text-emerald-700 px-2 py-0.5 font-semibold">
+                          <i class="fa-solid fa-arrow-trend-up text-[10px]"></i>
+                          +$1,250 Today
+                        </span>
+                        <span class="text-[11px] text-[color:var(--dash-muted)]">
+                          vs. previous close
+                        </span>
+                      </div>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-3 text-[11px] text-[color:var(--dash-muted)]">
+                      <span class="inline-flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-[color:var(--dash-deep-blue)]"></span>
+                        Taiwan · US · Singapore
+                      </span>
+                      <span>FX base: USD • Updated 3 mins ago</span>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col items-start md:items-end gap-3">
+                    <div class="flex items-center gap-3 text-[11px] text-[color:var(--dash-muted)]">
+                      <div class="flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-[color:var(--dash-deep-blue)]"></span>
+                        <span>Market assets</span>
+                      </div>
+                      <div class="flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-[color:var(--dash-light-blue)]"></span>
+                        <span>Properties &amp; policies</span>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <div class="text-right">
+                        <p class="text-[11px] text-[color:var(--dash-muted)] uppercase tracking-[0.14em]">
+                          Taiwan exposure
+                        </p>
+                        <p class="text-sm font-semibold text-[color:var(--dash-title)]">
+                          42% of net worth
+                        </p>
+                      </div>
+                      <button class="inline-flex items-center gap-1.5 rounded-full bg-slate-900 text-white text-[11px] font-semibold px-3 py-1.5 shadow-sm">
+                        <i class="fa-solid fa-bolt text-[9px] text-amber-300"></i>
+                        Run full risk scan
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Middle layout: Block B (Geo map) + Block C (Risk & allocation) -->
+              <section class="grid grid-cols-1 xl:grid-cols-[minmax(0,0.6fr),minmax(0,0.4fr)] gap-6 lg:gap-7">
+                <!-- Block B: Geo-Asset Map -->
+                <div class="dash-card p-5 sm:p-6 space-y-4">
+                  <div class="flex items-center justify-between gap-3">
+                    <div>
+                      <p class="dash-label-muted">
+                        Geo-Asset Map
+                      </p>
+                      <h2 class="text-sm sm:text-base font-semibold text-[color:var(--dash-title)]">
+                        Where your wealth actually lives
+                      </h2>
+                    </div>
+                    <div class="flex items-center gap-2 text-[10px] text-[color:var(--dash-muted)]">
+                      <span class="inline-flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-[color:var(--dash-deep-blue)]"></span>
+                        Has assets
+                      </span>
+                      <span class="inline-flex items-center gap-1">
+                        <i class="fa-regular fa-circle-dot text-[11px]"></i>
+                        No positions
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="geo-map h-64 sm:h-72 mt-1">
+                    <!-- Taiwan -->
+                    <div class="geo-dot" style="top: 52%; left: 67%;">
+                      <div class="geo-tooltip">
+                        Taiwan · $350,000<br/>
+                        Cash + Real Estate
+                      </div>
+                    </div>
+                    <!-- US -->
+                    <div class="geo-dot" style="top: 48%; left: 28%;">
+                      <div class="geo-tooltip">
+                        United States · $2,420,000<br/>
+                        Brokerage + 401(k)
+                      </div>
+                    </div>
+                    <!-- Singapore -->
+                    <div class="geo-dot" style="top: 63%; left: 62%;">
+                      <div class="geo-tooltip">
+                        Singapore · $180,500<br/>
+                        Cash + RSU
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-wrap items-center justify-between gap-3 text-[11px] text-[color:var(--dash-muted)]">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <span class="inline-flex items-center gap-1">
+                        <i class="fa-solid fa-circle-info text-[10px]"></i>
+                        Hover a dot to see country breakdown.
+                      </span>
+                    </div>
+                    <button class="inline-flex items-center gap-1 text-[11px] font-semibold text-[color:var(--dash-deep-blue)] hover:underline">
+                      Open country-level report →
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Block C: Risk & Allocation -->
+                <div class="flex flex-col gap-4 lg:gap-5">
+                  <!-- Card 1: FX Exposure -->
+                  <div class="dash-card-tight p-4 sm:p-5 space-y-3">
+                    <div class="flex items-center justify-between gap-2">
+                      <div>
+                        <p class="dash-label-muted">
+                          Currency Impact
+                        </p>
+                        <h3 class="text-sm font-semibold text-[color:var(--dash-title)]">
+                          FX Exposure · TWD &lt;&gt; USD
+                        </h3>
+                      </div>
+                      <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 text-slate-700 text-[10px] px-2 py-0.5">
+                        <i class="fa-solid fa-wave-square text-[9px]"></i>
+                        30D Vol: 6.3%
+                      </span>
+                    </div>
+
+                    <div class="space-y-2">
+                      <div class="fx-bar-track">
+                        <div class="fx-bar-midline"></div>
+                        <!-- marker: slightly on the “benefit” side -->
+                        <div class="fx-bar-marker" style="left: 62%;"></div>
+                      </div>
+                      <div class="flex items-center justify-between text-[11px] text-[color:var(--dash-muted)]">
+                        <span>Stronger USD (loss in TWD terms)</span>
+                        <span class="font-semibold text-emerald-700">
+                          +$3,420 today
+                        </span>
+                      </div>
+                    </div>
+
+                    <p class="text-[11px] text-[color:var(--dash-muted)]">
+                      Based on your current mix of USD and TWD assets, a ±1% FX move shifts your net worth by
+                      <span class="font-semibold text-[color:var(--dash-title)]">$28,000</span>.
+                    </p>
+                  </div>
+
+                  <!-- Card 2: Asset Allocation donut -->
+                  <div class="dash-card-tight p-4 sm:p-5 space-y-3">
+                    <div class="flex items-center justify-between gap-2">
+                      <div>
+                        <p class="dash-label-muted">
+                          Asset Allocation
+                        </p>
+                        <h3 class="text-sm font-semibold text-[color:var(--dash-title)]">
+                          Structure of your balance sheet
+                        </h3>
+                      </div>
+                      <span class="inline-flex items-center gap-1 text-[10px] text-[color:var(--dash-muted)]">
+                        <i class="fa-solid fa-circle text-[8px]" style="color: var(--dash-deep-blue);"></i> Equities
+                        <i class="fa-solid fa-circle text-[8px]" style="color: rgba(37,99,235,0.6);"></i> Real Assets
+                        <i class="fa-solid fa-circle text-[8px]" style="color: var(--dash-light-blue);"></i> Cash &amp; Others
+                      </span>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                      <div class="w-32 h-32 sm:w-36 sm:h-36">
+                        <canvas id="allocationDonut"></canvas>
+                      </div>
+                      <div class="flex-1 space-y-2 text-[11px] text-[color:var(--dash-muted)]">
+                        <div class="flex items-center justify-between">
+                          <span>Global Equities</span>
+                          <span class="font-semibold text-[color:var(--dash-title)]">54%</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                          <span>Real Estate &amp; Policies</span>
+                          <span class="font-semibold text-[color:var(--dash-title)]">31%</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                          <span>Cash &amp; Other</span>
+                          <span class="font-semibold text-[color:var(--dash-title)]">15%</span>
+                        </div>
+                        <p class="pt-1">
+                          Allocation is reasonably diversified. Taimic flags concentration if any single sleeve exceeds <span class="font-semibold">60%</span>.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Block D: Compliance Timeline -->
+              <section class="dash-card p-5 sm:p-6 space-y-4">
+                <div class="flex items-center justify-between gap-3">
+                  <div>
+                    <p class="dash-label-muted">
+                      Upcoming Compliance Deadlines
+                    </p>
+                    <h2 class="text-sm sm:text-base font-semibold text-[color:var(--dash-title)]">
+                      Compliance timeline for your structure
+                    </h2>
+                  </div>
+                  <button class="inline-flex items-center gap-1.5 rounded-full bg-[color:var(--dash-light-blue)] text-[color:var(--dash-deep-blue)] text-[11px] font-semibold px-3 py-1.5 shadow-sm">
+                    <i class="fa-solid fa-upload text-[10px]"></i>
+                    Upload Documents
+                  </button>
+                </div>
+
+                <div class="timeline-wrapper mt-2">
+                  <div class="timeline-line"></div>
+                  <div class="timeline-items">
+                    <!-- Completed -->
+                    <div class="timeline-item">
+                      <div class="timeline-node timeline-node-complete">
+                        <i class="fa-solid fa-check"></i>
+                      </div>
+                      <div class="timeline-date">2025-03-15</div>
+                      <div class="timeline-label">TW Annual Filing</div>
+                      <div class="timeline-tag">
+                        <i class="fa-solid fa-file-signature text-[9px]"></i>
+                        Filed
+                      </div>
+                    </div>
+                    <!-- Upcoming normal -->
+                    <div class="timeline-item">
+                      <div class="timeline-node timeline-node-upcoming"></div>
+                      <div class="timeline-date">2025-06-30</div>
+                      <div class="timeline-label">FBAR Filing</div>
+                      <div class="timeline-tag">
+                        <i class="fa-regular fa-clock text-[9px]"></i>
+                        In 4 weeks
+                      </div>
+                    </div>
+                    <!-- Urgent (< 7 days) -->
+                    <div class="timeline-item">
+                      <div class="timeline-node timeline-node-urgent">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                      </div>
+                      <div class="timeline-date">2025-05-10</div>
+                      <div class="timeline-label">Quarterly Tax (US)</div>
+                      <div class="timeline-tag" style="background:#fef3c7;color:#92400e;">
+                        <i class="fa-solid fa-triangle-exclamation text-[9px]"></i>
+                        5 days left
+                      </div>
+                    </div>
+                    <!-- Future CRS -->
+                    <div class="timeline-item">
+                      <div class="timeline-node timeline-node-upcoming"></div>
+                      <div class="timeline-date">2025-09-01</div>
+                      <div class="timeline-label">CRS Reporting Window</div>
+                      <div class="timeline-tag">
+                        <i class="fa-regular fa-bell text-[9px]"></i>
+                        Reminder set
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-between gap-3 text-[11px] text-[color:var(--dash-muted)] pt-1">
+                  <div class="flex items-center gap-3">
+                    <span class="inline-flex items-center gap-1">
+                      <span class="w-3 h-3 rounded-full bg-[#e5e7eb] flex items-center justify-center">
+                        <i class="fa-solid fa-check text-[8px] text-slate-600"></i>
+                      </span>
+                      Completed
+                    </span>
+                    <span class="inline-flex items-center gap-1">
+                      <span class="w-3 h-3 rounded-full border border-[color:var(--dash-deep-blue)]"></span>
+                      Upcoming
+                    </span>
+                    <span class="inline-flex items-center gap-1">
+                      <span class="w-3 h-3 rounded-full border border-[#f97316] bg-[#fff7ed]"></span>
+                      &lt; 7 days
+                    </span>
+                  </div>
+                  <button class="inline-flex items-center gap-1 text-[11px] font-semibold text-[color:var(--dash-deep-blue)] hover:underline">
+                    View compliance checklist →
+                  </button>
+                </div>
+              </section>
+
+              <!-- Summary Prompt 給開發者 -->
+              <!--
+              Summary Prompt:
+              "Create a high-end Fintech dashboard for Taimic using a clean, white-based design language reminiscent of Stripe or American Express. Use [Deep Blue Code] as the primary authoritative color and [Light Blue Code] for accents and backgrounds. The layout must be spacious, utilizing soft shadows instead of borders. Focus on data visualization (Map, Donut Chart) that looks professional, not gamified."
+              -->
             </div>
           </div>
         </div>
@@ -3381,7 +3149,7 @@
     }
 
     function switchSection(section) {
-      const ids = ["overview", "pricing", "about", "reports"];
+      const ids = ["overview", "pricing", "about", "reports", "dashboard"];
       ids.forEach((id) => {
         const el = document.getElementById(`section-${id}`);
         if (el) el.classList.toggle("hidden", id !== section);
@@ -3832,6 +3600,29 @@
       }
     }
 
+    function saveAndRedirect() {
+      const twdInput = document.getElementById("hero-twd");
+      const usdInput = document.getElementById("hero-usd");
+
+      if (!twdInput || !usdInput) {
+        switchSection("reports");
+        return;
+      }
+
+      const twd = parseFloat((twdInput.value || "").replace(/,/g, "")) || 0;
+      const usd = parseFloat((usdInput.value || "").replace(/,/g, "")) || 0;
+      const totalUsd = twd / RATE + usd;
+
+      try {
+        const payload = { twd, usd, totalUsd };
+        localStorage.setItem("taimic_demo_data", JSON.stringify(payload));
+      } catch (e) {
+        console.error(e);
+      }
+
+      switchSection("reports");
+    }
+
     function openUploadModal() {
       modalOverlay.classList.remove("hidden");
       document.getElementById("modal-step-1").classList.remove("hidden");
@@ -3944,6 +3735,9 @@
         if (noteZh) noteZh.classList.remove("hidden");
         if (reportsEmailEn) reportsEmailEn.textContent = email;
         if (reportsEmailZh) reportsEmailZh.textContent = email;
+
+        // 👉 這裡你之後可以自己改成 switchSection('dashboard')
+        // 現在我先維持你原本的 flow，不強制跳頁
       } else {
         if (actionsEn) actionsEn.classList.remove("hidden");
         if (actionsZh) actionsZh.classList.remove("hidden");
@@ -4071,7 +3865,6 @@
     }
 
     let geoChart;
-    let allocationChart;
     let langMenu, userMenu, modalOverlay, authOverlay, mobileMenu;
 
     window.onload = function () {
@@ -4098,22 +3891,22 @@
         },
       });
 
-      // Donut chart for Asset Allocation (Dashboard)
-      const allocationCtx = document.getElementById("allocationChart");
-      if (allocationCtx) {
-        const styles = getComputedStyle(document.documentElement);
-        const deepBlue = (styles.getPropertyValue("--brand-blue") || "#0066cc").trim() || "#0066cc";
-        const lightBlue = (styles.getPropertyValue("--ds-primary-accent") || "#bfdbfe").trim() || "#bfdbfe";
-        const deepBlueSoft = "rgba(0,102,204,0.6)";
-
-        allocationChart = new Chart(allocationCtx, {
+      // ✅ Dashboard Asset Allocation Donut
+      const allocCanvas = document.getElementById("allocationDonut");
+      if (allocCanvas) {
+        const allocCtx = allocCanvas.getContext("2d");
+        new Chart(allocCtx, {
           type: "doughnut",
           data: {
-            labels: ["Equities", "Cash & Deposits", "Real Estate"],
+            labels: ["Equities", "Real Assets", "Cash & Other"],
             datasets: [
               {
-                data: [52, 28, 20],
-                backgroundColor: [deepBlue, deepBlueSoft, lightBlue],
+                data: [54, 31, 15],
+                backgroundColor: [
+                  "#2563eb",             // Deep blue
+                  "rgba(37,99,235,0.6)", // Deep blue 60% opacity
+                  "#dbeafe"              // Clock light blue
+                ],
                 borderWidth: 0,
               },
             ],
@@ -4121,9 +3914,18 @@
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            cutout: "72%",
+            cutout: "68%",
             plugins: {
               legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: function (ctx) {
+                    const label = ctx.label || "";
+                    const value = ctx.parsed;
+                    return `${label}: ${value}%`;
+                  },
+                },
+              },
             },
           },
         });
@@ -4150,23 +3952,23 @@
       }
       
      // Hero Screener slide-up 初始化
-heroCardOuterEl = document.getElementById("compliance-card");
-heroOverlayEl = document.getElementById("hero-overlay");
-const heroRunScanBtn = document.getElementById("hero-run-scan-btn");
+      heroCardOuterEl = document.getElementById("compliance-card");
+      heroOverlayEl = document.getElementById("hero-overlay");
+      const heroRunScanBtn = document.getElementById("hero-run-scan-btn");
 
-if (heroRunScanBtn && heroCardOuterEl && heroOverlayEl) {
-  heroRunScanBtn.addEventListener("click", function () {
-    // 不要任何 scroll，不要 setTimeout，直接讓卡片往上浮
-    openHeroCard();
-  });
+      if (heroRunScanBtn && heroCardOuterEl && heroOverlayEl) {
+        heroRunScanBtn.addEventListener("click", function () {
+          // 不要任何 scroll，不要 setTimeout，直接讓卡片往上浮
+          openHeroCard();
+        });
 
-  // 點背景把卡片收回去
-  heroOverlayEl.addEventListener("click", function () {
-    if (heroCardOpen) {
-      closeHeroCard();
-    }
-  });
-}
+        // 點背景把卡片收回去
+        heroOverlayEl.addEventListener("click", function () {
+          if (heroCardOpen) {
+            closeHeroCard();
+          }
+        });
+      }
 
       const langToggle = document.getElementById("lang-toggle");
       const userToggle = document.getElementById("user-toggle");
