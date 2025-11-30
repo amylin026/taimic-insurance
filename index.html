@@ -3832,29 +3832,6 @@
       }
     }
 
-    function saveAndRedirect() {
-      const twdInput = document.getElementById("hero-twd");
-      const usdInput = document.getElementById("hero-usd");
-
-      if (!twdInput || !usdInput) {
-        switchSection("reports");
-        return;
-      }
-
-      const twd = parseFloat((twdInput.value || "").replace(/,/g, "")) || 0;
-      const usd = parseFloat((usdInput.value || "").replace(/,/g, "")) || 0;
-      const totalUsd = twd / RATE + usd;
-
-      try {
-        const payload = { twd, usd, totalUsd };
-        localStorage.setItem("taimic_demo_data", JSON.stringify(payload));
-      } catch (e) {
-        console.error(e);
-      }
-
-      switchSection("reports");
-    }
-
     function openUploadModal() {
       modalOverlay.classList.remove("hidden");
       document.getElementById("modal-step-1").classList.remove("hidden");
