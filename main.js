@@ -923,27 +923,55 @@
       }
     }
 
-    function openAuthModal(mode) {
-      authMode = mode;
-      const title = document.getElementById("auth-title");
-      const btnText = document.getElementById("auth-submit-text");
-      const msg = document.getElementById("auth-message");
-      msg.textContent = "";
-      msg.className = "text-sm h-5 text-center";
+   function openAuthModal(mode) {
+  authMode = mode;
+  const title = document.getElementById("auth-title");
+  const btnText = document.getElementById("auth-submit-text");
+  const msg = document.getElementById("auth-message");
+  const tabLogin = document.getElementById("auth-tab-login");
+  const tabRegister = document.getElementById("auth-tab-register");
 
-      if (mode === "login") {
-        title.textContent = "Login to Taimic";
-        btnText.textContent = "Login";
-      } else {
-        title.textContent = "Create a Taimic account";
-        btnText.textContent = "Sign up";
-      }
+  if (msg) {
+    msg.textContent = "";
+    msg.className = "text-sm h-5 text-center";
+  }
 
-      document.getElementById("auth-email").value = "";
-      document.getElementById("auth-password").value = "";
-
-      authOverlay.classList.remove("hidden");
+  // 切換 tab 樣式
+  if (tabLogin && tabRegister) {
+    if (mode === "login") {
+      tabLogin.className =
+        "flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-900 shadow-sm";
+      tabRegister.className =
+        "flex-1 px-4 py-1.5 text-xs font-semibold rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100";
+    } else {
+      tabRegister.className =
+        "flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-900 shadow-sm";
+      tabLogin.className =
+        "flex-1 px-4 py-1.5 text-xs font-semibold rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100";
     }
+  }
+
+  // 改標題與按鈕文字
+  if (title && btnText) {
+    if (mode === "login") {
+      title.textContent = "Login to Taimic";
+      btnText.textContent = "Login";
+    } else {
+      title.textContent = "Create a Taimic account";
+      btnText.textContent = "Sign up";
+    }
+  }
+
+  // 每次打開先清空輸入
+  const emailInput = document.getElementById("auth-email");
+  const pwdInput = document.getElementById("auth-password");
+  if (emailInput) emailInput.value = "";
+  if (pwdInput) pwdInput.value = "";
+
+  if (authOverlay) {
+    authOverlay.classList.remove("hidden");
+  }
+}
 
     function closeAuthModal() {
       authOverlay.classList.add("hidden");
