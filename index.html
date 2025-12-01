@@ -94,22 +94,20 @@
               <i class="fa-solid fa-user text-base"></i>
             </button>
             <div id="user-menu" class="dropdown-menu hidden">
-              <!-- 未登入狀態 -->
-              <div id="user-menu-guest">
-                <div class="dropdown-item" onclick="openAuthModal('login')">
-                  <i class="fa-solid fa-right-to-bracket"></i>
-                  <span data-i18n="user.login">Login</span>
-                </div>
-                <div class="dropdown-item" onclick="openAuthModal('register')">
-                  <i class="fa-solid fa-user-plus"></i>
-                  <span data-i18n="user.register">Sign up</span>
-                </div>
-                <div class="border-t border-gray-100 my-1"></div>
-                <div class="dropdown-item">
-                  <i class="fa-solid fa-circle-question"></i>
-                  <span>Help</span>
-                </div>
-              </div>
+             <!-- 未登入狀態 -->
+             <div id="user-menu-guest">
+               <!-- 合併：Login / Sign up 同一個入口 -->
+               <div class="dropdown-item" onclick="openAuthModal('login')">
+                 <i class="fa-solid fa-right-to-bracket"></i>
+                 <span>Login / Sign up</span>
+             </div>
+
+             <div class="border-t border-gray-100 my-1"></div>
+             <div class="dropdown-item">
+               <i class="fa-solid fa-circle-question"></i>
+               <span>Help</span>
+             </div>
+           </div>
 
               <!-- 已登入狀態 -->
               <div id="user-menu-loggedin" class="hidden">
