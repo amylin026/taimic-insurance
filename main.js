@@ -280,21 +280,27 @@ function changeLang(l) {
 }
 
 function switchSection(section) {
-  // 只有 index.html 才會有這些 section
-  const ids = ["overview", "pricing", "reports"];
+  // 這四個就是你 index.html 裡的四個 section
+  const ids = ["overview", "pricing", "about", "reports"];
+
+  // 顯示要的那個，把其他三個藏起來
   ids.forEach((id) => {
     const el = document.getElementById(`section-${id}`);
-    if (el) el.classList.toggle("hidden", id !== section);
+    if (!el) return;
+    el.classList.toggle("hidden", id !== section);
   });
 
-  document.querySelectorAll("nav .nav-link").forEach((link) => {
-    const sec = link.dataset.section;
-    if (!sec) return;
-    link.classList.toggle("active", sec === section);
-  });
+  // 更新上面 nav 的 active 樣式（桌機 + 手機）
+  document
+    .querySelectorAll("nav .nav-link, .mobile-nav-link")
+    .forEach((link) => {
+      const s = link.dataset.section;
+      link.classList.toggle("active", s === section);
+    });
 
   currentSection = section;
 
+  // 進 Reports 的時候，照舊改一下標題
   if (section === "reports") {
     try {
       const raw = localStorage.getItem("taimic_demo_data");
@@ -310,6 +316,7 @@ function switchSection(section) {
     }
   }
 
+  // 每次切 tab 都滾回上面
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
