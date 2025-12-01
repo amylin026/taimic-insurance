@@ -1,4 +1,8 @@
-// 匯率：優先 API，備援常數 31.0（嚴格認定）
+// ===================================================
+// 0. 全域設定：匯率 / I18N / Demo 資產
+// ===================================================
+
+// 匯率：優先 API，備援常數 31.0
 const RATE_FALLBACK = 31.0;
 let RATE = RATE_FALLBACK;
 
@@ -11,6 +15,7 @@ const RATE_LABEL_TEXT = {
 
 const RATE_LABEL_PREFIX = "1 USD ≈ ";
 
+// 文案多國語系
 const I18N = {
   en: {
     "nav.overview": "Overview",
@@ -79,6 +84,7 @@ const I18N = {
   },
 };
 
+// demo 資產
 const assets = [
   {
     id: 1,
@@ -106,20 +112,30 @@ const assets = [
   },
 ];
 
+// 狀態
 let curr = "TWD";
 let lang = "en";
 let currentSection = "overview";
 let billing = "monthly";
 const API_BASE = "https://cool-cell-b227.amy20060226.workers.dev";
 
-// Dashboard state
+// Dashboard 狀態
 let loggedInEmail = null;
 let dashboardInitialized = false;
 
-// Hero Screener slide-up 狀態
+// Hero slide-up 狀態
 let heroCardOpen = false;
 let heroCardOuterEl = null;
 let heroOverlayEl = null;
+
+// 共用 DOM 參考
+let geoChart;
+let allocationChart;
+let langMenu, userMenu, modalOverlay, authOverlay, mobileMenu, dashUserMenu;
+
+// ===================================================
+// 1. 小工具：格式化 / 匯率 label
+// ===================================================
 
 function fmt(usd) {
   const val = curr === "USD" ? usd : usd * RATE;
@@ -170,6 +186,10 @@ async function fetchFXRate() {
   }
 }
 
+// ===================================================
+// 2. render：文字 / 數字 / 語系切換
+// ===================================================
+
 function render() {
   const t = I18N[lang];
 
@@ -179,9 +199,11 @@ function render() {
   });
 
   document.querySelectorAll(".val-display").forEach((el) => {
-    el.textContent = fmt(parseFloat(el.dataset.usd));
+    const usd = parseFloat(el.dataset.usd);
+    if (!isNaN(usd)) el.textContent = fmt(usd);
   });
 
+  // 行銷頁 Holdings 表格
   const tbody = document.getElementById("asset-list");
   if (tbody) {
     tbody.innerHTML = "";
@@ -213,18 +235,7 @@ function render() {
     });
   }
 
-  const btnUsd = document.getElementById("btn-usd");
-  const btnTwd = document.getElementById("btn-twd");
-  if (btnUsd && btnTwd) {
-    if (curr === "USD") {
-      btnUsd.className = "px-4 py-2 bg-white text-[#0066cc] font-semibold";
-      btnTwd.className = "px-4 py-2 text-gray-500 hover:bg-gray-100";
-    } else {
-      btnTwd.className = "px-4 py-2 bg-white text-[#0066cc] font-semibold";
-      btnUsd.className = "px-4 py-2 text-gray-500 hover:bg-gray-100";
-    }
-  }
-
+  // About 雙語切換（在 about.html or index 裡都有這組）
   const aboutZh = document.getElementById("about-zh");
   const aboutEn = document.getElementById("about-en");
   if (aboutZh && aboutEn) {
@@ -237,6 +248,7 @@ function render() {
     }
   }
 
+  // Reports gate 雙語
   const reportsZh = document.getElementById("reports-gate-zh");
   const reportsEn = document.getElementById("reports-gate-en");
   if (reportsZh && reportsEn) {
@@ -268,14 +280,19 @@ function changeLang(l) {
 }
 
 function switchSection(section) {
+  // 只有 index.html 才會有這些 section
   const ids = ["overview", "pricing", "reports"];
   ids.forEach((id) => {
     const el = document.getElementById(`section-${id}`);
     if (el) el.classList.toggle("hidden", id !== section);
   });
+
   document.querySelectorAll("nav .nav-link").forEach((link) => {
-    link.classList.toggle("active", link.dataset.section === section);
+    const sec = link.dataset.section;
+    if (!sec) return;
+    link.classList.toggle("active", sec === section);
   });
+
   currentSection = section;
 
   if (section === "reports") {
@@ -323,7 +340,10 @@ function toggleBilling() {
   updatePricing();
 }
 
-// Hero 金額顯示縮寫
+// ===================================================
+// 3. Hero 快篩（首頁）
+// ===================================================
+
 function formatUSDAbbrev(value) {
   const n = Number(value) || 0;
   const abs = Math.abs(n);
@@ -347,7 +367,6 @@ function formatUSDAbbrev(value) {
   }).format(n);
 }
 
-// Hero 快篩引擎
 function calculateHeroTotal() {
   const twdInput = document.getElementById("hero-twd");
   const usdInput = document.getElementById("hero-usd");
@@ -362,6 +381,7 @@ function calculateHeroTotal() {
   const insuranceChk = document.getElementById("hero-asset-insurance");
   const assetsError = document.getElementById("hero-assets-error");
 
+  // 如果這些元素不存在（例如 dashboard.html），直接跳出
   if (
     !twdInput ||
     !usdInput ||
@@ -471,6 +491,7 @@ function calculateHeroTotal() {
 
   resultBox.classList.remove("hidden");
 
+  // --- US 卡片 ---
   if (usCard) {
     let cls = "rounded-2xl border px-4 py-3 flex flex-col gap-2 ";
     if (usStatus === "critical") {
@@ -696,7 +717,7 @@ function calculateHeroTotal() {
     ctaBtn.classList.toggle("hidden", !hasAnyRisk);
   }
 
-  // 把快篩結果也存起來，Dashboard 可以用
+  // 存 demo data 給 dashboard 用
   try {
     const payload = { twd, usd, totalUsd: globalUsd };
     localStorage.setItem("taimic_demo_data", JSON.stringify(payload));
@@ -731,6 +752,27 @@ function saveAndRedirect() {
 
   switchSection("reports");
 }
+
+// Hero 卡片 slide up / down
+function openHeroCard() {
+  if (!heroCardOuterEl || !heroOverlayEl) return;
+  heroCardOuterEl.classList.add("hero-card-open");
+  heroOverlayEl.classList.remove("hidden");
+  heroOverlayEl.classList.add("hero-overlay-active");
+  heroCardOpen = true;
+}
+
+function closeHeroCard() {
+  if (!heroCardOuterEl || !heroOverlayEl) return;
+  heroCardOuterEl.classList.remove("hero-card-open");
+  heroOverlayEl.classList.add("hidden");
+  heroOverlayEl.classList.remove("hero-overlay-active");
+  heroCardOpen = false;
+}
+
+// ===================================================
+// 4. 上傳 Modal（目前 demo 用）
+// ===================================================
 
 function openUploadModal() {
   if (!modalOverlay) return;
@@ -812,6 +854,10 @@ function startScan() {
   }, 3000);
 }
 
+// ===================================================
+// 5. Auth：登入 / 註冊
+// ===================================================
+
 let authMode = "register";
 
 function applyAuthUI(email) {
@@ -821,9 +867,6 @@ function applyAuthUI(email) {
   const userMenuGuest = document.getElementById("user-menu-guest");
   const userMenuLogged = document.getElementById("user-menu-loggedin");
   const userEmailLabel = document.getElementById("user-email-label");
-
-  const marketingShell = document.getElementById("marketing-shell");
-  const dashboardShell = document.getElementById("dashboard-shell");
 
   if (userToggleBtn) {
     if (email) {
@@ -851,6 +894,7 @@ function applyAuthUI(email) {
     userEmailLabel.textContent = email || "";
   }
 
+  // Reports gate 提示
   const noteEn = document.getElementById("reports-loggedin-note-en");
   const noteZh = document.getElementById("reports-loggedin-note-zh");
   const actionsEn = document.getElementById("reports-auth-actions-en");
@@ -874,23 +918,7 @@ function applyAuthUI(email) {
     if (reportsEmailZh) reportsEmailZh.textContent = "";
   }
 
-  // Dashboard shell 切換（如果你在 index.html 還有 dashboard-shell 的話）
-  if (marketingShell && dashboardShell) {
-    if (email) {
-      marketingShell.classList.add("hidden");
-      dashboardShell.classList.remove("hidden");
-      if (!dashboardInitialized) {
-        initDashboard();
-      }
-      updateDashboardStats();
-    } else {
-      dashboardShell.classList.add("hidden");
-      marketingShell.classList.remove("hidden");
-      switchSection("overview");
-    }
-  }
-
-  // Dashboard header avatar & email（在 dashboard.html 裡用）
+  // Dashboard header avatar & email（dashboard.html 上）
   const dashUserInitial = document.getElementById("dash-user-initial");
   const dashUserEmail = document.getElementById("dash-user-email");
   if (dashUserInitial && dashUserEmail) {
@@ -922,14 +950,15 @@ function handleLogout() {
   }
 }
 
+// index 頁右上角「Open my reports」
 function goToReports() {
-  // 如果已登入 → 直接去 dashboard.html
+  // 已登入 → 直接去 dashboard.html
   if (loggedInEmail) {
     window.location.href = "dashboard.html";
     return;
   }
 
-  // 還沒登入 → 留在首頁，切到 reports gate
+  // 未登入 → 留在首頁切到 Reports gate
   switchSection("reports");
   if (userMenu) {
     userMenu.classList.add("hidden");
@@ -949,7 +978,7 @@ function openAuthModal(mode) {
     msg.className = "text-sm h-5 text-center";
   }
 
-  // 切換 tab 樣式
+  // 切換 tab 樣式（如果有）
   if (tabLogin && tabRegister) {
     if (mode === "login") {
       tabLogin.className =
@@ -964,7 +993,6 @@ function openAuthModal(mode) {
     }
   }
 
-  // 改標題與按鈕文字
   if (title && btnText) {
     if (mode === "login") {
       title.textContent = "Login to Taimic";
@@ -975,7 +1003,6 @@ function openAuthModal(mode) {
     }
   }
 
-  // 每次打開先清空輸入
   const emailInput = document.getElementById("auth-email");
   const pwdInput = document.getElementById("auth-password");
   if (emailInput) emailInput.value = "";
@@ -1000,9 +1027,13 @@ async function callAuthAPI(path, payload) {
 }
 
 async function handleAuthSubmit() {
-  const email = document.getElementById("auth-email").value.trim();
-  const password = document.getElementById("auth-password").value;
+  const emailEl = document.getElementById("auth-email");
+  const pwdEl = document.getElementById("auth-password");
   const msg = document.getElementById("auth-message");
+  if (!emailEl || !pwdEl || !msg) return;
+
+  const email = emailEl.value.trim();
+  const password = pwdEl.value;
   msg.textContent = "";
   msg.className = "text-sm h-5 text-center";
 
@@ -1040,6 +1071,7 @@ async function handleAuthSubmit() {
 
         applyAuthUI(savedEmail);
 
+        // 登入成功 → 跳轉 dashboard
         setTimeout(() => {
           closeAuthModal();
           window.location.href = "dashboard.html";
@@ -1063,7 +1095,10 @@ async function handleAuthSubmit() {
   }
 }
 
-// Dashboard helper: aggregate numbers
+// ===================================================
+// 6. Dashboard 計算 / 圓餅圖
+// ===================================================
+
 function computeDashboardData() {
   const data = {
     totalUsd: 0,
@@ -1087,7 +1122,7 @@ function computeDashboardData() {
     }
   });
 
-  // 如果 user 有跑 hero 快篩，用那個 totalUsd 覆蓋 demo 資料
+  // 如果 Hero 有存 demo-data，就覆蓋
   try {
     const raw = localStorage.getItem("taimic_demo_data");
     if (raw) {
@@ -1106,10 +1141,6 @@ function computeDashboardData() {
 
   return data;
 }
-
-let geoChart;
-let allocationChart;
-let langMenu, userMenu, modalOverlay, authOverlay, mobileMenu, dashUserMenu;
 
 function initDashboard() {
   dashboardInitialized = true;
@@ -1171,6 +1202,7 @@ function updateDashboardStats() {
   const allocDefPct = document.getElementById("alloc-defensive-percent");
   const allocSummary = document.getElementById("alloc-summary-text");
 
+  // 如果是 index 頁，這些不存在，就直接跳出
   if (!networthEl) return;
 
   networthEl.textContent = fmt(totalUsd);
@@ -1178,7 +1210,7 @@ function updateDashboardStats() {
     curLabelEl.textContent = curr === "USD" ? "Base: USD" : "Base: TWD";
   }
 
-  const dailyChangeUsd = totalUsd * 0.0123; // demo 1.23%
+  const dailyChangeUsd = totalUsd * 0.0123;
   const isPositive = dailyChangeUsd >= 0;
   if (changePill && changeIcon && changeVal) {
     changePill.className =
@@ -1212,7 +1244,6 @@ function updateDashboardStats() {
       (fxImpactUsd >= 0 ? "+" : "-") + fmtAbs(fxImpactUsd);
   }
 
-  // Allocation chart data
   const cats = data.categories;
   const totalAlloc = cats.market + cats.realEstate + cats.defensive || 1;
   const mPct = Math.round((cats.market / totalAlloc) * 100);
@@ -1250,8 +1281,12 @@ function updateDashboardStats() {
   }
 }
 
+// ===================================================
+// 7. window.onload：所有初始化
+// ===================================================
+
 window.onload = function () {
-  // Geo chart (marketing)
+  // 如果有 marketing donut chart
   const geoCanvas = document.getElementById("geoChart");
   if (geoCanvas) {
     const ctx = geoCanvas.getContext("2d");
@@ -1300,7 +1335,7 @@ window.onload = function () {
     applyAuthUI(null);
   }
 
-  // Hero Screener slide-up 初始化
+  // Hero slide-up 初始化（只有 index.html 才有）
   heroCardOuterEl = document.getElementById("compliance-card");
   heroOverlayEl = document.getElementById("hero-overlay");
   const heroRunScanBtn = document.getElementById("hero-run-scan-btn");
@@ -1368,10 +1403,10 @@ window.onload = function () {
   }
   if (dashUserMenu) dashUserMenu.addEventListener("click", (e) => e.stopPropagation());
 
-  // Desktop nav：只攔有 data-section 的（Overview / Pricing / Reports）
+  // Desktop nav：只攔有 data-section 的（About 用 href 跳頁）
   document.querySelectorAll("nav .nav-link").forEach((link) => {
     const section = link.dataset.section;
-    if (!section) return; // 沒 section 的（About）就讓瀏覽器自己跳頁
+    if (!section) return;
 
     link.addEventListener("click", (e) => {
       e.preventDefault();
@@ -1382,7 +1417,7 @@ window.onload = function () {
   // Mobile nav：同理
   document.querySelectorAll(".mobile-nav-link").forEach((link) => {
     const section = link.dataset.section;
-    if (!section) return; // About 在 mobile 用 href
+    if (!section) return;
 
     link.addEventListener("click", (e) => {
       e.preventDefault();
@@ -1398,22 +1433,20 @@ window.onload = function () {
     authSubmitBtn.addEventListener("click", handleAuthSubmit);
   }
 
-  switchSection("overview");
+  // 判斷現在是在 index 還是 dashboard
+  const isMarketing = document.getElementById("section-overview");
+  const isDashboard = document.getElementById("dashboard-shell");
+
+  // 首頁：切到 overview
+  if (isMarketing) {
+    switchSection("overview");
+  }
+
+  // Dashboard：建立 donut + 算數字
+  if (isDashboard) {
+    initDashboard();
+  }
+
+  // 兩邊都要匯率
   fetchFXRate();
 };
-
-function openHeroCard() {
-  if (!heroCardOuterEl || !heroOverlayEl) return;
-  heroCardOuterEl.classList.add("hero-card-open");
-  heroOverlayEl.classList.remove("hidden");
-  heroOverlayEl.classList.add("hero-overlay-active");
-  heroCardOpen = true;
-}
-
-function closeHeroCard() {
-  if (!heroCardOuterEl || !heroOverlayEl) return;
-  heroCardOuterEl.classList.remove("hero-card-open");
-  heroOverlayEl.classList.add("hidden");
-  heroOverlayEl.classList.remove("hero-overlay-active");
-  heroCardOpen = false;
-}
