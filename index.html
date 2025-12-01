@@ -63,7 +63,7 @@
           <a href="#" class="nav-link active" data-section="overview" data-i18n="nav.overview">Overview</a>
           <a href="#" class="nav-link" data-section="pricing" data-i18n="nav.pricing">Pricing</a>
           <a href="#" class="nav-link" data-section="reports" data-i18n="nav.reports">Reports</a>
-          <a href="about.html" class="nav-link active" data-i18n="nav.about">About Taimic</a>
+          <a href="about.html" class="nav-link" data-i18n="nav.about">About Taimic</a>
         </nav>
 
         <!-- Right controls: currency, language, user, mobile nav -->
@@ -140,10 +140,12 @@
       <!-- Mobile nav menu -->
       <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 absolute top-[72px] left-0 w-full shadow-lg z-30">
         <div class="flex flex-col p-4 space-y-2">
-          <a href="about.html" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]" data-i18n="nav.about">About Taimic</a>
+          <a href="#" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]" data-section="overview" data-i18n="nav.overview">Overview</a>
           <a href="#" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]" data-section="pricing" data-i18n="nav.pricing">Pricing</a>
           <a href="#" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]" data-section="reports" data-i18n="nav.reports">Reports</a>
-          <a href="#" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]" data-section="about" data-i18n="nav.about">About Taimic</a>
+          <a href="about.html" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]" data-i18n="nav.about">About Taimic</a>
+
+          <div class="pt-2 mt-2 border-t border-gray-100 flex gap-2">
           
           <div class="pt-2 mt-2 border-t border-gray-100 flex gap-2">
             <button onclick="setCurrency('USD')" class="flex-1 py-2 text-xs font-bold border border-gray-200 rounded text-center hover:bg-gray-50">USD</button>
@@ -1156,8 +1158,7 @@
       <!-- =================================================== -->
       <section id="section-reports" class="hidden reports-section">
         <div class="reports-shell w-full">
-          <div class="max-w-[1100px] mx-auto px-6 py-16 flex itemscenter justify-center">
-            <div class="w-full max-w-md bg-white rounded-3xl border border-blue-100 shadow-xl md:shadow-2xl p-8 md:p-9 animate-fade-in">
+        <div class="max-w-[1100px] mx-auto px-6 py-16 flex items-center justify-center">            <div class="w-full max-w-md bg-white rounded-3xl border border-blue-100 shadow-xl md:shadow-2xl p-8 md:p-9 animate-fade-in">
               <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-100 mb-5">
                 <div class="w-6 h-6 rounded-full bg-[#e0edff] flex items-center justify-center text-[#1d4ed8]">
                   <i class="fa-solid fa-lock text-xs"></i>
@@ -1204,8 +1205,7 @@
                   <button
                     type="button"
                     onclick="openAuthModal('login')"
-                    class="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition"
-                  >
+                    class="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition"                  >
                     <i class="fa-solid fa-right-to-bracket text-xs"></i>
                     <span>Log in to Taimic</span>
                   </button>
@@ -1355,164 +1355,104 @@
   <!-- （底下 dashboard-shell + shared modals + main.js 跟你原本版本一樣，略） -->
   <!-- 為了訊息長度這裡不重貼 dashboard-shell，如果你需要我也可以幫你整份重組一次。 -->
 
-  <!-- 3. SHARED MODALS: UPLOAD + AUTH -->
+   <!-- 3. SHARED MODALS: UPLOAD + AUTH -->
+
+  <!-- 上傳用 overlay（先留空，之後要做 upload modal 再加內容） -->
   <div
     id="modal-overlay"
-    <div
-  id="auth-overlay"
-  class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
->
-    <!-- ...（保持你原本 main.html 裡的 modal 結構與 main.js 相容）... -->
-
-  <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 relative">
-    <!-- 關閉按鈕 -->
-    <button
-      type="button"
-      onclick="closeAuthModal()"
-      class="absolute right-3 top-3 text-slate-400 hover:text-slate-600 text-sm"
-    >
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-
-    <!-- Login / Sign up 切換 tab -->
-    <div class="flex justify-center mb-4">
-      <div class="inline-flex bg-slate-100 rounded-full p-1">
-        <button
-          type="button"
-          id="auth-tab-login"
-          onclick="openAuthModal('login')"
-          class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-900 shadow-sm"
-        >
-          Log in
-        </button>
-        <button
-          type="button"
-          id="auth-tab-register"
-          onclick="openAuthModal('register')"
-          class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100"
-        >
-          Sign up
-        </button>
-      </div>
-    </div>
-
-    <!-- 標題 -->
-    <h2
-      id="auth-title"
-      class="text-lg font-semibold text-slate-900 mb-1 text-center"
-    >
-      Login to Taimic
-    </h2>
-    <p class="text-xs text-slate-500 mb-4 text-center">
-      Use a demo email to explore the cross-border reports dashboard.
-    </p>
-
-    <!-- 訊息列（錯誤 / 成功文字會寫在這） -->
-    <div id="auth-message" class="text-sm h-5 text-center"></div>
-
-    <!-- Email -->
-    <label class="block text-xs font-medium text-slate-700 mt-2 mb-1">
-      Email
-    </label>
-    <input
-      id="auth-email"
-      type="email"
-      class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
-      placeholder="you@example.com"
-    />
-
-    <!-- Password -->
-    <label class="block text-xs font-medium text-slate-700 mt-3 mb-1">
-      Password
-    </label>
-    <input
-      id="auth-password"
-      type="password"
-      class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
-      placeholder="••••••••"
-    />
-
-    <!-- 送出按鈕 -->
-    <button
-      id="auth-submit"
-      type="button"
-      class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition"
-    >
-      <span id="auth-submit-text">Login</span>
-      <i class="fa-solid fa-arrow-right-long text-xs"></i>
-    </button>
-
-    <p class="mt-3 text-[11px] text-slate-400 text-center">
-      Demo only – no real accounts are created.
-    </p>
+    class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+  >
   </div>
-</div>
-  
+
+  <!-- Auth overlay：登入 / 註冊共用 -->
   <div
-  id="auth-overlay"
-  class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
->
-  <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 relative">
-    <!-- 關閉按鈕 -->
-    <button
-      type="button"
-      onclick="closeAuthModal()"
-      class="absolute right-3 top-3 text-slate-400 hover:text-slate-600 text-sm"
-    >
-      <i class="fa-solid fa-xmark"></i>
-    </button>
+    id="auth-overlay"
+    class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+  >
+    <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 relative">
+      <!-- 關閉按鈕 -->
+      <button
+        type="button"
+        onclick="closeAuthModal()"
+        class="absolute right-3 top-3 text-slate-400 hover:text-slate-600 text-sm"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
 
-    <!-- 標題 -->
-    <h2
-      id="auth-title"
-      class="text-lg font-semibold text-slate-900 mb-1 text-center"
-    >
-      Login to Taimic
-    </h2>
-    <p class="text-xs text-slate-500 mb-4 text-center">
-      Use a demo email to explore the cross-border reports dashboard.
-    </p>
+      <!-- Login / Sign up 切換 tab -->
+      <div class="flex justify-center mb-4">
+        <div class="inline-flex bg-slate-100 rounded-full p-1">
+          <button
+            type="button"
+            id="auth-tab-login"
+            onclick="openAuthModal('login')"
+            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-900 shadow-sm"
+          >
+            Log in
+          </button>
+          <button
+            type="button"
+            id="auth-tab-register"
+            onclick="openAuthModal('register')"
+            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+          >
+            Sign up
+          </button>
+        </div>
+      </div>
 
-    <!-- 訊息列（錯誤 / 成功文字會寫在這） -->
-    <div id="auth-message" class="text-sm h-5 text-center"></div>
+      <!-- 標題 -->
+      <h2
+        id="auth-title"
+        class="text-lg font-semibold text-slate-900 mb-1 text-center"
+      >
+        Login to Taimic
+      </h2>
+      <p class="text-xs text-slate-500 mb-4 text-center">
+        Use a demo email to explore the cross-border reports dashboard.
+      </p>
 
-    <!-- Email -->
-    <label class="block text-xs font-medium text-slate-700 mt-2 mb-1">
-      Email
-    </label>
-    <input
-      id="auth-email"
-      type="email"
-      class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
-      placeholder="you@example.com"
-    />
+      <!-- 訊息列 -->
+      <div id="auth-message" class="text-sm h-5 text-center"></div>
 
-    <!-- Password -->
-    <label class="block text-xs font-medium text-slate-700 mt-3 mb-1">
-      Password
-    </label>
-    <input
-      id="auth-password"
-      type="password"
-      class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
-      placeholder="••••••••"
-    />
+      <!-- Email -->
+      <label class="block text-xs font-medium text-slate-700 mt-2 mb-1">
+        Email
+      </label>
+      <input
+        id="auth-email"
+        type="email"
+        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
+        placeholder="you@example.com"
+      />
 
-    <!-- 送出按鈕 -->
-    <button
-      id="auth-submit"
-      type="button"
-      class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition"
-    >
-      <span id="auth-submit-text">Login</span>
-      <i class="fa-solid fa-arrow-right-long text-xs"></i>
-    </button>
+      <!-- Password -->
+      <label class="block text-xs font-medium text-slate-700 mt-3 mb-1">
+        Password
+      </label>
+      <input
+        id="auth-password"
+        type="password"
+        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
+        placeholder="••••••••"
+      />
 
-    <p class="mt-3 text-[11px] text-slate-400 text-center">
-      Demo only – no real accounts are created.
-    </p>
+      <!-- 送出按鈕 -->
+      <button
+        id="auth-submit"
+        type="button"
+        class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition"
+      >
+        <span id="auth-submit-text">Login</span>
+        <i class="fa-solid fa-arrow-right-long text-xs"></i>
+      </button>
+
+      <p class="mt-3 text-[11px] text-slate-400 text-center">
+        Demo only – no real accounts are created.
+      </p>
+    </div>
   </div>
-</div>
+
   <!-- =================================================== -->
   <!-- 4. MAIN JS ENTRYPOINT                               -->
   <!-- =================================================== -->
