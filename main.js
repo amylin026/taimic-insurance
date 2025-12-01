@@ -933,21 +933,23 @@ function applyAuthUI(email) {
 }
 
 function handleLogout() {
+  // 1. 把瀏覽器裡記住的 email 清掉
   try {
     localStorage.removeItem("taimic-user-email");
   } catch (e) {
     console.error(e);
   }
+
+  // 2. 更新畫面：頭像變回 T、右上 email 清空、Reports gate 變成未登入版
+  loggedInEmail = null;
   applyAuthUI(null);
-  if (authOverlay) {
-    closeAuthModal();
-  }
-  if (userMenu) {
-    userMenu.classList.add("hidden");
-  }
-  if (dashUserMenu) {
-    dashUserMenu.classList.add("hidden");
-  }
+
+  // 3. 把兩個 dropdown（首頁那個、dashboard 那個）都收起來
+  if (userMenu) userMenu.classList.add("hidden");
+  if (dashUserMenu) dashUserMenu.classList.add("hidden");
+
+  // 4. 不管你現在在 index 還是 dashboard，統一導回首頁
+  window.location.href = "index.html"; // 或 "./index.html" 也可以
 }
 
 // index 頁右上角「Open my reports」
