@@ -1370,13 +1370,7 @@
         authSubmitBtn.addEventListener("click", handleAuthSubmit);
       }
 
-      document.querySelectorAll("nav .nav-link").forEach((link) => {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          const section = link.dataset.section;
-          if (section) switchSection(section);
-        });
-      });
+      
 
       // Dashboard nav click (現在只有一個實際畫面，用 active 樣式即可)
       document.querySelectorAll(".dash-nav-item").forEach((btn) => {
