@@ -1406,16 +1406,29 @@ window.onload = function () {
   if (dashUserMenu) dashUserMenu.addEventListener("click", (e) => e.stopPropagation());
 
   // Desktop nav：只攔有 data-section 的（About 用 href 跳頁）
-  document.querySelectorAll("nav .nav-link").forEach((link) => {
-    const section = link.dataset.section;
-    if (!section) return;
+  // 桌機 nav
+document.querySelectorAll("nav .nav-link").forEach((link) => {
+  const section = link.dataset.section;
+  if (!section) return; // 沒 data-section 的（例如外連）就跳過
 
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      switchSection(section);
-    });
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    switchSection(section);
   });
+});
 
+// 手機 nav
+document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+  const section = link.dataset.section;
+  if (!section) return;
+
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    switchSection(section);
+    const mobileMenu = document.getElementById("mobile-menu");
+    if (mobileMenu) mobileMenu.classList.add("hidden");
+  });
+});
   // Mobile nav：同理
   document.querySelectorAll(".mobile-nav-link").forEach((link) => {
     const section = link.dataset.section;
