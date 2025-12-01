@@ -917,11 +917,18 @@
     }
 
     function goToReports() {
-      switchSection("reports");
-      if (userMenu) {
-        userMenu.classList.add("hidden");
-      }
-    }
+  // 如果已登入 → 直接去 dashboard.html
+  if (loggedInEmail) {
+    window.location.href = "dashboard.html";
+    return;
+  }
+
+  // 還沒登入 → 留在首頁，切到 reports gate
+  switchSection("reports");
+  if (userMenu) {
+    userMenu.classList.add("hidden");
+  }
+}
 
    function openAuthModal(mode) {
   authMode = mode;
@@ -1006,27 +1013,23 @@
         const path = authMode === "register" ? "/api/register" : "/api/login";
         const data = await callAuthAPI(path, { email, password });
 
-        if (data.ok) {
-          msg.textContent =
-            authMode === "register"
-              ? lang === "zh"
-                ? "註冊成功，請重新登入。"
-                : "Sign up successful, please log in."
-              : lang === "zh"
-              ? `登入成功，歡迎 ${data.user?.email || email}`
-              : `Welcome back, ${data.user?.email || email}`;
-          msg.classList.add("text-green-600");
+         if (authMode === "login") {
+    const savedEmail = data.user?.email || email;
+    try {
+      localStorage.setItem("taimic-user-email", savedEmail);
+    } catch (e) {
+      console.error(e);
+    }
 
-          if (authMode === "login") {
-            const savedEmail = data.user?.email || email;
-            try {
-              localStorage.setItem("taimic-user-email", savedEmail);
-            } catch (e) {
-              console.error(e);
-            }
-            applyAuthUI(savedEmail);
-            setTimeout(closeAuthModal, 800);
-          }
+    // 讓 header / local state 先更新一下（避免跳頁前一瞬間 UI 錯亂）
+    applyAuthUI(savedEmail);
+
+    // 關掉 modal，並導到 dashboard.html
+    setTimeout(() => {
+      closeAuthModal();
+      window.location.href = "dashboard.html";
+    }, 600);
+  }
         } else {
           msg.textContent =
             data.message ||
