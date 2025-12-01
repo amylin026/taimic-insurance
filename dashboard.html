@@ -94,7 +94,7 @@
                   Signed in as
                 </p>
                 <p id="dash-user-email" class="text-xs font-semibold text-slate-800 truncate">
-                  you@example.com
+                  you@gmail.com
                 </p>
               </div>
               <button
@@ -638,13 +638,90 @@
   </div>
 
   <!-- Auth overlay：用你現在 index.html 的那個（有 Login / Sign up tab 的版本） -->
+    <!-- Auth overlay：登入 / 註冊共用 -->
   <div
     id="auth-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
   >
-    <!-- 建議直接複製 index.html 裡的 auth-overlay 內容過來 -->
-  </div>
+    <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 relative">
+      <!-- 關閉按鈕 -->
+      <button
+        type="button"
+        onclick="closeAuthModal()"
+        class="absolute right-3 top-3 text-slate-400 hover:text-slate-600 text-sm"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
 
+      <!-- Login / Sign up 切換 tab -->
+      <div class="flex justify-center mb-4">
+        <div class="inline-flex bg-slate-100 rounded-full p-1">
+          <button
+            type="button"
+            id="auth-tab-login"
+            onclick="openAuthModal('login')"
+            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-900 shadow-sm"
+          >
+            Log in
+          </button>
+          <button
+            type="button"
+            id="auth-tab-register"
+            onclick="openAuthModal('register')"
+            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+          >
+            Sign up
+          </button>
+        </div>
+      </div>
+
+      <!-- 標題 -->
+      <h2
+        id="auth-title"
+        class="text-lg font-semibold text-slate-900 mb-1 text-center"
+      >
+        Login to Taimic
+      </h2>
+      <!-- ⛔ 這裡原本那行「Use a demo email...」已經移除 -->
+
+      <!-- 訊息列（錯誤 / 成功訊息） -->
+      <div id="auth-message" class="text-sm h-5 text-center"></div>
+
+      <!-- Email -->
+      <label class="block text-xs font-medium text-slate-700 mt-2 mb-1">
+        Email
+      </label>
+      <input
+        id="auth-email"
+        type="email"
+        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
+        placeholder="you@gmail.com"
+      />
+
+      <!-- Password -->
+      <label class="block text-xs font-medium text-slate-700 mt-3 mb-1">
+        Password
+      </label>
+      <input
+        id="auth-password"
+        type="password"
+        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
+        placeholder="••••••••"
+      />
+
+      <!-- 送出按鈕 -->
+      <button
+        id="auth-submit"
+        type="button"
+        class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition"
+      >
+        <span id="auth-submit-text">Login</span>
+        <i class="fa-solid fa-arrow-right-long text-xs"></i>
+      </button>
+
+      <!-- ⛔ 這裡原本那行 Demo only – no real accounts are created. 已刪掉 -->
+    </div>
+  </div>
   <!-- 共用 JS -->
   <script src="main.js"></script>
 </body>
