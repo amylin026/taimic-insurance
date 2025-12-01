@@ -68,12 +68,7 @@
 
         <!-- Right controls: currency, language, user, mobile nav -->
         <div class="flex items-center gap-6 h-full">
-          <!-- Currency toggle -->
-          <div class="hidden sm:flex items-center text-xs font-medium text-gray-600 border border-gray-200 rounded-full overflow-hidden bg-gray-50 shadow-sm">
-            <button id="btn-usd" onclick="setCurrency('USD')" class="px-4 py-2 transition-colors">USD</button>
-            <button id="btn-twd" onclick="setCurrency('TWD')" class="px-4 py-2 transition-colors">TWD</button>
-          </div>
-
+          
           <!-- Language dropdown -->
           <div class="dropdown-container cursor-pointer h-full">
             <button id="lang-toggle" type="button" class="flex items-center gap-2 text-gray-600 hover:text-[#0066cc] transition-colors">
@@ -143,10 +138,6 @@
           <a href="#" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]" data-section="reports" data-i18n="nav.reports">Reports</a>
           <a href="about.html" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]" data-i18n="nav.about">About Taimic</a>
           
-          <div class="pt-2 mt-2 border-t border-gray-100 flex gap-2">
-            <button onclick="setCurrency('USD')" class="flex-1 py-2 text-xs font-bold border border-gray-200 rounded text-center hover:bg-gray-50">USD</button>
-            <button onclick="setCurrency('TWD')" class="flex-1 py-2 text-xs font-bold border border-gray-200 rounded text-center hover:bg-gray-50">TWD</button>
-          </div>
         </div>
       </div>
     </header>
