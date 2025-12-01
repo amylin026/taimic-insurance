@@ -1412,42 +1412,24 @@ window.onload = function () {
   }
   if (dashUserMenu) dashUserMenu.addEventListener("click", (e) => e.stopPropagation());
 
-  // Desktop nav：只攔有 data-section 的（About 用 href 跳頁）
-  // 桌機 nav
-document.querySelectorAll("nav .nav-link").forEach((link) => {
-  const section = link.dataset.section;
-  if (!section) return; // 沒 data-section 的（例如外連）就跳過
+  // Desktop + Mobile nav：只處理有 data-section 的（About 讓瀏覽器自己跳 about.html）
+  document
+    .querySelectorAll("nav .nav-link, .mobile-nav-link")
+    .forEach((link) => {
+      const section = link.dataset.section;
+      if (!section) return; // 沒 data-section = 外連，例如 About Taimic
 
-  link.addEventListener("click", (e) => {
-    e.preventDefault();
-    switchSection(section);
-  });
-});
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        switchSection(section);
 
-// 手機 nav
-document.querySelectorAll(".mobile-nav-link").forEach((link) => {
-  const section = link.dataset.section;
-  if (!section) return;
-
-  link.addEventListener("click", (e) => {
-    e.preventDefault();
-    switchSection(section);
-    const mobileMenu = document.getElementById("mobile-menu");
-    if (mobileMenu) mobileMenu.classList.add("hidden");
-  });
-});
-  // Mobile nav：同理
-  document.querySelectorAll(".mobile-nav-link").forEach((link) => {
-    const section = link.dataset.section;
-    if (!section) return;
-
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      switchSection(section);
-      if (mobileMenu) mobileMenu.classList.add("hidden");
+        // 如果是手機選單，切完 section 把 menu 收起來
+        if (mobileMenu && link.classList.contains("mobile-nav-link")) {
+          mobileMenu.classList.add("hidden");
+        }
+      });
     });
-  });
-
+  
   document.addEventListener("click", closeAllMenus);
 
   const authSubmitBtn = document.getElementById("auth-submit");
@@ -1455,13 +1437,19 @@ document.querySelectorAll(".mobile-nav-link").forEach((link) => {
     authSubmitBtn.addEventListener("click", handleAuthSubmit);
   }
 
-  // 判斷現在是在 index 還是 dashboard
+    // 判斷現在是在 index 還是 dashboard
   const isMarketing = document.getElementById("section-overview");
   const isDashboard = document.getElementById("dashboard-shell");
 
-  // 首頁：切到 overview
+  // 首頁：根據網址上的 # 決定一開始顯示哪個 section
   if (isMarketing) {
-    switchSection("overview");
+    // 例如 index.html#pricing / index.html#reports
+    const hash = (window.location.hash || "").replace("#", "");
+    let initial = "overview";
+    if (hash === "pricing" || hash === "reports" || hash === "overview") {
+      initial = hash;
+    }
+    switchSection(initial);
   }
 
   // Dashboard：建立 donut + 算數字
