@@ -98,6 +98,21 @@
       color: var(--brand-blue);
       background-color: #eef2ff;
     }
+    /* 取消右上角 globe / user 按鈕被點擊時的方形 focus 框 */
+    #lang-toggle:focus,
+    #lang-toggle:focus-visible,
+    #user-toggle:focus,
+    #user-toggle:focus-visible {
+      outline: none;
+      box-shadow: none;
+    }
+
+    /* dropdown 裡所有 button 的 focus 也一起關掉（避免再閃一下） */
+    .dropdown-container button:focus,
+    .dropdown-container button:focus-visible {
+     outline: none;
+     box-shadow: none;
+    }
 
     .btn-corp {
       background-color: var(--brand-blue);
