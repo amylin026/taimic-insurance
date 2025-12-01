@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- =================================================== -->
-  <!-- 0. DOCUMENT SETUP: META, CDN, FONTS, GLOBAL CSS     -->
-  <!-- =================================================== -->
   <title>Taimic – Operating System for Cross-Border Families | 跨國家庭的作業系統</title>
 
   <meta name="description" content="Taimic is the operating system for cross-border families and global citizens with assets in multiple countries. We consolidate bank accounts, insurance policies and properties across borders, track your global net worth, and use AI to help with tax, insurance and legacy planning. Taimic 專為在美台灣人與 Global Citizens 設計，一個 App 整合台灣與美國資產，追蹤全球淨值，並用 AI 幫你處理跨境稅務、保險配置與資產傳承。">
@@ -19,20 +16,19 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
-  <!-- Project design system & layout -->
+  <!-- 你的設計系統 / 版型 CSS -->
   <link rel="stylesheet" href="main.css" />
 </head>
 
 <body class="min-h-screen bg-[#F5F7FA]">
 
   <!-- =================================================== -->
-  <!-- 1. MARKETING SHELL (未登入看到的整個網站)          -->
+  <!-- 1. MARKETING (未登入看到的整個網站)                 -->
   <!-- =================================================== -->
   <div id="marketing-shell" class="flex flex-col min-h-screen">
-    <!-- 1.0 Global top nav (logo + nav + language + user dropdown) -->
+    <!-- 1.0 Top Nav -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[72px]">
       <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center relative">
-        <!-- Logo + brand -->
         <div class="flex items-center gap-4 cursor-pointer" onclick="switchSection('overview')">
           <svg class="logo-clock" viewBox="0 0 100 100">
             <defs>
@@ -58,7 +54,6 @@
           </div>
         </div>
 
-        <!-- Desktop nav -->
         <nav class="hidden lg:flex h-full items-center space-x-4">
           <a href="#" class="nav-link active" data-section="overview" data-i18n="nav.overview">Overview</a>
           <a href="#" class="nav-link" data-section="pricing" data-i18n="nav.pricing">Pricing</a>
@@ -66,15 +61,13 @@
           <a href="#" class="nav-link" data-section="about" data-i18n="nav.about">About Taimic</a>
         </nav>
 
-        <!-- Right controls: currency, language, user, mobile nav -->
         <div class="flex items-center gap-6 h-full">
-          <!-- Currency toggle -->
           <div class="hidden sm:flex items-center text-xs font-medium text-gray-600 border border-gray-200 rounded-full overflow-hidden bg-gray-50 shadow-sm">
             <button id="btn-usd" onclick="setCurrency('USD')" class="px-4 py-2 transition-colors">USD</button>
             <button id="btn-twd" onclick="setCurrency('TWD')" class="px-4 py-2 transition-colors">TWD</button>
           </div>
 
-          <!-- Language dropdown -->
+          <!-- 語言選單 -->
           <div class="dropdown-container cursor-pointer h-full">
             <button id="lang-toggle" type="button" class="flex items-center gap-2 text-gray-600 hover:text-[#0066cc] transition-colors">
               <div class="w-9 h-9 rounded-full flex items-center justify-center bg-gray-50 border border-gray-200">
@@ -88,13 +81,13 @@
             </div>
           </div>
 
-          <!-- User avatar (pre-login / post-login for marketing shell) -->
+          <!-- User menu（行銷頁狀態用） -->
           <div class="dropdown-container cursor-pointer h-full border-l border-gray-200 pl-4">
             <button id="user-toggle" type="button" class="w-10 h-10 bg-[#f3f4f6] text-gray-600 rounded-full flex items-center justify-center hover:bg-[#0066cc] hover:text-white transition-colors">
               <i class="fa-solid fa-user text-base"></i>
             </button>
             <div id="user-menu" class="dropdown-menu hidden">
-              <!-- 未登入狀態 -->
+              <!-- 未登入 -->
               <div id="user-menu-guest">
                 <div class="dropdown-item" onclick="openAuthModal('login')">
                   <i class="fa-solid fa-right-to-bracket"></i>
@@ -111,7 +104,7 @@
                 </div>
               </div>
 
-              <!-- 已登入狀態 -->
+              <!-- 已登入 -->
               <div id="user-menu-loggedin" class="hidden">
                 <div class="px-4 py-3 border-b border-gray-100">
                   <p class="text-[10px] text-slate-500 uppercase tracking-[0.16em]">Signed in as</p>
@@ -130,21 +123,21 @@
             </div>
           </div>
 
-          <!-- Mobile hamburger -->
+          <!-- Mobile menu button -->
           <button id="mobile-menu-btn" class="lg:hidden pl-2 text-gray-600 hover:text-[#0066cc] focus:outline-none">
             <i class="fa-solid fa-bars text-xl"></i>
           </button>
         </div>
       </div>
 
-      <!-- Mobile nav menu -->
+      <!-- Mobile nav -->
       <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 absolute top-[72px] left-0 w-full shadow-lg z-30">
         <div class="flex flex-col p-4 space-y-2">
           <a href="#" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]" data-section="overview" data-i18n="nav.overview">Overview</a>
           <a href="#" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]" data-section="pricing" data-i18n="nav.pricing">Pricing</a>
           <a href="#" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]" data-section="reports" data-i18n="nav.reports">Reports</a>
           <a href="#" class="mobile-nav-link block px-4 py-3 rounded-lg text-gray-600 font-medium hover:bg-gray-50 hover:text-[#0066cc]" data-section="about" data-i18n="nav.about">About Taimic</a>
-          
+
           <div class="pt-2 mt-2 border-t border-gray-100 flex gap-2">
             <button onclick="setCurrency('USD')" class="flex-1 py-2 text-xs font-bold border border-gray-200 rounded text-center hover:bg-gray-50">USD</button>
             <button onclick="setCurrency('TWD')" class="flex-1 py-2 text-xs font-bold border border-gray-200 rounded text-center hover:bg-gray-50">TWD</button>
@@ -153,17 +146,15 @@
       </div>
     </header>
 
-    <!-- =================================================== -->
-    <!-- 1.1 OVERVIEW / HERO + RISK SCREENER                -->
-    <!-- =================================================== -->
+    <!-- 1.1 Main Marketing Sections -->
     <main class="flex-grow">
+      <!-- 1.1.1 Overview / Hero -->
       <section id="section-overview">
         <!-- Hero / risk scan -->
         <section class="relative border-b border-slate-200 bg-gradient-to-b from-[#ecf3ff] via-[#f7f9ff] to-[#e5edf9]">
           <div id="hero-overlay" class="absolute inset-0 z-20 hidden cursor-pointer"></div>
 
           <div class="max-w-[1440px] mx-auto px-6 pt-16 pb-10 md:pt-20 md:pb-24">
-            <!-- Hero copy -->
             <div class="max-w-3xl mx-auto text-center space-y-6">
               <p class="text-xs font-semibold tracking-[0.28em] text-slate-500 uppercase">
                 CROSS-BORDER WEALTH OS
@@ -194,7 +185,7 @@
               </div>
             </div>
 
-            <!-- Compliance screener card -->
+            <!-- Hero card (calculator) -->
             <div class="mt-10 md:mt-12 flex justify-center relative">
               <div
                 id="compliance-card"
@@ -222,14 +213,13 @@
                     </div>
                   </div>
 
-                  <!-- Screener controls -->
                   <div class="space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <!-- Left: Tax status, residence, asset types -->
                       <div class="space-y-4">
                         <input id="hero-identity" type="hidden" value="non-us" />
                         <input id="hero-residence" type="hidden" value="tw" />
 
-                        <!-- Tax Status pills -->
                         <div class="space-y-2">
                           <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
                             Tax Status
@@ -270,7 +260,6 @@
                           </div>
                         </div>
 
-                        <!-- Residence pills -->
                         <div class="space-y-2">
                           <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
                             Residence
@@ -311,7 +300,6 @@
                           </div>
                         </div>
 
-                        <!-- Asset types -->
                         <div class="space-y-2">
                           <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
                             Asset Types
@@ -360,7 +348,7 @@
                         </div>
                       </div>
 
-                      <!-- Asset amounts -->
+                      <!-- Right: inputs -->
                       <div class="space-y-4">
                         <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
                           Assets (TWD / USD)
@@ -408,7 +396,7 @@
                       </div>
                     </div>
 
-                    <!-- Analyze CTA -->
+                    <!-- CTA row -->
                     <div class="pt-4 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-3">
                       <p class="text-[11px] text-slate-500 flex items-center gap-1">
                         <i class="fa-solid fa-circle-info text-[10px] text-slate-400"></i>
@@ -425,7 +413,7 @@
                     </div>
                   </div>
 
-                  <!-- Screener result panel -->
+                  <!-- Hero result -->
                   <div id="hero-result" class="mt-6 hidden space-y-5 animate-fade-in">
                     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
                       <div>
@@ -446,7 +434,6 @@
                       </p>
                     </div>
 
-                    <!-- US / TW risk cards -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                       <div
                         id="hero-us-status"
@@ -479,7 +466,6 @@
                       </div>
                     </div>
 
-                    <!-- Upgrade CTA banner -->
                     <div class="relative mt-4 overflow-hidden rounded-2xl border border-slate-200 bg-slate-50/80">
                       <div class="absolute inset-0 bg-slate-100/70 backdrop-blur-sm pointer-events-none"></div>
                       <div class="relative p-4 md:p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -530,9 +516,7 @@
           </div>
         </section>
 
-        <!-- =================================================== -->
-        <!-- 1.2 VALUE PROPS GRID (Global View / Compliance / AI) -->
-        <!-- =================================================== -->
+        <!-- 1.1.2 Feature section -->
         <section class="py-16 md:py-20 bg-[#f3f5f9]">
           <div class="max-w-[1100px] mx-auto px-6">
             <div class="text-center max-w-2xl mx-auto mb-10">
@@ -592,9 +576,7 @@
           </div>
         </section>
 
-        <!-- =================================================== -->
-        <!-- 1.3 CTA STRIPE: "Stop living in spreadsheets"       -->
-        <!-- =================================================== -->
+        <!-- 1.1.3 CTA band -->
         <section class="py-16 md:py-20 bg-gradient-to-r from-[#e0f2fe] via-[#bfdbfe] to-[#93c5fd] border-t border-blue-100">
           <div class="max-w-[1100px] mx-auto px-6">
             <div class="bg-white/95 rounded-3xl shadow-lg px-8 py-10 md:px-10 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -624,13 +606,10 @@
           </div>
         </section>
 
-        <!-- =================================================== -->
-        <!-- 1.4 DEMO STATS & HOLDINGS (目前 hidden)             -->
-        <!-- =================================================== -->
+        <!-- 1.1.4 Stats + chart section (hidden demo) -->
         <section class="py-10 hidden">
           <div class="max-w-[1440px] mx-auto px-6 w-full">
             <div class="panel px-6 md:px-8 lg:px-10 py-8 md:py-10">
-              <!-- Stats cards -->
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
                 <div class="p-6 border border-gray-200 rounded-xl hover:border-[#0066cc] transition-colors bg-white">
                   <div class="flex justify-between items-start mb-4">
@@ -690,7 +669,6 @@
                 </div>
               </div>
 
-              <!-- Holdings table + donut chart -->
               <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
                 <div class="lg:col-span-2">
                   <div
@@ -792,9 +770,7 @@
         </section>
       </section>
 
-      <!-- =================================================== -->
-      <!-- 1.5 PRICING PAGE (Pricing nav tab)                  -->
-      <!-- =================================================== -->
+      <!-- 1.2 Pricing section -->
       <section id="section-pricing" class="hidden bg-[#eef2ff] border-t border-gray-200">
         <div class="max-w-[1100px] mx-auto px-6 pt-14 pb-20">
           <div class="text-center">
@@ -848,8 +824,8 @@
             </div>
           </div>
 
-          <!-- Plan cards -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+            <!-- Starter -->
             <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col relative overflow-hidden group pricing-card">
               <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-50/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
               <div class="relative z-10">
@@ -890,6 +866,7 @@
               </div>
             </div>
 
+            <!-- Pro -->
             <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col relative overflow-hidden group pricing-card">
               <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-50/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
               <div class="relative z-10">
@@ -945,6 +922,7 @@
               </div>
             </div>
 
+            <!-- Family Office -->
             <div class="bg-white rounded-3xl border border-gray-200 shadow-sm p-8 flex flex-col relative overflow-hidden group pricing-card">
               <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-blue-50/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
               <div class="relative z-10">
@@ -996,9 +974,7 @@
         </div>
       </section>
 
-      <!-- =================================================== -->
-      <!-- 1.6 ABOUT PAGE (About tab)                          -->
-      <!-- =================================================== -->
+      <!-- 1.3 About section（★這個是我幫你補好的完整 About Taimic） -->
       <section id="section-about" class="bg-[#dbeafe] border-t border-gray-200">
         <div class="max-w-[1100px] mx-auto px-6 pt-16 pb-20">
           <header class="mb-10">
@@ -1041,18 +1017,105 @@
           </header>
 
           <div class="bg-white/95 rounded-3xl shadow-sm border border-gray-200 p-6 md:p-8 leading-relaxed text-sm md:text-[15px] text-gray-800 space-y-6">
-            <!-- 1.6.1 About content (中文) -->
+            <!--
+              ★ 如果你手上有「原本寫好的 About Taimic 文字」，
+              只要把下面這兩個 <div id="about-zh"> / <div id="about-en">
+              裡面的內容整段換掉就可以，class / id 不要動。
+            -->
+
+            <!-- ABOUT-ZH -->
             <div id="about-zh" class="space-y-6">
-              <!-- TODO: full zh content retained in original; shortened here in comments -->
+              <p>
+                Taimic 是一個為「跨國家庭、在美台灣人、Global Citizens」打造的
+                <span class="font-semibold">跨境資產作業系統（Cross-Border Wealth OS）</span>。
+                我們不是做一個漂亮的投資 App，而是希望幫你把散落在台灣、美國與其他國家的
+                帳戶、保單、房產與投資部位，拉回到同一個可以管理的畫面裡。
+              </p>
+
+              <p>
+                很多用戶在遇到 Taimic 之前，生活看起來是這樣的：
+              </p>
+
+              <ul class="list-disc pl-5 space-y-1.5">
+                <li>Excel 裡有 10 個 sheet，追匯率、資產與保單，但每次看到就想關掉。</li>
+                <li>台灣、美國各一堆帳戶，只有報稅季或要填 FATCA / CRS 表時才想起來它們的存在。</li>
+                <li>明明資產已經破幾千萬台幣，卻很難回答：「如果匯率動 5%、或是其中一個人出事，家裡的資產結構會變成怎樣？」</li>
+                <li>會計師、律師、保險業務各說各話，卻沒有人真的幫你把「全局」畫出來。</li>
+              </ul>
+
+              <p>
+                所以，我們決定做一個比較像「作業系統」的東西，而不是單純的行情或下單工具：
+              </p>
+
+              <ul class="list-disc pl-5 space-y-1.5">
+                <li>先從你<strong>實際持有的帳戶、保單、房產</strong>開始建檔，跨國整合成一份「全球資產總表」。</li>
+                <li>自動套用即時匯率，幫你換算成單一基準貨幣，讓你一眼看到淨值與資產配置。</li>
+                <li>針對 FATCA / FBAR / CRS、台灣所得稅與遺贈稅，做門檻追蹤與風險提醒。</li>
+                <li>用 AI 把「規則」翻譯成你看得懂的語言：發生什麼事、為什麼、接下來可以怎麼做。</li>
+              </ul>
+
+              <p>
+                Taimic 不會取代會計師或律師，我們比較像是你和專業顧問之間的
+                <span class="font-semibold">「共同語言與共同畫面」</span>：
+                當你看得懂自己的結構，你就更有能力問對問題、做對決定。
+              </p>
+
+              <p>
+                在安全與隱私上，我們採用和金融機構同級的加密標準，並且盡量讓你保留主導權：
+                你可以選擇只放「必要的摘要」，或在需要時再授權顧問看指定報表，而不是把所有東西散落在 email、聊天紀錄與紙本資料夾裡。
+              </p>
+
               <p>
                 如果您也相信，看懂自己的全球資產，是邁向財務安全與長期資產規劃的第一步，
                 歡迎加入 Taimic，拿回您對全球財富的掌控權。
               </p>
             </div>
 
-            <!-- 1.6.2 About content (英文) -->
+            <!-- ABOUT-EN -->
             <div id="about-en" class="hidden space-y-6">
-              <!-- TODO: full en content retained in original; shortened here in comments -->
+              <p>
+                Taimic is an <span class="font-semibold">AI-enabled cross-border wealth and legacy OS</span>
+                built for globally mobile families – immigrants, expats and global citizens with real assets
+                spread across Taiwan, the US and beyond. We’re not trying to be another trading app.
+                We’re building the operating system that sits underneath your cross-border life.
+              </p>
+
+              <p>
+                Before finding Taimic, many of our users shared the same story:
+              </p>
+
+              <ul class="list-disc pl-5 space-y-1.5">
+                <li>They lived in massive spreadsheets with 10+ tabs for FX, accounts and policies – and avoided opening them.</li>
+                <li>They had accounts and policies scattered across Taiwan, the US and other jurisdictions, only remembered during tax season.</li>
+                <li>Net worth was in the millions (TWD or USD), but it was still hard to answer:
+                  “What if FX moves 5%? What if something happens to one of us – how does our structure actually behave?”</li>
+                <li>Accountants, lawyers and advisors all had pieces of the puzzle, but nobody held the full picture together.</li>
+              </ul>
+
+              <p>
+                Taimic is our answer to that gap. Instead of starting from “products” or “portfolios”, we start from
+                <span class="font-semibold">your actual accounts, policies, entities and properties</span>, then:
+              </p>
+
+              <ul class="list-disc pl-5 space-y-1.5">
+                <li>Consolidate Taiwan + US + offshore positions into a single global balance sheet.</li>
+                <li>Apply live FX to give you a clear base-currency view of net worth and allocation.</li>
+                <li>Track FATCA / FBAR / CRS thresholds and Taiwan income / estate tax exposure with simple, visual flags.</li>
+                <li>Use AI to translate complex rules into plain language – what’s happening, why, and what scenarios to consider next.</li>
+              </ul>
+
+              <p>
+                We don’t replace your professional advisors. Instead, we give you and your advisors a
+                <span class="font-semibold">shared source of truth</span> so conversations can move from
+                “sending PDFs back and forth” to “making real, well-informed decisions about structure and legacy”.
+              </p>
+
+              <p>
+                From a security and privacy standpoint, we follow bank-grade encryption practices and design Taimic
+                so that <span class="font-semibold">you stay in control</span>: you decide what to upload, what to
+                summarise, and when to share specific reports with the people you trust.
+              </p>
+
               <p>
                 If you also believe that understanding your global assets is the
                 first step toward financial security and long-term planning, we’d
@@ -1064,9 +1127,7 @@
         </div>
       </section>
 
-      <!-- =================================================== -->
-      <!-- 1.7 REPORTS GATE (Reports nav tab / pre-login gate) -->
-      <!-- =================================================== -->
+      <!-- 1.4 Reports gate (pre-login) -->
       <section id="section-reports" class="hidden reports-section">
         <div class="reports-shell w-full">
           <div class="max-w-[1100px] mx-auto px-6 py-16 flex items-center justify-center">
@@ -1080,7 +1141,6 @@
                 </span>
               </div>
 
-              <!-- EN version -->
               <div
                 id="reports-gate-en"
                 class="space-y-4 text-slate-900 text-sm md:text-[15px] leading-relaxed"
@@ -1134,7 +1194,6 @@
                 </div>
               </div>
 
-              <!-- ZH version -->
               <div
                 id="reports-gate-zh"
                 class="hidden space-y-4 text-slate-900 text-sm md:text-[15px] leading-relaxed"
@@ -1190,9 +1249,7 @@
       </section>
     </main>
 
-    <!-- =================================================== -->
-    <!-- 1.8 FOOTER                                           -->
-    <!-- =================================================== -->
+    <!-- 1.5 Footer -->
     <footer class="bg-[#f4f6fb] border-t border-gray-200">
       <div class="max-w-[1440px] mx-auto px-6 pt-10 pb-4">
         <div class="flex flex-col lg:flex-row gap-10 lg:gap-20 pb-8 border-b border-gray-200">
@@ -1263,11 +1320,11 @@
   </div> <!-- /marketing-shell -->
 
   <!-- =================================================== -->
-  <!-- 2. LOGGED-IN DASHBOARD SHELL                        -->
+  <!-- 2. LOGGED-IN DASHBOARD UI                           -->
   <!-- =================================================== -->
   <div id="dashboard-shell" class="hidden min-h-screen">
     <div class="dashboard-layout">
-      <!-- 2.1 Sidebar navigation -->
+      <!-- Sidebar -->
       <aside class="dashboard-sidebar">
         <div class="dashboard-sidebar-header">
           <svg class="logo-clock" viewBox="0 0 100 100">
@@ -1339,9 +1396,9 @@
         </div>
       </aside>
 
-      <!-- 2.2 Main dashboard area -->
+      <!-- Main -->
       <div class="dashboard-main-shell">
-        <!-- 2.2.1 Header bar (breadcrumbs + advisor button + user) -->
+        <!-- Top header -->
         <header class="dashboard-header">
           <div>
             <div class="dashboard-breadcrumb">Home &gt; Dashboard</div>
@@ -1383,10 +1440,11 @@
           </div>
         </header>
 
-        <!-- 2.2.2 Dashboard content blocks (A~D) -->
+        <!-- Dashboard content -->
         <main class="dashboard-main">
-          <!-- A. Total Net Worth hero card -->
+          <!-- View: main overview -->
           <section id="dash-view-overview" class="space-y-6">
+            <!-- Block A: Hero / Total Net Worth -->
             <section class="dashboard-card dashboard-hero-card p-6 md:p-7 lg:p-8">
               <div class="dashboard-hero-orb"></div>
               <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 relative z-10">
@@ -1449,9 +1507,9 @@
               </div>
             </section>
 
-            <!-- B + C row: Geo map + Risk & Allocation -->
+            <!-- Block B + C row -->
             <section class="grid lg:grid-cols-[1.6fr,1fr] gap-6">
-              <!-- B. Global Asset Map -->
+              <!-- Block B: Global Asset Map -->
               <section class="dashboard-card p-6 md:p-7 flex flex-col gap-4">
                 <div class="flex items-center justify-between">
                   <div>
@@ -1469,7 +1527,7 @@
                 </div>
 
                 <div class="dashboard-map-wrapper h-72 md:h-80 mt-2">
-                  <!-- Super minimal world map silhouette -->
+                  <!-- Minimal world map silhouette -->
                   <svg viewBox="0 0 800 400" class="w-full h-full opacity-70">
                     <rect x="0" y="0" width="800" height="400" fill="#E2E8F0"></rect>
                     <path
@@ -1525,9 +1583,9 @@
                 </div>
               </section>
 
-              <!-- C. Risk & Allocation column -->
+              <!-- Block C: Risk & Allocation -->
               <section class="flex flex-col gap-6">
-                <!-- C1. FX Exposure -->
+                <!-- FX Exposure -->
                 <section class="dashboard-subcard p-5 md:p-6">
                   <div class="flex items-center justify-between mb-3">
                     <div>
@@ -1551,7 +1609,7 @@
                     </div>
                     <div class="fx-bar mt-1">
                       <div class="fx-bar-zero-line"></div>
-                      <!-- indicator: default to right side (positive) -->
+                      <!-- indicator -->
                       <div id="fx-impact-indicator" class="fx-bar-indicator" style="left: 66%;"></div>
                     </div>
                     <p class="text-[11px] text-[var(--text-muted)]">
@@ -1561,7 +1619,7 @@
                   </div>
                 </section>
 
-                <!-- C2. Asset Allocation donut -->
+                <!-- Asset Allocation donut -->
                 <section class="dashboard-subcard p-5 md:p-6 flex flex-col gap-4">
                   <div class="flex items-center justify-between">
                     <div>
@@ -1613,7 +1671,7 @@
               </section>
             </section>
 
-            <!-- D. Compliance Timeline -->
+            <!-- Block D: Compliance Timeline -->
             <section class="dashboard-card p-6 md:p-7 lg:p-8">
               <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
                 <div>
@@ -1688,8 +1746,10 @@
   </div> <!-- /dashboard-shell -->
 
   <!-- =================================================== -->
-  <!-- 3. SHARED MODALS: UPLOAD + AUTH                     -->
+  <!-- 3. Modals: Upload (AI OCR) + Auth                   -->
   <!-- =================================================== -->
+
+  <!-- Upload modal -->
   <div
     id="modal-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
@@ -1741,6 +1801,7 @@
     </div>
   </div>
 
+  <!-- Auth modal -->
   <div
     id="auth-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
@@ -1786,7 +1847,7 @@
   </div>
 
   <!-- =================================================== -->
-  <!-- 4. MAIN JS ENTRYPOINT                               -->
+  <!-- 4. Main JS                                          -->
   <!-- =================================================== -->
   <script src="main.js"></script>
 </body>
