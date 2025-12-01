@@ -1438,17 +1438,14 @@ window.onload = function () {
   }
 
     // 判斷現在是在 index 還是 dashboard
-  const isMarketing = document.getElementById("section-overview");
+    const isMarketing = document.getElementById("section-overview");
   const isDashboard = document.getElementById("dashboard-shell");
 
-  // 首頁：根據網址上的 # 決定一開始顯示哪個 section
+  // ✅ 首頁：依照網址的 #hash 決定要開哪一個 tab
   if (isMarketing) {
-    // 例如 index.html#pricing / index.html#reports
-    const hash = (window.location.hash || "").replace("#", "");
-    let initial = "overview";
-    if (hash === "pricing" || hash === "reports" || hash === "overview") {
-      initial = hash;
-    }
+    const hash = window.location.hash.replace("#", "");
+    const allowed = ["overview", "pricing", "reports"];
+    const initial = allowed.includes(hash) ? hash : "overview";
     switchSection(initial);
   }
 
@@ -1456,7 +1453,6 @@ window.onload = function () {
   if (isDashboard) {
     initDashboard();
   }
-
   // 兩邊都要匯率
   fetchFXRate();
 };
