@@ -166,16 +166,29 @@
             <!-- Hero copy -->
             <div class="max-w-3xl mx-auto text-center space-y-6">
               <p class="text-xs font-semibold tracking-[0.28em] text-slate-500 uppercase">
-                CROSS-BORDER WEALTH OS
+                <span class="overview-i18n" data-lang="en">CROSS-BORDER WEALTH OS</span>
+                <span class="overview-i18n hidden" data-lang="zh">跨境資產作業系統</span>
               </p>
               <h1 class="text-[32px] sm:text-[40px] md:text-[46px] font-extrabold tracking-tight text-slate-900 leading-tight">
-                The OS for your
-                <span class="text-[#0066cc]">Cross-border Wealth.</span>
+                <span class="overview-i18n" data-lang="en">
+                  The OS for your
+                  <span class="text-[#0066cc]">Cross-border Wealth.</span>
+                </span>
+                <span class="overview-i18n hidden" data-lang="zh">
+                  為你的<span class="text-[#0066cc]">跨境資產</span>打造的作業系統。
+                </span>
               </h1>
               <p class="text-sm md:text-base text-slate-600 leading-relaxed max-w-xl mx-auto">
-                <span class="block">Automated FATCA compliance.</span>
-                <span class="block">Real-time net worth tracking.</span>
-                <span class="block">AI insights for global families.</span>
+                <span class="overview-i18n block" data-lang="en">
+                  <span class="block">Automated FATCA compliance.</span>
+                  <span class="block">Real-time net worth tracking.</span>
+                  <span class="block">AI insights for global families.</span>
+                </span>
+                <span class="overview-i18n block hidden" data-lang="zh">
+                  <span class="block">自動化 FATCA 合規檢核。</span>
+                  <span class="block">即時追蹤全球淨值。</span>
+                  <span class="block">為跨境家庭量身打造的 AI 洞察。</span>
+                </span>
               </p>
 
               <div class="flex flex-wrap items-center justify-center gap-3">
@@ -183,14 +196,17 @@
                   id="hero-run-scan-btn"
                   type="button"
                   class="inline-flex items-center justify-center px-7 py-3 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm md:text-base font-semibold shadow-[0_18px_60px_rgba(37,99,235,0.45)]">
-                  Run Free Risk Scan
+                  <span class="overview-i18n" data-lang="en">Run Free Risk Scan</span>
+                  <span class="overview-i18n hidden" data-lang="zh">免費風險掃描</span>
                 </button>
               </div>
 
               <div class="flex items-center justify-center gap-2 text-[11px] text-slate-500 pt-1">
-                <span>No sign-up for first scan</span>
+                <span class="overview-i18n" data-lang="en">No sign-up for first scan</span>
+                <span class="overview-i18n hidden" data-lang="zh">首次掃描無需註冊</span>
                 <span class="hidden sm:inline">·</span>
-                <span>Takes 60 seconds</span>
+                <span class="overview-i18n" data-lang="en">Takes 60 seconds</span>
+                <span class="overview-i18n hidden" data-lang="zh">約 60 秒完成</span>
               </div>
             </div>
 
@@ -203,12 +219,14 @@
                   <div class="flex items-center justify-between mb-5">
                     <div>
                       <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
-                        Compliance Risk Screener
+                        <span class="overview-i18n" data-lang="en">Compliance Risk Screener</span>
+                        <span class="overview-i18n hidden" data-lang="zh">合規風險快篩</span>
                       </p>
                       <div class="mt-2 inline-flex items-center gap-2 rounded-full bg-blue-50 border border-blue-100 px-2.5 py-1">
                         <span class="inline-flex w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                         <span class="text-[10px] font-semibold tracking-[0.18em] uppercase text-[#1d4ed8]">
-                          Powered by Taimic AI
+                          <span class="overview-i18n" data-lang="en">Powered by Taimic AI</span>
+                          <span class="overview-i18n hidden" data-lang="zh">由 Taimic AI 驅動</span>
                         </span>
                       </div>
                     </div>
@@ -217,7 +235,8 @@
                         <i class="fa-solid fa-shield-halved text-xs text-[#1d4ed8]"></i>
                       </div>
                       <span class="uppercase tracking-[0.18em] font-semibold">
-                        Bank-level encryption
+                        <span class="overview-i18n" data-lang="en">Bank-level encryption</span>
+                        <span class="overview-i18n hidden" data-lang="zh">銀行等級加密</span>
                       </span>
                     </div>
                   </div>
@@ -232,7 +251,8 @@
                         <!-- Tax Status pills -->
                         <div class="space-y-2">
                           <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
-                            Tax Status
+                            <span class="overview-i18n" data-lang="en">Tax Status</span>
+                            <span class="overview-i18n hidden" data-lang="zh">稅務身分</span>
                           </p>
                           <div class="inline-flex rounded-full bg-slate-100 p-1 gap-1">
                             <button
@@ -249,7 +269,8 @@
                                 calculateHeroTotal();
                               "
                             >
-                              Non-US Person
+                              <span class="overview-i18n" data-lang="en">Non-US Person</span>
+                              <span class="overview-i18n hidden" data-lang="zh">非美國納稅人</span>
                             </button>
                             <button
                               type="button"
@@ -265,7 +286,8 @@
                                 calculateHeroTotal();
                               "
                             >
-                              US Citizen / Green Card
+                              <span class="overview-i18n" data-lang="en">US Citizen / Green Card</span>
+                              <span class="overview-i18n hidden" data-lang="zh">美國公民／綠卡</span>
                             </button>
                           </div>
                         </div>
@@ -273,7 +295,8 @@
                         <!-- Residence pills -->
                         <div class="space-y-2">
                           <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
-                            Residence
+                            <span class="overview-i18n" data-lang="en">Residence</span>
+                            <span class="overview-i18n hidden" data-lang="zh">居住地</span>
                           </p>
                           <div class="inline-flex rounded-full bg-slate-100 p-1 gap-1">
                             <button
@@ -290,7 +313,8 @@
                                 calculateHeroTotal();
                               "
                             >
-                              Living in Taiwan
+                              <span class="overview-i18n" data-lang="en">Living in Taiwan</span>
+                              <span class="overview-i18n hidden" data-lang="zh">目前居住台灣</span>
                             </button>
                             <button
                               type="button"
@@ -306,7 +330,8 @@
                                 calculateHeroTotal();
                               "
                             >
-                              Living in US
+                              <span class="overview-i18n" data-lang="en">Living in US</span>
+                              <span class="overview-i18n hidden" data-lang="zh">目前居住美國</span>
                             </button>
                           </div>
                         </div>
@@ -314,7 +339,8 @@
                         <!-- Asset types -->
                         <div class="space-y-2">
                           <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
-                            Asset Types
+                            <span class="overview-i18n" data-lang="en">Asset Types</span>
+                            <span class="overview-i18n hidden" data-lang="zh">資產類型</span>
                           </p>
                           <div class="flex flex-wrap gap-2">
                             <label class="inline-flex items-center gap-2 text-[11px] md:text-[12px] text-slate-600 bg-slate-50 border border-slate-200 rounded-full px-3 py-1.5">
@@ -324,7 +350,10 @@
                                 class="rounded border-slate-300"
                                 onchange="calculateHeroTotal()"
                               />
-                              <span>現金存款 Cash</span>
+                              <span>
+                                <span class="overview-i18n" data-lang="en">Cash deposits</span>
+                                <span class="overview-i18n hidden" data-lang="zh">現金存款</span>
+                              </span>
                             </label>
                             <label class="inline-flex items-center gap-2 text-[11px] md:text-[12px] text-slate-600 bg-slate-50 border border-slate-200 rounded-full px-3 py-1.5">
                               <input
@@ -333,7 +362,10 @@
                                 class="rounded border-slate-300"
                                 onchange="calculateHeroTotal()"
                               />
-                              <span>股票 Stocks</span>
+                              <span>
+                                <span class="overview-i18n" data-lang="en">Stocks</span>
+                                <span class="overview-i18n hidden" data-lang="zh">股票</span>
+                              </span>
                             </label>
                             <label class="inline-flex items-center gap-2 text-[11px] md:text-[12px] text-slate-600 bg-slate-50 border border-slate-200 rounded-full px-3 py-1.5">
                               <input
@@ -342,7 +374,16 @@
                                 class="rounded border-slate-300"
                                 onchange="calculateHeroTotal()"
                               />
-                              <span>基金 / ETF Funds <span class="text-[10px] text-red-500">（PFIC 高風險）</span></span>
+                              <span>
+                                <span class="overview-i18n" data-lang="en">
+                                  Funds / ETFs
+                                  <span class="text-[10px] text-red-500">(PFIC high risk)</span>
+                                </span>
+                                <span class="overview-i18n hidden" data-lang="zh">
+                                  基金／ETF
+                                  <span class="text-[10px] text-red-500">（PFIC 高風險）</span>
+                                </span>
+                              </span>
                             </label>
                             <label class="inline-flex items-center gap-2 text-[11px] md:text-[12px] text-slate-600 bg-slate-50 border border-slate-200 rounded-full px-3 py-1.5">
                               <input
@@ -351,11 +392,21 @@
                                 class="rounded border-slate-300"
                                 onchange="calculateHeroTotal()"
                               />
-                              <span>保險 / 年金 Insurance <span class="text-[10px] text-red-500">（PFIC / Excise Tax）</span></span>
+                              <span>
+                                <span class="overview-i18n" data-lang="en">
+                                  Insurance / annuity
+                                  <span class="text-[10px] text-red-500">(PFIC / excise tax)</span>
+                                </span>
+                                <span class="overview-i18n hidden" data-lang="zh">
+                                  保險／年金
+                                  <span class="text-[10px] text-red-500">（PFIC／保費稅）</span>
+                                </span>
+                              </span>
                             </label>
                           </div>
                           <p id="hero-assets-error" class="hidden text-[11px] text-red-500 mt-1">
-                            請至少勾選一項資產類型 / Please select at least one asset type.
+                            <span class="overview-i18n" data-lang="en">Please select at least one asset type.</span>
+                            <span class="overview-i18n hidden" data-lang="zh">請至少勾選一項資產類型。</span>
                           </p>
                         </div>
                       </div>
@@ -363,12 +414,14 @@
                       <!-- Asset amounts -->
                       <div class="space-y-4">
                         <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
-                          Assets (TWD / USD)
+                          <span class="overview-i18n" data-lang="en">Assets (TWD / USD)</span>
+                          <span class="overview-i18n hidden" data-lang="zh">資產（台幣／美金）</span>
                         </p>
 
                         <div class="space-y-2">
                           <label for="hero-twd" class="block text-[11px] font-medium text-slate-600 mb-1.5">
-                            Taiwan Assets (TWD) / 台灣資產
+                            <span class="overview-i18n" data-lang="en">Taiwan assets (TWD)</span>
+                            <span class="overview-i18n hidden" data-lang="zh">台灣資產（新台幣）</span>
                           </label>
                           <div class="relative">
                             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-[11px] text-slate-400">
@@ -388,7 +441,8 @@
 
                         <div class="space-y-2">
                           <label for="hero-usd" class="block text-[11px] font-medium text-slate-600 mb-1.5">
-                            US / Overseas Assets (USD) / 美國・海外資產
+                            <span class="overview-i18n" data-lang="en">US / overseas assets (USD)</span>
+                            <span class="overview-i18n hidden" data-lang="zh">美國／海外資產（美元）</span>
                           </label>
                           <div class="relative">
                             <span class="absolute left-3 top-1/2 -translate-y-1/2 text-[11px] text-slate-400">
@@ -412,14 +466,16 @@
                     <div class="pt-4 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-3">
                       <p class="text-[11px] text-slate-500 flex items-center gap-1">
                         <i class="fa-solid fa-circle-info text-[10px] text-slate-400"></i>
-                        <span>No sign-up for first scan · Takes about 60 seconds</span>
+                        <span class="overview-i18n" data-lang="en">No sign-up for first scan · Takes about 60 seconds</span>
+                        <span class="overview-i18n hidden" data-lang="zh">首次掃描無需註冊，約 60 秒完成</span>
                       </p>
                       <button
                         type="button"
                         onclick="calculateHeroTotal()"
                         class="inline-flex items-center justify-center gap-2 rounded-full bg-[#111827] hover:bg-black text-white text-sm font-semibold px-6 py-2.5 shadow-sm transition"
                       >
-                        <span>Analyze My Risks</span>
+                        <span class="overview-i18n" data-lang="en">Analyze My Risks</span>
+                        <span class="overview-i18n hidden" data-lang="zh">分析我的風險</span>
                         <i class="fa-solid fa-magnifying-glass-chart text-xs"></i>
                       </button>
                     </div>
@@ -430,7 +486,8 @@
                     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
                       <div>
                         <p class="text-[11px] font-semibold tracking-[0.2em] text-slate-500 uppercase mb-1">
-                          Est. Global Net Worth (USD)
+                          <span class="overview-i18n" data-lang="en">Est. Global Net Worth (USD)</span>
+                          <span class="overview-i18n hidden" data-lang="zh">預估全球淨值（美元）</span>
                         </p>
                         <div
                           id="hero-total"
@@ -441,8 +498,14 @@
                         <p class="mt-1 text-[11px] text-slate-500" id="hero-rate-label"></p>
                       </div>
                       <p class="text-[11px] text-slate-600 max-w-xs">
-                        Across Taiwan, US and offshore accounts based on the amounts you entered.  
-                        This is an estimate for screening, not a legal or tax opinion.
+                        <span class="overview-i18n" data-lang="en">
+                          Across Taiwan, US and offshore accounts based on the amounts you entered.
+                          This is an estimate for screening, not a legal or tax opinion.
+                        </span>
+                        <span class="overview-i18n hidden" data-lang="zh">
+                          依你填入的金額，彙整台灣、美國與海外帳戶的估計淨值。
+                          本結果僅供初步風險檢視，並非稅務或法律意見。
+                        </span>
                       </p>
                     </div>
 
@@ -454,7 +517,9 @@
                       >
                         <div class="flex items-center justify-between">
                           <div class="text-[11px] font-semibold tracking-[0.18em] text-slate-600 uppercase">
-                            🇺🇸 US Compliance
+                            🇺🇸
+                            <span class="overview-i18n" data-lang="en"> US Compliance</span>
+                            <span class="overview-i18n hidden" data-lang="zh"> 美國合規風險</span>
                           </div>
                           <div id="hero-us-tag" class="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide bg-slate-100 text-slate-600">
                             —
@@ -469,7 +534,9 @@
                       >
                         <div class="flex items-center justify-between">
                           <div class="text-[11px] font-semibold tracking-[0.18em] text-slate-600 uppercase">
-                            🇹🇼 Taiwan Tax Exposure
+                            🇹🇼
+                            <span class="overview-i18n" data-lang="en"> Taiwan Tax Exposure</span>
+                            <span class="overview-i18n hidden" data-lang="zh"> 台灣稅務曝險</span>
                           </div>
                           <div id="hero-tw-tag" class="text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide bg-slate-100 text-slate-600">
                             —
@@ -491,20 +558,24 @@
                           </div>
                           <div class="space-y-1.5 text-[11px] text-slate-700">
                             <p class="text-sm md:text-[15px] font-semibold text-slate-900">
-                              Unlock full cross-border report for your family.
+                              <span class="overview-i18n" data-lang="en">Unlock full cross-border report for your family.</span>
+                              <span class="overview-i18n hidden" data-lang="zh">解鎖專屬的跨境資產完整報表。</span>
                             </p>
                             <ul class="space-y-1.5">
                               <li class="flex items-start gap-1.5">
                                 <i class="fa-solid fa-check text-[10px] text-emerald-600 mt-0.5"></i>
-                                <span>Full FATCA / FBAR / CRS threshold checks across accounts.</span>
+                                <span class="overview-i18n" data-lang="en">Full FATCA / FBAR / CRS threshold checks across accounts.</span>
+                                <span class="overview-i18n hidden" data-lang="zh">跨帳戶檢視 FATCA／FBAR／CRS 等關鍵申報門檻。</span>
                               </li>
                               <li class="flex items-start gap-1.5">
                                 <i class="fa-solid fa-check text-[10px] text-emerald-600 mt-0.5"></i>
-                                <span>Detailed estate &amp; gift tax scenarios for cross-border families.</span>
+                                <span class="overview-i18n" data-lang="en">Detailed estate &amp; gift tax scenarios for cross-border families.</span>
+                                <span class="overview-i18n hidden" data-lang="zh">針對跨境家庭的遺產與贈與稅情境試算。</span>
                               </li>
                               <li class="flex items-start gap-1.5">
                                 <i class="fa-solid fa-check text-[10px] text-emerald-600 mt-0.5"></i>
-                                <span>AI-generated next steps tailored to your structure.</span>
+                                <span class="overview-i18n" data-lang="en">AI-generated next steps tailored to your structure.</span>
+                                <span class="overview-i18n hidden" data-lang="zh">根據你的實際結構產生 AI 建議與下一步行動。</span>
                               </li>
                             </ul>
                           </div>
@@ -516,7 +587,8 @@
                             onclick="openAuthModal('register')"
                             class="hidden inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold px-6 py-2.5 shadow-md transition"
                           >
-                            <span>Create a free Taimic account</span>
+                            <span class="overview-i18n" data-lang="en">Create a free Taimic account</span>
+                            <span class="overview-i18n hidden" data-lang="zh">免費建立 Taimic 帳號</span>
                             <i class="fa-solid fa-arrow-right-long text-xs"></i>
                           </button>
                         </div>
@@ -537,15 +609,22 @@
           <div class="max-w-[1100px] mx-auto px-6">
             <div class="text-center max-w-2xl mx-auto mb-10">
               <p class="text-xs font-semibold tracking-[0.22em] text-gray-500 uppercase mb-2">
-                Built for globally mobile families
+                <span class="overview-i18n" data-lang="en">Built for globally mobile families</span>
+                <span class="overview-i18n hidden" data-lang="zh">為跨國移動家庭設計</span>
               </p>
               <h2 class="text-2xl md:text-[28px] font-bold tracking-tight text-slate-900 mb-3">
-                See your global balance sheet in one place.
+                <span class="overview-i18n" data-lang="en">See your global balance sheet in one place.</span>
+                <span class="overview-i18n hidden" data-lang="zh">在同一個畫面看清你的全球資產負債表。</span>
               </h2>
               <p class="text-sm md:text-base text-slate-600">
-                Taimic helps you stop guessing and finally see how your Taiwan,
-                US and offshore assets fit together — with compliance risks
-                surfaced automatically.
+                <span class="overview-i18n" data-lang="en">
+                  Taimic helps you stop guessing and finally see how your Taiwan, US and offshore assets fit together —
+                  with compliance risks surfaced automatically.
+                </span>
+                <span class="overview-i18n hidden" data-lang="zh">
+                  Taimic 幫你把台灣、美國與海外資產拉回同一個畫面，不再用猜的，
+                  自動標示出可能的合規風險與稅務門檻。
+                </span>
               </p>
             </div>
 
@@ -555,11 +634,18 @@
                   <i class="fa-solid fa-globe-asia text-sm"></i>
                 </div>
                 <h3 class="text-base font-semibold text-slate-900">
-                  Global View
+                  <span class="overview-i18n" data-lang="en">Global View</span>
+                  <span class="overview-i18n hidden" data-lang="zh">全球資產總覽</span>
                 </h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
-                  整合台美與多國資產，統一以單一幣別呈現市值與資產配置，
-                  並自動套用實時匯率，讓你一眼看懂整體淨值結構。
+                  <span class="overview-i18n" data-lang="en">
+                    Consolidate Taiwan, US and other-country assets into a single-currency view of market value
+                    and allocation, using live FX so you can understand your overall net worth structure at a glance.
+                  </span>
+                  <span class="overview-i18n hidden" data-lang="zh">
+                    整合台美與多國資產，統一以單一幣別呈現市值與資產配置，
+                    並自動套用實時匯率，讓你一眼看懂整體淨值結構。
+                  </span>
                 </p>
               </div>
 
@@ -568,11 +654,18 @@
                   <i class="fa-solid fa-shield-check text-sm"></i>
                 </div>
                 <h3 class="text-base font-semibold text-slate-900">
-                  Compliance Radar
+                  <span class="overview-i18n" data-lang="en">Compliance Radar</span>
+                  <span class="overview-i18n hidden" data-lang="zh">合規雷達</span>
                 </h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
-                  自動化 FATCA / FBAR / CRS 風險檢測，追蹤關鍵門檻與餘額，
-                  讓稅務不再憑印象，而是有數據、有提醒、有脈絡。
+                  <span class="overview-i18n" data-lang="en">
+                    Automated FATCA / FBAR / CRS checks that track key thresholds and balances, so tax
+                    and reporting are no longer based on vague memory but on clear data, reminders and context.
+                  </span>
+                  <span class="overview-i18n hidden" data-lang="zh">
+                    自動化 FATCA／FBAR／CRS 風險檢測，追蹤關鍵門檻與餘額，
+                    讓稅務不再憑印象，而是有數據、有提醒、有脈絡。
+                  </span>
                 </p>
               </div>
 
@@ -581,11 +674,18 @@
                   <i class="fa-solid fa-bolt text-sm"></i>
                 </div>
                 <h3 class="text-base font-semibold text-slate-900">
-                  AI Insights
+                  <span class="overview-i18n" data-lang="en">AI Insights</span>
+                  <span class="overview-i18n hidden" data-lang="zh">AI 洞察</span>
                 </h3>
                 <p class="text-sm text-slate-600 leading-relaxed">
-                  針對你實際持有的部位，提供 AI 驅動的稅務風險提示、
-                  資產集中度分析與情境模擬，幫你提前看見問題與機會。
+                  <span class="overview-i18n" data-lang="en">
+                    For the positions you actually hold, get AI-driven tax risk prompts, concentration analysis
+                    and scenario simulations, so you can see issues and opportunities before they surface.
+                  </span>
+                  <span class="overview-i18n hidden" data-lang="zh">
+                    針對你實際持有的部位，提供 AI 驅動的稅務風險提示、
+                    資產集中度分析與情境模擬，幫你提前看見問題與機會。
+                  </span>
                 </p>
               </div>
             </div>
@@ -600,14 +700,22 @@
             <div class="bg-white/95 rounded-3xl shadow-lg px-8 py-10 md:px-10 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6">
               <div class="text-center md:text-left space-y-2">
                 <p class="text-xs font-semibold tracking-[0.2em] text-[#2563eb] uppercase">
-                  Stop living in spreadsheets
+                  <span class="overview-i18n" data-lang="en">Stop living in spreadsheets</span>
+                  <span class="overview-i18n hidden" data-lang="zh">不要再被試算表綁住</span>
                 </p>
                 <h2 class="text-2xl md:text-[28px] font-bold tracking-tight text-slate-900">
-                  Stop managing your millions in spreadsheets.
+                  <span class="overview-i18n" data-lang="en">Stop managing your millions in spreadsheets.</span>
+                  <span class="overview-i18n hidden" data-lang="zh">別再用試算表管理你的千萬資產。</span>
                 </h2>
                 <p class="text-sm md:text-base text-slate-600 max-w-xl">
-                  Bring your Taiwan, US and offshore assets回到同一個畫面，
-                  讓 Taimic 幫你處理匯率、稅務門檻與結構風險，你只需要專心做決策。
+                  <span class="overview-i18n" data-lang="en">
+                    Bring your Taiwan, US and offshore assets back into a single view, and let Taimic handle FX,
+                    tax thresholds and structural risk — you only need to focus on decisions.
+                  </span>
+                  <span class="overview-i18n hidden" data-lang="zh">
+                    把台灣、美國與海外資產拉回同一個畫面，
+                    讓 Taimic 幫你處理匯率、稅務門檻與結構風險，你只需要專心做決策。
+                  </span>
                 </p>
               </div>
 
@@ -617,7 +725,8 @@
                   class="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-white text-slate-900 text-sm md:text-base font-semibold shadow-md border border-slate-200 hover:shadow-lg hover:-translate-y-0.5 transition"
                   onclick="openAuthModal('register')"
                 >
-                  Create your Taimic account
+                  <span class="overview-i18n" data-lang="en">Create your Taimic account</span>
+                  <span class="overview-i18n hidden" data-lang="zh">建立你的 Taimic 帳號</span>
                 </button>
               </div>
             </div>
@@ -646,7 +755,9 @@
                     ...
                   </div>
                   <div class="mt-2 text-xs font-medium text-green-600 flex items-center gap-1">
-                    <i class="fa-solid fa-arrow-trend-up"></i> +4.2% YTD
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    <span class="overview-i18n" data-lang="en">+4.2% YTD</span>
+                    <span class="overview-i18n hidden" data-lang="zh">年初至今 +4.2%</span>
                   </div>
                 </div>
 
@@ -665,7 +776,9 @@
                     ...
                   </div>
                   <div class="mt-2 text-xs font-medium text-green-600 flex items-center gap-1">
-                    <i class="fa-solid fa-arrow-trend-up"></i> +1.8% YTD
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    <span class="overview-i18n" data-lang="en">+1.8% YTD</span>
+                    <span class="overview-i18n hidden" data-lang="zh">年初至今 +1.8%</span>
                   </div>
                 </div>
 
@@ -790,6 +903,44 @@
             </div>
           </div>
         </section>
+
+        <!-- Overview-specific language toggle -->
+        <script>
+          (function () {
+            function updateOverviewLanguage(lang) {
+              document.querySelectorAll('#section-overview .overview-i18n').forEach(function (el) {
+                var elLang = el.getAttribute('data-lang');
+                if (!elLang) return;
+                if (elLang === lang) {
+                  el.classList.remove('hidden');
+                } else {
+                  if (!el.classList.contains('hidden')) {
+                    el.classList.add('hidden');
+                  }
+                }
+              });
+            }
+
+            var defaultLang = document.querySelector('#opt-zh.active') ? 'zh' : 'en';
+            updateOverviewLanguage(defaultLang || 'en');
+
+            var optZh = document.getElementById('opt-zh');
+            var optEn = document.getElementById('opt-en');
+
+            if (optZh) {
+              optZh.addEventListener('click', function () {
+                updateOverviewLanguage('zh');
+              });
+            }
+            if (optEn) {
+              optEn.addEventListener('click', function () {
+                updateOverviewLanguage('en');
+              });
+            }
+
+            window.updateOverviewLanguage = updateOverviewLanguage;
+          })();
+        </script>
       </section>
 
       <!-- =================================================== -->
