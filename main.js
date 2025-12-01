@@ -275,7 +275,7 @@
     }
 
     function switchSection(section) {
-      const ids = ["overview", "pricing", "about", "reports"];
+      const ids = ["overview", "pricing", "reports"];
       ids.forEach((id) => {
         const el = document.getElementById(`section-${id}`);
         if (el) el.classList.toggle("hidden", id !== section);
@@ -1353,14 +1353,15 @@
       }
       if (dashUserMenu) dashUserMenu.addEventListener("click", (e) => e.stopPropagation());
 
-      document.querySelectorAll(".mobile-nav-link").forEach((link) => {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          const section = link.dataset.section;
-          if (section) switchSection(section);
-          if (mobileMenu) mobileMenu.classList.add("hidden");
-        });
-      });
+      document.querySelectorAll("nav .nav-link").forEach((link) => {
+  const section = link.dataset.section;
+  if (!section) return; // 沒 section 的（About）就讓瀏覽器自己跳頁
+
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    switchSection(section);
+  });
+});
 
       document.addEventListener("click", closeAllMenus);
 
