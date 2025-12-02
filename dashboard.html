@@ -13,21 +13,21 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
-  <!-- 你原來的設計系統 -->
+  <!-- 設計系統 -->
   <link rel="stylesheet" href="main.css" />
 </head>
 <body class="min-h-screen bg-[#EFF3FF]">
 
   <!-- =================================================== -->
-  <!-- 2. LOGGED-IN DASHBOARD SHELL                        -->
+  <!-- LOGGED-IN DASHBOARD SHELL                           -->
   <!-- =================================================== -->
   <div id="dashboard-shell" class="min-h-screen flex flex-col bg-[#eff3ff]">
 
-    <!-- Header：沿用原本的 top bar，Reports 高亮 -->
+    <!-- Header -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[72px]">
       <div class="max-w-[1200px] mx-auto px-6 h-full flex justify-between items-center relative">
         <!-- Logo + brand -->
-        <div class="flex items-center gap-3 cursor-pointer">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
           <svg class="logo-clock w-9 h-9" viewBox="0 0 100 100">
             <defs>
               <linearGradient id="clockGradientDash" x1="0" y1="0" x2="1" y2="1">
@@ -111,7 +111,9 @@
       </div>
     </header>
 
-    <!-- Main dashboard content -->
+    <!-- =================================================== -->
+    <!-- Main dashboard content                              -->
+    <!-- =================================================== -->
     <main class="flex-1">
       <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
         <!-- Page intro -->
@@ -157,7 +159,9 @@
           </div>
         </div>
 
-              <!-- Top metrics row -->
+        <!-- =================================================== -->
+        <!-- Top metrics row                                     -->
+        <!-- =================================================== -->
         <div class="space-y-5 mb-7">
           <!-- Global net worth：一整條 -->
           <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between">
@@ -166,7 +170,10 @@
                 <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
                   Global net worth
                 </p>
-                <div id="dash-networth-value" class="text-2xl md:text-3xl font-bold text-slate-900 font-mono tracking-tight">
+                <div
+                  id="dash-networth-value"
+                  class="text-2xl md:text-3xl font-bold text-slate-900 font-mono tracking-tight"
+                >
                   $0
                 </div>
                 <p id="dash-networth-currency-label" class="text-[11px] text-slate-500 mt-1">
@@ -177,7 +184,10 @@
                 id="dash-networth-change-pill"
                 class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700"
               >
-                <i id="dash-networth-change-icon" class="mr-1 text-[10px] fa-solid fa-arrow-trend-up"></i>
+                <i
+                  id="dash-networth-change-icon"
+                  class="mr-1 text-[10px] fa-solid fa-arrow-trend-up"
+                ></i>
                 <span id="dash-networth-change-value">+0 (Today)</span>
               </div>
             </div>
@@ -210,13 +220,16 @@
                     Global income &amp; estate
                   </p>
                 </div>
-                <span class="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+                <span
+                  class="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200"
+                >
                   <i class="fa-solid fa-triangle-exclamation text-[10px]"></i>
                   Monitor
                 </span>
               </div>
               <p class="text-[11px] text-slate-500">
-                Overseas income and global assets are monitored against Taiwan global-income and estate tax thresholds.
+                Overseas income and global assets are monitored against Taiwan global-income
+                and estate tax thresholds.
               </p>
               <div class="mt-2 flex items-center justify-between text-[11px] text-slate-700">
                 <div>
@@ -232,7 +245,7 @@
               </div>
             </div>
 
-            <!-- US / other -->
+            <!-- US / offshore -->
             <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col gap-3">
               <div class="flex items-start justify-between gap-3">
                 <div>
@@ -243,13 +256,16 @@
                     FATCA / FBAR coverage
                   </p>
                 </div>
-                <span class="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">
+                <span
+                  class="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100"
+                >
                   <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                   Within limits
                 </span>
               </div>
               <p class="text-[11px] text-slate-500">
-                Total US + offshore balances are tracked against FBAR and FATCA thresholds. PFIC candidates are marked for review.
+                Total US + offshore balances are tracked against FBAR and FATCA thresholds.
+                PFIC candidates are marked for review.
               </p>
               <div class="mt-2 flex items-center justify-between text-[11px] text-slate-700">
                 <div>
@@ -267,10 +283,10 @@
             </div>
           </div>
         </div>
-          </div>
-        </div>
 
-        <!-- Middle row -->
+        <!-- =================================================== -->
+        <!-- Middle row                                          -->
+        <!-- =================================================== -->
         <div class="grid grid-cols-1 lg:grid-cols-[1.4fr,1.1fr] gap-6 mb-7">
           <!-- Allocation donut -->
           <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
@@ -342,7 +358,10 @@
                   <p id="alloc-defensive-percent" class="font-semibold text-slate-900">0%</p>
                 </div>
 
-                <div class="mt-2 p-3 rounded-xl bg-slate-50 border border-slate-200/70 text-[11px] text-slate-600" id="alloc-summary-text">
+                <div
+                  class="mt-2 p-3 rounded-xl bg-slate-50 border border-slate-200/70 text-[11px] text-slate-600"
+                  id="alloc-summary-text"
+                >
                   Your largest sleeve is Market at 0%. Review if this aligns with your risk tolerance and cash needs.
                 </div>
               </div>
@@ -385,7 +404,7 @@
                   <span class="mt-0.5 text-amber-600">
                     <i class="fa-solid fa-triangle-exclamation text-[11px]"></i>
                   </span>
-                <div>
+                  <div>
                     <p class="font-semibold text-slate-900">PFIC &amp; high cash-value policies</p>
                     <p class="text-[11px] text-slate-700">
                       Taiwan policies that look like PFICs or may face US excise tax are flagged for specialist review.
@@ -405,7 +424,8 @@
                   <div>
                     <p class="font-semibold text-slate-900">Taiwan global income</p>
                     <p class="text-[11px] text-slate-700">
-                      Estimated foreign-source income is kept one band below current filing thresholds. System alerts you when projections change.
+                      Estimated foreign-source income is kept one band below current filing thresholds.
+                      System alerts you when projections change.
                     </p>
                   </div>
                 </div>
@@ -426,7 +446,9 @@
           </section>
         </div>
 
-        <!-- Bottom row：accounts + notes -->
+        <!-- =================================================== -->
+        <!-- Bottom row：accounts + notes                        -->
+        <!-- =================================================== -->
         <div class="grid grid-cols-1 lg:grid-cols-[1.4fr,1.1fr] gap-6 pb-4">
           <!-- Accounts table -->
           <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
@@ -440,9 +462,20 @@
                 </h2>
               </div>
               <div class="flex items-center gap-2 text-[11px] text-slate-500">
-                <span id="dash-tooltip-tw">TW demo</span>
-                <span class="text-slate-400">·</span>
-                <span id="dash-tooltip-us">US demo</span>
+                <button
+                  type="button"
+                  class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-full border border-slate-200 bg-white hover:bg-slate-50"
+                >
+                  <i class="fa-solid fa-plus text-[10px]"></i>
+                  <span>Add account</span>
+                </button>
+                <button
+                  type="button"
+                  class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-full border border-slate-200 bg-white hover:bg-slate-50"
+                >
+                  <i class="fa-solid fa-download text-[10px]"></i>
+                  <span>Export CSV</span>
+                </button>
               </div>
             </div>
 
@@ -469,7 +502,9 @@
                       </span>
                     </td>
                     <td class="px-2 py-2">Taxable brokerage</td>
-                    <td class="px-2 py-2 text-right font-mono font-semibold" id="dash-tooltip-us-value">$820,430</td>
+                    <td class="px-2 py-2 text-right font-mono font-semibold" id="dash-tooltip-us-value">
+                      $820,430
+                    </td>
                     <td class="pl-2 pr-1 py-2 text-right">
                       <span class="inline-flex items-center gap-1 text-[10px] rounded-full bg-emerald-50 text-emerald-700 px-2 py-0.5 border border-emerald-100">
                         <i class="fa-solid fa-check text-[9px]"></i>
@@ -489,7 +524,9 @@
                       </span>
                     </td>
                     <td class="px-2 py-2">Cash / deposits</td>
-                    <td class="px-2 py-2 text-right font-mono font-semibold" id="dash-tooltip-tw-value">$410,220</td>
+                    <td class="px-2 py-2 text-right font-mono font-semibold" id="dash-tooltip-tw-value">
+                      $410,220
+                    </td>
                     <td class="pl-2 pr-1 py-2 text-right">
                       <span class="inline-flex items-center gap-1 text-[10px] rounded-full bg-sky-50 text-sky-700 px-2 py-0.5 border border-sky-100">
                         <i class="fa-solid fa-circle-info text-[9px]"></i>
@@ -509,7 +546,9 @@
                       </span>
                     </td>
                     <td class="px-2 py-2">Insurance</td>
-                    <td class="px-2 py-2 text-right font-mono font-semibold">$320,000</td>
+                    <td class="px-2 py-2 text-right font-mono font-semibold">
+                      $320,000
+                    </td>
                     <td class="pl-2 pr-1 py-2 text-right">
                       <span class="inline-flex items-center gap-1 text-[10px] rounded-full bg-amber-50 text-amber-700 px-2 py-0.5 border border-amber-200">
                         <i class="fa-solid fa-triangle-exclamation text-[9px]"></i>
@@ -522,7 +561,8 @@
             </div>
 
             <p class="mt-3 text-[11px] text-slate-500">
-              Taimic uses live FX to convert all values into USD for reporting. Your advisors may still prefer local-currency statements for filing.
+              Taimic uses live FX to convert all values into USD for reporting. Your advisors may still
+              prefer local-currency statements for filing.
             </p>
           </section>
 
@@ -537,7 +577,9 @@
                   Suggested next steps for 2025
                 </h2>
               </div>
-              <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-[#2563eb] text-[11px] font-semibold px-2.5 py-1 border border-blue-100">
+              <span
+                class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-[#2563eb] text-[11px] font-semibold px-2.5 py-1 border border-blue-100"
+              >
                 <i class="fa-solid fa-robot text-[10px]"></i>
                 Draft only
               </span>
@@ -556,7 +598,8 @@
                     Confirm PFIC treatment on Taiwan policies
                   </p>
                   <p class="text-[11px]">
-                    Export the policy summary and share it with your US tax advisor. Ask specifically about Form 8621 filing and potential restructuring.
+                    Export the policy summary and share it with your US tax advisor. Ask specifically
+                    about Form 8621 filing and potential restructuring.
                   </p>
                 </div>
               </li>
@@ -573,7 +616,8 @@
                     Run inheritance scenario for &ldquo;one spouse in US&rdquo;
                   </p>
                   <p class="text-[11px]">
-                    Use the estate scenario tool to check whether current liquidity and titling cover estate tax and administration costs in both Taiwan and the US.
+                    Use the estate scenario tool to check whether current liquidity and titling cover
+                    estate tax and administration costs in both Taiwan and the US.
                   </p>
                 </div>
               </li>
@@ -590,7 +634,8 @@
                     Decide your target FX mix for the next 3–5 years
                   </p>
                   <p class="text-[11px]">
-                    Given your plan to spend time in both Taiwan and the US, decide what share of net worth you want in TWD vs USD and let Taimic alert you when you drift.
+                    Given your plan to spend time in both Taiwan and the US, decide what share of net
+                    worth you want in TWD vs USD and let Taimic alert you when you drift.
                   </p>
                 </div>
               </li>
@@ -606,14 +651,16 @@
                     Share this dashboard with family / advisors
                   </p>
                   <p class="text-[11px]">
-                    Invite your spouse or advisor to view a read-only version of this page so everyone works off the same cross-border picture.
+                    Invite your spouse or advisor to view a read-only version of this page so everyone
+                    works off the same cross-border picture.
                   </p>
                 </div>
               </li>
             </ol>
 
             <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500">
-              These suggestions are generated from your current holdings and thresholds. They are not legal or tax advice – treat them as a checklist for your next meeting.
+              These suggestions are generated from your current holdings and thresholds. They are not
+              legal or tax advice – treat them as a checklist for your next meeting.
             </div>
           </section>
         </div>
@@ -636,16 +683,13 @@
     </footer>
   </div>
 
-  <!-- 與 index.html 共用的兩個 overlay（結構可以跟你現在 index 那份一樣） -->
+  <!-- 與 index.html 共用的 overlay（先留空） -->
   <div
     id="modal-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-  >
-    <!-- 這裡保留你原本的上傳 modal 結構，如果還沒做可以先留空 -->
-  </div>
+  ></div>
 
-  <!-- Auth overlay：用你現在 index.html 的那個（有 Login / Sign up tab 的版本） -->
-    <!-- Auth overlay：登入 / 註冊共用 -->
+  <!-- Auth overlay：登入 / 註冊共用 -->
   <div
     id="auth-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
@@ -689,9 +733,8 @@
       >
         Login to Taimic
       </h2>
-      <!-- ⛔ 這裡原本那行「Use a demo email...」已經移除 -->
 
-      <!-- 訊息列（錯誤 / 成功訊息） -->
+      <!-- 訊息列 -->
       <div id="auth-message" class="text-sm h-5 text-center"></div>
 
       <!-- Email -->
@@ -725,10 +768,9 @@
         <span id="auth-submit-text">Login</span>
         <i class="fa-solid fa-arrow-right-long text-xs"></i>
       </button>
-
-      <!-- ⛔ 這裡原本那行 Demo only – no real accounts are created. 已刪掉 -->
     </div>
   </div>
+
   <!-- 共用 JS -->
   <script src="main.js"></script>
 </body>
