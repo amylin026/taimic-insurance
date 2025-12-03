@@ -13,271 +13,304 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
+  <!-- Lucide (for sidebar icons) -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
   <!-- 設計系統 -->
   <link rel="stylesheet" href="main.css" />
 </head>
-<body class="min-h-screen bg-[#EFF3FF]">
+<body class="min-h-screen bg-slate-100 text-slate-900">
 
   <!-- =================================================== -->
   <!-- LOGGED-IN DASHBOARD SHELL                           -->
   <!-- =================================================== -->
-  <div id="dashboard-shell" class="min-h-screen flex flex-col bg-[#EFF3FF]">
+  <div id="dashboard-shell" class="min-h-screen flex bg-slate-100">
 
-    <!-- ================= Header ================= -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[72px]">
-      <div class="max-w-[1200px] mx-auto px-6 h-full flex justify-between items-center relative">
-        <!-- Logo + brand -->
-        <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
-          <svg class="logo-clock w-9 h-9" viewBox="0 0 100 100">
-            <defs>
-              <linearGradient id="clockGradientDash" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#bfdbfe" />
-                <stop offset="100%" stop-color="#60a5fa" />
-              </linearGradient>
-            </defs>
-            <circle cx="50" cy="50" r="46" class="clock-outer" />
-            <circle cx="50" cy="50" r="38" class="clock-inner" />
-            <circle cx="50" cy="50" r="30" class="clock-core" />
-            <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
-            <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
-            <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
-            <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
-            <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
-            <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
-            <circle cx="50" cy="50" r="3.2" class="center-dot" />
-          </svg>
-          <div class="flex flex-col justify-center">
-            <span class="text-[20px] font-[700] tracking-tight text-[#0066cc] leading-none">TAIMIC</span>
-            <span class="text-[10px] font-[600] tracking-[0.18em] text-gray-500 mt-1 uppercase">Global Wealth</span>
-          </div>
-
-          <div class="hidden md:flex items-center gap-2 pl-5 ml-3 border-l border-slate-200 text-[11px] text-slate-500">
-            <i class="fa-regular fa-calendar-check text-[11px]"></i>
-            <span>Snapshot as of</span>
-            <span class="font-semibold text-slate-800">2025-12-01</span>
-          </div>
-        </div>
-
-        <!-- 右側：demo 狀態 + 匯出 + 使用者 -->
-        <div class="flex items-center gap-4">
-          <div class="hidden sm:flex items-center gap-2 text-[11px] text-slate-500">
-            <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 border border-emerald-100 text-emerald-700 font-medium">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-              Live demo data
-            </span>
-            <span>Last sync: <span class="font-medium text-slate-800">3 min ago</span></span>
-          </div>
-
-          <button
-            type="button"
-            class="hidden md:inline-flex items-center gap-2 rounded-full bg-[#111827] text-white text-xs font-semibold px-4 py-2 shadow-sm hover:bg-black transition"
-          >
-            <i class="fa-solid fa-file-export text-[11px]"></i>
-            <span>Export full report (PDF)</span>
-          </button>
-
-          <!-- Dashboard user dropdown -->
-          <div class="relative">
-            <button
-              id="dash-user-toggle"
-              type="button"
-              class="w-9 h-9 rounded-full bg-[#0f172a] text-white flex items-center justify-center text-sm font-semibold hover:bg-black transition-colors"
-            >
-              <span id="dash-user-initial">T</span>
-            </button>
-            <div
-              id="dash-user-menu"
-              class="hidden absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-lg border border-slate-100 text-sm overflow-hidden z-50"
-            >
-              <div class="px-4 py-3 border-b border-slate-100">
-                <p class="text-[10px] text-slate-500 uppercase tracking-[0.16em]">
-                  Signed in as
-                </p>
-                <p id="dash-user-email" class="text-xs font-semibold text-slate-800 truncate">
-                  you@gmail.com
-                </p>
-              </div>
-              <button
-                type="button"
-                onclick="handleLogout()"
-                class="w-full text-left px-4 py-2.5 flex items-center gap-2 text-slate-700 hover:bg-slate-50"
-              >
-                <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
-                <span>Logout</span>
-              </button>
-            </div>
-          </div>
+    <!-- ================= Glass Sidebar ================= -->
+    <aside class="hidden md:flex w-[260px] flex-col bg-slate-50/80 backdrop-blur-2xl border-r border-slate-200/60">
+      <!-- Logo -->
+      <div class="px-5 pt-6 pb-4 flex items-center gap-3">
+        <svg class="logo-clock w-9 h-9" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="clockGradientDash" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#bfdbfe" />
+              <stop offset="100%" stop-color="#60a5fa" />
+            </linearGradient>
+          </defs>
+          <circle cx="50" cy="50" r="46" class="clock-outer" />
+          <circle cx="50" cy="50" r="38" class="clock-inner" />
+          <circle cx="50" cy="50" r="30" class="clock-core" />
+          <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
+          <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
+          <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
+          <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
+          <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
+          <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
+          <circle cx="50" cy="50" r="3.2" class="center-dot" />
+        </svg>
+        <div class="flex flex-col">
+          <span class="text-[18px] font-[700] tracking-tight text-[#0066cc] leading-none">TAIMIC</span>
+          <span class="text-[10px] font-[600] tracking-[0.18em] text-gray-500 mt-1 uppercase">Global Wealth</span>
         </div>
       </div>
-    </header>
 
-    <!-- ================= Main Layout: Sidebar + Content ================= -->
-    <div class="flex flex-1 min-h-0">
-      <!-- ---------- 左側 Sidebar（桌機版） ---------- -->
-      <aside class="hidden lg:flex w-60 bg-slate-900 text-slate-200 flex-col border-r border-slate-800">
-        <div class="px-4 pt-6 pb-3">
-          <p class="text-[11px] font-semibold tracking-[0.16em] text-slate-500 uppercase">
-            Navigation
-          </p>
-        </div>
-        <nav class="px-2 space-y-1 text-sm flex-1">
-          <!-- 先只有 Snapshot 有內容，其它是骨架 -->
-          <button
-            type="button"
-            class="w-full flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-800 text-slate-50 font-semibold"
-          >
-            <i class="fa-solid fa-gauge-high text-xs"></i>
-            <span>Snapshot</span>
-          </button>
-          <button
-            type="button"
-            class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-slate-300 hover:bg-slate-800/70 hover:text-white transition"
-          >
-            <i class="fa-solid fa-wallet text-xs"></i>
-            <span>Assets</span>
-            <span class="ml-auto text-[10px] rounded-full bg-slate-800 px-2 py-0.5">Soon</span>
-          </button>
-          <button
-            type="button"
-            class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-slate-300 hover:bg-slate-800/70 hover:text-white transition"
-          >
-            <i class="fa-solid fa-shield-halved text-xs"></i>
-            <span>Compliance</span>
-            <span class="ml-auto text-[10px] rounded-full bg-slate-800 px-2 py-0.5">Soon</span>
-          </button>
-          <button
-            type="button"
-            class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-slate-300 hover:bg-slate-800/70 hover:text-white transition"
-          >
-            <i class="fa-solid fa-gear text-xs"></i>
-            <span>Settings</span>
-          </button>
-        </nav>
+      <div class="px-5 pt-2 pb-1">
+        <p class="text-[11px] font-semibold tracking-[0.16em] text-slate-400 uppercase">
+          Wealth
+        </p>
+      </div>
+      <nav class="px-3 space-y-1 text-sm">
+        <button type="button" class="w-full flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-200/60 text-slate-900 font-semibold">
+          <i data-lucide="pie-chart" class="w-4 h-4"></i>
+          <span>Overview</span>
+        </button>
+        <button type="button" class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-200/40 transition">
+          <i data-lucide="layers" class="w-4 h-4"></i>
+          <span>Assets</span>
+          <span class="ml-auto text-[10px] rounded-full bg-slate-200/70 px-2 py-0.5">Soon</span>
+        </button>
+        <button type="button" class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-200/40 transition">
+          <i data-lucide="line-chart" class="w-4 h-4"></i>
+          <span>Performance</span>
+        </button>
+      </nav>
 
-        <div class="px-4 py-4 border-t border-slate-800 text-[11px] text-slate-500">
-          <p class="font-medium">TAIMIC demo</p>
-          <p>Cross-border family OS</p>
-        </div>
-      </aside>
+      <div class="px-5 pt-5 pb-1 mt-3">
+        <p class="text-[11px] font-semibold tracking-[0.16em] text-slate-400 uppercase">
+          Compliance
+        </p>
+      </div>
+      <nav class="px-3 space-y-1 text-sm">
+        <button type="button" class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-200/40 transition">
+          <i data-lucide="shield-check" class="w-4 h-4"></i>
+          <span>Tax Status</span>
+        </button>
+        <button type="button" class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-200/40 transition">
+          <i data-lucide="file-badge" class="w-4 h-4"></i>
+          <span>FBAR / FATCA</span>
+        </button>
+        <button type="button" class="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-200/40 transition">
+          <i data-lucide="files" class="w-4 h-4"></i>
+          <span>Documents</span>
+        </button>
+      </nav>
 
-      <!-- ---------- 右側內容區 ---------- -->
-      <div class="flex-1 flex flex-col min-h-0">
-        <main class="flex-1 overflow-y-auto">
-          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
-            <!-- Page intro -->
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-7">
-              <div class="space-y-1">
-                <p class="text-[11px] font-semibold tracking-[0.2em] text-slate-500 uppercase">
-                  Cross-border family report
-                </p>
-                <h1 class="text-2xl md:text-[26px] font-bold tracking-tight text-slate-900">
-                  Global net worth &amp; compliance overview
-                </h1>
-                <p class="text-xs md:text-sm text-slate-600 max-w-xl">
-                  This page consolidates your Taiwan, US and offshore positions into one report,
-                  with key tax thresholds and AI notes highlighted for this year.
-                </p>
-              </div>
+      <div class="mt-auto px-5 py-4 border-t border-slate-200/60 text-[11px] text-slate-500">
+        <p class="font-medium">TAIMIC demo</p>
+        <p>Cross-border family OS</p>
+      </div>
+    </aside>
 
-              <div class="flex flex-col items-start md:items-end gap-3">
-                <div class="inline-flex items-center gap-2 text-xs bg-white/80 border border-slate-200 rounded-full px-3 py-1.5 shadow-sm">
-                  <span class="font-medium text-slate-500">Report year</span>
-                  <div class="inline-flex rounded-full bg-slate-100 p-1 gap-1">
-                    <button class="px-3 py-1 text-[11px] font-semibold rounded-full bg-white text-slate-900 shadow-sm">
-                      2025
-                    </button>
-                    <button class="px-3 py-1 text-[11px] font-semibold rounded-full text-slate-500 hover:bg-slate-200/70">
-                      2024
-                    </button>
-                    <button class="px-3 py-1 text-[11px] font-semibold rounded-full text-slate-500 hover:bg-slate-200/70">
-                      2023
-                    </button>
-                  </div>
+    <!-- ================= Right side: Header + Content ================= -->
+    <div class="flex-1 flex flex-col min-h-0">
+      <!-- Glass Top Bar -->
+      <header class="sticky top-0 z-30 border-b border-slate-200/70 bg-white/70 backdrop-blur-md">
+        <div class="max-w-[1200px] mx-auto px-5 py-3 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="hidden sm:flex items-center gap-2 text-[11px] text-slate-500 border border-slate-200/80 rounded-full px-3 py-1 bg-white/60">
+              <i class="fa-regular fa-calendar-check text-[11px]"></i>
+              <span>Snapshot as of</span>
+              <span class="font-semibold text-slate-800">2025-12-01</span>
+            </div>
+            <div class="text-sm sm:text-base">
+              <p class="text-[11px] uppercase tracking-[0.16em] text-slate-400 mb-0.5">Dashboard</p>
+              <p class="font-semibold text-slate-900">
+                Welcome, <span id="dash-user-name">Alex</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <button class="relative w-9 h-9 rounded-full bg-white/70 border border-slate-200/80 flex items-center justify-center backdrop-blur-md hover:bg-slate-100 transition">
+              <i class="fa-regular fa-bell text-slate-500 text-sm"></i>
+              <span class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-white"></span>
+            </button>
+
+            <!-- 使用者泡泡：跟 main.js 相容 -->
+            <div class="relative">
+              <button
+                id="dash-user-toggle"
+                type="button"
+                class="w-9 h-9 rounded-full bg-[#0f172a] text-white flex items-center justify-center text-sm font-semibold hover:bg-black transition-colors"
+              >
+                <span id="dash-user-initial">T</span>
+              </button>
+              <div
+                id="dash-user-menu"
+                class="hidden absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-lg border border-slate-100 text-sm overflow-hidden z-50"
+              >
+                <div class="px-4 py-3 border-b border-slate-100">
+                  <p class="text-[10px] text-slate-500 uppercase tracking-[0.16em]">
+                    Signed in as
+                  </p>
+                  <p id="dash-user-email" class="text-xs font-semibold text-slate-800 truncate">
+                    you@gmail.com
+                  </p>
                 </div>
-                <div class="flex flex-wrap gap-2 text-[11px] text-slate-500">
-                  <span class="inline-flex items-center gap-1">
-                    <i class="fa-solid fa-shield-check text-emerald-600"></i>
-                    Bank-level encryption
-                  </span>
-                  <span class="inline-flex items-center gap-1">
-                    <i class="fa-solid fa-robot text-[#2563eb]"></i>
-                    AI-assisted analysis
-                  </span>
+                <button
+                  type="button"
+                  onclick="handleLogout()"
+                  class="w-full text-left px-4 py-2.5 flex items-center gap-2 text-slate-700 hover:bg-slate-50"
+                >
+                  <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+                  <span>Logout</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ================= Main Content ================= -->
+      <main class="flex-1 overflow-y-auto">
+        <div class="max-w-[1200px] mx-auto px-5 py-7 space-y-7">
+
+          <!-- Intro copy -->
+          <section>
+            <p class="text-[11px] font-semibold tracking-[0.2em] text-slate-500 uppercase">
+              Cross-border family report
+            </p>
+            <h1 class="text-2xl md:text-[26px] font-bold tracking-tight text-slate-900">
+              Global net worth &amp; compliance overview
+            </h1>
+            <p class="mt-1 text-xs md:text-sm text-slate-600 max-w-xl">
+              Taiwan, US and offshore positions, consolidated into one glass-clear view,
+              with tax thresholds and AI notes highlighted for this year.
+            </p>
+          </section>
+
+          <!-- =================================================== -->
+          <!-- Row 1: High-Level Metrics ("Apple Wallet" style)    -->
+          <!-- =================================================== -->
+          <section class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+            <!-- Card 1: Net Worth + sparkline -->
+            <div class="bg-white/80 backdrop-blur-xl border border-slate-200/80 rounded-2xl shadow-sm p-4 flex flex-col justify-between">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
+                    Global net worth
+                  </p>
+                  <div
+                    id="dash-networth-value"
+                    class="mt-1 text-[22px] md:text-[24px] font-bold text-slate-900 font-mono tracking-tight"
+                  >
+                    $0
+                  </div>
+                  <p id="dash-networth-currency-label" class="text-[11px] text-slate-500 mt-1">
+                    Base: USD
+                  </p>
+                </div>
+                <div
+                  id="dash-networth-change-pill"
+                  class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700"
+                >
+                  <i
+                    id="dash-networth-change-icon"
+                    class="mr-1 text-[10px] fa-solid fa-arrow-trend-up"
+                  ></i>
+                  <span id="dash-networth-change-value">+0 (Today)</span>
+                </div>
+              </div>
+              <div class="mt-4">
+                <canvas id="netWorthSparkline" class="h-10 w-full"></canvas>
+              </div>
+            </div>
+
+            <!-- Card 2: Safe vs Risk -->
+            <div class="bg-white/80 backdrop-blur-xl border border-slate-200/80 rounded-2xl shadow-sm p-4 flex flex-col justify-between">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
+                    Safe vs risk
+                  </p>
+                  <p class="mt-1 text-sm font-semibold text-slate-900">
+                    Cash vs investments
+                  </p>
+                </div>
+              </div>
+              <div class="mt-4 space-y-2">
+                <div class="flex justify-between text-[11px] text-slate-500">
+                  <span>Safe (Cash &amp; deposits)</span>
+                  <span>35%</span>
+                </div>
+                <div class="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden">
+                  <div class="h-full w-[35%] bg-emerald-400/90"></div>
+                </div>
+                <div class="flex justify-between text-[11px] text-slate-500 mt-3">
+                  <span>Risk (Market &amp; alternatives)</span>
+                  <span>65%</span>
+                </div>
+                <div class="w-full h-2.5 rounded-full bg-slate-100 overflow-hidden">
+                  <div class="h-full w-[65%] bg-sky-500/90"></div>
                 </div>
               </div>
             </div>
 
-            <!-- ================= Top metrics row ================= -->
-            <div class="space-y-5 mb-7">
-              <!-- Global net worth：一整條 -->
-              <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between">
-                <div class="flex items-start justify-between gap-3">
-                  <div>
-                    <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                      Global net worth
-                    </p>
-                    <div
-                      id="dash-networth-value"
-                      class="text-2xl md:text-3xl font-bold text-slate-900 font-mono tracking-tight"
-                    >
-                      $0
+            <!-- Card 3: Compliance Score donut -->
+            <div class="bg-white/80 backdrop-blur-xl border border-slate-200/80 rounded-2xl shadow-sm p-4 flex flex-col">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
+                    Compliance score
+                  </p>
+                  <p class="mt-1 text-sm font-semibold text-slate-900">
+                    Cross-border coverage
+                  </p>
+                </div>
+              </div>
+              <div class="mt-3 flex items-center justify-center">
+                <div class="relative w-28 h-28">
+                  <canvas id="complianceScoreChart"></canvas>
+                  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="text-center">
+                      <div class="text-xl font-bold text-slate-900">90%</div>
+                      <div class="text-[10px] text-slate-500">Compliant</div>
                     </div>
-                    <p id="dash-networth-currency-label" class="text-[11px] text-slate-500 mt-1">
-                      Base: USD
-                    </p>
-                  </div>
-                  <div
-                    id="dash-networth-change-pill"
-                    class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700"
-                  >
-                    <i
-                      id="dash-networth-change-icon"
-                      class="mr-1 text-[10px] fa-solid fa-arrow-trend-up"
-                    ></i>
-                    <span id="dash-networth-change-value">+0 (Today)</span>
                   </div>
                 </div>
-                <div class="mt-4 flex flex-wrap items-center gap-4 text-[11px] text-slate-600">
-                  <span class="inline-flex items-center gap-1">
-                    <span class="inline-flex w-2.5 h-2.5 rounded-full bg-sky-400"></span>
-                    Taiwan 42%
-                  </span>
-                  <span class="inline-flex items-center gap-1">
-                    <span class="inline-flex w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
-                    US 38%
-                  </span>
-                  <span class="inline-flex items-center gap-1">
-                    <span class="inline-flex w-2.5 h-2.5 rounded-full bg-slate-300"></span>
-                    Offshore 20%
-                  </span>
+              </div>
+              <p class="mt-3 text-[11px] text-slate-500 text-center">
+                FBAR, FATCA and CRS checks are within expected ranges for this year.
+              </p>
+            </div>
+          </section>
+
+          <!-- =================================================== -->
+          <!-- Row 2: Left = Wealth / Right = Compliance           -->
+          <!-- =================================================== -->
+          <section class="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6">
+            <!-- Left: Asset allocation donut -->
+            <div class="bg-white/80 backdrop-blur-xl border border-slate-200/80 rounded-2xl shadow-sm p-5 flex flex-col">
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
+                    Asset allocation
+                  </p>
+                  <h2 class="text-sm font-semibold text-slate-900">
+                    Cross-border balance sheet
+                  </h2>
                 </div>
               </div>
 
-              <!-- Taiwan / US 兩張並排 -->
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <!-- Taiwan -->
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col gap-3">
-                  <div class="flex items-start justify-between gap-3">
-                    <div>
-                      <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                        🇹🇼 Taiwan exposure
-                      </p>
-                      <p class="text-xs font-semibold text-slate-900">
-                        Global income &amp; estate
-                      </p>
+              <div class="grid grid-cols-1 md:grid-cols-[1.1fr,1fr] gap-4 md:gap-6 items-center">
+                <div class="relative max-w-[260px] mx-auto aspect-square">
+                  <!-- Chart.js 使用原本的 allocationChart id，方便沿用 main.js -->
+                  <canvas id="allocationChart"></canvas>
+                  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="text-center">
+                      <div class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1">
+                        TOTAL
+                      </div>
+                      <div class="text-lg font-bold text-slate-900 font-mono">
+                        100%
+                      </div>
                     </div>
-                    <span
-                      class="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200"
-                    >
-                      <i class="fa-solid fa-triangle-exclamation text-[10px]"></i>
-                      Monitor
-                    </span>
                   </div>
-                  <p class="text-[11px] text-slate-500">
-                    Overseas income and global assets are monitored against Taiwan global-income
-                    and estate tax thresholds.
-                  </p>
-                  <div class="mt-2 flex items-center justify-between text-[11px] text-slate-700">
+                </div>
+
+                <div class="space-y-3 text-xs text-slate-700">
+                  <!-- TW / US / offshore 數字：沿用原本 id 給 main.js 更新 -->
+                  <div class="flex items-center justify-between">
                     <div>
                       <p class="font-semibold text-slate-900">Taiwan slice</p>
                       <p id="dash-region-tw-value" class="font-mono text-sm text-slate-900">$0</p>
@@ -286,454 +319,166 @@
                     <div class="text-right">
                       <p class="font-semibold text-slate-900">FX impact (demo)</p>
                       <p id="fx-impact-value" class="font-mono text-sm text-slate-900">+0</p>
-                      <p class="text-[10px] text-slate-500">TWD moves vs USD</p>
+                      <p class="text-[10px] text-slate-500">TWD vs USD moves</p>
                     </div>
                   </div>
-                </div>
 
-                <!-- US / offshore -->
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col gap-3">
-                  <div class="flex items-start justify-between gap-3">
-                    <div>
-                      <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                        🇺🇸 US &amp; offshore
-                      </p>
-                      <p class="text-xs font-semibold text-slate-900">
-                        FATCA / FBAR coverage
-                      </p>
-                    </div>
-                    <span
-                      class="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100"
-                    >
-                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                      Within limits
-                    </span>
-                  </div>
-                  <p class="text-[11px] text-slate-500">
-                    Total US + offshore balances are tracked against FBAR and FATCA thresholds.
-                    PFIC candidates are marked for review.
-                  </p>
-                  <div class="mt-2 flex items-center justify-between text-[11px] text-slate-700">
+                  <div class="flex items-center justify-between">
                     <div>
                       <p class="font-semibold text-slate-900">US &amp; offshore</p>
                       <p id="dash-region-us-value" class="font-mono text-sm text-slate-900">$0</p>
                       <p id="dash-region-us-percent" class="text-[10px] text-slate-500">0% of total</p>
                     </div>
-                    <div class="text-right">
-                      <p class="font-semibold text-slate-900">FBAR / FATCA</p>
-                      <p class="text-[10px] text-slate-500">
-                        Details available in your tax pack export.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- ================= Middle row ================= -->
-            <div class="grid grid-cols-1 lg:grid-cols-[1.4fr,1.1fr] gap-6 mb-7">
-              <!-- Allocation donut -->
-              <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
-                <div class="flex items-start justify-between mb-4">
-                  <div>
-                    <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                      Cross-border balance sheet
-                    </p>
-                    <h2 class="text-sm font-semibold text-slate-900">
-                      Allocation by sleeve
-                    </h2>
-                  </div>
-                  <div class="flex items-center gap-2 text-[11px] text-slate-500">
-                    <span class="inline-flex items-center gap-1">
-                      <span class="inline-flex w-2 h-2 rounded-full bg-[#0f5ad8]"></span> Market
-                    </span>
-                    <span class="inline-flex items-center gap-1">
-                      <span class="inline-flex w-2 h-2 rounded-full bg-indigo-300"></span> Real estate
-                    </span>
-                    <span class="inline-flex items-center gap-1">
-                      <span class="inline-flex w-2 h-2 rounded-full bg-sky-300"></span> Defensive
-                    </span>
-                  </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-[1.1fr,1fr] gap-4 md:gap-6 items-center">
-                  <div class="relative max-w-[260px] mx-auto aspect-square">
-                    <canvas id="allocationChart"></canvas>
-                    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div class="text-center">
-                        <div class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1">
-                          TOTAL
-                        </div>
-                        <div class="text-lg font-bold text-slate-900 font-mono">
-                          100%
-                        </div>
-                      </div>
-                    </div>
                   </div>
 
-                  <div class="space-y-3 text-xs text-slate-700">
+                  <div class="border-t border-slate-100 pt-3 space-y-2">
                     <div class="flex items-center justify-between">
-                      <div>
-                        <p class="font-semibold text-slate-900">Market assets</p>
-                        <p class="text-[11px] text-slate-500">
-                          Listed stocks / funds / ETFs
-                        </p>
+                      <div class="flex items-center gap-2">
+                        <span class="inline-flex w-2.5 h-2.5 rounded-full bg-[#0f5ad8]"></span>
+                        <p class="font-semibold text-slate-900 text-xs">Market assets</p>
                       </div>
-                      <p id="alloc-market-percent" class="font-semibold text-slate-900">0%</p>
+                      <p id="alloc-market-percent" class="font-semibold text-slate-900 text-xs">0%</p>
                     </div>
-
                     <div class="flex items-center justify-between">
-                      <div>
-                        <p class="font-semibold text-slate-900">Real estate</p>
-                        <p class="text-[11px] text-slate-500">
-                          Homes, investment property, REITs
-                        </p>
+                      <div class="flex items-center gap-2">
+                        <span class="inline-flex w-2.5 h-2.5 rounded-full bg-indigo-300"></span>
+                        <p class="font-semibold text-slate-900 text-xs">Real estate</p>
                       </div>
-                      <p id="alloc-realestate-percent" class="font-semibold text-slate-900">0%</p>
+                      <p id="alloc-realestate-percent" class="font-semibold text-slate-900 text-xs">0%</p>
                     </div>
-
                     <div class="flex items-center justify-between">
-                      <div>
-                        <p class="font-semibold text-slate-900">Defensive / cash</p>
-                        <p class="text-[11px] text-slate-500">
-                          Cash, deposits, insurance with cash value
-                        </p>
+                      <div class="flex items-center gap-2">
+                        <span class="inline-flex w-2.5 h-2.5 rounded-full bg-sky-300"></span>
+                        <p class="font-semibold text-slate-900 text-xs">Defensive / cash</p>
                       </div>
-                      <p id="alloc-defensive-percent" class="font-semibold text-slate-900">0%</p>
+                      <p id="alloc-defensive-percent" class="font-semibold text-slate-900 text-xs">0%</p>
                     </div>
-
-                    <div
-                      class="mt-2 p-3 rounded-xl bg-slate-50 border border-slate-200/70 text-[11px] text-slate-600"
+                    <p
                       id="alloc-summary-text"
+                      class="mt-1 p-3 rounded-xl bg-slate-50 border border-slate-200/70 text-[11px] text-slate-600"
                     >
                       Your largest sleeve is Market at 0%. Review if this aligns with your risk tolerance and cash needs.
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              <!-- Tax radar -->
-              <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
-                <div class="flex items-start justify-between mb-4">
-                  <div>
-                    <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                      Tax &amp; reporting radar
-                    </p>
-                    <h2 class="text-sm font-semibold text-slate-900">
-                      Key regimes monitored
-                    </h2>
-                  </div>
-                </div>
-
-                <div class="space-y-3 text-xs">
-                  <div class="flex items-start justify-between gap-2 p-3 rounded-xl bg-emerald-50 border border-emerald-200">
-                    <div class="flex items-start gap-2">
-                      <span class="mt-0.5 text-emerald-600">
-                        <i class="fa-solid fa-shield-halved text-[11px]"></i>
-                      </span>
-                      <div>
-                        <p class="font-semibold text-slate-900">US FATCA / FBAR</p>
-                        <p class="text-[11px] text-slate-700">
-                          Foreign financial accounts and assets are aggregated for FBAR Form 114 and FATCA Form 8938 screening.
-                        </p>
-                      </div>
-                    </div>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-700 border border-emerald-200">
-                      OK
-                    </span>
-                  </div>
-
-                  <div class="flex items-start justify-between gap-2 p-3 rounded-xl bg-amber-50/80 border border-amber-200">
-                    <div class="flex items-start gap-2">
-                      <span class="mt-0.5 text-amber-600">
-                        <i class="fa-solid fa-triangle-exclamation text-[11px]"></i>
-                      </span>
-                      <div>
-                        <p class="font-semibold text-slate-900">PFIC &amp; high cash-value policies</p>
-                        <p class="text-[11px] text-slate-700">
-                          Taiwan policies that look like PFICs or may face US excise tax are flagged for specialist review.
-                        </p>
-                      </div>
-                    </div>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-100 text-amber-700 border border-amber-200">
-                      REVIEW
-                    </span>
-                  </div>
-
-                  <div class="flex items-start justify-between gap-2 p-3 rounded-xl bg-sky-50 border border-sky-200">
-                    <div class="flex items-start gap-2">
-                      <span class="mt-0.5 text-sky-600">
-                        <i class="fa-solid fa-building-columns text-[11px]"></i>
-                      </span>
-                      <div>
-                        <p class="font-semibold text-slate-900">Taiwan global income</p>
-                        <p class="text-[11px] text-slate-700">
-                          Estimated foreign-source income is kept one band below current filing thresholds.
-                          System alerts you when projections change.
-                        </p>
-                      </div>
-                    </div>
-                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-sky-100 text-sky-700 border border-sky-200">
-                      WATCH
-                    </span>
-                  </div>
-
-                  <div class="flex items-start gap-2 mt-2 p-3 rounded-xl bg-slate-900 text-[11px] text-slate-100">
-                    <span class="mt-0.5">
-                      <i class="fa-solid fa-robot text-xs"></i>
-                    </span>
-                    <p>
-                      These notes are for screening and planning only. Export this section and share it with your tax advisor for formal advice.
                     </p>
                   </div>
                 </div>
-              </section>
-            </div>
+              </div>
 
-            <!-- ================= Bottom row：accounts + notes ================= -->
-            <div class="grid grid-cols-1 lg:grid-cols-[1.4fr,1.1fr] gap-6 pb-4">
-              <!-- Accounts table -->
-              <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
-                <div class="flex items-center justify-between mb-4">
-                  <div>
-                    <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                      Accounts &amp; policies
-                    </p>
-                    <h2 class="text-sm font-semibold text-slate-900">
-                      Where your assets are held
-                    </h2>
-                  </div>
-                  <div class="flex items-center gap-2 text-[11px] text-slate-500">
-                    <button
-                      type="button"
-                      class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-full border border-slate-200 bg-white hover:bg-slate-50"
-                    >
-                      <i class="fa-solid fa-plus text-[10px]"></i>
-                      <span>Add account</span>
-                    </button>
-                    <button
-                      type="button"
-                      class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-full border border-slate-200 bg-white hover:bg-slate-50"
-                    >
-                      <i class="fa-solid fa-download text-[10px]"></i>
-                      <span>Export CSV</span>
-                    </button>
-                  </div>
-                </div>
-
-                <div class="overflow-x-auto">
-                  <table class="w-full text-xs text-slate-700">
-                    <thead>
-                      <tr class="text-[11px] uppercase tracking-[0.12em] text-slate-400 border-b border-slate-100">
-                        <th class="py-2 pr-2 text-left">Institution / Account</th>
-                        <th class="py-2 px-2 text-left">Jurisdiction</th>
-                        <th class="py-2 px-2 text-left">Type</th>
-                        <th class="py-2 px-2 text-right">Value (USD)</th>
-                        <th class="py-2 pl-2 pr-1 text-right">Tax flags</th>
-                      </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-100">
-                      <tr>
-                        <td class="py-2 pr-2">
-                          <div class="font-semibold text-slate-900">Brokerage – US</div>
-                          <div class="text-[11px] text-slate-500">Interactive Brokers • Ending 4821</div>
-                        </td>
-                        <td class="px-2 py-2">
-                          <span class="inline-flex items-center gap-1 text-[11px]">
-                            🇺🇸 <span>United States</span>
-                          </span>
-                        </td>
-                        <td class="px-2 py-2">Taxable brokerage</td>
-                        <td class="px-2 py-2 text-right font-mono font-semibold" id="dash-tooltip-us-value">
-                          $820,430
-                        </td>
-                        <td class="pl-2 pr-1 py-2 text-right">
-                          <span class="inline-flex items-center gap-1 text-[10px] rounded-full bg-emerald-50 text-emerald-700 px-2 py-0.5 border border-emerald-100">
-                            <i class="fa-solid fa-check text-[9px]"></i>
-                            FATCA filed
-                          </span>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td class="py-2 pr-2">
-                          <div class="font-semibold text-slate-900">Taiwan bank – savings</div>
-                          <div class="text-[11px] text-slate-500">Mega Bank • Ending 0398</div>
-                        </td>
-                        <td class="px-2 py-2">
-                          <span class="inline-flex items-center gap-1 text-[11px]">
-                            🇹🇼 <span>Taiwan</span>
-                          </span>
-                        </td>
-                        <td class="px-2 py-2">Cash / deposits</td>
-                        <td class="px-2 py-2 text-right font-mono font-semibold" id="dash-tooltip-tw-value">
-                          $410,220
-                        </td>
-                        <td class="pl-2 pr-1 py-2 text-right">
-                          <span class="inline-flex items-center gap-1 text-[10px] rounded-full bg-sky-50 text-sky-700 px-2 py-0.5 border border-sky-100">
-                            <i class="fa-solid fa-circle-info text-[9px]"></i>
-                            Counts for FBAR
-                          </span>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td class="py-2 pr-2">
-                          <div class="font-semibold text-slate-900">High cash-value policy</div>
-                          <div class="text-[11px] text-slate-500">TW insurer • Policy #9A23</div>
-                        </td>
-                        <td class="px-2 py-2">
-                          <span class="inline-flex items-center gap-1 text-[11px]">
-                            🇹🇼 <span>Taiwan</span>
-                          </span>
-                        </td>
-                        <td class="px-2 py-2">Insurance</td>
-                        <td class="px-2 py-2 text-right font-mono font-semibold">
-                          $320,000
-                        </td>
-                        <td class="pl-2 pr-1 py-2 text-right">
-                          <span class="inline-flex items-center gap-1 text-[10px] rounded-full bg-amber-50 text-amber-700 px-2 py-0.5 border border-amber-200">
-                            <i class="fa-solid fa-triangle-exclamation text-[9px]"></i>
-                            PFIC review
-                          </span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <p class="mt-3 text-[11px] text-slate-500">
-                  Taimic uses live FX to convert all values into USD for reporting. Your advisors may still
-                  prefer local-currency statements for filing.
-                </p>
-              </section>
-
-              <!-- AI notes / next steps -->
-              <section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col">
-                <div class="flex items-start justify-between mb-4">
-                  <div>
-                    <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                      Taimic AI notes
-                    </p>
-                    <h2 class="text-sm font-semibold text-slate-900">
-                      Suggested next steps for 2025
-                    </h2>
-                  </div>
-                  <span
-                    class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-[#2563eb] text-[11px] font-semibold px-2.5 py-1 border border-blue-100"
-                  >
-                    <i class="fa-solid fa-robot text-[10px]"></i>
-                    Draft only
-                  </span>
-                </div>
-
-                <ol class="space-y-3 text-xs text-slate-700 flex-1">
-                  <li class="flex gap-3">
-                    <div class="flex flex-col items-center">
-                      <div class="w-5 h-5 rounded-full bg-[#2563eb] text-white flex items-center justify-center text-[11px] font-semibold">
-                        1
-                      </div>
-                      <div class="flex-1 w-px bg-slate-200 mt-1"></div>
-                    </div>
-                    <div class="pt-0.5">
-                      <p class="font-semibold text-slate-900 mb-0.5">
-                        Confirm PFIC treatment on Taiwan policies
-                      </p>
-                      <p class="text-[11px]">
-                        Export the policy summary and share it with your US tax advisor. Ask specifically
-                        about Form 8621 filing and potential restructuring.
-                      </p>
-                    </div>
-                  </li>
-
-                  <li class="flex gap-3">
-                    <div class="flex flex-col items-center">
-                      <div class="w-5 h-5 rounded-full bg-[#2563eb] text-white flex items-center justify-center text-[11px] font-semibold">
-                        2
-                      </div>
-                      <div class="flex-1 w-px bg-slate-200 mt-1"></div>
-                    </div>
-                    <div class="pt-0.5">
-                      <p class="font-semibold text-slate-900 mb-0.5">
-                        Run inheritance scenario for &ldquo;one spouse in US&rdquo;
-                      </p>
-                      <p class="text-[11px]">
-                        Use the estate scenario tool to check whether current liquidity and titling cover
-                        estate tax and administration costs in both Taiwan and the US.
-                      </p>
-                    </div>
-                  </li>
-
-                  <li class="flex gap-3">
-                    <div class="flex flex-col items-center">
-                      <div class="w-5 h-5 rounded-full bg-[#2563eb] text-white flex items-center justify-center text-[11px] font-semibold">
-                        3
-                      </div>
-                      <div class="flex-1 w-px bg-slate-200 mt-1"></div>
-                    </div>
-                    <div class="pt-0.5">
-                      <p class="font-semibold text-slate-900 mb-0.5">
-                        Decide your target FX mix for the next 3–5 years
-                      </p>
-                      <p class="text-[11px]">
-                        Given your plan to spend time in both Taiwan and the US, decide what share of net
-                        worth you want in TWD vs USD and let Taimic alert you when you drift.
-                      </p>
-                    </div>
-                  </li>
-
-                  <li class="flex gap-3">
-                    <div class="flex flex-col items-center">
-                      <div class="w-5 h-5 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-[11px] font-semibold">
-                        4
-                      </div>
-                    </div>
-                    <div class="pt-0.5">
-                      <p class="font-semibold text-slate-900 mb-0.5">
-                        Share this dashboard with family / advisors
-                      </p>
-                      <p class="text-[11px]">
-                        Invite your spouse or advisor to view a read-only version of this page so everyone
-                        works off the same cross-border picture.
-                      </p>
-                    </div>
-                  </li>
-                </ol>
-
-                <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500">
-                  These suggestions are generated from your current holdings and thresholds. They are not
-                  legal or tax advice – treat them as a checklist for your next meeting.
-                </div>
-              </section>
-            </div>
-          </div>
-        </main>
-
-        <!-- Footer（在內容區右側底部） -->
-        <footer class="bg-[#f4f6fb] border-t border-gray-200">
-          <div class="max-w-[1200px] mx-auto px-6 pt-6 pb-4">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
-              <div>© 2025 Taimic Inc. All Rights Reserved.</div>
-              <div class="flex items-center gap-4 text-gray-400">
-                <i class="fa-brands fa-x-twitter"></i>
-                <i class="fa-brands fa-discord"></i>
-                <i class="fa-brands fa-instagram"></i>
-                <i class="fa-brands fa-github"></i>
+              <!-- 這兩個只是給 main.js 填值用，可隱藏 -->
+              <div class="sr-only">
+                <span id="dash-tooltip-tw">TW demo</span>
+                <span id="dash-tooltip-us">US demo</span>
               </div>
             </div>
+
+            <!-- Right: Compliance Risk Monitor -->
+            <div class="bg-white/80 backdrop-blur-xl border border-slate-200/80 rounded-2xl shadow-sm p-5 flex flex-col">
+              <div class="flex items-start justify-between mb-3">
+                <div>
+                  <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
+                    Risk &amp; compliance monitor
+                  </p>
+                  <h2 class="text-sm font-semibold text-slate-900">
+                    Cross-border obligations
+                  </h2>
+                </div>
+              </div>
+
+              <div class="space-y-3 text-xs">
+                <!-- FBAR -->
+                <div class="flex items-start gap-3 rounded-xl bg-emerald-50/80 border border-emerald-100 px-3 py-2">
+                  <div class="mt-1">
+                    <span class="inline-flex w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgba(16,185,129,0.25)]"></span>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-semibold text-slate-900 flex items-center gap-2">
+                      FBAR filing
+                      <span class="inline-flex items-center rounded-full bg-emerald-600/10 text-emerald-700 px-2 py-0.5 text-[10px] font-semibold">
+                        Completed
+                      </span>
+                    </p>
+                    <p class="text-[11px] text-slate-700">
+                      Foreign account balances have been aggregated for FinCEN Form 114 this year.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- FATCA -->
+                <div class="flex items-start gap-3 rounded-xl bg-amber-50/80 border border-amber-100 px-3 py-2">
+                  <div class="mt-1">
+                    <span class="inline-flex w-2.5 h-2.5 rounded-full bg-amber-400 shadow-[0_0_0_4px_rgba(251,191,36,0.25)]"></span>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-semibold text-slate-900 flex items-center gap-2">
+                      FATCA threshold
+                      <span class="inline-flex items-center rounded-full bg-amber-500/10 text-amber-700 px-2 py-0.5 text-[10px] font-semibold">
+                        Near limit
+                      </span>
+                    </p>
+                    <p class="text-[11px] text-slate-700 mb-2">
+                      Current estimated foreign financial assets are approaching the Form 8938 reporting band.
+                    </p>
+                    <div class="flex items-center justify-between text-[11px] text-slate-500 mb-1">
+                      <span>$48,000 / $50,000</span>
+                      <span>96%</span>
+                    </div>
+                    <div class="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
+                      <div class="h-full w-[96%] bg-gradient-to-r from-amber-400 to-amber-500"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- CRS -->
+                <div class="flex items-start gap-3 rounded-xl bg-slate-50 border border-slate-200 px-3 py-2">
+                  <div class="mt-1">
+                    <span class="inline-flex w-2.5 h-2.5 rounded-full bg-sky-500 shadow-[0_0_0_4px_rgba(59,130,246,0.25)]"></span>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-semibold text-slate-900 flex items-center gap-2">
+                      CRS status
+                      <span class="inline-flex items-center rounded-full bg-sky-500/10 text-sky-700 px-2 py-0.5 text-[10px] font-semibold">
+                        Active
+                      </span>
+                    </p>
+                    <p class="text-[11px] text-slate-700">
+                      Automatic exchange of information is enabled for participating jurisdictions.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <p class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500">
+                These signals are for screening and planning only. Export this section and share it
+                with your cross-border tax advisor for formal advice.
+              </p>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="border-t border-slate-200 bg-slate-100/90">
+        <div class="max-w-[1200px] mx-auto px-5 pt-4 pb-3">
+          <div class="flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+            <div>© 2025 Taimic Inc. All Rights Reserved.</div>
+            <div class="flex items-center gap-4 text-slate-400">
+              <i class="fa-brands fa-x-twitter"></i>
+              <i class="fa-brands fa-discord"></i>
+              <i class="fa-brands fa-instagram"></i>
+              <i class="fa-brands fa-github"></i>
+            </div>
           </div>
-        </footer>
-      </div>
+        </div>
+      </footer>
     </div>
   </div>
 
-  <!-- overlay 保留 -->
+  <!-- overlay：先留空給之後 upload modal 用 -->
   <div
     id="modal-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
   ></div>
 
-  <!-- Auth overlay：登入 / 註冊共用（跟 index.html 共用 main.js） -->
+  <!-- Auth overlay：登入 / 註冊共用（和 index.html 共用 main.js） -->
   <div
     id="auth-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
@@ -808,7 +553,72 @@
     </div>
   </div>
 
-  <!-- 共用 JS -->
+  <!-- 共用 JS（會幫你算 net worth / TW / US 等數字）-->
   <script src="main.js"></script>
+
+  <!-- 專屬這個 dashboard 的小圖表：sparkline + compliance donut -->
+  <script>
+    window.addEventListener("load", function () {
+      // Lucide icons
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+      // Net worth sparkline (demo data)
+      const sparkCtx = document.getElementById("netWorthSparkline");
+      if (sparkCtx && window.Chart) {
+        new Chart(sparkCtx, {
+          type: "line",
+          data: {
+            labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            datasets: [
+              {
+                data: [910, 915, 920, 918, 930, 936, 942],
+                borderWidth: 2,
+                tension: 0.35,
+                borderColor: "#22c55e",
+                pointRadius: 0,
+                fill: true,
+                backgroundColor: "rgba(34,197,94,0.10)",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: { enabled: false } },
+            scales: {
+              x: { display: false },
+              y: { display: false },
+            },
+          },
+        });
+      }
+
+      // Compliance score donut
+      const compCtx = document.getElementById("complianceScoreChart");
+      if (compCtx && window.Chart) {
+        new Chart(compCtx, {
+          type: "doughnut",
+          data: {
+            labels: ["Compliant", "Gap"],
+            datasets: [
+              {
+                data: [90, 10],
+                backgroundColor: ["#22c55e", "#e5e7eb"],
+                borderWidth: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: "75%",
+            plugins: { legend: { display: false }, tooltip: { enabled: false } },
+          },
+        });
+      }
+    });
+  </script>
 </body>
 </html>
