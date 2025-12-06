@@ -31,11 +31,29 @@
       border: 1px solid rgba(255, 255, 255, 0.45);
     }
 
+    /* Sidebar 連結：改成真的 CSS，不用 @apply 了 */
     .side-item {
-      @apply flex items-center justify-between w-full text-sm px-3 py-2 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 transition;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      color: #64748b; /* slate-500-ish */
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+    .side-item:hover {
+      color: #0f172a; /* slate-900 */
+      background-color: rgba(148, 163, 184, 0.25); /* slate-400/40 */
     }
     .side-item-active {
-      @apply bg-slate-200/70 text-slate-900 font-semibold;
+      background-color: rgba(148, 163, 184, 0.35);
+      color: #0f172a;
+      font-weight: 600;
     }
 
     /* AI notes 滾動上限，避免卡片過高 */
@@ -51,9 +69,21 @@
   <svg width="0" height="0" style="position:absolute;left:-9999px;top:-9999px;">
     <defs>
       <filter id="liquid_glass_filter">
-        <feTurbulence type="fractalNoise" baseFrequency="0.003" numOctaves="2" result="noise" />
-        <feGaussianBlur in="noise" stdDeviation="1.2" result="map" />
-        <feDisplacementMap in="SourceGraphic" in2="map" scale="110" xChannelSelector="R" yChannelSelector="G" />
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.003"
+          numOctaves="2"
+          result="noise" />
+        <feGaussianBlur
+          in="noise"
+          stdDeviation="1.2"
+          result="map" />
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="map"
+          scale="110"
+          xChannelSelector="R"
+          yChannelSelector="G" />
       </filter>
     </defs>
   </svg>
@@ -156,48 +186,28 @@
     <!-- =================================================== -->
     <div class="flex flex-1">
 
-      <!-- 左側分類 -->
+      <!-- 左側分類：Overview / US assets / Taiwan assets + 底部 Help / Settings -->
       <aside class="hidden md:flex flex-col w-64 px-5 py-6 border-r border-slate-200/70 bg-white/60 backdrop-blur-xl">
-        <!-- 主導航：Overview / US / Taiwan -->
         <nav class="space-y-1">
-          <button
-            class="side-item side-item-active"
-            onclick="scrollToSection('snapshot-top')"
-          >
+          <button class="side-item side-item-active" onclick="scrollToSection('snapshot-top')">
             <span>Overview</span>
           </button>
-
-          <button
-            class="side-item"
-            onclick="scrollToSection('us-assets')"
-          >
+          <button class="side-item" onclick="scrollToSection('us-assets')">
             <span>US assets</span>
           </button>
-
-          <button
-            class="side-item"
-            onclick="scrollToSection('tw-assets')"
-          >
+          <button class="side-item" onclick="scrollToSection('tw-assets')">
             <span>Taiwan assets</span>
           </button>
         </nav>
 
-        <!-- 底部：Help center + Settings（有 icon） -->
-        <div class="mt-8 pt-4 border-t border-slate-200 space-y-1">
-          <button
-            class="side-item"
-            onclick="scrollToSection('help-center')"
-          >
+        <div class="mt-auto pt-4 border-t border-slate-200 space-y-1">
+          <button class="side-item" onclick="scrollToSection('help-center')">
             <span class="flex items-center gap-2">
               <i class="fa-regular fa-circle-question text-slate-500"></i>
               <span>Help center</span>
             </span>
           </button>
-
-          <button
-            class="side-item"
-            onclick="scrollToSection('settings-section')"
-          >
+          <button class="side-item" onclick="scrollToSection('settings-section')">
             <span class="flex items-center gap-2">
               <i class="fa-solid fa-gear text-slate-500"></i>
               <span>Settings</span>
@@ -257,7 +267,7 @@
           </div>
 
           <!-- =================================================== -->
-          <!-- Row 1: 上半部 Overview (Snapshot + AI notes)        -->
+          <!-- Row 1: Overview (Snapshot + AI notes)               -->
           <!-- =================================================== -->
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Global snapshot -->
@@ -388,9 +398,8 @@
           </div>
 
           <!-- =================================================== -->
-          <!-- Row 2: 下半部 Accounts + 教學                       -->
+          <!-- Row 2: Accounts + How to use (US/TW Assets 錨點)    -->
           <!-- =================================================== -->
-          <!-- US/TW assets 錨點（目前都指到同一個 Accounts 區塊） -->
           <div id="us-assets"></div>
           <div id="tw-assets"></div>
           <div id="accounts-block"></div>
@@ -507,7 +516,7 @@
                 <div class="col-span-2 md:col-span-3 flex justify-end items-end">
                   <button
                     type="submit"
-                    class="inline-flex items-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-xs font-semibold px-4 py-2 shadow-sm transition"
+                    class="inline-flex items-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text白 text-xs font-semibold px-4 py-2 shadow-sm transition"
                   >
                     <i class="fa-solid fa-plus text-[10px]"></i>
                     <span>Add to dashboard</span>
@@ -539,7 +548,7 @@
               </p>
             </section>
 
-            <!-- 小提示 / 使用步驟 + Help center 錨點 -->
+            <!-- Help center 區塊 (也是 help center 錨點) -->
             <section id="help-center" class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-3 text-[11px] text-slate-700">
               <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
                 How to use this page
@@ -564,13 +573,13 @@
               <div class="mt-2 p-3 rounded-xl bg-slate-900 text-slate-100 flex gap-2">
                 <i class="fa-solid fa-circle-question text-xs mt-[2px]"></i>
                 <p>
-                  Help center (coming soon): in future you’ll find FAQs, examples and direct support contact here.
+                  Help center (coming soon): here you’ll find FAQs, examples and ways to contact Taimic support.
                 </p>
               </div>
             </section>
           </div>
 
-          <!-- Settings 錨點（先放一個 placeholder） -->
+          <!-- Settings 區塊錨點 -->
           <div id="settings-section" class="pb-6">
             <section class="liquid bg-white/5 rounded-2xl p-5 mt-2 text-[11px] text-slate-700">
               <div class="flex items-center gap-2 mb-2">
@@ -620,7 +629,7 @@
     id="auth-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
   >
-    <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 relative">
+    <div class="w-full max-w-sm bg白 rounded-2xl shadow-2xl p-6 relative">
       <button
         type="button"
         onclick="closeAuthModal && closeAuthModal()"
@@ -635,7 +644,7 @@
             type="button"
             id="auth-tab-login"
             onclick="openAuthModal && openAuthModal('login')"
-            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-900 shadow-sm"
+            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg白 text-slate-900 shadow-sm"
           >
             Log in
           </button>
@@ -693,11 +702,11 @@
   <!-- 共用 JS -->
   <script src="main.js"></script>
 
-  <!-- Dashboard JS：資產輸入 + 計算 + 圖表 + AI notes + localStorage -->
+  <!-- Dashboard 專用 JS：資產輸入 + 計算 + 圖表 + AI notes + localStorage -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const STORAGE_KEY = 'taimic_assets_v1';
-      const FX_TWD_TO_USD = 0.031;
+      const FX_TWD_TO_USD = 0.031; // demo 匯率
       let assets = [];
       let regionChart = null;
 
@@ -708,7 +717,7 @@
 
       if (!form) return;
 
-      // localStorage 載入
+      // ---- localStorage 載入 ----
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
@@ -722,18 +731,20 @@
         console.warn('Failed to load assets from localStorage', e);
       }
 
+      // 幣別切換時更新前綴
       currencySelect.addEventListener('change', () => {
         const cur = currencySelect.value;
         currencyPrefix.textContent = cur === 'TWD' ? 'NT$' : '$';
       });
 
+      // 提交表單：新增資產
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         const name = document.getElementById('asset-name').value.trim();
         const region = document.getElementById('asset-region').value;
         const type = document.getElementById('asset-type').value;
         const currency = document.getElementById('asset-currency').value;
-        const units = parseFloat(document.getElementById('asset-value').value || '0');
+        const units = parseFloat(document.getElementById('asset-value').value || '0'); // 幾「萬」
 
         if (!name || !units || units <= 0) return;
 
@@ -741,7 +752,14 @@
         let valueUsd = valueInCurrency;
         if (currency === 'TWD') valueUsd = valueInCurrency * FX_TWD_TO_USD;
 
-        assets.push({ name, region, type, currency, valueInCurrency, valueUsd });
+        assets.push({
+          name,
+          region,
+          type,
+          currency,
+          valueInCurrency,
+          valueUsd
+        });
 
         saveAssets();
         form.reset();
@@ -781,7 +799,9 @@
       }
 
       function formatUsd(x) {
-        return '$' + (x || 0).toLocaleString('en-US', { maximumFractionDigits: 0 });
+        return '$' + (x || 0).toLocaleString('en-US', {
+          maximumFractionDigits: 0
+        });
       }
 
       function updateRegionLabel(val, total, elId) {
@@ -852,6 +872,7 @@
           tbody.appendChild(tr);
         });
 
+        // 綁刪除按鈕
         tbody.querySelectorAll('.asset-delete-btn').forEach(btn => {
           btn.addEventListener('click', () => {
             const idx = parseInt(btn.dataset.index, 10);
@@ -905,7 +926,11 @@
       }
 
       function updateRegionChart(regionTotals) {
-        const data = [regionTotals.tw, regionTotals.us, regionTotals.offshore];
+        const data = [
+          regionTotals.tw,
+          regionTotals.us,
+          regionTotals.offshore
+        ];
         const ctx = document.getElementById('regionChart').getContext('2d');
 
         if (!regionChart) {
@@ -919,7 +944,9 @@
               }]
             },
             options: {
-              plugins: { legend: { display: false } },
+              plugins: {
+                legend: { display: false }
+              },
               cutout: '65%'
             }
           });
@@ -1042,6 +1069,7 @@
           .replace(/>/g, '&gt;');
       }
 
+      // 初始 render
       renderDashboard();
     });
 
