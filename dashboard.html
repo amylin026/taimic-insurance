@@ -37,6 +37,12 @@
     .side-item-active {
       @apply bg-slate-200/70 text-slate-900 font-semibold;
     }
+
+    /* AI notes 滾動上限，避免卡片過高 */
+    #ai-notes-list {
+      max-height: 260px;
+      overflow-y: auto;
+    }
   </style>
 </head>
 <body class="min-h-screen bg-[#EFF3FF]">
@@ -244,10 +250,142 @@
           </div>
 
           <!-- =================================================== -->
-          <!-- Row 1: 左邊輸入資產 + 右邊大總覽                     -->
+          <!-- Row 1: 上半部專心講 Summary (Snapshot + AI notes)   -->
           <!-- =================================================== -->
-          <div class="grid grid-cols-1 lg:grid-cols-[1.15fr,1fr] gap-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Global snapshot -->
+            <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-4">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                    Global snapshot
+                  </p>
+                  <h2 class="text-sm font-semibold text-slate-900">
+                    Net worth &amp; cross-border split
+                  </h2>
+                </div>
+              </div>
 
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <p class="text-[11px] text-slate-500 mb-1">Estimated global net worth</p>
+                  <div
+                    id="networth-value"
+                    class="text-2xl md:text-3xl font-bold text-slate-900 font-mono tracking-tight"
+                  >
+                    $0
+                  </div>
+                  <p class="text-[11px] text-slate-500 mt-1">
+                    Base currency: USD
+                  </p>
+                </div>
+
+                <div class="space-y-2 text-[11px]">
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="inline-flex items-center gap-1 text-slate-600">
+                      <span class="inline-flex w-2 h-2 rounded-full bg-sky-400"></span>
+                      Taiwan
+                    </span>
+                    <span id="region-tw-label" class="font-semibold text-slate-900">0% · $0</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="inline-flex items-center gap-1 text-slate-600">
+                      <span class="inline-flex w-2 h-2 rounded-full bg-indigo-500"></span>
+                      US
+                    </span>
+                    <span id="region-us-label" class="font-semibold text-slate-900">0% · $0</span>
+                  </div>
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="inline-flex items-center gap-1 text-slate-600">
+                      <span class="inline-flex w-2 h-2 rounded-full bg-slate-300"></span>
+                      Offshore / other
+                    </span>
+                    <span id="region-offshore-label" class="font-semibold text-slate-900">0% · $0</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Region donut -->
+              <div class="mt-2 grid grid-cols-1 md:grid-cols-[1.1fr,1fr] gap-4 items-center">
+                <div class="relative max-w-[220px] mx-auto aspect-square">
+                  <canvas id="regionChart"></canvas>
+                  <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div class="text-center">
+                      <div class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1">
+                        TOTAL
+                      </div>
+                      <div class="text-lg font-bold text-slate-900 font-mono" id="networth-percent-center">
+                        100%
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="space-y-2 text-[11px] text-slate-700">
+                  <p class="font-semibold text-slate-900">
+                    Tax &amp; reporting radar
+                  </p>
+                  <div id="radar-fatca" class="flex items-center justify-between">
+                    <span>US FATCA / FBAR</span>
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      OK
+                    </span>
+                  </div>
+                  <div id="radar-pfic" class="flex items-center justify-between">
+                    <span>PFIC / high cash-value policies</span>
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 text-[10px] font-semibold">
+                      —
+                    </span>
+                  </div>
+                  <div id="radar-twglobal" class="flex items-center justify-between">
+                    <span>Taiwan global income</span>
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 text-[10px] font-semibold">
+                      —
+                    </span>
+                  </div>
+
+                  <p class="mt-2 text-[11px] text-slate-500">
+                    These are screening labels only. Your advisor gives the final call on filing and structure.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <!-- AI notes / next steps -->
+            <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col">
+              <div class="flex items-start justify-between mb-4">
+                <div>
+                  <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                    Taimic AI notes
+                  </p>
+                  <h2 class="text-sm font-semibold text-slate-900">
+                    Suggested next steps for this year
+                  </h2>
+                </div>
+                <span
+                  class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-[#2563eb] text-[11px] font-semibold px-2.5 py-1 border border-blue-100"
+                >
+                  <i class="fa-solid fa-robot text-[10px]"></i>
+                  Draft only
+                </span>
+              </div>
+
+              <ol class="space-y-3 text-xs text-slate-700 flex-1" id="ai-notes-list">
+                <!-- JS 依照資產狀況調整內容 -->
+              </ol>
+
+              <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500">
+                These suggestions are generated from your current holdings and regions. They are not
+                legal or tax advice – treat them as a checklist for your next meeting.
+              </div>
+            </section>
+          </div>
+
+          <!-- =================================================== -->
+          <!-- Row 2: 下半部講輸入 / 帳戶 + 教學                   -->
+          <!-- =================================================== -->
+          <div class="grid grid-cols-1 lg:grid-cols-[1.4fr,1fr] gap-6 pb-4">
             <!-- Add assets + table -->
             <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-4">
               <div class="flex items-start justify-between gap-2">
@@ -391,139 +529,6 @@
               </p>
             </section>
 
-            <!-- Global snapshot -->
-            <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-4">
-              <div class="flex items-start justify-between gap-2">
-                <div>
-                  <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                    Global snapshot
-                  </p>
-                  <h2 class="text-sm font-semibold text-slate-900">
-                    Net worth &amp; cross-border split
-                  </h2>
-                </div>
-              </div>
-
-              <div class="flex items-start justify-between gap-3">
-                <div>
-                  <p class="text-[11px] text-slate-500 mb-1">Estimated global net worth</p>
-                  <div
-                    id="networth-value"
-                    class="text-2xl md:text-3xl font-bold text-slate-900 font-mono tracking-tight"
-                  >
-                    $0
-                  </div>
-                  <p class="text-[11px] text-slate-500 mt-1">
-                    Base currency: USD
-                  </p>
-                </div>
-
-                <div class="space-y-2 text-[11px]">
-                  <div class="flex items-center justify-between gap-2">
-                    <span class="inline-flex items-center gap-1 text-slate-600">
-                      <span class="inline-flex w-2 h-2 rounded-full bg-sky-400"></span>
-                      Taiwan
-                    </span>
-                    <span id="region-tw-label" class="font-semibold text-slate-900">0% · $0</span>
-                  </div>
-                  <div class="flex items-center justify-between gap-2">
-                    <span class="inline-flex items-center gap-1 text-slate-600">
-                      <span class="inline-flex w-2 h-2 rounded-full bg-indigo-500"></span>
-                      US
-                    </span>
-                    <span id="region-us-label" class="font-semibold text-slate-900">0% · $0</span>
-                  </div>
-                  <div class="flex items-center justify-between gap-2">
-                    <span class="inline-flex items-center gap-1 text-slate-600">
-                      <span class="inline-flex w-2 h-2 rounded-full bg-slate-300"></span>
-                      Offshore / other
-                    </span>
-                    <span id="region-offshore-label" class="font-semibold text-slate-900">0% · $0</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Region donut -->
-              <div class="mt-2 grid grid-cols-1 md:grid-cols-[1.1fr,1fr] gap-4 items-center">
-                <div class="relative max-w-[220px] mx-auto aspect-square">
-                  <canvas id="regionChart"></canvas>
-                  <div class="absolute inset-0 flex items-center justifycenter pointer-events-none">
-                    <div class="text-center">
-                      <div class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1">
-                        TOTAL
-                      </div>
-                      <div class="text-lg font-bold text-slate-900 font-mono" id="networth-percent-center">
-                        100%
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="space-y-2 text-[11px] text-slate-700">
-                  <p class="font-semibold text-slate-900">
-                    Tax &amp; reporting radar
-                  </p>
-                  <div id="radar-fatca" class="flex items-center justify-between">
-                    <span>US FATCA / FBAR</span>
-                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold">
-                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                      OK
-                    </span>
-                  </div>
-                  <div id="radar-pfic" class="flex items-center justify-between">
-                    <span>PFIC / high cash-value policies</span>
-                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 text-[10px] font-semibold">
-                      —
-                    </span>
-                  </div>
-                  <div id="radar-twglobal" class="flex items-center justify-between">
-                    <span>Taiwan global income</span>
-                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 text-[10px] font-semibold">
-                      —
-                    </span>
-                  </div>
-
-                  <p class="mt-2 text-[11px] text-slate-500">
-                    These are screening labels only. Your advisor gives the final call on filing and structure.
-                  </p>
-                </div>
-              </div>
-            </section>
-          </div>
-
-          <!-- =================================================== -->
-          <!-- Row 2: AI notes                                      -->
-          <!-- =================================================== -->
-          <div class="grid grid-cols-1 lg:grid-cols-[1.2fr,1fr] gap-6 pb-4">
-            <!-- AI notes / next steps -->
-            <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col">
-              <div class="flex items-start justify-between mb-4">
-                <div>
-                  <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                    Taimic AI notes
-                  </p>
-                  <h2 class="text-sm font-semibold text-slate-900">
-                    Suggested next steps for this year
-                  </h2>
-                </div>
-                <span
-                  class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-[#2563eb] text-[11px] font-semibold px-2.5 py-1 border border-blue-100"
-                >
-                  <i class="fa-solid fa-robot text-[10px]"></i>
-                  Draft only
-                </span>
-              </div>
-
-              <ol class="space-y-3 text-xs text-slate-700 flex-1" id="ai-notes-list">
-                <!-- JS 依照資產狀況調整內容 -->
-              </ol>
-
-              <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500">
-                These suggestions are generated from your current holdings and regions. They are not
-                legal or tax advice – treat them as a checklist for your next meeting.
-              </div>
-            </section>
-
             <!-- 小提示 / 使用步驟 -->
             <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-3 text-[11px] text-slate-700">
               <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
@@ -578,13 +583,13 @@
   <!-- 共用 overlay -->
   <div
     id="modal-overlay"
-    class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justifycenter p-4"
+    class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
   ></div>
 
   <!-- Auth overlay：登入 / 註冊共用 -->
   <div
     id="auth-overlay"
-    class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justifycenter p-4"
+    class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
   >
     <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 relative">
       <button
@@ -601,7 +606,7 @@
             type="button"
             id="auth-tab-login"
             onclick="openAuthModal && openAuthModal('login')"
-            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-900 shadow-sm"
+            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg白 text-slate-900 shadow-sm"
           >
             Log in
           </button>
@@ -648,7 +653,7 @@
       <button
         id="auth-submit"
         type="button"
-        class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition"
+        class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text白 text-sm font-semibold py-2.5 shadow-sm transition"
       >
         <span id="auth-submit-text">Login</span>
         <i class="fa-solid fa-arrow-right-long text-xs"></i>
@@ -656,14 +661,15 @@
     </div>
   </div>
 
-  <!-- 如果 main.js 有共用邏輯，可以留著；沒有也可以先註解掉 -->
+  <!-- 共用 JS -->
   <script src="main.js"></script>
 
-  <!-- Dashboard 專用 JS：資產輸入 + 計算 + 圖表 + AI notes -->
+  <!-- Dashboard 專用 JS：資產輸入 + 計算 + 圖表 + AI notes + localStorage -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      const STORAGE_KEY = 'taimic_assets_v1';
       const FX_TWD_TO_USD = 0.031; // demo 匯率
-      const assets = [];
+      let assets = [];
       let regionChart = null;
 
       const form = document.getElementById('asset-form');
@@ -671,9 +677,31 @@
       const currencyPrefix = document.getElementById('asset-currency-prefix');
       const emptyState = document.getElementById('empty-state');
 
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
+      if (!form) return;
 
+      // ---- localStorage 載入 ----
+      try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed)) {
+            assets = parsed;
+            if (assets.length && emptyState) emptyState.classList.add('hidden');
+          }
+        }
+      } catch (e) {
+        console.warn('Failed to load assets from localStorage', e);
+      }
+
+      // 幣別切換時更新前綴
+      currencySelect.addEventListener('change', () => {
+        const cur = currencySelect.value;
+        currencyPrefix.textContent = cur === 'TWD' ? 'NT$' : '$';
+      });
+
+      // 提交表單：新增資產
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
         const name = document.getElementById('asset-name').value.trim();
         const region = document.getElementById('asset-region').value;
         const type = document.getElementById('asset-type').value;
@@ -682,7 +710,7 @@
 
         if (!name || !units || units <= 0) return;
 
-        const valueInCurrency = units * 10000; // 實際金額
+        const valueInCurrency = units * 10000;
         let valueUsd = valueInCurrency;
         if (currency === 'TWD') valueUsd = valueInCurrency * FX_TWD_TO_USD;
 
@@ -695,18 +723,22 @@
           valueUsd
         });
 
+        saveAssets();
         form.reset();
         currencySelect.value = 'USD';
         currencyPrefix.textContent = '$';
 
         if (emptyState) emptyState.classList.add('hidden');
-
         renderDashboard();
       });
 
-      currencySelect.addEventListener('change', () => {
-        currencyPrefix.textContent = currencySelect.value === 'TWD' ? 'NT$' : '$';
-      });
+      function saveAssets() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(assets));
+        } catch (e) {
+          console.warn('Failed to save assets to localStorage', e);
+        }
+      }
 
       function renderDashboard() {
         const total = assets.reduce((sum, a) => sum + a.valueUsd, 0);
@@ -729,7 +761,9 @@
       }
 
       function formatUsd(x) {
-        return '$' + (x || 0).toLocaleString('en-US', { maximumFractionDigits: 0 });
+        return '$' + (x || 0).toLocaleString('en-US', {
+          maximumFractionDigits: 0
+        });
       }
 
       function updateRegionLabel(val, total, elId) {
@@ -738,81 +772,80 @@
         const pct = total > 0 ? Math.round((val / total) * 100) : 0;
         el.textContent = `${pct}% · ${formatUsd(val)}`;
       }
+
       function renderAssetTable() {
-  const tbody = document.getElementById('asset-table-body');
-  tbody.innerHTML = '';
+        const tbody = document.getElementById('asset-table-body');
+        tbody.innerHTML = '';
 
-  if (!assets.length) {
-    const tr = document.createElement('tr');
-    const td = document.createElement('td');
-    td.colSpan = 5;
-    td.className = 'py-4 text-center text-[11px] text-slate-500';
-    td.textContent = 'No accounts added yet.';
-    tr.appendChild(td);
-    tbody.appendChild(tr);
-    return;
-  }
+        if (!assets.length) {
+          const tr = document.createElement('tr');
+          const td = document.createElement('td');
+          td.colSpan = 5;
+          td.className = 'py-4 text-center text-[11px] text-slate-500';
+          td.textContent = 'No accounts added yet.';
+          tr.appendChild(td);
+          tbody.appendChild(tr);
+          return;
+        }
 
-  assets.forEach((a, index) => {
-    const tr = document.createElement('tr');
+        assets.forEach((a, index) => {
+          const tr = document.createElement('tr');
 
-    const tdName = document.createElement('td');
-    tdName.className = 'py-2 pr-2';
-    tdName.innerHTML = `
-      <div class="font-semibold text-slate-900">${escapeHtml(a.name)}</div>
-      <div class="text-[11px] text-slate-500">${a.currency} · approx. ${a.valueInCurrency.toLocaleString('en-US')}</div>
-    `;
+          const tdName = document.createElement('td');
+          tdName.className = 'py-2 pr-2';
+          tdName.innerHTML = `
+            <div class="font-semibold text-slate-900">${escapeHtml(a.name)}</div>
+            <div class="text-[11px] text-slate-500">${a.currency} · approx. ${a.valueInCurrency.toLocaleString('en-US')}</div>
+          `;
 
-    const tdRegion = document.createElement('td');
-    tdRegion.className = 'px-2 py-2';
-    tdRegion.innerHTML = regionLabelHtml(a.region);
+          const tdRegion = document.createElement('td');
+          tdRegion.className = 'px-2 py-2';
+          tdRegion.innerHTML = regionLabelHtml(a.region);
 
-    const tdType = document.createElement('td');
-    tdType.className = 'px-2 py-2';
-    tdType.textContent = typeLabel(a.type);
+          const tdType = document.createElement('td');
+          tdType.className = 'px-2 py-2';
+          tdType.textContent = typeLabel(a.type);
 
-    const tdVal = document.createElement('td');
-    tdVal.className = 'px-2 py-2 text-right font-mono font-semibold';
-    tdVal.textContent = formatUsd(a.valueUsd);
+          const tdVal = document.createElement('td');
+          tdVal.className = 'px-2 py-2 text-right font-mono font-semibold';
+          tdVal.textContent = formatUsd(a.valueUsd);
 
-    const tdFlag = document.createElement('td');
-    tdFlag.className = 'pl-2 pr-1 py-2 text-right text-[10px]';
-    tdFlag.innerHTML = `
-      <div class="flex items-center justify-end gap-2">
-        ${taxFlagHtml(a)}
-        <button
-          type="button"
-          class="asset-delete-btn w-7 h-7 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-slate-700 text-xs"
-          data-index="${index}"
-        >
-          <i class="fa-solid fa-minus"></i>
-        </button>
-      </div>
-    `;
+          const tdFlag = document.createElement('td');
+          tdFlag.className = 'pl-2 pr-1 py-2 text-right text-[10px]';
+          tdFlag.innerHTML = `
+            <div class="flex items-center justify-end gap-2">
+              ${taxFlagHtml(a)}
+              <button
+                type="button"
+                class="asset-delete-btn w-7 h-7 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-slate-700 text-xs"
+                data-index="${index}"
+              >
+                <i class="fa-solid fa-minus"></i>
+              </button>
+            </div>
+          `;
 
-    tr.appendChild(tdName);
-    tr.appendChild(tdRegion);
-    tr.appendChild(tdType);
-    tr.appendChild(tdVal);
-    tr.appendChild(tdFlag);
+          tr.appendChild(tdName);
+          tr.appendChild(tdRegion);
+          tr.appendChild(tdType);
+          tr.appendChild(tdVal);
+          tr.appendChild(tdFlag);
 
-    tbody.appendChild(tr);
-  });
+          tbody.appendChild(tr);
+        });
 
-  // 綁定刪除按鈕的 click 事件
-  tbody.querySelectorAll('.asset-delete-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const idx = parseInt(btn.dataset.index, 10);
-      if (Number.isNaN(idx)) return;
-
-      assets.splice(idx, 1);            // 從陣列移除
-      if (!assets.length) {
-        document.getElementById('empty-state').classList.remove('hidden');
+        // 綁刪除按鈕
+        tbody.querySelectorAll('.asset-delete-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = parseInt(btn.dataset.index, 10);
+            if (Number.isNaN(idx)) return;
+            assets.splice(idx, 1);
+            saveAssets();
+            if (!assets.length && emptyState) emptyState.classList.remove('hidden');
+            renderDashboard();
+          });
+        });
       }
-      renderDashboard();                // 重新算淨值 + 重畫表格 + donut + AI notes
-    });
-  });
-}
 
       function regionLabelHtml(region) {
         if (region === 'tw') return '<span class="inline-flex items-center gap-1 text-[11px]">🇹🇼 <span>Taiwan</span></span>';
@@ -860,10 +893,7 @@
           regionTotals.us,
           regionTotals.offshore
         ];
-        const canvas = document.getElementById('regionChart');
-        if (!canvas || typeof Chart === 'undefined') return;
-
-        const ctx = canvas.getContext('2d');
+        const ctx = document.getElementById('regionChart').getContext('2d');
 
         if (!regionChart) {
           regionChart = new Chart(ctx, {
@@ -906,7 +936,7 @@
 
         if (anyTw && anyOffshore) {
           twEl.querySelector('span:last-child').className =
-            'inline-flex itemscenter gap-1 px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200 text-[10px] font-semibold';
+            'inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200 text-[10px] font-semibold';
           twEl.querySelector('span:last-child').innerHTML =
             '<i class="fa-solid fa-eye text-[9px]"></i> WATCH';
         } else if (anyTw) {
@@ -923,41 +953,45 @@
 
       function renderAiNotes(regionTotals, total) {
         const list = document.getElementById('ai-notes-list');
+        if (!list) return;
         list.innerHTML = '';
 
-        const items = [];
+        const rawItems = [];
 
         if (assets.some(a => a.type === 'insurance' && a.region === 'tw')) {
-          items.push({
+          rawItems.push({
             title: 'Confirm PFIC treatment on Taiwan policies',
-            body: 'Export policy details and ask your US tax advisor specifically about Form 8621 and potential restructuring options.',
+            body: 'Export Taiwan policy details and ask your US tax advisor specifically about Form 8621 and whether restructuring is needed.',
             tag: 'US tax advisor'
           });
         }
 
         if (regionTotals.tw > 0 && regionTotals.us > 0) {
-          items.push({
-            title: 'Run cross-border inheritance scenario',
+          rawItems.push({
+            title: 'Run a TW–US inheritance scenario',
             body: 'Simulate what happens if one spouse passes away while assets are split between Taiwan and the US to check liquidity and tax.',
             tag: 'Estate / succession'
           });
         }
 
         if (total > 0 && (regionTotals.tw / total > 0.4 || regionTotals.us / total > 0.4)) {
-          items.push({
+          rawItems.push({
             title: 'Decide your target TW vs US FX mix',
             body: 'Set a target range for how much of your net worth you want in TWD vs USD, then let Taimic alert you when allocations drift.',
             tag: 'FX & allocation'
           });
         }
 
-        if (!items.length) {
-          items.push({
+        if (!rawItems.length) {
+          rawItems.push({
             title: 'Add a few more accounts to unlock AI notes',
             body: 'Once we see assets in at least two regions or more than one type, we can surface more specific cross-border suggestions.',
             tag: 'Setup'
           });
         }
+
+        // 首頁最多顯示 2 條
+        const items = rawItems.slice(0, 2);
 
         items.forEach((item, idx) => {
           const li = document.createElement('li');
@@ -980,6 +1014,13 @@
           `;
           list.appendChild(li);
         });
+
+        if (rawItems.length > 2) {
+          const extra = document.createElement('p');
+          extra.className = 'mt-3 text-[10px] text-slate-400';
+          extra.textContent = `Showing top 2 of ${rawItems.length} insights.`;
+          list.appendChild(extra);
+        }
       }
 
       function escapeHtml(str) {
@@ -989,7 +1030,7 @@
           .replace(/>/g, '&gt;');
       }
 
-      // 預設空狀態
+      // 初始：render 一次（如果 localStorage 裡有資料就會顯示）
       renderDashboard();
     });
   </script>
