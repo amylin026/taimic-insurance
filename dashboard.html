@@ -168,59 +168,40 @@
     <!-- =================================================== -->
     <div class="flex flex-1">
 
-      <!-- 左側分類 -->
-<aside class="hidden md:flex flex-col w-64 px-5 py-6 border-r border-slate-200/70 bg-white/60 backdrop-blur-xl">
+      <!-- 左側分類：只保留 Snapshot & Accounts，Settings 灰掉 -->
+      <aside class="hidden md:flex flex-col w-64 px-5 py-6 border-r border-slate-200/70 bg-white/60 backdrop-blur-xl">
+        <nav class="space-y-1">
+          <button
+            class="side-item side-item-active"
+            onclick="scrollToSection('snapshot-top')"
+          >
+            <span>Snapshot</span>
+          </button>
 
-  <!-- 上半：報表視角 -->
-  <div class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-2">
-    Reports
-  </div>
-  <nav class="space-y-1 mb-5">
-    <button class="side-item side-item-active" data-view="snapshot">
-      <span class="flex items-center gap-2">
-        <span>Snapshot</span>
-      </span>
-    </button>
+          <button
+            class="side-item"
+            onclick="scrollToSection('accounts-block')"
+          >
+            <span>Accounts &amp; policies</span>
+          </button>
+        </nav>
 
-    <button class="side-item" data-view="compliance">
-      <span class="flex items-center gap-2">
-        <span>Compliance radar</span>
-        <span class="text-[9px] text-slate-400 uppercase rounded-full bg-slate-100 px-2 py-0.5">Soon</span>
-      </span>
-    </button>
-
-    <button class="side-item" data-view="scenarios">
-      <span class="flex items-center gap-2">
-        <span>Scenarios &amp; planning</span>
-        <span class="text-[9px] text-slate-400 uppercase rounded-full bg-slate-100 px-2 py-0.5">Soon</span>
-      </span>
-    </button>
-  </nav>
-
-  <!-- 下半：資料與設定 -->
-  <div class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-2 mt-4">
-    Data &amp; setup
-  </div>
-  <nav class="space-y-1">
-    <button class="side-item" data-view="accounts">
-      <span class="flex items-center gap-2">
-        <span>Accounts &amp; policies</span>
-        <span class="text-[9px] text-slate-400 uppercase rounded-full bg-slate-100 px-2 py-0.5">This page</span>
-      </span>
-    </button>
-
-    <button class="side-item" data-view="settings">
-      <span class="flex items-center gap-2">
-        <span>Settings</span>
-        <span class="text-[9px] text-slate-400 uppercase rounded-full bg-slate-100 px-2 py-0.5">Later</span>
-      </span>
-    </button>
-  </nav>
-</aside>
+        <div class="mt-8 pt-4 border-t border-slate-200">
+          <button class="side-item opacity-40 cursor-not-allowed">
+            <span>Settings</span>
+            <span class="text-[9px] text-slate-400 uppercase rounded-full bg-slate-100 px-2 py-0.5">
+              Later
+            </span>
+          </button>
+        </div>
+      </aside>
 
       <!-- ========== 右側主要 Dashboard 內容 ========== -->
       <main class="flex-1">
         <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-7">
+
+          <!-- Snapshot 錨點 -->
+          <div id="snapshot-top"></div>
 
           <!-- Page intro -->
           <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -401,6 +382,9 @@
           <!-- =================================================== -->
           <!-- Row 2: 下半部講輸入 / 帳戶 + 教學                   -->
           <!-- =================================================== -->
+          <!-- Accounts 區塊錨點 -->
+          <div id="accounts-block"></div>
+
           <div class="grid grid-cols-1 lg:grid-cols-[1.4fr,1fr] gap-6 pb-4">
             <!-- Add assets + table -->
             <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-4">
@@ -622,7 +606,7 @@
             type="button"
             id="auth-tab-login"
             onclick="openAuthModal && openAuthModal('login')"
-            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg白 text-slate-900 shadow-sm"
+            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-900 shadow-sm"
           >
             Log in
           </button>
@@ -669,7 +653,7 @@
       <button
         id="auth-submit"
         type="button"
-        class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text白 text-sm font-semibold py-2.5 shadow-sm transition"
+        class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition"
       >
         <span id="auth-submit-text">Login</span>
         <i class="fa-solid fa-arrow-right-long text-xs"></i>
@@ -1046,9 +1030,19 @@
           .replace(/>/g, '&gt;');
       }
 
-      // 初始：render 一次（如果 localStorage 裡有資料就會顯示）
+      // 初始 render
       renderDashboard();
     });
+
+    // Sidebar 按鈕捲動到對應區塊
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      window.scrollTo({
+        top: el.getBoundingClientRect().top + window.scrollY - 80, // 預留 header 高度
+        behavior: 'smooth'
+      });
+    }
   </script>
 </body>
 </html>
