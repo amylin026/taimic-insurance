@@ -19,25 +19,18 @@
   <!-- 液態玻璃樣式（只負責 .liquid 卡片） -->
   <style>
     .liquid {
-      /* 真正的液態關鍵：先模糊背景，再套用 SVG 濾鏡扭曲 */
       backdrop-filter: blur(4px) url(#liquid_glass_filter);
       -webkit-backdrop-filter: blur(4px) url(#liquid_glass_filter);
-
-      /* 半透明白底，讓後面的漸層透一點出來 */
       background: rgba(255, 255, 255, 0.10);
-
-      /* 多層 box-shadow 营造玻璃厚度與反光 */
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.45),
         inset 0 -1px 0 rgba(255, 255, 255, 0.18),
         6px 6px 16px rgba(15, 23, 42, 0.18),
         0 12px 30px rgba(37, 99, 235, 0.20);
-
       border-radius: 24px;
       border: 1px solid rgba(255, 255, 255, 0.45);
     }
 
-    /* 左側導覽的 active 狀態 */
     .side-item {
       @apply flex items-center justify-between w-full text-sm px-3 py-2 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-200/60 transition;
     }
@@ -107,7 +100,7 @@
           <div class="hidden md:flex items-center gap-2 pl-5 ml-3 border-l border-slate-200 text-[11px] text-slate-500">
             <i class="fa-regular fa-calendar-check text-[11px]"></i>
             <span>Snapshot as of</span>
-            <span class="font-semibold text-slate-800">2025-12-01</span>
+            <span class="font-semibold text-slate-800" id="snapshot-date">2025-12-01</span>
           </div>
         </div>
 
@@ -118,7 +111,7 @@
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               Live demo data
             </span>
-            <span>Last sync: <span class="font-medium text-slate-800">3 min ago</span></span>
+            <span>Last sync: <span class="font-medium text-slate-800" id="last-sync-label">Just now</span></span>
           </div>
 
           <button
@@ -169,7 +162,7 @@
     <!-- =================================================== -->
     <div class="flex flex-1">
 
-      <!-- ========== 左側分類（你說的 Snapshot / Assets / …） ========== -->
+      <!-- 左側分類 -->
       <aside class="hidden md:flex flex-col w-64 px-5 py-6 border-r border-slate-200/70 bg-white/60 backdrop-blur-xl">
         <div class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-3">
           Overview
@@ -179,16 +172,25 @@
             <span>Snapshot</span>
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
           </button>
-          <button class="side-item">
-            <span>Assets</span>
+          <button class="side-item" disabled>
+            <span class="flex items-center gap-1">
+              Assets
+              <span class="text-[9px] text-slate-400 uppercase">Soon</span>
+            </span>
           </button>
-          <button class="side-item">
-            <span>Compliance</span>
+          <button class="side-item" disabled>
+            <span class="flex items-center gap-1">
+              Compliance
+              <span class="text-[9px] text-slate-400 uppercase">Soon</span>
+            </span>
           </button>
-          <button class="side-item">
-            <span>Scenarios</span>
+          <button class="side-item" disabled>
+            <span class="flex items-center gap-1">
+              Scenarios
+              <span class="text-[9px] text-slate-400 uppercase">Soon</span>
+            </span>
           </button>
-          <button class="side-item">
+          <button class="side-item" disabled>
             <span>Settings</span>
           </button>
         </nav>
@@ -196,19 +198,20 @@
 
       <!-- ========== 右側主要 Dashboard 內容 ========== -->
       <main class="flex-1">
-        <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+        <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-7">
+
           <!-- Page intro -->
-          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-7">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div class="space-y-1">
               <p class="text-[11px] font-semibold tracking-[0.2em] text-slate-500 uppercase">
                 Cross-border family report
               </p>
               <h1 class="text-2xl md:text-[26px] font-bold tracking-tight text-slate-900">
-                Global net worth &amp; compliance overview
+                Map your global net worth &amp; risks
               </h1>
               <p class="text-xs md:text-sm text-slate-600 max-w-xl">
-                This page consolidates your Taiwan, US and offshore positions into one report,
-                with key tax thresholds and AI notes highlighted for this year.
+                Start by adding the accounts and policies you actually hold. Taimic will keep your global
+                balance sheet, tax thresholds and AI notes in one place.
               </p>
             </div>
 
@@ -241,286 +244,237 @@
           </div>
 
           <!-- =================================================== -->
-          <!-- Top metrics row                                     -->
+          <!-- Row 1: 左邊輸入資產 + 右邊大總覽                     -->
           <!-- =================================================== -->
-          <div class="space-y-5 mb-7">
-            <!-- Global net worth：一整條（液態玻璃） -->
-            <div class="liquid bg-white/5 rounded-2xl p-5 flex flex-col justify-between">
-              <div class="flex items-start justify-between gap-3">
+          <div class="grid grid-cols-1 lg:grid-cols-[1.15fr,1fr] gap-6">
+
+            <!-- Add assets + table -->
+            <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-4">
+              <div class="flex items-start justify-between gap-2">
                 <div>
                   <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                    Global net worth
+                    Accounts &amp; policies
                   </p>
+                  <h2 class="text-sm font-semibold text-slate-900">
+                    Add the places where your money lives
+                  </h2>
+                </div>
+                <span class="inline-flex items-center gap-1 rounded-full bg-slate-900 text-slate-50 text-[11px] font-semibold px-2.5 py-1">
+                  <i class="fa-solid fa-bolt text-[10px]"></i>
+                  Quick add
+                </span>
+              </div>
+
+              <!-- Empty state 提示 -->
+              <div id="empty-state" class="text-[11px] text-slate-500 bg-slate-900/5 border border-slate-200/70 rounded-xl px-3 py-2.5 flex items-start gap-2">
+                <i class="fa-solid fa-circle-info mt-[2px] text-slate-400 text-[10px]"></i>
+                <p>
+                  Start with 2–3 largest accounts (e.g. US brokerage, Taiwan bank, one insurance policy).
+                  You can always refine details later.
+                </p>
+              </div>
+
+              <!-- Quick add form -->
+              <form id="asset-form" class="grid grid-cols-2 md:grid-cols-3 gap-3 text-[11px]">
+                <div class="col-span-2 md:col-span-3">
+                  <label class="block mb-1 font-medium text-slate-700">Institution / nickname</label>
+                  <input
+                    id="asset-name"
+                    type="text"
+                    class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
+                    placeholder="e.g. Fidelity brokerage, Fubon policy"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="block mb-1 font-medium text-slate-700">Region</label>
+                  <select
+                    id="asset-region"
+                    class="w-full border border-slate-200 rounded-lg px-2 py-2 text-[11px] focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
+                    required
+                  >
+                    <option value="tw">🇹🇼 Taiwan</option>
+                    <option value="us">🇺🇸 United States</option>
+                    <option value="offshore">🌐 Offshore / other</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block mb-1 font-medium text-slate-700">Type</label>
+                  <select
+                    id="asset-type"
+                    class="w-full border border-slate-200 rounded-lg px-2 py-2 text-[11px] focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
+                    required
+                  >
+                    <option value="brokerage">Brokerage / stocks</option>
+                    <option value="bank">Bank / cash</option>
+                    <option value="insurance">Insurance / policy</option>
+                    <option value="property">Real estate</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block mb-1 font-medium text-slate-700">Currency</label>
+                  <select
+                    id="asset-currency"
+                    class="w-full border border-slate-200 rounded-lg px-2 py-2 text-[11px] focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
+                    required
+                  >
+                    <option value="USD">USD</option>
+                    <option value="TWD">TWD</option>
+                    <option value="OTHER">Other (treated as USD)</option>
+                  </select>
+                </div>
+
+                <div class="col-span-2 md:col-span-1">
+                  <label class="block mb-1 font-medium text-slate-700">Approx. value</label>
+                  <div class="relative">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-[11px] text-slate-400" id="asset-currency-prefix">
+                      $
+                    </span>
+                    <input
+                      id="asset-value"
+                      type="number"
+                      min="0"
+                      step="100"
+                      class="w-full border border-slate-200 rounded-lg pl-7 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
+                      placeholder="e.g. 250000"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="col-span-2 md:col-span-3 flex justify-end items-end">
+                  <button
+                    type="submit"
+                    class="inline-flex items-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-xs font-semibold px-4 py-2 shadow-sm transition"
+                  >
+                    <i class="fa-solid fa-plus text-[10px]"></i>
+                    <span>Add to dashboard</span>
+                  </button>
+                </div>
+              </form>
+
+              <!-- Accounts table -->
+              <div class="mt-4 overflow-x-auto">
+                <table class="w-full text-xs text-slate-700">
+                  <thead>
+                    <tr class="text-[11px] uppercase tracking-[0.12em] text-slate-400 border-b border-slate-100/80">
+                      <th class="py-2 pr-2 text-left">Institution</th>
+                      <th class="py-2 px-2 text-left">Region</th>
+                      <th class="py-2 px-2 text-left">Type</th>
+                      <th class="py-2 px-2 text-right">Value (USD)</th>
+                      <th class="py-2 pl-2 pr-1 text-right">Tax flag</th>
+                    </tr>
+                  </thead>
+                  <tbody id="asset-table-body" class="divide-y divide-slate-100/70">
+                    <!-- 動態插入 -->
+                  </tbody>
+                </table>
+              </div>
+
+              <p class="mt-3 text-[11px] text-slate-500">
+                FX is approximated for demo purposes (TWD &rarr; USD at 0.031). Your actual advisor may use
+                different rates when filing.
+              </p>
+            </section>
+
+            <!-- Global snapshot -->
+            <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-4">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                    Global snapshot
+                  </p>
+                  <h2 class="text-sm font-semibold text-slate-900">
+                    Net worth &amp; cross-border split
+                  </h2>
+                </div>
+              </div>
+
+              <div class="flex items-start justify-between gap-3">
+                <div>
+                  <p class="text-[11px] text-slate-500 mb-1">Estimated global net worth</p>
                   <div
-                    id="dash-networth-value"
+                    id="networth-value"
                     class="text-2xl md:text-3xl font-bold text-slate-900 font-mono tracking-tight"
                   >
                     $0
                   </div>
-                  <p id="dash-networth-currency-label" class="text-[11px] text-slate-500 mt-1">
-                    Base: USD
+                  <p class="text-[11px] text-slate-500 mt-1">
+                    Base currency: USD
                   </p>
                 </div>
-                <div
-                  id="dash-networth-change-pill"
-                  class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700"
-                >
-                  <i
-                    id="dash-networth-change-icon"
-                    class="mr-1 text-[10px] fa-solid fa-arrow-trend-up"
-                  ></i>
-                  <span id="dash-networth-change-value">+0 (Today)</span>
-                </div>
-              </div>
-              <div class="mt-4 flex flex-wrap items-center gap-4 text-[11px] text-slate-600">
-                <span class="inline-flex items-center gap-1">
-                  <span class="inline-flex w-2.5 h-2.5 rounded-full bg-sky-400"></span>
-                  Taiwan 42%
-                </span>
-                <span class="inline-flex items-center gap-1">
-                  <span class="inline-flex w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
-                  US 38%
-                </span>
-                <span class="inline-flex items-center gap-1">
-                  <span class="inline-flex w-2.5 h-2.5 rounded-full bg-slate-300"></span>
-                  Offshore 20%
-                </span>
-              </div>
-            </div>
 
-            <!-- Taiwan / US 兩張並排（液態玻璃） -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <!-- Taiwan -->
-              <div class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-3">
-                <div class="flex items-start justify-between gap-3">
-                  <div>
-                    <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                      🇹🇼 Taiwan exposure
-                    </p>
-                    <p class="text-xs font-semibold text-slate-900">
-                      Global income &amp; estate
-                    </p>
+                <div class="space-y-2 text-[11px]">
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="inline-flex items-center gap-1 text-slate-600">
+                      <span class="inline-flex w-2 h-2 rounded-full bg-sky-400"></span>
+                      Taiwan
+                    </span>
+                    <span id="region-tw-label" class="font-semibold text-slate-900">0% · $0</span>
                   </div>
-                  <span
-                    class="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200"
-                  >
-                    <i class="fa-solid fa-triangle-exclamation text-[10px]"></i>
-                    Monitor
-                  </span>
-                </div>
-                <p class="text-[11px] text-slate-500">
-                  Overseas income and global assets are monitored against Taiwan global-income
-                  and estate tax thresholds.
-                </p>
-                <div class="mt-2 flex items-center justify-between text-[11px] text-slate-700">
-                  <div>
-                    <p class="font-semibold text-slate-900">Taiwan slice</p>
-                    <p id="dash-region-tw-value" class="font-mono text-sm text-slate-900">$0</p>
-                    <p id="dash-region-tw-percent" class="text-[10px] text-slate-500">0% of total</p>
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="inline-flex items-center gap-1 text-slate-600">
+                      <span class="inline-flex w-2 h-2 rounded-full bg-indigo-500"></span>
+                      US
+                    </span>
+                    <span id="region-us-label" class="font-semibold text-slate-900">0% · $0</span>
                   </div>
-                  <div class="text-right">
-                    <p class="font-semibold text-slate-900">FX impact (demo)</p>
-                    <p id="fx-impact-value" class="font-mono text-sm text-slate-900">+0</p>
-                    <p class="text-[10px] text-slate-500">TWD moves vs USD</p>
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="inline-flex items-center gap-1 text-slate-600">
+                      <span class="inline-flex w-2 h-2 rounded-full bg-slate-300"></span>
+                      Offshore / other
+                    </span>
+                    <span id="region-offshore-label" class="font-semibold text-slate-900">0% · $0</span>
                   </div>
                 </div>
               </div>
 
-              <!-- US / offshore -->
-              <div class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-3">
-                <div class="flex items-start justify-between gap-3">
-                  <div>
-                    <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                      🇺🇸 US &amp; offshore
-                    </p>
-                    <p class="text-xs font-semibold text-slate-900">
-                      FATCA / FBAR coverage
-                    </p>
-                  </div>
-                  <span
-                    class="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100"
-                  >
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                    Within limits
-                  </span>
-                </div>
-                <p class="text-[11px] text-slate-500">
-                  Total US + offshore balances are tracked against FBAR and FATCA thresholds.
-                  PFIC candidates are marked for review.
-                </p>
-                <div class="mt-2 flex items-center justify-between text-[11px] text-slate-700">
-                  <div>
-                    <p class="font-semibold text-slate-900">US &amp; offshore</p>
-                    <p id="dash-region-us-value" class="font-mono text-sm text-slate-900">$0</p>
-                    <p id="dash-region-us-percent" class="text-[10px] text-slate-500">0% of total</p>
-                  </div>
-                  <div class="text-right">
-                    <p class="font-semibold text-slate-900">FBAR / FATCA</p>
-                    <p class="text-[10px] text-slate-500">
-                      Details available in your tax pack export.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- =================================================== -->
-          <!-- Middle row（液態玻璃）                             -->
-          <!-- =================================================== -->
-          <div class="grid grid-cols-1 lg:grid-cols-[1.4fr,1.1fr] gap-6 mb-7">
-            <!-- Allocation donut -->
-            <section class="liquid bg-white/5 rounded-2xl p-5">
-              <div class="flex items-start justify-between mb-4">
-                <div>
-                  <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                    Cross-border balance sheet
-                  </p>
-                  <h2 class="text-sm font-semibold text-slate-900">
-                    Allocation by sleeve
-                  </h2>
-                </div>
-                <div class="flex items-center gap-2 text-[11px] text-slate-500">
-                  <span class="inline-flex items-center gap-1">
-                    <span class="inline-flex w-2 h-2 rounded-full bg-[#0f5ad8]"></span> Market
-                  </span>
-                  <span class="inline-flex items-center gap-1">
-                    <span class="inline-flex w-2 h-2 rounded-full bg-indigo-300"></span> Real estate
-                  </span>
-                  <span class="inline-flex items-center gap-1">
-                    <span class="inline-flex w-2 h-2 rounded-full bg-sky-300"></span> Defensive
-                  </span>
-                </div>
-              </div>
-
-              <div class="grid grid-cols-1 md:grid-cols-[1.1fr,1fr] gap-4 md:gap-6 items-center">
-                <div class="relative max-w-[260px] mx-auto aspect-square">
-                  <canvas id="allocationChart"></canvas>
+              <!-- Region donut -->
+              <div class="mt-2 grid grid-cols-1 md:grid-cols-[1.1fr,1fr] gap-4 items-center">
+                <div class="relative max-w-[220px] mx-auto aspect-square">
+                  <canvas id="regionChart"></canvas>
                   <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div class="text-center">
                       <div class="text-xs uppercase tracking-[0.16em] text-slate-400 mb-1">
                         TOTAL
                       </div>
-                      <div class="text-lg font-bold text-slate-900 font-mono">
+                      <div class="text-lg font-bold text-slate-900 font-mono" id="networth-percent-center">
                         100%
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="space-y-3 text-xs text-slate-700">
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <p class="font-semibold text-slate-900">Market assets</p>
-                      <p class="text-[11px] text-slate-500">
-                        Listed stocks / funds / ETFs
-                      </p>
-                    </div>
-                    <p id="alloc-market-percent" class="font-semibold text-slate-900">0%</p>
-                  </div>
-
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <p class="font-semibold text-slate-900">Real estate</p>
-                      <p class="text-[11px] text-slate-500">
-                        Homes, investment property, REITs
-                      </p>
-                    </div>
-                    <p id="alloc-realestate-percent" class="font-semibold text-slate-900">0%</p>
-                  </div>
-
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <p class="font-semibold text-slate-900">Defensive / cash</p>
-                      <p class="text-[11px] text-slate-500">
-                        Cash, deposits, insurance with cash value
-                      </p>
-                    </div>
-                    <p id="alloc-defensive-percent" class="font-semibold text-slate-900">0%</p>
-                  </div>
-
-                  <div
-                    class="mt-2 p-3 rounded-xl bg-slate-50/80 border border-slate-200/70 text-[11px] text-slate-600"
-                    id="alloc-summary-text"
-                  >
-                    Your largest sleeve is Market at 0%. Review if this aligns with your risk tolerance and cash needs.
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <!-- Tax radar -->
-            <section class="liquid bg-white/5 rounded-2xl p-5">
-              <div class="flex items-start justify-between mb-4">
-                <div>
-                  <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                <div class="space-y-2 text-[11px] text-slate-700">
+                  <p class="font-semibold text-slate-900">
                     Tax &amp; reporting radar
                   </p>
-                  <h2 class="text-sm font-semibold text-slate-900">
-                    Key regimes monitored
-                  </h2>
-                </div>
-              </div>
-
-              <div class="space-y-3 text-xs">
-                <div class="flex items-start justify-between gap-2 p-3 rounded-xl bg-emerald-50/90 border border-emerald-200">
-                  <div class="flex items-start gap-2">
-                    <span class="mt-0.5 text-emerald-600">
-                      <i class="fa-solid fa-shield-halved text-[11px]"></i>
+                  <div id="radar-fatca" class="flex items-center justify-between">
+                    <span>US FATCA / FBAR</span>
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold">
+                      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      OK
                     </span>
-                    <div>
-                      <p class="font-semibold text-slate-900">US FATCA / FBAR</p>
-                      <p class="text-[11px] text-slate-700">
-                        Foreign financial accounts and assets are aggregated for FBAR Form 114 and FATCA Form 8938 screening.
-                      </p>
-                    </div>
                   </div>
-                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-700 border border-emerald-200">
-                    OK
-                  </span>
-                </div>
-
-                <div class="flex items-start justify-between gap-2 p-3 rounded-xl bg-amber-50/90 border border-amber-200">
-                  <div class="flex items-start gap-2">
-                    <span class="mt-0.5 text-amber-600">
-                      <i class="fa-solid fa-triangle-exclamation text-[11px]"></i>
+                  <div id="radar-pfic" class="flex items-center justify-between">
+                    <span>PFIC / high cash-value policies</span>
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 text-[10px] font-semibold">
+                      —
                     </span>
-                    <div>
-                      <p class="font-semibold text-slate-900">PFIC &amp; high cash-value policies</p>
-                      <p class="text-[11px] text-slate-700">
-                        Taiwan policies that look like PFICs or may face US excise tax are flagged for specialist review.
-                      </p>
-                    </div>
                   </div>
-                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-100 text-amber-700 border border-amber-200">
-                    REVIEW
-                  </span>
-                </div>
-
-                <div class="flex items-start justify-between gap-2 p-3 rounded-xl bg-sky-50/90 border border-sky-200">
-                  <div class="flex items-start gap-2">
-                    <span class="mt-0.5 text-sky-600">
-                      <i class="fa-solid fa-building-columns text-[11px]"></i>
+                  <div id="radar-twglobal" class="flex items-center justify-between">
+                    <span>Taiwan global income</span>
+                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 text-[10px] font-semibold">
+                      —
                     </span>
-                    <div>
-                      <p class="font-semibold text-slate-900">Taiwan global income</p>
-                      <p class="text-[11px] text-slate-700">
-                        Estimated foreign-source income is kept one band below current filing thresholds.
-                        System alerts you when projections change.
-                      </p>
-                    </div>
                   </div>
-                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-sky-100 text-sky-700 border border-sky-200">
-                    WATCH
-                  </span>
-                </div>
 
-                <div class="flex items-start gap-2 mt-2 p-3 rounded-xl bg-slate-900 text-[11px] text-slate-100">
-                  <span class="mt-0.5">
-                    <i class="fa-solid fa-robot text-xs"></i>
-                  </span>
-                  <p>
-                    These notes are for screening and planning only. Export this section and share it with your tax advisor for formal advice.
+                  <p class="mt-2 text-[11px] text-slate-500">
+                    These are screening labels only. Your advisor gives the final call on filing and structure.
                   </p>
                 </div>
               </div>
@@ -528,125 +482,9 @@
           </div>
 
           <!-- =================================================== -->
-          <!-- Bottom row：accounts + notes（液態玻璃）            -->
+          <!-- Row 2: AI notes                                      -->
           <!-- =================================================== -->
-          <div class="grid grid-cols-1 lg:grid-cols-[1.4fr,1.1fr] gap-6 pb-4">
-            <!-- Accounts table -->
-            <section class="liquid bg-white/5 rounded-2xl p-5">
-              <div class="flex items-center justify-between mb-4">
-                <div>
-                  <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                    Accounts &amp; policies
-                  </p>
-                  <h2 class="text-sm font-semibold text-slate-900">
-                    Where your assets are held
-                  </h2>
-                </div>
-                <div class="flex items-center gap-2 text-[11px] text-slate-500">
-                  <button
-                    type="button"
-                    class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-full border border-slate-200 bg-white/70 hover:bg-slate-50"
-                  >
-                    <i class="fa-solid fa-plus text-[10px]"></i>
-                    <span>Add account</span>
-                  </button>
-                  <button
-                    type="button"
-                    class="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-full border border-slate-200 bg-white/70 hover:bg-slate-50"
-                  >
-                    <i class="fa-solid fa-download text-[10px]"></i>
-                    <span>Export CSV</span>
-                  </button>
-                </div>
-              </div>
-
-              <div class="overflow-x-auto">
-                <table class="w-full text-xs text-slate-700">
-                  <thead>
-                    <tr class="text-[11px] uppercase tracking-[0.12em] text-slate-400 border-b border-slate-100/80">
-                      <th class="py-2 pr-2 text-left">Institution / Account</th>
-                      <th class="py-2 px-2 text-left">Jurisdiction</th>
-                      <th class="py-2 px-2 text-left">Type</th>
-                      <th class="py-2 px-2 text-right">Value (USD)</th>
-                      <th class="py-2 pl-2 pr-1 text-right">Tax flags</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-slate-100/70">
-                    <tr>
-                      <td class="py-2 pr-2">
-                        <div class="font-semibold text-slate-900">Brokerage – US</div>
-                        <div class="text-[11px] text-slate-500">Interactive Brokers • Ending 4821</div>
-                      </td>
-                      <td class="px-2 py-2">
-                        <span class="inline-flex items-center gap-1 text-[11px]">
-                          🇺🇸 <span>United States</span>
-                        </span>
-                      </td>
-                      <td class="px-2 py-2">Taxable brokerage</td>
-                      <td class="px-2 py-2 text-right font-mono font-semibold" id="dash-tooltip-us-value">
-                        $820,430
-                      </td>
-                      <td class="pl-2 pr-1 py-2 text-right">
-                        <span class="inline-flex items-center gap-1 text-[10px] rounded-full bg-emerald-50 text-emerald-700 px-2 py-0.5 border border-emerald-100">
-                          <i class="fa-solid fa-check text-[9px]"></i>
-                          FATCA filed
-                        </span>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td class="py-2 pr-2">
-                        <div class="font-semibold text-slate-900">Taiwan bank – savings</div>
-                        <div class="text-[11px] text-slate-500">Mega Bank • Ending 0398</div>
-                      </td>
-                      <td class="px-2 py-2">
-                        <span class="inline-flex items-center gap-1 text-[11px]">
-                          🇹🇼 <span>Taiwan</span>
-                        </span>
-                      </td>
-                      <td class="px-2 py-2">Cash / deposits</td>
-                      <td class="px-2 py-2 text-right font-mono font-semibold" id="dash-tooltip-tw-value">
-                        $410,220
-                      </td>
-                      <td class="pl-2 pr-1 py-2 text-right">
-                        <span class="inline-flex items-center gap-1 text-[10px] rounded-full bg-sky-50 text-sky-700 px-2 py-0.5 border border-sky-100">
-                          <i class="fa-solid fa-circle-info text-[9px]"></i>
-                          Counts for FBAR
-                        </span>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td class="py-2 pr-2">
-                        <div class="font-semibold text-slate-900">High cash-value policy</div>
-                        <div class="text-[11px] text-slate-500">TW insurer • Policy #9A23</div>
-                      </td>
-                      <td class="px-2 py-2">
-                        <span class="inline-flex items-center gap-1 text-[11px]">
-                          🇹🇼 <span>Taiwan</span>
-                        </span>
-                      </td>
-                      <td class="px-2 py-2">Insurance</td>
-                      <td class="px-2 py-2 text-right font-mono font-semibold">
-                        $320,000
-                      </td>
-                      <td class="pl-2 pr-1 py-2 text-right">
-                        <span class="inline-flex items-center gap-1 text-[10px] rounded-full bg-amber-50 text-amber-700 px-2 py-0.5 border border-amber-200">
-                          <i class="fa-solid fa-triangle-exclamation text-[9px]"></i>
-                          PFIC review
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <p class="mt-3 text-[11px] text-slate-500">
-                Taimic uses live FX to convert all values into USD for reporting. Your advisors may still
-                prefer local-currency statements for filing.
-              </p>
-            </section>
-
+          <div class="grid grid-cols-1 lg:grid-cols-[1.2fr,1fr] gap-6 pb-4">
             <!-- AI notes / next steps -->
             <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col">
               <div class="flex items-start justify-between mb-4">
@@ -655,7 +493,7 @@
                     Taimic AI notes
                   </p>
                   <h2 class="text-sm font-semibold text-slate-900">
-                    Suggested next steps for 2025
+                    Suggested next steps for this year
                   </h2>
                 </div>
                 <span
@@ -666,82 +504,44 @@
                 </span>
               </div>
 
-              <ol class="space-y-3 text-xs text-slate-700 flex-1">
-                <li class="flex gap-3">
-                  <div class="flex flex-col items-center">
-                    <div class="w-5 h-5 rounded-full bg-[#2563eb] text-white flex items-center justify-center text-[11px] font-semibold">
-                      1
-                    </div>
-                    <div class="flex-1 w-px bg-slate-200 mt-1"></div>
-                  </div>
-                  <div class="pt-0.5">
-                    <p class="font-semibold text-slate-900 mb-0.5">
-                      Confirm PFIC treatment on Taiwan policies
-                    </p>
-                    <p class="text-[11px]">
-                      Export the policy summary and share it with your US tax advisor. Ask specifically
-                      about Form 8621 filing and potential restructuring.
-                    </p>
-                  </div>
-                </li>
-
-                <li class="flex gap-3">
-                  <div class="flex flex-col items-center">
-                    <div class="w-5 h-5 rounded-full bg-[#2563eb] text-white flex items-center justify-center text-[11px] font-semibold">
-                      2
-                    </div>
-                    <div class="flex-1 w-px bg-slate-200 mt-1"></div>
-                  </div>
-                  <div class="pt-0.5">
-                    <p class="font-semibold text-slate-900 mb-0.5">
-                      Run inheritance scenario for &ldquo;one spouse in US&rdquo;
-                    </p>
-                    <p class="text-[11px]">
-                      Use the estate scenario tool to check whether current liquidity and titling cover
-                      estate tax and administration costs in both Taiwan and the US.
-                    </p>
-                  </div>
-                </li>
-
-                <li class="flex gap-3">
-                  <div class="flex flex-col items-center">
-                    <div class="w-5 h-5 rounded-full bg-[#2563eb] text-white flex items-center justify-center text-[11px] font-semibold">
-                      3
-                    </div>
-                    <div class="flex-1 w-px bg-slate-200 mt-1"></div>
-                  </div>
-                  <div class="pt-0.5">
-                    <p class="font-semibold text-slate-900 mb-0.5">
-                      Decide your target FX mix for the next 3–5 years
-                    </p>
-                    <p class="text-[11px]">
-                      Given your plan to spend time in both Taiwan and the US, decide what share of net
-                      worth you want in TWD vs USD and let Taimic alert you when you drift.
-                    </p>
-                  </div>
-                </li>
-
-                <li class="flex gap-3">
-                  <div class="flex flex-col items-center">
-                    <div class="w-5 h-5 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-[11px] font-semibold">
-                      4
-                    </div>
-                  </div>
-                  <div class="pt-0.5">
-                    <p class="font-semibold text-slate-900 mb-0.5">
-                      Share this dashboard with family / advisors
-                    </p>
-                    <p class="text-[11px]">
-                      Invite your spouse or advisor to view a read-only version of this page so everyone
-                      works off the same cross-border picture.
-                    </p>
-                  </div>
-                </li>
+              <ol class="space-y-3 text-xs text-slate-700 flex-1" id="ai-notes-list">
+                <!-- JS 依照資產狀況調整內容 -->
               </ol>
 
               <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500">
-                These suggestions are generated from your current holdings and thresholds. They are not
+                These suggestions are generated from your current holdings and regions. They are not
                 legal or tax advice – treat them as a checklist for your next meeting.
+              </div>
+            </section>
+
+            <!-- 小提示 / 使用步驟 -->
+            <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-3 text-[11px] text-slate-700">
+              <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                How to use this page
+              </p>
+              <h2 class="text-sm font-semibold text-slate-900">
+                From Excel chaos to one cross-border view
+              </h2>
+
+              <ul class="list-decimal pl-4 space-y-2">
+                <li>
+                  Add 2–5 of your largest accounts first (US brokerage, TW bank, one policy, one property).
+                </li>
+                <li>
+                  Check the global net worth and region split. Decide if this matches how you actually
+                  plan to live (time in TW vs US).
+                </li>
+                <li>
+                  Use the AI notes as talking points with your tax / legal advisors. Export PDF before meetings.
+                </li>
+              </ul>
+
+              <div class="mt-2 p-3 rounded-xl bg-slate-900 text-slate-100 flex gap-2">
+                <i class="fa-solid fa-lightbulb text-xs mt-[2px]"></i>
+                <p>
+                  In the future, connecting live banks / brokerages will auto-fill this page. For now, you
+                  are driving the numbers – Taimic focuses on structure and risk.
+                </p>
               </div>
             </section>
           </div>
@@ -765,19 +565,18 @@
     </footer>
   </div>
 
-  <!-- 與 index.html 共用的 overlay（先留空） -->
+  <!-- 共用 overlay（如果之後要呼叫 auth / upload 可以用） -->
   <div
     id="modal-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
   ></div>
 
-  <!-- Auth overlay：登入 / 註冊共用 -->
+  <!-- Auth overlay：登入 / 註冊共用（跟 index.html 同版型） -->
   <div
     id="auth-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
   >
-    <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 relative">
-      <!-- 關閉按鈕 -->
+    <div class="w-full max-w-sm bg白 rounded-2xl shadow-2xl p-6 relative">
       <button
         type="button"
         onclick="closeAuthModal()"
@@ -786,7 +585,6 @@
         <i class="fa-solid fa-xmark"></i>
       </button>
 
-      <!-- Login / Sign up 切換 tab -->
       <div class="flex justify-center mb-4">
         <div class="inline-flex bg-slate-100 rounded-full p-1">
           <button
@@ -808,7 +606,6 @@
         </div>
       </div>
 
-      <!-- 標題 -->
       <h2
         id="auth-title"
         class="text-lg font-semibold text-slate-900 mb-1 text-center"
@@ -816,10 +613,8 @@
         Login to Taimic
       </h2>
 
-      <!-- 訊息列 -->
       <div id="auth-message" class="text-sm h-5 text-center"></div>
 
-      <!-- Email -->
       <label class="block text-xs font-medium text-slate-700 mt-2 mb-1">
         Email
       </label>
@@ -830,7 +625,6 @@
         placeholder="you@gmail.com"
       />
 
-      <!-- Password -->
       <label class="block text-xs font-medium text-slate-700 mt-3 mb-1">
         Password
       </label>
@@ -841,7 +635,6 @@
         placeholder="••••••••"
       />
 
-      <!-- 送出按鈕 -->
       <button
         id="auth-submit"
         type="button"
@@ -855,5 +648,327 @@
 
   <!-- 共用 JS -->
   <script src="main.js"></script>
+
+  <!-- Dashboard 專用 JS：資產輸入 + 計算 + 圖表 -->
+  <script>
+    const FX_TWD_TO_USD = 0.031; // demo 匯率
+    const assets = [];
+    let regionChart = null;
+
+    const form = document.getElementById('asset-form');
+    const currencySelect = document.getElementById('asset-currency');
+    const currencyPrefix = document.getElementById('asset-currency-prefix');
+
+    currencySelect.addEventListener('change', () => {
+      const cur = currencySelect.value;
+      if (cur === 'TWD') currencyPrefix.textContent = 'NT$';
+      else currencyPrefix.textContent = '$';
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = document.getElementById('asset-name').value.trim();
+      const region = document.getElementById('asset-region').value;
+      const type = document.getElementById('asset-type').value;
+      const currency = document.getElementById('asset-currency').value;
+      const rawVal = parseFloat(document.getElementById('asset-value').value || '0');
+
+      if (!name || !rawVal || rawVal <= 0) return;
+
+      let valueUsd = rawVal;
+      if (currency === 'TWD') valueUsd = rawVal * FX_TWD_TO_USD;
+
+      assets.push({
+        name,
+        region,
+        type,
+        currency,
+        rawVal,
+        valueUsd
+      });
+
+      form.reset();
+      currencySelect.value = 'USD';
+      currencyPrefix.textContent = '$';
+
+      document.getElementById('empty-state').classList.add('hidden');
+      renderDashboard();
+    });
+
+    function renderDashboard() {
+      const total = assets.reduce((sum, a) => sum + a.valueUsd, 0);
+      const regionTotals = { tw: 0, us: 0, offshore: 0 };
+      assets.forEach(a => {
+        if (a.region === 'tw') regionTotals.tw += a.valueUsd;
+        else if (a.region === 'us') regionTotals.us += a.valueUsd;
+        else regionTotals.offshore += a.valueUsd;
+      });
+
+      // 更新總淨值
+      document.getElementById('networth-value').textContent = formatUsd(total);
+
+      // 更新地區 label
+      updateRegionLabel('tw', regionTotals.tw, total, 'region-tw-label');
+      updateRegionLabel('us', regionTotals.us, total, 'region-us-label');
+      updateRegionLabel('offshore', regionTotals.offshore, total, 'region-offshore-label');
+
+      // 更新 donut
+      updateRegionChart(regionTotals, total);
+
+      // 更新 table
+      renderAssetTable();
+
+      // 更新 radar flag（超粗糙 rule，只是示意）
+      updateRadar(regionTotals);
+
+      // 更新 AI Notes
+      renderAiNotes(regionTotals, total);
+    }
+
+    function formatUsd(x) {
+      return '$' + (x || 0).toLocaleString('en-US', {
+        maximumFractionDigits: 0
+      });
+    }
+
+    function updateRegionLabel(key, val, total, elId) {
+      const el = document.getElementById(elId);
+      if (!el) return;
+      const pct = total > 0 ? Math.round((val / total) * 100) : 0;
+      el.textContent = `${pct}% · ${formatUsd(val)}`;
+    }
+
+    function updateRegionChart(regionTotals, total) {
+      const data = [
+        regionTotals.tw,
+        regionTotals.us,
+        regionTotals.offshore
+      ];
+      const ctx = document.getElementById('regionChart').getContext('2d');
+
+      if (!regionChart) {
+        regionChart = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Taiwan', 'US', 'Offshore'],
+            datasets: [{
+              data,
+              backgroundColor: ['#38bdf8', '#4f46e5', '#cbd5f5']
+            }]
+          },
+          options: {
+            plugins: {
+              legend: {
+                display: false
+              }
+            },
+            cutout: '65%'
+          }
+        });
+      } else {
+        regionChart.data.datasets[0].data = data;
+        regionChart.update();
+      }
+    }
+
+    function renderAssetTable() {
+      const tbody = document.getElementById('asset-table-body');
+      tbody.innerHTML = '';
+
+      if (!assets.length) {
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.colSpan = 5;
+        td.className = 'py-4 text-center text-[11px] text-slate-500';
+        td.textContent = 'No accounts added yet.';
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+        return;
+      }
+
+      assets.forEach(a => {
+        const tr = document.createElement('tr');
+
+        const tdName = document.createElement('td');
+        tdName.className = 'py-2 pr-2';
+        tdName.innerHTML = `
+          <div class="font-semibold text-slate-900">${escapeHtml(a.name)}</div>
+          <div class="text-[11px] text-slate-500">${a.currency} · approx. ${a.rawVal.toLocaleString('en-US')}</div>
+        `;
+
+        const tdRegion = document.createElement('td');
+        tdRegion.className = 'px-2 py-2';
+        tdRegion.innerHTML = regionLabelHtml(a.region);
+
+        const tdType = document.createElement('td');
+        tdType.className = 'px-2 py-2';
+        tdType.textContent = typeLabel(a.type);
+
+        const tdVal = document.createElement('td');
+        tdVal.className = 'px-2 py-2 text-right font-mono font-semibold';
+        tdVal.textContent = formatUsd(a.valueUsd);
+
+        const tdFlag = document.createElement('td');
+        tdFlag.className = 'pl-2 pr-1 py-2 text-right text-[10px]';
+        tdFlag.innerHTML = taxFlagHtml(a);
+
+        tr.appendChild(tdName);
+        tr.appendChild(tdRegion);
+        tr.appendChild(tdType);
+        tr.appendChild(tdVal);
+        tr.appendChild(tdFlag);
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    function regionLabelHtml(region) {
+      if (region === 'tw') return '<span class="inline-flex items-center gap-1 text-[11px]">🇹🇼 <span>Taiwan</span></span>';
+      if (region === 'us') return '<span class="inline-flex items-center gap-1 text-[11px]">🇺🇸 <span>United States</span></span>';
+      return '<span class="inline-flex items-center gap-1 text-[11px]">🌐 <span>Offshore / other</span></span>';
+    }
+
+    function typeLabel(type) {
+      switch (type) {
+        case 'brokerage': return 'Brokerage / stocks';
+        case 'bank': return 'Bank / cash';
+        case 'insurance': return 'Insurance / policy';
+        case 'property': return 'Real estate';
+        default: return 'Other';
+      }
+    }
+
+    function taxFlagHtml(a) {
+      // 超簡化 rule：台灣 + insurance => PFIC review
+      if (a.type === 'insurance' && a.region === 'tw') {
+        return `
+          <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-700 px-2 py-0.5 border border-amber-200">
+            <i class="fa-solid fa-triangle-exclamation text-[9px]"></i>
+            PFIC review
+          </span>
+        `;
+      }
+      // US / offshore bank or brokerage => Counts for FBAR
+      if ((a.type === 'bank' || a.type === 'brokerage') && (a.region === 'tw' || a.region === 'offshore')) {
+        return `
+          <span class="inline-flex items-center gap-1 rounded-full bg-sky-50 text-sky-700 px-2 py-0.5 border border-sky-100">
+            <i class="fa-solid fa-circle-info text-[9px]"></i>
+            Counts for FBAR
+          </span>
+        `;
+      }
+      return `
+        <span class="inline-flex items-center gap-1 rounded-full bg-slate-50 text-slate-500 px-2 py-0.5 border border-slate-200">
+          —
+        </span>
+      `;
+    }
+
+    function updateRadar(regionTotals) {
+      const anyTw = regionTotals.tw > 0;
+      const anyOffshore = regionTotals.offshore > 0;
+
+      const pficEl = document.getElementById('radar-pfic');
+      const twEl = document.getElementById('radar-twglobal');
+
+      if (assets.some(a => a.type === 'insurance' && a.region === 'tw')) {
+        pficEl.querySelector('span:last-child').className =
+          'inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-semibold';
+        pficEl.querySelector('span:last-child').innerHTML =
+          '<i class="fa-solid fa-triangle-exclamation text-[9px]"></i> REVIEW';
+      } else {
+        pficEl.querySelector('span:last-child').className =
+          'inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-[10px] font-semibold';
+        pficEl.querySelector('span:last-child').textContent = '—';
+      }
+
+      if (anyTw && anyOffshore) {
+        twEl.querySelector('span:last-child').className =
+          'inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200 text-[10px] font-semibold';
+        twEl.querySelector('span:last-child').innerHTML =
+          '<i class="fa-solid fa-eye text-[9px]"></i> WATCH';
+      } else if (anyTw) {
+        twEl.querySelector('span:last-child').className =
+          'inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold';
+        twEl.querySelector('span:last-child').innerHTML =
+          '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> LOW';
+      } else {
+        twEl.querySelector('span:last-child').className =
+          'inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-[10px] font-semibold';
+        twEl.querySelector('span:last-child').textContent = '—';
+      }
+    }
+
+    function renderAiNotes(regionTotals, total) {
+      const list = document.getElementById('ai-notes-list');
+      list.innerHTML = '';
+
+      const items = [];
+
+      if (assets.some(a => a.type === 'insurance' && a.region === 'tw')) {
+        items.push({
+          title: 'Confirm PFIC treatment on Taiwan policies',
+          body: 'Export policy details and ask your US tax advisor specifically about Form 8621 and potential restructuring options.',
+          tag: 'US tax advisor'
+        });
+      }
+
+      if (regionTotals.tw > 0 && regionTotals.us > 0) {
+        items.push({
+          title: 'Run cross-border inheritance scenario',
+          body: 'Simulate what happens if one spouse passes away while assets are split between Taiwan and the US to check liquidity and tax.',
+          tag: 'Estate / succession'
+        });
+      }
+
+      if (total > 0 && (regionTotals.tw / total > 0.4 || regionTotals.us / total > 0.4)) {
+        items.push({
+          title: 'Decide your target TW vs US FX mix',
+          body: 'Set a target range for how much of your net worth you want in TWD vs USD, then let Taimic alert you when allocations drift.',
+          tag: 'FX & allocation'
+        });
+      }
+
+      if (!items.length) {
+        items.push({
+          title: 'Add a few more accounts to unlock AI notes',
+          body: 'Once we see assets in at least two regions or more than one type, we can surface more specific cross-border suggestions.',
+          tag: 'Setup'
+        });
+      }
+
+      items.forEach((item, idx) => {
+        const li = document.createElement('li');
+        li.className = 'flex gap-3';
+        li.innerHTML = `
+          <div class="flex flex-col items-center">
+            <div class="w-5 h-5 rounded-full bg-[#2563eb] text-white flex items-center justify-center text-[11px] font-semibold">
+              ${idx + 1}
+            </div>
+            ${idx !== items.length - 1 ? '<div class="flex-1 w-px bg-slate-200 mt-1"></div>' : ''}
+          </div>
+          <div class="pt-0.5">
+            <p class="font-semibold text-slate-900 mb-0.5">${escapeHtml(item.title)}</p>
+            <p class="text-[11px] mb-1">${escapeHtml(item.body)}</p>
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 text-[10px]">
+              <i class="fa-solid fa-tag text-[9px]"></i>
+              ${escapeHtml(item.tag)}
+            </span>
+          </div>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    // 初始：顯示 empty table
+    renderDashboard();
+  </script>
 </body>
 </html>
