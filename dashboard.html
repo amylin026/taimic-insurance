@@ -51,21 +51,9 @@
   <svg width="0" height="0" style="position:absolute;left:-9999px;top:-9999px;">
     <defs>
       <filter id="liquid_glass_filter">
-        <feTurbulence
-          type="fractalNoise"
-          baseFrequency="0.003"
-          numOctaves="2"
-          result="noise" />
-        <feGaussianBlur
-          in="noise"
-          stdDeviation="1.2"
-          result="map" />
-        <feDisplacementMap
-          in="SourceGraphic"
-          in2="map"
-          scale="110"
-          xChannelSelector="R"
-          yChannelSelector="G" />
+        <feTurbulence type="fractalNoise" baseFrequency="0.003" numOctaves="2" result="noise" />
+        <feGaussianBlur in="noise" stdDeviation="1.2" result="map" />
+        <feDisplacementMap in="SourceGraphic" in2="map" scale="110" xChannelSelector="R" yChannelSelector="G" />
       </filter>
     </defs>
   </svg>
@@ -168,29 +156,51 @@
     <!-- =================================================== -->
     <div class="flex flex-1">
 
-      <!-- 左側分類：只保留 Snapshot & Accounts，Settings 灰掉 -->
+      <!-- 左側分類 -->
       <aside class="hidden md:flex flex-col w-64 px-5 py-6 border-r border-slate-200/70 bg-white/60 backdrop-blur-xl">
+        <!-- 主導航：Overview / US / Taiwan -->
         <nav class="space-y-1">
           <button
             class="side-item side-item-active"
             onclick="scrollToSection('snapshot-top')"
           >
-            <span>Snapshot</span>
+            <span>Overview</span>
           </button>
 
           <button
             class="side-item"
-            onclick="scrollToSection('accounts-block')"
+            onclick="scrollToSection('us-assets')"
           >
-            <span>Accounts &amp; policies</span>
+            <span>US assets</span>
+          </button>
+
+          <button
+            class="side-item"
+            onclick="scrollToSection('tw-assets')"
+          >
+            <span>Taiwan assets</span>
           </button>
         </nav>
 
-        <div class="mt-8 pt-4 border-t border-slate-200">
-          <button class="side-item opacity-40 cursor-not-allowed">
-            <span>Settings</span>
-            <span class="text-[9px] text-slate-400 uppercase rounded-full bg-slate-100 px-2 py-0.5">
-              Later
+        <!-- 底部：Help center + Settings（有 icon） -->
+        <div class="mt-8 pt-4 border-t border-slate-200 space-y-1">
+          <button
+            class="side-item"
+            onclick="scrollToSection('help-center')"
+          >
+            <span class="flex items-center gap-2">
+              <i class="fa-regular fa-circle-question text-slate-500"></i>
+              <span>Help center</span>
+            </span>
+          </button>
+
+          <button
+            class="side-item"
+            onclick="scrollToSection('settings-section')"
+          >
+            <span class="flex items-center gap-2">
+              <i class="fa-solid fa-gear text-slate-500"></i>
+              <span>Settings</span>
             </span>
           </button>
         </div>
@@ -200,7 +210,7 @@
       <main class="flex-1">
         <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-7">
 
-          <!-- Snapshot 錨點 -->
+          <!-- Overview 錨點 -->
           <div id="snapshot-top"></div>
 
           <!-- Page intro -->
@@ -247,7 +257,7 @@
           </div>
 
           <!-- =================================================== -->
-          <!-- Row 1: 上半部專心講 Summary (Snapshot + AI notes)   -->
+          <!-- Row 1: 上半部 Overview (Snapshot + AI notes)        -->
           <!-- =================================================== -->
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Global snapshot -->
@@ -368,9 +378,7 @@
                 </span>
               </div>
 
-              <ol class="space-y-3 text-xs text-slate-700 flex-1" id="ai-notes-list">
-                <!-- JS 依照資產狀況調整內容 -->
-              </ol>
+              <ol class="space-y-3 text-xs text-slate-700 flex-1" id="ai-notes-list"></ol>
 
               <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-500">
                 These suggestions are generated from your current holdings and regions. They are not
@@ -380,9 +388,11 @@
           </div>
 
           <!-- =================================================== -->
-          <!-- Row 2: 下半部講輸入 / 帳戶 + 教學                   -->
+          <!-- Row 2: 下半部 Accounts + 教學                       -->
           <!-- =================================================== -->
-          <!-- Accounts 區塊錨點 -->
+          <!-- US/TW assets 錨點（目前都指到同一個 Accounts 區塊） -->
+          <div id="us-assets"></div>
+          <div id="tw-assets"></div>
           <div id="accounts-block"></div>
 
           <div class="grid grid-cols-1 lg:grid-cols-[1.4fr,1fr] gap-6 pb-4">
@@ -529,8 +539,8 @@
               </p>
             </section>
 
-            <!-- 小提示 / 使用步驟 -->
-            <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-3 text-[11px] text-slate-700">
+            <!-- 小提示 / 使用步驟 + Help center 錨點 -->
+            <section id="help-center" class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-3 text-[11px] text-slate-700">
               <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
                 How to use this page
               </p>
@@ -552,14 +562,33 @@
               </ul>
 
               <div class="mt-2 p-3 rounded-xl bg-slate-900 text-slate-100 flex gap-2">
-                <i class="fa-solid fa-lightbulb text-xs mt-[2px]"></i>
+                <i class="fa-solid fa-circle-question text-xs mt-[2px]"></i>
                 <p>
-                  In the future, connecting live banks / brokerages will auto-fill this page. For now, you
-                  are driving the numbers – Taimic focuses on structure and risk.
+                  Help center (coming soon): in future you’ll find FAQs, examples and direct support contact here.
                 </p>
               </div>
             </section>
           </div>
+
+          <!-- Settings 錨點（先放一個 placeholder） -->
+          <div id="settings-section" class="pb-6">
+            <section class="liquid bg-white/5 rounded-2xl p-5 mt-2 text-[11px] text-slate-700">
+              <div class="flex items-center gap-2 mb-2">
+                <i class="fa-solid fa-gear text-slate-500"></i>
+                <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
+                  Settings
+                </p>
+              </div>
+              <h2 class="text-sm font-semibold text-slate-900 mb-1">
+                Settings &amp; preferences (coming soon)
+              </h2>
+              <p>
+                Here you’ll be able to change language, base currency, sharing with spouse / advisors and export options.
+                For now, settings are fixed while we focus on the core report experience.
+              </p>
+            </section>
+          </div>
+
         </div>
       </main>
     </div>
@@ -664,11 +693,11 @@
   <!-- 共用 JS -->
   <script src="main.js"></script>
 
-  <!-- Dashboard 專用 JS：資產輸入 + 計算 + 圖表 + AI notes + localStorage -->
+  <!-- Dashboard JS：資產輸入 + 計算 + 圖表 + AI notes + localStorage -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const STORAGE_KEY = 'taimic_assets_v1';
-      const FX_TWD_TO_USD = 0.031; // demo 匯率
+      const FX_TWD_TO_USD = 0.031;
       let assets = [];
       let regionChart = null;
 
@@ -679,7 +708,7 @@
 
       if (!form) return;
 
-      // ---- localStorage 載入 ----
+      // localStorage 載入
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
@@ -693,20 +722,18 @@
         console.warn('Failed to load assets from localStorage', e);
       }
 
-      // 幣別切換時更新前綴
       currencySelect.addEventListener('change', () => {
         const cur = currencySelect.value;
         currencyPrefix.textContent = cur === 'TWD' ? 'NT$' : '$';
       });
 
-      // 提交表單：新增資產
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         const name = document.getElementById('asset-name').value.trim();
         const region = document.getElementById('asset-region').value;
         const type = document.getElementById('asset-type').value;
         const currency = document.getElementById('asset-currency').value;
-        const units = parseFloat(document.getElementById('asset-value').value || '0'); // 幾「萬」
+        const units = parseFloat(document.getElementById('asset-value').value || '0');
 
         if (!name || !units || units <= 0) return;
 
@@ -714,14 +741,7 @@
         let valueUsd = valueInCurrency;
         if (currency === 'TWD') valueUsd = valueInCurrency * FX_TWD_TO_USD;
 
-        assets.push({
-          name,
-          region,
-          type,
-          currency,
-          valueInCurrency,
-          valueUsd
-        });
+        assets.push({ name, region, type, currency, valueInCurrency, valueUsd });
 
         saveAssets();
         form.reset();
@@ -761,9 +781,7 @@
       }
 
       function formatUsd(x) {
-        return '$' + (x || 0).toLocaleString('en-US', {
-          maximumFractionDigits: 0
-        });
+        return '$' + (x || 0).toLocaleString('en-US', { maximumFractionDigits: 0 });
       }
 
       function updateRegionLabel(val, total, elId) {
@@ -834,7 +852,6 @@
           tbody.appendChild(tr);
         });
 
-        // 綁刪除按鈕
         tbody.querySelectorAll('.asset-delete-btn').forEach(btn => {
           btn.addEventListener('click', () => {
             const idx = parseInt(btn.dataset.index, 10);
@@ -888,11 +905,7 @@
       }
 
       function updateRegionChart(regionTotals) {
-        const data = [
-          regionTotals.tw,
-          regionTotals.us,
-          regionTotals.offshore
-        ];
+        const data = [regionTotals.tw, regionTotals.us, regionTotals.offshore];
         const ctx = document.getElementById('regionChart').getContext('2d');
 
         if (!regionChart) {
@@ -990,7 +1003,6 @@
           });
         }
 
-        // 首頁最多顯示 2 條
         const items = rawItems.slice(0, 2);
 
         items.forEach((item, idx) => {
@@ -1030,16 +1042,15 @@
           .replace(/>/g, '&gt;');
       }
 
-      // 初始 render
       renderDashboard();
     });
 
-    // Sidebar 按鈕捲動到對應區塊
+    // Sidebar 滑動函式
     function scrollToSection(id) {
       const el = document.getElementById(id);
       if (!el) return;
       window.scrollTo({
-        top: el.getBoundingClientRect().top + window.scrollY - 80, // 預留 header 高度
+        top: el.getBoundingClientRect().top + window.scrollY - 80,
         behavior: 'smooth'
       });
     }
