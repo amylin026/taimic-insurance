@@ -169,38 +169,54 @@
     <div class="flex flex-1">
 
       <!-- 左側分類 -->
-      <aside class="hidden md:flex flex-col w-64 px-5 py-6 border-r border-slate-200/70 bg-white/60 backdrop-blur-xl">
-        <div class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-3">
-          Overview
-        </div>
-        <nav class="space-y-2">
-          <button class="side-item side-item-active">
-            <span>Snapshot</span>
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-          </button>
-          <button class="side-item" disabled>
-            <span class="flex items-center gap-1">
-              Assets
-              <span class="text-[9px] text-slate-400 uppercase">Soon</span>
-            </span>
-          </button>
-          <button class="side-item" disabled>
-            <span class="flex items-center gap-1">
-              Compliance
-              <span class="text-[9px] text-slate-400 uppercase">Soon</span>
-            </span>
-          </button>
-          <button class="side-item" disabled>
-            <span class="flex items-center gap-1">
-              Scenarios
-              <span class="text-[9px] text-slate-400 uppercase">Soon</span>
-            </span>
-          </button>
-          <button class="side-item" disabled>
-            <span>Settings</span>
-          </button>
-        </nav>
-      </aside>
+<aside class="hidden md:flex flex-col w-64 px-5 py-6 border-r border-slate-200/70 bg-white/60 backdrop-blur-xl">
+
+  <!-- 上半：報表視角 -->
+  <div class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-2">
+    Reports
+  </div>
+  <nav class="space-y-1 mb-5">
+    <button class="side-item side-item-active" data-view="snapshot">
+      <span class="flex items-center gap-2">
+        <span>Snapshot</span>
+      </span>
+    </button>
+
+    <button class="side-item" data-view="compliance">
+      <span class="flex items-center gap-2">
+        <span>Compliance radar</span>
+        <span class="text-[9px] text-slate-400 uppercase rounded-full bg-slate-100 px-2 py-0.5">Soon</span>
+      </span>
+    </button>
+
+    <button class="side-item" data-view="scenarios">
+      <span class="flex items-center gap-2">
+        <span>Scenarios &amp; planning</span>
+        <span class="text-[9px] text-slate-400 uppercase rounded-full bg-slate-100 px-2 py-0.5">Soon</span>
+      </span>
+    </button>
+  </nav>
+
+  <!-- 下半：資料與設定 -->
+  <div class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-2 mt-4">
+    Data &amp; setup
+  </div>
+  <nav class="space-y-1">
+    <button class="side-item" data-view="accounts">
+      <span class="flex items-center gap-2">
+        <span>Accounts &amp; policies</span>
+        <span class="text-[9px] text-slate-400 uppercase rounded-full bg-slate-100 px-2 py-0.5">This page</span>
+      </span>
+    </button>
+
+    <button class="side-item" data-view="settings">
+      <span class="flex items-center gap-2">
+        <span>Settings</span>
+        <span class="text-[9px] text-slate-400 uppercase rounded-full bg-slate-100 px-2 py-0.5">Later</span>
+      </span>
+    </button>
+  </nav>
+</aside>
 
       <!-- ========== 右側主要 Dashboard 內容 ========== -->
       <main class="flex-1">
