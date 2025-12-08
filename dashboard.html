@@ -240,16 +240,16 @@
             <span>Overview</span>
           </button>
 
-          <!-- Family members（先只是入口，之後你要接哪個 section 再改 onclick） -->
+          <!-- Family members -->
           <button class="side-item" type="button">
             <span>Family members</span>
           </button>
 
-          <!-- US assets：可展開/收起 -->
+          <!-- US assets：只展開，不捲動 -->
           <button
             class="side-item"
             type="button"
-            onclick="toggleSideSection('us'); scrollToSection('us-assets');"
+            onclick="toggleSideSection('us')"
           >
             <span class="flex items-center gap-1">
               <span id="side-us-chevron" class="inline-block text-xs transition-transform">&gt;</span>
@@ -271,11 +271,11 @@
             </button>
           </div>
 
-          <!-- Taiwan assets：可展開/收起 -->
+          <!-- Taiwan assets：只展開，不捲動 -->
           <button
             class="side-item"
             type="button"
-            onclick="toggleSideSection('tw'); scrollToSection('tw-assets');"
+            onclick="toggleSideSection('tw')"
           >
             <span class="flex items-center gap-1">
               <span id="side-tw-chevron" class="inline-block text-xs transition-transform">&gt;</span>
@@ -311,7 +311,7 @@
         </nav>
       </aside>
 
-      <!-- 右側內容：**完全沒動** -->
+      <!-- 右側內容：完全沒動 -->
       <main class="flex-1">
         <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-7">
 
@@ -707,10 +707,7 @@
     <div class="w-full max-w-sm bg白 rounded-2xl shadow-2xl p-6 relative">
       <button
         type="button"
-        onclick="closeAuthModal && closeAuthModal()
-
-
-        "
+        onclick="closeAuthModal && closeAuthModal()"
         class="absolute right-3 top-3 text-slate-400 hover:text-slate-600 text-sm"
       >
         <i class="fa-solid fa-xmark"></i>
@@ -1155,7 +1152,7 @@
       });
     }
 
-    // 新增：sidebar 裡 US / Taiwan assets 展開 / 收起
+    // Sidebar US / TW assets 展開 / 收起（不捲動）
     function toggleSideSection(key) {
       const body = document.getElementById(`side-${key}-children`);
       const chevron = document.getElementById(`side-${key}-chevron`);
