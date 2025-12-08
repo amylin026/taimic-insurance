@@ -138,7 +138,7 @@
           <!-- 三條線，只在 md 以上出現 -->
           <button
             id="sidebar-toggle"
-            class="hidden md:flex flex-col justify-center gap-[3px]"
+            class="hidden md:flex flex-col justify-center gap-[3px] -ml-2"
             type="button"
           >
             <span class="sr-only">Toggle sidebar</span>
@@ -171,26 +171,11 @@
               <span class="text-[22px] font-[700] tracking-tight text-[#0066cc] leading-none">TAIMIC</span>
               <span class="text-[10px] font-[600] tracking-[0.2em] text-gray-500 mt-1 uppercase">Global Wealth</span>
             </div>
-
-            <!-- Snapshot 區 -->
-            <div class="hidden md:flex items-center gap-2 pl-5 ml-3 border-l border-slate-200 text-[11px] text-slate-500">
-              <i class="fa-regular fa-calendar-check text-[11px]"></i>
-              <span>Snapshot as of</span>
-              <span class="font-semibold text-slate-800" id="snapshot-date">2025-12-01</span>
-            </div>
           </div>
         </div>
 
-        <!-- 右側：demo 狀態 + 匯出 + 使用者 -->
+        <!-- 右側：匯出 + 使用者 -->
         <div class="flex items-center gap-4">
-          <div class="hidden sm:flex items-center gap-2 text-[11px] text-slate-500">
-            <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 border border-emerald-100 text-emerald-700 font-medium">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-              Live demo data
-            </span>
-            <span>Last sync: <span class="font-medium text-slate-800" id="last-sync-label">Just now</span></span>
-          </div>
-
           <button
             type="button"
             class="hidden md:inline-flex items-center gap-2 rounded-full bg-[#111827] text-white text-xs font-semibold px-4 py-2 shadow-sm hover:bg-black transition"
