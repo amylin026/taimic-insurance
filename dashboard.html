@@ -41,8 +41,7 @@
       border-radius: 9999px;
       font-size: 0.875rem;
 
-      /* 預設超低存在感 */
-      color: #64748b;                 /* slate-500-ish */
+      color: #64748b;
       background: transparent;
       border: 1px solid transparent;
       box-shadow: none;
@@ -60,7 +59,7 @@
     }
 
     .side-item:hover {
-      color: #0f172a; /* slate-900 */
+      color: #0f172a;
       background: rgba(255, 255, 255, 0.9);
       border-color: rgba(148, 163, 184, 0.55);
       box-shadow: 0 8px 22px rgba(15, 23, 42, 0.14);
@@ -72,11 +71,71 @@
     .side-item-active {
       font-weight: 600;
       color: #0f172a;
-      background: rgba(248, 250, 252, 0.95);         /* 很接近整體背景 */
-      border-color: rgba(37, 99, 235, 0.35);         /* 淡淡藍邊 */
+      background: rgba(248, 250, 252, 0.95);
+      border-color: rgba(37, 99, 235, 0.35);
       box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
+    }
+
+    /* Help / Settings：文字型連結 */
+    .side-bottom-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.25rem 0.1rem;
+      font-size: 0.82rem;
+      color: #64748b;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.15s ease, transform 0.12s ease;
+    }
+
+    .side-bottom-link i {
+      font-size: 0.8rem;
+    }
+
+    .side-bottom-link:hover {
+      color: #0f172a;
+      transform: translateX(2px);
+    }
+
+    /* Sidebar toggle button（三條線） */
+    #sidebar-toggle {
+      position: absolute;
+      left: 18px;
+      top: 120px;
+      width: 30px;
+      height: 30px;
+      border-radius: 9999px;
+      border: 1px solid rgba(148, 163, 184, 0.55);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.16);
+      cursor: pointer;
+      transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
+      z-index: 30;
+    }
+
+    #sidebar-toggle:hover {
+      background: rgba(255, 255, 255, 1);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.2);
+      transform: translateY(-1px);
+    }
+
+    #sidebar-toggle .bar {
+      display: block;
+      width: 14px;
+      height: 1.5px;
+      border-radius: 9999px;
+      background-color: #64748b;
+    }
+
+    /* md 以上才會真正把 sidebar 收掉 */
+    @media (min-width: 768px) {
+      #sidebar.sidebar-collapsed {
+        display: none !important;
+      }
     }
 
     /* AI notes 滾動上限，避免卡片過高 */
@@ -207,10 +266,27 @@
     <!-- =================================================== -->
     <!-- Main layout：左側導覽 + 右側內容                     -->
     <!-- =================================================== -->
-    <div class="flex flex-1">
+    <div class="flex flex-1 relative">
 
-      <!-- 左側分類：Overview / US assets / Taiwan assets + 底部 Help / Settings -->
-      <aside class="hidden md:flex flex-col w-64 px-5 py-6 border-r border-slate-200/70 bg-white/60 backdrop-blur-xl">
+      <!-- 三條線 toggle（md 以上顯示） -->
+      <button
+        id="sidebar-toggle"
+        class="hidden md:flex items-center justify-center"
+        type="button"
+      >
+        <span class="sr-only">Toggle sidebar</span>
+        <div class="space-y-[3px]">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </button>
+
+      <!-- 左側分類：Overview / US assets / Taiwan assets + 下面 Help / Settings -->
+      <aside
+        id="sidebar"
+        class="hidden md:flex flex-col w-64 px-5 py-6 border-r border-slate-200/70 bg-white/60 backdrop-blur-xl"
+      >
         <nav class="space-y-1">
           <button class="side-item side-item-active" onclick="scrollToSection('snapshot-top')">
             <span>Overview</span>
@@ -221,22 +297,19 @@
           <button class="side-item" onclick="scrollToSection('tw-assets')">
             <span>Taiwan assets</span>
           </button>
-        </nav>
 
-        <div class="mt-auto pt-4 border-t border-slate-200 space-y-1">
-          <button class="side-item" onclick="scrollToSection('help-center')">
-            <span class="flex items-center gap-2">
-              <i class="fa-regular fa-circle-question text-slate-500"></i>
+          <!-- 直接接在 Taiwan assets 下面 -->
+          <div class="pt-4 mt-2 border-t border-slate-200/70 space-y-1">
+            <button class="side-bottom-link" onclick="scrollToSection('help-center')">
+              <i class="fa-regular fa-circle-question"></i>
               <span>Help center</span>
-            </span>
-          </button>
-          <button class="side-item" onclick="scrollToSection('settings-section')">
-            <span class="flex items-center gap-2">
-              <i class="fa-solid fa-gear text-slate-500"></i>
+            </button>
+            <button class="side-bottom-link" onclick="scrollToSection('settings-section')">
+              <i class="fa-solid fa-gear"></i>
               <span>Settings</span>
-            </span>
-          </button>
-        </div>
+            </button>
+          </div>
+        </nav>
       </aside>
 
       <!-- ========== 右側主要 Dashboard 內容 ========== -->
@@ -1094,6 +1167,16 @@
 
       // 初始 render
       renderDashboard();
+
+      // Sidebar toggle（收合 / 展開）
+      const sidebarToggle = document.getElementById('sidebar-toggle');
+      const sidebar = document.getElementById('sidebar');
+
+      if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', () => {
+          sidebar.classList.toggle('sidebar-collapsed');
+        });
+      }
     });
 
     // Sidebar 滑動函式
