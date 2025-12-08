@@ -59,6 +59,12 @@
       color: #0f172a;
     }
 
+    /* 子選單（縮一格、字再小一點） */
+    .side-subitem {
+      padding-left: 1.25rem;
+      font-size: 0.78rem;
+    }
+
     .side-bottom-link {
       display: flex;
       align-items: center;
@@ -229,22 +235,69 @@
         class="hidden md:flex flex-col w-64 px-5 py-6 border-r border-slate-200/70 bg-white/60 backdrop-blur-xl"
       >
         <nav class="space-y-1">
+          <!-- Overview -->
           <button class="side-item side-item-active" onclick="scrollToSection('snapshot-top')">
             <span>Overview</span>
           </button>
 
-          <!-- 新增：Family members 在 Overview 下、US assets 上 -->
-          <button class="side-item" onclick="scrollToSection('family-members')">
+          <!-- Family members（先只是入口，之後你要接哪個 section 再改 onclick） -->
+          <button class="side-item" type="button">
             <span>Family members</span>
           </button>
 
-          <button class="side-item" onclick="scrollToSection('us-assets')">
-            <span>US assets</span>
+          <!-- US assets：可展開/收起 -->
+          <button
+            class="side-item"
+            type="button"
+            onclick="toggleSideSection('us'); scrollToSection('us-assets');"
+          >
+            <span class="flex items-center gap-1">
+              <span id="side-us-chevron" class="inline-block text-xs transition-transform">&gt;</span>
+              <span>US assets</span>
+            </span>
           </button>
-          <button class="side-item" onclick="scrollToSection('tw-assets')">
-            <span>Taiwan assets</span>
-          </button>
+          <div id="side-us-children" class="ml-4 mt-1 space-y-1 hidden">
+            <button class="side-item side-subitem" type="button">
+              <span>Accounts</span>
+            </button>
+            <button class="side-item side-subitem" type="button">
+              <span>House</span>
+            </button>
+            <button class="side-item side-subitem" type="button">
+              <span>Crypto</span>
+            </button>
+            <button class="side-item side-subitem" type="button">
+              <span>Insurance</span>
+            </button>
+          </div>
 
+          <!-- Taiwan assets：可展開/收起 -->
+          <button
+            class="side-item"
+            type="button"
+            onclick="toggleSideSection('tw'); scrollToSection('tw-assets');"
+          >
+            <span class="flex items-center gap-1">
+              <span id="side-tw-chevron" class="inline-block text-xs transition-transform">&gt;</span>
+              <span>Taiwan assets</span>
+            </span>
+          </button>
+          <div id="side-tw-children" class="ml-4 mt-1 space-y-1 hidden">
+            <button class="side-item side-subitem" type="button">
+              <span>Accounts</span>
+            </button>
+            <button class="side-item side-subitem" type="button">
+              <span>House</span>
+            </button>
+            <button class="side-item side-subitem" type="button">
+              <span>Crypto</span>
+            </button>
+            <button class="side-item side-subitem" type="button">
+              <span>Insurance</span>
+            </button>
+          </div>
+
+          <!-- 底部：Help / Settings 原樣 -->
           <div class="pt-4 mt-2 border-t border-slate-200/70 space-y-1">
             <button class="side-bottom-link" onclick="scrollToSection('help-center')">
               <i class="fa-regular fa-circle-question"></i>
@@ -258,7 +311,7 @@
         </nav>
       </aside>
 
-      <!-- 右側內容 -->
+      <!-- 右側內容：**完全沒動** -->
       <main class="flex-1">
         <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-7">
 
@@ -435,142 +488,11 @@
             </section>
           </div>
 
-          <!-- Family members section：Overview 下面、US assets 上面 -->
-          <section id="family-members" class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-3">
-            <div class="flex items-start justify-between gap-2">
-              <div>
-                <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                  Family members
-                </p>
-                <h2 class="text-sm font-semibold text-slate-900">
-                  Who is included in this report
-                </h2>
-              </div>
-            </div>
-            <p class="text-[11px] text-slate-600 max-w-xl">
-              Use this section to track which family members are covered in the cross-border plan –
-              spouse, kids, or parents you support.
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px]">
-              <div class="rounded-xl bg-white/80 border border-slate-200 px-3 py-3">
-                <p class="font-semibold text-slate-900 mb-1">You</p>
-                <p class="text-slate-500">Primary taxpayer / main account owner.</p>
-              </div>
-              <div class="rounded-xl bg-white/80 border border-slate-200 px-3 py-3">
-                <p class="font-semibold text-slate-900 mb-1">Spouse / partner</p>
-                <p class="text-slate-500">Income, assets and insurance that tie into your plan.</p>
-              </div>
-              <div class="rounded-xl bg-white/80 border border-slate-200 px-3 py-3">
-                <p class="font-semibold text-slate-900 mb-1">Parents / kids</p>
-                <p class="text-slate-500">Support, gifts and inheritance you want to plan for.</p>
-              </div>
-            </div>
-          </section>
-
-          <!-- US assets accordion -->
-          <section id="us-assets" class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-3">
-            <button
-              type="button"
-              class="flex items-center justify-between w-full"
-              onclick="toggleAssetSection('us')"
-            >
-              <div class="flex items-center gap-2">
-                <span class="text-sm font-semibold text-slate-900">&gt; US assets</span>
-                <span class="hidden sm:inline text-[11px] text-slate-500">
-                  Accounts, house, crypto, insurance
-                </span>
-              </div>
-              <i
-                id="us-assets-chevron"
-                class="fa-solid fa-chevron-right text-[10px] text-slate-400 transition-transform duration-150"
-              ></i>
-            </button>
-
-            <div
-              id="us-assets-body"
-              class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-[11px] hidden"
-            >
-              <div class="rounded-xl bg-white/80 border border-slate-200 px-3 py-3">
-                <p class="font-semibold text-slate-900 mb-1">Accounts</p>
-                <p class="text-slate-500">
-                  US brokerage and bank accounts you hold in your name or jointly.
-                </p>
-              </div>
-              <div class="rounded-xl bg-white/80 border border-slate-200 px-3 py-3">
-                <p class="font-semibold text-slate-900 mb-1">House / property</p>
-                <p class="text-slate-500">
-                  US real estate, mortgages and rental properties tied to your family.
-                </p>
-              </div>
-              <div class="rounded-xl bg-white/80 border border-slate-200 px-3 py-3">
-                <p class="font-semibold text-slate-900 mb-1">Crypto</p>
-                <p class="text-slate-500">
-                  Exchanges, cold wallets and on-chain positions reported in USD.
-                </p>
-              </div>
-              <div class="rounded-xl bg-white/80 border border-slate-200 px-3 py-3">
-                <p class="font-semibold text-slate-900 mb-1">Insurance / retirement</p>
-                <p class="text-slate-500">
-                  401(k), IRA and US life insurance policies that affect tax and estate.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <!-- Taiwan assets accordion -->
-          <section id="tw-assets" class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-3">
-            <button
-              type="button"
-              class="flex items-center justify-between w-full"
-              onclick="toggleAssetSection('tw')"
-            >
-              <div class="flex items-center gap-2">
-                <span class="text-sm font-semibold text-slate-900">&gt; Taiwan assets</span>
-                <span class="hidden sm:inline text-[11px] text-slate-500">
-                  Accounts, house, crypto, insurance
-                </span>
-              </div>
-              <i
-                id="tw-assets-chevron"
-                class="fa-solid fa-chevron-right text-[10px] text-slate-400 transition-transform duration-150"
-              ></i>
-            </button>
-
-            <div
-              id="tw-assets-body"
-              class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-[11px] hidden"
-            >
-              <div class="rounded-xl bg-white/80 border border-slate-200 px-3 py-3">
-                <p class="font-semibold text-slate-900 mb-1">Accounts</p>
-                <p class="text-slate-500">
-                  Taiwan bank, brokerage and futures accounts (TWD or foreign currency).
-                </p>
-              </div>
-              <div class="rounded-xl bg-white/80 border border-slate-200 px-3 py-3">
-                <p class="font-semibold text-slate-900 mb-1">House / property</p>
-                <p class="text-slate-500">
-                  自住房、投資房和土地，用來看集中在台灣多少不動產。
-                </p>
-              </div>
-              <div class="rounded-xl bg-white/80 border border-slate-200 px-3 py-3">
-                <p class="font-semibold text-slate-900 mb-1">Crypto</p>
-                <p class="text-slate-500">
-                  以台灣交易所或個人錢包為主的加密貨幣部位，統一折算成 USD。
-                </p>
-              </div>
-              <div class="rounded-xl bg-white/80 border border-slate-200 px-3 py-3">
-                <p class="font-semibold text-slate-900 mb-1">Insurance / policies</p>
-                <p class="text-slate-500">
-                  高現金價值保單、儲蓄險和年金，用來判斷 PFIC / 全球所得風險。
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <!-- 保留原本 anchor（現在只剩 accounts-block） -->
+          <!-- Row 2：Accounts + Help -->
+          <div id="us-assets"></div>
+          <div id="tw-assets"></div>
           <div id="accounts-block"></div>
 
-          <!-- Row 2：Accounts + Help -->
           <div class="grid grid-cols-1 lg:grid-cols-[1.4fr,1fr] gap-6 pb-4">
             <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-4">
               <div class="flex items-start justify-between gap-2">
@@ -785,7 +707,10 @@
     <div class="w-full max-w-sm bg白 rounded-2xl shadow-2xl p-6 relative">
       <button
         type="button"
-        onclick="closeAuthModal && closeAuthModal()"
+        onclick="closeAuthModal && closeAuthModal()
+
+
+        "
         class="absolute right-3 top-3 text-slate-400 hover:text-slate-600 text-sm"
       >
         <i class="fa-solid fa-xmark"></i>
@@ -1230,10 +1155,10 @@
       });
     }
 
-    // 新增：US / TW assets 展開 / 收起
-    function toggleAssetSection(region) {
-      const body = document.getElementById(region + '-assets-body');
-      const chevron = document.getElementById(region + '-assets-chevron');
+    // 新增：sidebar 裡 US / Taiwan assets 展開 / 收起
+    function toggleSideSection(key) {
+      const body = document.getElementById(`side-${key}-children`);
+      const chevron = document.getElementById(`side-${key}-chevron`);
       if (!body || !chevron) return;
       body.classList.toggle('hidden');
       chevron.classList.toggle('rotate-90');
