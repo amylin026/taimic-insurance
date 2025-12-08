@@ -16,7 +16,7 @@
   <!-- 設計系統 -->
   <link rel="stylesheet" href="main.css" />
 
-  <!-- 液態玻璃樣式（只負責 .liquid 卡片） -->
+  <!-- 液態玻璃樣式（只負責 .liquid 卡片 + sidebar） -->
   <style>
     .liquid {
       backdrop-filter: blur(4px) url(#liquid_glass_filter);
@@ -31,49 +31,52 @@
       border: 1px solid rgba(255, 255, 255, 0.45);
     }
 
-    /* Sidebar 連結：Mac 控制中心風格毛玻璃 pill */
+    /* Sidebar：預設像文字列表，hover / active 才有毛玻璃 */
     .side-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      padding: 0.55rem 0.85rem;
+      padding: 0.45rem 0.8rem;
       border-radius: 9999px;
       font-size: 0.875rem;
-      color: #64748b; /* slate-500-ish */
-      background: rgba(255, 255, 255, 0.18);
-      border: 1px solid rgba(255, 255, 255, 0.55);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.4),
-        0 10px 28px rgba(15, 23, 42, 0.18);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+
+      /* 預設超低存在感 */
+      color: #64748b;                 /* slate-500-ish */
+      background: transparent;
+      border: 1px solid transparent;
+      box-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+
       cursor: pointer;
       transition:
-        background 0.16s ease,
-        color 0.16s ease,
-        box-shadow 0.16s ease,
-        transform 0.13s ease;
+        background 0.15s ease,
+        color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        transform 0.12s ease,
+        backdrop-filter 0.15s ease;
     }
+
     .side-item:hover {
       color: #0f172a; /* slate-900 */
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.25);
+      background: rgba(255, 255, 255, 0.9);
+      border-color: rgba(148, 163, 184, 0.55);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.14);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       transform: translateY(-1px);
     }
-    /* active 只有淡淡 outline，不會一直深色；真正深色交給 hover */
+
     .side-item-active {
       font-weight: 600;
       color: #0f172a;
-      border-color: rgba(37, 99, 235, 0.65);
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.5),
-        0 0 0 1px rgba(37, 99, 235, 0.28),
-        0 10px 28px rgba(15, 23, 42, 0.18);
-    }
-    .side-item-active:hover {
-      /* hover 時一樣是 hover 的深色感，只是多一點藍色邊框 */
-      border-color: rgba(37, 99, 235, 0.75);
+      background: rgba(248, 250, 252, 0.95);         /* 很接近整體背景 */
+      border-color: rgba(37, 99, 235, 0.35);         /* 淡淡藍邊 */
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
     }
 
     /* AI notes 滾動上限，避免卡片過高 */
@@ -764,7 +767,7 @@
         const region = document.getElementById('asset-region').value;
         const type = document.getElementById('asset-type').value;
         const currency = document.getElementById('asset-currency').value;
-        const units = parseFloat(document.getElementById('asset-value').value || '0'); // 幾「萬»
+        const units = parseFloat(document.getElementById('asset-value').value || '0'); // 幾「萬」
 
         if (!name || !units || units <= 0) return;
 
