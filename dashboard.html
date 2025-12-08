@@ -232,6 +232,12 @@
           <button class="side-item side-item-active" onclick="scrollToSection('snapshot-top')">
             <span>Overview</span>
           </button>
+
+          <!-- 新增：Family members 在 Overview 下、US assets 上 -->
+          <button class="side-item" onclick="scrollToSection('family-members')">
+            <span>Family members</span>
+          </button>
+
           <button class="side-item" onclick="scrollToSection('us-assets')">
             <span>US assets</span>
           </button>
@@ -429,7 +435,7 @@
             </section>
           </div>
 
-          <!-- Family members section (在 overview 下面、US assets 上面) -->
+          <!-- Family members section：Overview 下面、US assets 上面 -->
           <section id="family-members" class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-3">
             <div class="flex items-start justify-between gap-2">
               <div>
@@ -442,7 +448,7 @@
               </div>
             </div>
             <p class="text-[11px] text-slate-600 max-w-xl">
-              Use this section to keep track of which family members are covered in the cross-border plan –
+              Use this section to track which family members are covered in the cross-border plan –
               spouse, kids, or parents you support.
             </p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px]">
@@ -456,7 +462,7 @@
               </div>
               <div class="rounded-xl bg-white/80 border border-slate-200 px-3 py-3">
                 <p class="font-semibold text-slate-900 mb-1">Parents / kids</p>
-                <p class="text-slate-500">Support, gifts, and inheritance you want to plan for.</p>
+                <p class="text-slate-500">Support, gifts and inheritance you want to plan for.</p>
               </div>
             </div>
           </section>
@@ -468,13 +474,11 @@
               class="flex items-center justify-between w-full"
               onclick="toggleAssetSection('us')"
             >
-              <div class="flex flex-col items-start gap-1">
-                <div class="flex items-center gap-2">
-                  <span class="text-sm font-semibold text-slate-900">&gt; US assets</span>
-                  <span class="hidden sm:inline text-[11px] text-slate-500">
-                    Accounts, house, crypto, insurance
-                  </span>
-                </div>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-semibold text-slate-900">&gt; US assets</span>
+                <span class="hidden sm:inline text-[11px] text-slate-500">
+                  Accounts, house, crypto, insurance
+                </span>
               </div>
               <i
                 id="us-assets-chevron"
@@ -520,13 +524,11 @@
               class="flex items-center justify-between w-full"
               onclick="toggleAssetSection('tw')"
             >
-              <div class="flex flex-col items-start gap-1">
-                <div class="flex items-center gap-2">
-                  <span class="text-sm font-semibold text-slate-900">&gt; Taiwan assets</span>
-                  <span class="hidden sm:inline text-[11px] text-slate-500">
-                    Accounts, house, crypto, insurance
-                  </span>
-                </div>
+              <div class="flex items-center gap-2">
+                <span class="text-sm font-semibold text-slate-900">&gt; Taiwan assets</span>
+                <span class="hidden sm:inline text-[11px] text-slate-500">
+                  Accounts, house, crypto, insurance
+                </span>
               </div>
               <i
                 id="tw-assets-chevron"
@@ -565,6 +567,7 @@
             </div>
           </section>
 
+          <!-- 保留原本 anchor（現在只剩 accounts-block） -->
           <div id="accounts-block"></div>
 
           <!-- Row 2：Accounts + Help -->
@@ -1227,6 +1230,7 @@
       });
     }
 
+    // 新增：US / TW assets 展開 / 收起
     function toggleAssetSection(region) {
       const body = document.getElementById(region + '-assets-body');
       const chevron = document.getElementById(region + '-assets-chevron');
