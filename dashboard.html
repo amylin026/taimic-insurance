@@ -31,7 +31,7 @@
       border: 1px solid rgba(255, 255, 255, 0.45);
     }
 
-    /* Sidebar：上半部也改成跟 Help / Settings 一樣是文字型連結 */
+    /* Sidebar：上半部是文字型連結 */
     .side-item {
       display: flex;
       align-items: center;
@@ -39,14 +39,12 @@
       width: 100%;
       padding: 0.25rem 0.1rem;
       font-size: 0.82rem;
-
       color: #64748b;
       background: transparent;
       border: none;
       box-shadow: none;
       backdrop-filter: none;
       -webkit-backdrop-filter: none;
-
       cursor: pointer;
       transition: color 0.15s ease, transform 0.12s ease;
     }
@@ -61,7 +59,6 @@
       color: #0f172a;
     }
 
-    /* Help / Settings：文字型連結 */
     .side-bottom-link {
       display: flex;
       align-items: center;
@@ -84,30 +81,25 @@
       transform: translateX(2px);
     }
 
-    /* Sidebar toggle button（三條線）：放在 header 左邊，用絕對定位，不擠到 TAIMIC */
+    /* Header 裡的三條線：就是三條線，沒有圈 */
     #sidebar-toggle {
-      width: 30px;
-      height: 30px;
-      border-radius: 9999px;
-      border: 1px solid rgba(148, 163, 184, 0.55);
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.16);
+      padding: 0;
+      border: none;
+      background: transparent;
+      box-shadow: none;
       cursor: pointer;
-      transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.12s ease;
-    }
-
-    #sidebar-toggle:hover {
-      background: rgba(255, 255, 255, 1);
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.2);
-      transform: translateY(-1px);
     }
 
     #sidebar-toggle .bar {
       display: block;
-      width: 14px;
+      width: 18px;
       height: 1.5px;
       border-radius: 9999px;
       background-color: #64748b;
+    }
+
+    #sidebar-toggle:hover .bar {
+      background-color: #0f172a;
     }
 
     /* md 以上才會真正把 sidebar 收掉 */
@@ -117,7 +109,6 @@
       }
     }
 
-    /* AI notes 滾動上限，避免卡片過高 */
     #ai-notes-list {
       max-height: 260px;
       overflow-y: auto;
@@ -130,77 +121,63 @@
   <svg width="0" height="0" style="position:absolute;left:-9999px;top:-9999px;">
     <defs>
       <filter id="liquid_glass_filter">
-        <feTurbulence
-          type="fractalNoise"
-          baseFrequency="0.003"
-          numOctaves="2"
-          result="noise" />
-        <feGaussianBlur
-          in="noise"
-          stdDeviation="1.2"
-          result="map" />
-        <feDisplacementMap
-          in="SourceGraphic"
-          in2="map"
-          scale="110"
-          xChannelSelector="R"
-          yChannelSelector="G" />
+        <feTurbulence type="fractalNoise" baseFrequency="0.003" numOctaves="2" result="noise" />
+        <feGaussianBlur in="noise" stdDeviation="1.2" result="map" />
+        <feDisplacementMap in="SourceGraphic" in2="map" scale="110" xChannelSelector="R" yChannelSelector="G" />
       </filter>
     </defs>
   </svg>
 
-  <!-- =================================================== -->
-  <!-- LOGGED-IN DASHBOARD SHELL                           -->
-  <!-- =================================================== -->
   <div id="dashboard-shell" class="min-h-screen flex flex-col bg-[#eff3ff]">
 
     <!-- Header -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[72px]">
       <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center relative">
-        <!-- 三條線：絕對定位在 header 左邊，不會推到 TAIMIC -->
-        <button
-          id="sidebar-toggle"
-          class="hidden md:flex items-center justify-center absolute left-4 top-1/2 -translate-y-1/2"
-          type="button"
-        >
-          <span class="sr-only">Toggle sidebar</span>
-          <div class="space-y-[3px]">
+        <!-- 左側：三條線 + TAIMIC（同一排） -->
+        <div class="flex items-center gap-3 -ml-3">
+          <!-- 三條線，只在 md 以上出現 -->
+          <button
+            id="sidebar-toggle"
+            class="hidden md:flex flex-col justify-center gap-[3px]"
+            type="button"
+          >
+            <span class="sr-only">Toggle sidebar</span>
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
-          </div>
-        </button>
+          </button>
 
-        <!-- Logo + brand（位置和 index.html 一樣） -->
-        <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
-          <svg class="logo-clock" viewBox="0 0 100 100">
-            <defs>
-              <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#bfdbfe" />
-                <stop offset="100%" stop-color="#60a5fa" />
-              </linearGradient>
-            </defs>
-            <circle cx="50" cy="50" r="46" class="clock-outer" />
-            <circle cx="50" cy="50" r="38" class="clock-inner" />
-            <circle cx="50" cy="50" r="30" class="clock-core" />
-            <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
-            <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
-            <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
-            <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
-            <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
-            <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
-            <circle cx="50" cy="50" r="3.2" class="center-dot" />
-          </svg>
-          <div class="flex flex-col justify-center">
-            <span class="text-[22px] font-[700] tracking-tight text-[#0066cc] leading-none">TAIMIC</span>
-            <span class="text-[10px] font-[600] tracking-[0.2em] text-gray-500 mt-1 uppercase">Global Wealth</span>
-          </div>
+          <!-- TAIMIC logo：跟 index 一樣 -->
+          <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+            <svg class="logo-clock" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#bfdbfe" />
+                  <stop offset="100%" stop-color="#60a5fa" />
+                </linearGradient>
+              </defs>
+              <circle cx="50" cy="50" r="46" class="clock-outer" />
+              <circle cx="50" cy="50" r="38" class="clock-inner" />
+              <circle cx="50" cy="50" r="30" class="clock-core" />
+              <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
+              <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
+              <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
+              <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
+              <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
+              <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
+              <circle cx="50" cy="50" r="3.2" class="center-dot" />
+            </svg>
+            <div class="flex flex-col justify-center">
+              <span class="text-[22px] font-[700] tracking-tight text-[#0066cc] leading-none">TAIMIC</span>
+              <span class="text-[10px] font-[600] tracking-[0.2em] text-gray-500 mt-1 uppercase">Global Wealth</span>
+            </div>
 
-          <!-- Snapshot 區：保留原本樣式 -->
-          <div class="hidden md:flex items-center gap-2 pl-5 ml-3 border-l border-slate-200 text-[11px] text-slate-500">
-            <i class="fa-regular fa-calendar-check text-[11px]"></i>
-            <span>Snapshot as of</span>
-            <span class="font-semibold text-slate-800" id="snapshot-date">2025-12-01</span>
+            <!-- Snapshot 區 -->
+            <div class="hidden md:flex items-center gap-2 pl-5 ml-3 border-l border-slate-200 text-[11px] text-slate-500">
+              <i class="fa-regular fa-calendar-check text-[11px]"></i>
+              <span>Snapshot as of</span>
+              <span class="font-semibold text-slate-800" id="snapshot-date">2025-12-01</span>
+            </div>
           </div>
         </div>
 
@@ -222,7 +199,6 @@
             <span>Export full report (PDF)</span>
           </button>
 
-          <!-- Dashboard user dropdown -->
           <div class="relative">
             <button
               id="dash-user-toggle"
@@ -262,9 +238,7 @@
     <!-- =================================================== -->
     <div class="flex flex-1 relative">
 
-      <!-- 注意：原本在這裡的 sidebar-toggle 已刪掉，只保留 header 那顆 -->
-
-      <!-- 左側分類：Overview / US assets / Taiwan assets + 下面 Help / Settings -->
+      <!-- 左側 Sidebar -->
       <aside
         id="sidebar"
         class="hidden md:flex flex-col w-64 px-5 py-6 border-r border-slate-200/70 bg-white/60 backdrop-blur-xl"
@@ -280,7 +254,6 @@
             <span>Taiwan assets</span>
           </button>
 
-          <!-- 直接接在 Taiwan assets 下面 -->
           <div class="pt-4 mt-2 border-t border-slate-200/70 space-y-1">
             <button class="side-bottom-link" onclick="scrollToSection('help-center')">
               <i class="fa-regular fa-circle-question"></i>
@@ -294,11 +267,10 @@
         </nav>
       </aside>
 
-      <!-- ========== 右側主要 Dashboard 內容 ========== -->
+      <!-- 右側內容 -->
       <main class="flex-1">
         <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-7">
 
-          <!-- Overview 錨點 -->
           <div id="snapshot-top"></div>
 
           <!-- Page intro -->
@@ -344,9 +316,7 @@
             </div>
           </div>
 
-          <!-- =================================================== -->
-          <!-- Row 1: Overview (Snapshot + AI notes)               -->
-          <!-- =================================================== -->
+          <!-- Row 1 -->
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- Global snapshot -->
             <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-4">
@@ -400,7 +370,6 @@
                 </div>
               </div>
 
-              <!-- Region donut -->
               <div class="mt-2 grid grid-cols-1 md:grid-cols-[1.1fr,1fr] gap-4 items-center">
                 <div class="relative max-w-[220px] mx-auto aspect-square">
                   <canvas id="regionChart"></canvas>
@@ -447,7 +416,7 @@
               </div>
             </section>
 
-            <!-- AI notes / next steps -->
+            <!-- AI notes -->
             <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col">
               <div class="flex items-start justify-between mb-4">
                 <div>
@@ -475,15 +444,12 @@
             </section>
           </div>
 
-          <!-- =================================================== -->
-          <!-- Row 2: Accounts + How to use (US/TW Assets 錨點)    -->
-          <!-- =================================================== -->
+          <!-- Row 2：Accounts + Help -->
           <div id="us-assets"></div>
           <div id="tw-assets"></div>
           <div id="accounts-block"></div>
 
           <div class="grid grid-cols-1 lg:grid-cols-[1.4fr,1fr] gap-6 pb-4">
-            <!-- Add assets + table -->
             <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-4">
               <div class="flex items-start justify-between gap-2">
                 <div>
@@ -500,7 +466,6 @@
                 </span>
               </div>
 
-              <!-- Empty state 提示 -->
               <div id="empty-state" class="text-[11px] text-slate-500 bg-slate-900/5 border border-slate-200/70 rounded-xl px-3 py-2.5 flex items-start gap-2">
                 <i class="fa-solid fa-circle-info mt-[2px] text-slate-400 text-[10px]"></i>
                 <p>
@@ -509,7 +474,6 @@
                 </p>
               </div>
 
-              <!-- Quick add form -->
               <form id="asset-form" class="grid grid-cols-2 md:grid-cols-3 gap-3 text-[11px]">
                 <div class="col-span-2 md:col-span-3">
                   <label class="block mb-1 font-medium text-slate-700">Institution / nickname</label>
@@ -583,9 +547,7 @@
                       placeholder="e.g. 250"
                       required
                     />
-                    <span
-                      class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-slate-400"
-                    >
+                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-slate-400">
                       ×10k
                     </span>
                   </div>
@@ -602,7 +564,6 @@
                 </div>
               </form>
 
-              <!-- Accounts table -->
               <div class="mt-4 overflow-x-auto">
                 <table class="w-full text-xs text-slate-700">
                   <thead>
@@ -614,9 +575,7 @@
                       <th class="py-2 pl-2 pr-1 text-right">Tax flag</th>
                     </tr>
                   </thead>
-                  <tbody id="asset-table-body" class="divide-y divide-slate-100/70">
-                    <!-- 動態插入 -->
-                  </tbody>
+                  <tbody id="asset-table-body" class="divide-y divide-slate-100/70"></tbody>
                 </table>
               </div>
 
@@ -626,7 +585,6 @@
               </p>
             </section>
 
-            <!-- Help center 區塊 (也是 help center 錨點) -->
             <section id="help-center" class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-3 text-[11px] text-slate-700">
               <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
                 How to use this page
@@ -657,7 +615,6 @@
             </section>
           </div>
 
-          <!-- Settings 區塊錨點 -->
           <div id="settings-section" class="pb-6">
             <section class="liquid bg-white/5 rounded-2xl p-5 mt-2 text-[11px] text-slate-700">
               <div class="flex items-center gap-2 mb-2">
@@ -680,7 +637,6 @@
       </main>
     </div>
 
-    <!-- Footer -->
     <footer class="bg-[#f4f6fb] border-t border-gray-200">
       <div class="max-w-[1200px] mx-auto px-6 pt-6 pb-4">
         <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
@@ -697,12 +653,9 @@
   </div>
 
   <!-- 共用 overlay -->
-  <div
-    id="modal-overlay"
-    class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-  ></div>
+  <div id="modal-overlay" class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"></div>
 
-  <!-- Auth overlay：登入 / 註冊共用 -->
+  <!-- Auth overlay -->
   <div
     id="auth-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
@@ -737,10 +690,7 @@
         </div>
       </div>
 
-      <h2
-        id="auth-title"
-        class="text-lg font-semibold text-slate-900 mb-1 text-center"
-      >
+      <h2 id="auth-title" class="text-lg font-semibold text-slate-900 mb-1 text-center">
         Login to Taimic
       </h2>
 
@@ -777,14 +727,12 @@
     </div>
   </div>
 
-  <!-- 共用 JS -->
   <script src="main.js"></script>
 
-  <!-- Dashboard 專用 JS：資產輸入 + 計算 + 圖表 + AI notes + localStorage -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const STORAGE_KEY = 'taimic_assets_v1';
-      const FX_TWD_TO_USD = 0.031; // demo 匯率
+      const FX_TWD_TO_USD = 0.031;
       let assets = [];
       let regionChart = null;
 
@@ -795,7 +743,6 @@
 
       if (!form) return;
 
-      // ---- localStorage 載入 ----
       try {
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
@@ -809,20 +756,18 @@
         console.warn('Failed to load assets from localStorage', e);
       }
 
-      // 幣別切換時更新前綴
       currencySelect.addEventListener('change', () => {
         const cur = currencySelect.value;
         currencyPrefix.textContent = cur === 'TWD' ? 'NT$' : '$';
       });
 
-      // 提交表單：新增資產
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         const name = document.getElementById('asset-name').value.trim();
         const region = document.getElementById('asset-region').value;
         const type = document.getElementById('asset-type').value;
         const currency = document.getElementById('asset-currency').value;
-        const units = parseFloat(document.getElementById('asset-value').value || '0'); // 幾「萬」
+        const units = parseFloat(document.getElementById('asset-value').value || '0');
 
         if (!name || !units || units <= 0) return;
 
@@ -950,7 +895,6 @@
           tbody.appendChild(tr);
         });
 
-        // 綁刪除按鈕
         tbody.querySelectorAll('.asset-delete-btn').forEach(btn => {
           btn.addEventListener('click', () => {
             const idx = parseInt(btn.dataset.index, 10);
@@ -1004,11 +948,7 @@
       }
 
       function updateRegionChart(regionTotals) {
-        const data = [
-          regionTotals.tw,
-          regionTotals.us,
-          regionTotals.offshore
-        ];
+        const data = [regionTotals.tw, regionTotals.us, regionTotals.offshore];
         const ctx = document.getElementById('regionChart').getContext('2d');
 
         if (!regionChart) {
@@ -1022,9 +962,7 @@
               }]
             },
             options: {
-              plugins: {
-                legend: { display: false }
-              },
+              plugins: { legend: { display: false } },
               cutout: '65%'
             }
           });
@@ -1150,7 +1088,7 @@
       // 初始 render
       renderDashboard();
 
-      // Sidebar toggle（收合 / 展開）
+      // Sidebar toggle
       const sidebarToggle = document.getElementById('sidebar-toggle');
       const sidebar = document.getElementById('sidebar');
 
@@ -1161,7 +1099,6 @@
       }
     });
 
-    // Sidebar 滑動函式
     function scrollToSection(id) {
       const el = document.getElementById(id);
       if (!el) return;
