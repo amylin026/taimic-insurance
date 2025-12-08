@@ -84,7 +84,7 @@
       transform: translateX(2px);
     }
 
-    /* Sidebar toggle button（三條線）：改成一般按鈕，放在 header 左邊 */
+    /* Sidebar toggle button（三條線）：放在 header 左邊，用絕對定位，不擠到 TAIMIC */
     #sidebar-toggle {
       width: 30px;
       height: 30px;
@@ -157,46 +157,50 @@
     <!-- Header -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[72px]">
       <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center relative">
-        <!-- 左側：三條線 + TAIMIC logo -->
-        <div class="flex items-center gap-3">
-          <!-- 三條線：只在 md 以上顯示 -->
-          <button
-            id="sidebar-toggle"
-            class="hidden md:flex items-center justify-center"
-            type="button"
-          >
-            <span class="sr-only">Toggle sidebar</span>
-            <div class="space-y-[3px]">
-              <span class="bar"></span>
-              <span class="bar"></span>
-              <span class="bar"></span>
-            </div>
-          </button>
+        <!-- 三條線：絕對定位在 header 左邊，不會推到 TAIMIC -->
+        <button
+          id="sidebar-toggle"
+          class="hidden md:flex items-center justify-center absolute left-4 top-1/2 -translate-y-1/2"
+          type="button"
+        >
+          <span class="sr-only">Toggle sidebar</span>
+          <div class="space-y-[3px]">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </div>
+        </button>
 
-          <!-- Logo + brand（跟 index 一樣的時鐘＋字） -->
-          <div class="flex items-center gap-4 cursor-pointer" onclick="window.location.href='index.html'">
-            <svg class="logo-clock" viewBox="0 0 100 100">
-              <defs>
-                <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#bfdbfe" />
-                  <stop offset="100%" stop-color="#60a5fa" />
-                </linearGradient>
-              </defs>
-              <circle cx="50" cy="50" r="46" class="clock-outer" />
-              <circle cx="50" cy="50" r="38" class="clock-inner" />
-              <circle cx="50" cy="50" r="30" class="clock-core" />
-              <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
-              <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
-              <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
-              <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
-              <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
-              <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
-              <circle cx="50" cy="50" r="3.2" class="center-dot" />
-            </svg>
-            <div class="flex flex-col justify-center">
-              <span class="text-[22px] font-[700] tracking-tight text-[#0066cc] leading-none">TAIMIC</span>
-              <span class="text-[10px] font-[600] tracking-[0.2em] text-gray-500 mt-1 uppercase">Global Wealth</span>
-            </div>
+        <!-- Logo + brand（位置和 index.html 一樣） -->
+        <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+          <svg class="logo-clock" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#bfdbfe" />
+                <stop offset="100%" stop-color="#60a5fa" />
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="46" class="clock-outer" />
+            <circle cx="50" cy="50" r="38" class="clock-inner" />
+            <circle cx="50" cy="50" r="30" class="clock-core" />
+            <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
+            <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
+            <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
+            <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
+            <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
+            <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
+            <circle cx="50" cy="50" r="3.2" class="center-dot" />
+          </svg>
+          <div class="flex flex-col justify-center">
+            <span class="text-[22px] font-[700] tracking-tight text-[#0066cc] leading-none">TAIMIC</span>
+            <span class="text-[10px] font-[600] tracking-[0.2em] text-gray-500 mt-1 uppercase">Global Wealth</span>
+          </div>
+
+          <!-- Snapshot 區：保留原本樣式 -->
+          <div class="hidden md:flex items-center gap-2 pl-5 ml-3 border-l border-slate-200 text-[11px] text-slate-500">
+            <i class="fa-regular fa-calendar-check text-[11px]"></i>
+            <span>Snapshot as of</span>
+            <span class="font-semibold text-slate-800" id="snapshot-date">2025-12-01</span>
           </div>
         </div>
 
@@ -258,7 +262,7 @@
     <!-- =================================================== -->
     <div class="flex flex-1 relative">
 
-      <!--（原本在這裡的 sidebar-toggle 按鈕已拿掉，改到 header） -->
+      <!-- 注意：原本在這裡的 sidebar-toggle 已刪掉，只保留 header 那顆 -->
 
       <!-- 左側分類：Overview / US assets / Taiwan assets + 下面 Help / Settings -->
       <aside
