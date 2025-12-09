@@ -236,12 +236,22 @@
       >
         <nav class="space-y-1">
           <!-- Overview -->
-          <button class="side-item side-item-active" onclick="scrollToSection('snapshot-top')">
+          <button
+            class="side-item side-item-active"
+            type="button"
+            data-page="overview"
+            onclick="switchDashboardPage('overview')"
+          >
             <span>Overview</span>
           </button>
 
           <!-- Family members -->
-          <button class="side-item" type="button">
+          <button
+            class="side-item"
+            type="button"
+            data-page="family"
+            onclick="switchDashboardPage('family')"
+          >
             <span>Family members</span>
           </button>
 
@@ -257,16 +267,36 @@
             </span>
           </button>
           <div id="side-us-children" class="ml-4 mt-1 space-y-1 hidden">
-            <button class="side-item side-subitem" type="button">
+            <button
+              class="side-item side-subitem"
+              type="button"
+              data-page="us-accounts"
+              onclick="switchDashboardPage('us-accounts')"
+            >
               <span>Accounts</span>
             </button>
-            <button class="side-item side-subitem" type="button">
+            <button
+              class="side-item side-subitem"
+              type="button"
+              data-page="us-house"
+              onclick="switchDashboardPage('us-house')"
+            >
               <span>House</span>
             </button>
-            <button class="side-item side-subitem" type="button">
+            <button
+              class="side-item side-subitem"
+              type="button"
+              data-page="us-crypto"
+              onclick="switchDashboardPage('us-crypto')"
+            >
               <span>Crypto</span>
             </button>
-            <button class="side-item side-subitem" type="button">
+            <button
+              class="side-item side-subitem"
+              type="button"
+              data-page="us-insurance"
+              onclick="switchDashboardPage('us-insurance')"
+            >
               <span>Insurance</span>
             </button>
           </div>
@@ -283,27 +313,57 @@
             </span>
           </button>
           <div id="side-tw-children" class="ml-4 mt-1 space-y-1 hidden">
-            <button class="side-item side-subitem" type="button">
+            <button
+              class="side-item side-subitem"
+              type="button"
+              data-page="tw-accounts"
+              onclick="switchDashboardPage('tw-accounts')"
+            >
               <span>Accounts</span>
             </button>
-            <button class="side-item side-subitem" type="button">
+            <button
+              class="side-item side-subitem"
+              type="button"
+              data-page="tw-house"
+              onclick="switchDashboardPage('tw-house')"
+            >
               <span>House</span>
             </button>
-            <button class="side-item side-subitem" type="button">
+            <button
+              class="side-item side-subitem"
+              type="button"
+              data-page="tw-crypto"
+              onclick="switchDashboardPage('tw-crypto')"
+            >
               <span>Crypto</span>
             </button>
-            <button class="side-item side-subitem" type="button">
+            <button
+              class="side-item side-subitem"
+              type="button"
+              data-page="tw-insurance"
+              onclick="switchDashboardPage('tw-insurance')"
+            >
               <span>Insurance</span>
             </button>
           </div>
 
-          <!-- 底部：Help / Settings 原樣 -->
+          <!-- 底部：Help / Settings -->
           <div class="pt-4 mt-2 border-t border-slate-200/70 space-y-1">
-            <button class="side-bottom-link" onclick="scrollToSection('help-center')">
+            <button
+              class="side-bottom-link"
+              type="button"
+              data-page="help"
+              onclick="switchDashboardPage('help')"
+            >
               <i class="fa-regular fa-circle-question"></i>
               <span>Help center</span>
             </button>
-            <button class="side-bottom-link" onclick="scrollToSection('settings-section')">
+            <button
+              class="side-bottom-link"
+              type="button"
+              data-page="settings"
+              onclick="switchDashboardPage('settings')"
+            >
               <i class="fa-solid fa-gear"></i>
               <span>Settings</span>
             </button>
@@ -311,9 +371,10 @@
         </nav>
       </aside>
 
-      <!-- 右側內容：完全沒動 -->
+      <!-- 右側內容 -->
       <main class="flex-1">
-        <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-7">
+        <!-- Overview page -->
+        <div id="page-overview" class="dash-page max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-7">
 
           <div id="snapshot-top"></div>
 
@@ -678,6 +739,205 @@
           </div>
 
         </div>
+
+        <!-- Family members page -->
+        <div id="page-family" class="dash-page hidden">
+          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+            <section class="liquid bg-white/5 rounded-2xl p-5 text-[11px] text-slate-700">
+              <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                Family members
+              </p>
+              <h2 class="text-sm font-semibold text-slate-900 mb-1">
+                Family members (coming soon)
+              </h2>
+              <p>
+                This page will let you add household members and control who can view or edit different parts of your cross-border report.
+              </p>
+            </section>
+          </div>
+        </div>
+
+        <!-- US assets pages -->
+        <div id="page-us-accounts" class="dash-page hidden">
+          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+            <section class="liquid bg-white/5 rounded-2xl p-5 text-[11px] text-slate-700">
+              <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                US assets
+              </p>
+              <h2 class="text-sm font-semibold text-slate-900 mb-1">
+                US accounts (coming soon)
+              </h2>
+              <p>
+                Later you can list US brokerage and bank accounts here and see how they feed into the global report.
+              </p>
+            </section>
+          </div>
+        </div>
+
+        <div id="page-us-house" class="dash-page hidden">
+          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+            <section class="liquid bg-white/5 rounded-2xl p-5 text-[11px] text-slate-700">
+              <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                US assets
+              </p>
+              <h2 class="text-sm font-semibold text-slate-900 mb-1">
+                US real estate (coming soon)
+              </h2>
+              <p>
+                This page will be for US houses / condos, mortgages and how they affect estate and tax planning.
+              </p>
+            </section>
+          </div>
+        </div>
+
+        <div id="page-us-crypto" class="dash-page hidden">
+          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+            <section class="liquid bg-white/5 rounded-2xl p-5 text-[11px] text-slate-700">
+              <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                US assets
+              </p>
+              <h2 class="text-sm font-semibold text-slate-900 mb-1">
+                US crypto (coming soon)
+              </h2>
+              <p>
+                Later you’ll be able to track crypto that sits on US platforms and include it in your global view.
+              </p>
+            </section>
+          </div>
+        </div>
+
+        <div id="page-us-insurance" class="dash-page hidden">
+          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+            <section class="liquid bg-white/5 rounded-2xl p-5 text-[11px] text-slate-700">
+              <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                US assets
+              </p>
+              <h2 class="text-sm font-semibold text-slate-900 mb-1">
+                US insurance &amp; annuities (coming soon)
+              </h2>
+              <p>
+                A future place for US life insurance, annuities and related tax checks.
+              </p>
+            </section>
+          </div>
+        </div>
+
+        <!-- Taiwan assets pages -->
+        <div id="page-tw-accounts" class="dash-page hidden">
+          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+            <section class="liquid bg-white/5 rounded-2xl p-5 text-[11px] text-slate-700">
+              <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                Taiwan assets
+              </p>
+              <h2 class="text-sm font-semibold text-slate-900 mb-1">
+                Taiwan accounts (coming soon)
+              </h2>
+              <p>
+                Here you’ll map Taiwan bank and brokerage accounts in more detail.
+              </p>
+            </section>
+          </div>
+        </div>
+
+        <div id="page-tw-house" class="dash-page hidden">
+          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+            <section class="liquid bg-white/5 rounded-2xl p-5 text-[11px] text-slate-700">
+              <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                Taiwan assets
+              </p>
+              <h2 class="text-sm font-semibold text-slate-900 mb-1">
+                Taiwan real estate (coming soon)
+              </h2>
+              <p>
+                Later this will include Taiwan houses, land and mortgages in your structure.
+              </p>
+            </section>
+          </div>
+        </div>
+
+        <div id="page-tw-crypto" class="dash-page hidden">
+          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+            <section class="liquid bg-white/5 rounded-2xl p-5 text-[11px] text-slate-700">
+              <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                Taiwan assets
+              </p>
+              <h2 class="text-sm font-semibold text-slate-900 mb-1">
+                Taiwan crypto (coming soon)
+              </h2>
+              <p>
+                Placeholder page for Taiwan-linked crypto positions.
+              </p>
+            </section>
+          </div>
+        </div>
+
+        <div id="page-tw-insurance" class="dash-page hidden">
+          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+            <section class="liquid bg-white/5 rounded-2xl p-5 text-[11px] text-slate-700">
+              <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                Taiwan assets
+              </p>
+              <h2 class="text-sm font-semibold text-slate-900 mb-1">
+                Taiwan insurance (coming soon)
+              </h2>
+              <p>
+                This is the empty page that opens when you click “Taiwan assets → Insurance” in the sidebar.
+              </p>
+            </section>
+          </div>
+        </div>
+
+        <!-- Help page -->
+        <div id="page-help" class="dash-page hidden">
+          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+            <section class="liquid bg-white/5 rounded-2xl p-5 flex flex-col gap-3 text-[11px] text-slate-700">
+              <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                Help center
+              </p>
+              <h2 class="text-sm font-semibold text-slate-900">
+                Help center (coming soon)
+              </h2>
+              <ul class="list-decimal pl-4 space-y-2">
+                <li>
+                  FAQs on how to connect Taiwan / US accounts.
+                </li>
+                <li>
+                  Examples of typical cross-border family structures.
+                </li>
+                <li>
+                  Ways to contact Taimic support.
+                </li>
+              </ul>
+              <div class="mt-2 p-3 rounded-xl bg-slate-900 text-slate-100 flex gap-2">
+                <i class="fa-solid fa-circle-question text-xs mt-[2px]"></i>
+                <p>
+                  This is just a placeholder – real articles and links will live here later.
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <!-- Settings page -->
+        <div id="page-settings" class="dash-page hidden">
+          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+            <section class="liquid bg-white/5 rounded-2xl p-5 mt-2 text-[11px] text-slate-700">
+              <div class="flex items-center gap-2 mb-2">
+                <i class="fa-solid fa-gear text-slate-500"></i>
+                <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase">
+                  Settings
+                </p>
+              </div>
+              <h2 class="text-sm font-semibold text-slate-900 mb-1">
+                Settings &amp; preferences (coming soon)
+              </h2>
+              <p>
+                Future controls for language, base currency, data sharing with spouse / advisors and export formats will appear on this page.
+              </p>
+            </section>
+          </div>
+        </div>
+
       </main>
     </div>
 
@@ -1141,6 +1401,9 @@
           sidebar.classList.toggle('sidebar-collapsed');
         });
       }
+
+      // 初始頁面：Overview
+      switchDashboardPage('overview');
     });
 
     function scrollToSection(id) {
@@ -1159,6 +1422,26 @@
       if (!body || !chevron) return;
       body.classList.toggle('hidden');
       chevron.classList.toggle('rotate-90');
+    }
+
+    // 假分頁 router：切換 Overview / US / Taiwan / Help / Settings
+    function switchDashboardPage(pageKey) {
+      // 1. 切換內容頁
+      const pages = document.querySelectorAll('.dash-page');
+      pages.forEach(page => {
+        page.classList.add('hidden');
+      });
+      const target = document.getElementById('page-' + pageKey);
+      if (target) {
+        target.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+      }
+
+      // 2. Sidebar active 樣式
+      const navButtons = document.querySelectorAll('[data-page]');
+      navButtons.forEach(btn => btn.classList.remove('side-item-active'));
+      const activeButtons = document.querySelectorAll('[data-page="' + pageKey + '"]');
+      activeButtons.forEach(btn => btn.classList.add('side-item-active'));
     }
   </script>
 </body>
