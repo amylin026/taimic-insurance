@@ -955,47 +955,53 @@
                 </div>
               </section>
 
-              <!-- Summary strip: show who is in your family setup -->
-              <section class="family-card px-4 md:px-5 py-4">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                  <div class="text-xs text-slate-700">
-                    <p class="font-semibold text-slate-900 mb-0.5">
-                      Current members in this report
-                    </p>
-                    <p class="text-[11px] text-slate-500">
-                      A quick snapshot of who appears on this page and what level of access each person has.
-                    </p>
+                          <!-- Summary strip: social-style avatars row -->
+              <section class="family-card px-5 py-3">
+                <div class="flex items-center justify-between gap-4">
+                  <!-- 左邊：小標題 -->
+                  <div class="flex items-center gap-2 text-[11px] text-slate-600">
+                    <span class="text-[11px] font-semibold text-slate-900 tracking-[0.16em] uppercase">
+                      Members
+                    </span>
+                    <span class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-500">
+                      3 active
+                    </span>
                   </div>
 
-                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-[11px] text-slate-600">
-                    <div class="flex items-center gap-2">
-                      <div class="family-avatar w-7 h-7">
-                        <span>O</span>
+                  <!-- 右邊：一排「頭像 + 線上綠點」 -->
+                  <div class="flex items-center gap-4">
+                    <!-- Owner -->
+                    <div class="flex flex-col items-center gap-1">
+                      <div class="relative">
+                        <div class="family-avatar w-8 h-8 text-[11px]">
+                          <span>O</span>
+                        </div>
+                        <!-- 線上綠點 -->
+                        <span class="absolute -right-0.5 -bottom-0.5 w-2.5 h-2.5 rounded-full border border-white bg-emerald-400"></span>
                       </div>
-                      <div>
-                        <p class="font-semibold text-slate-900 text-[11px]">Owner</p>
-                        <p class="text-[10px] text-slate-500">Full access</p>
-                      </div>
+                      <span class="text-[10px] text-slate-500">Owner</span>
                     </div>
 
-                    <div class="flex items-center gap-2">
-                      <div class="family-avatar w-7 h-7">
-                        <span>S</span>
+                    <!-- Spouse -->
+                    <div class="flex flex-col items-center gap-1">
+                      <div class="relative">
+                        <div class="family-avatar w-8 h-8 text-[11px]">
+                          <span>S</span>
+                        </div>
+                        <span class="absolute -right-0.5 -bottom-0.5 w-2.5 h-2.5 rounded-full border border-white bg-emerald-400"></span>
                       </div>
-                      <div>
-                        <p class="font-semibold text-slate-900 text-[11px]">Spouse / partner</p>
-                        <p class="text-[10px] text-slate-500">Shared view</p>
-                      </div>
+                      <span class="text-[10px] text-slate-500">Spouse</span>
                     </div>
 
-                    <div class="flex items-center gap-2">
-                      <div class="family-avatar w-7 h-7">
-                        <span>B</span>
+                    <!-- Beneficiary -->
+                    <div class="flex flex-col items-center gap-1">
+                      <div class="relative">
+                        <div class="family-avatar w-8 h-8 text-[11px]">
+                          <span>B</span>
+                        </div>
+                        <span class="absolute -right-0.5 -bottom-0.5 w-2.5 h-2.5 rounded-full border border-white bg-emerald-400"></span>
                       </div>
-                      <div>
-                        <p class="font-semibold text-slate-900 text-[11px]">Beneficiary</p>
-                        <p class="text-[10px] text-slate-500">Limited view</p>
-                      </div>
+                      <span class="text-[10px] text-slate-500">Beneficiary</span>
                     </div>
                   </div>
                 </div>
