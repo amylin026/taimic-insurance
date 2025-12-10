@@ -12,6 +12,8 @@
   <!-- Icons & fonts -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <!-- Serif heading font for magazine / family governance look -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <!-- 設計系統 -->
   <link rel="stylesheet" href="main.css" />
@@ -57,6 +59,19 @@
     .side-item-active {
       font-weight: 600;
       color: #0f172a;
+      position: relative;
+    }
+
+    /* 瑞士風：左側 3px 品牌色直線當 active 標記 */
+    .side-item-active::before {
+      content: '';
+      position: absolute;
+      left: -0.75rem;
+      top: 0.2rem;
+      bottom: 0.2rem;
+      width: 3px;
+      border-radius: 9999px;
+      background-color: #002fa7; /* International Klein Blue */
     }
 
     /* 子選單（縮一格、字再小一點） */
@@ -118,6 +133,119 @@
     #ai-notes-list {
       max-height: 260px;
       overflow-y: auto;
+    }
+
+    /* ============= Family members page 專用樣式 ============= */
+
+    /* 主畫布：右側內容區改成更偏雜誌感的淺灰 */
+    .family-page {
+      background-color: #F9FAFB;
+    }
+
+    /* 大標題用 Serif，營造 family office / trust 感 */
+    .family-heading {
+      font-family: 'Merriweather', ui-serif, Georgia, 'Times New Roman', serif;
+      letter-spacing: 0.02em;
+    }
+
+    /* Family cards：白底 + 大範圍低透明陰影，像浮在桌面 1mm */
+    .family-card {
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .family-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+    }
+
+    .family-avatar {
+      border-radius: 9999px;
+      background: #111827;
+      color: #f9fafb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .family-role-tag {
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #6b7280;
+    }
+
+    .family-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.2rem 0.7rem;
+      border-radius: 9999px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-width: 1px;
+      border-style: solid;
+    }
+
+    .family-status-dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 9999px;
+    }
+
+    .family-status-full {
+      background-color: #ecfdf3;
+      border-color: rgba(34, 197, 94, 0.3);
+      color: #15803d;
+    }
+
+    .family-status-full .family-status-dot {
+      background-color: #22c55e;
+    }
+
+    .family-status-shared {
+      background-color: #eff6ff;
+      border-color: rgba(37, 99, 235, 0.3);
+      color: #1d4ed8;
+    }
+
+    .family-status-shared .family-status-dot {
+      background-color: #2563eb;
+    }
+
+    .family-status-limited {
+      background-color: #f9fafb;
+      border-color: #e5e7eb;
+      color: #4b5563;
+    }
+
+    .family-status-limited .family-status-dot {
+      background-color: #9ca3af;
+    }
+
+    .family-meta-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #9ca3af;
+    }
+
+    .family-meta-value {
+      font-size: 0.75rem;
+      color: #4b5563;
+    }
+
+    .family-divider {
+      height: 1px;
+      background: linear-gradient(to right, rgba(148, 163, 184, 0.28), rgba(148, 163, 184, 0.06));
     }
   </style>
 </head>
@@ -741,19 +869,232 @@
         </div>
 
         <!-- Family members page -->
-        <div id="page-family" class="dash-page hidden">
+        <div id="page-family" class="dash-page hidden family-page">
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
-            <section class="liquid bg-white/5 rounded-2xl p-5 text-[11px] text-slate-700">
-              <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
-                Family members
-              </p>
-              <h2 class="text-sm font-semibold text-slate-900 mb-1">
-                Family members (coming soon)
-              </h2>
-              <p>
-                This page will let you add household members and control who can view or edit different parts of your cross-border report.
-              </p>
+            <!-- Top: title + actions -->
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
+              <div>
+                <p class="text-[11px] font-semibold tracking-[0.26em] text-slate-500 uppercase mb-2">
+                  Family governance
+                </p>
+                <h1 class="family-heading text-[26px] md:text-[32px] font-semibold text-slate-900 leading-tight">
+                  Family members &amp; access
+                </h1>
+                <p class="mt-3 text-xs md:text-sm text-slate-600 max-w-xl">
+                  Define who can see what inside your cross-border report. Start from the owner, then add spouse,
+                  children and trusted advisors instead of sharing passwords.
+                </p>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-transparent text-[11px] font-medium text-slate-700 px-3 py-2 hover:bg-white hover:border-slate-400"
+                >
+                  <i class="fa-solid fa-file-export text-[10px]"></i>
+                  <span>Export access matrix</span>
+                </button>
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-2 rounded-full bg-[#002FA7] hover:bg-[#001a70] text-white text-[11px] font-semibold px-4 py-2 shadow-sm"
+                >
+                  <i class="fa-solid fa-user-plus text-[10px]"></i>
+                  <span>Invite member</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Info strip -->
+            <section class="family-card px-4 md:px-5 py-4 mb-7">
+              <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="flex items-start gap-3">
+                  <div class="w-9 h-9 rounded-full bg-slate-900 flex items-center justify-center text-[11px] text-white">
+                    <i class="fa-solid fa-shield-halved"></i>
+                  </div>
+                  <div class="text-xs text-slate-700">
+                    <p class="font-semibold text-slate-900 mb-0.5">
+                      Keep ownership simple, keep access controlled
+                    </p>
+                    <p class="text-[11px] text-slate-500">
+                      Owner always has full control. Use roles to mirror how your estate is set up instead of
+                      sending screenshots or passwords in chat apps.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2 text-[10px] text-slate-500">
+                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-slate-100">
+                    <i class="fa-solid fa-lock text-[9px]"></i>
+                    Bank-level encryption
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-slate-100">
+                    <i class="fa-solid fa-user-shield text-[9px]"></i>
+                    Role-based access
+                  </span>
+                  <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-slate-100">
+                    <i class="fa-solid fa-globe text-[9px]"></i>
+                    Built for cross-border families
+                  </span>
+                </div>
+              </div>
             </section>
+
+            <!-- Family members cards -->
+            <div class="space-y-4">
+              <!-- Owner -->
+              <section class="family-card px-5 py-4">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                  <div class="flex items-start gap-4">
+                    <div class="family-avatar w-10 h-10">
+                      <span>O</span>
+                    </div>
+                    <div>
+                      <div class="flex items-center gap-2">
+                        <p class="text-sm font-semibold text-slate-900">
+                          Account owner
+                        </p>
+                        <span class="family-role-tag">
+                          OWNER
+                        </span>
+                      </div>
+                      <p class="mt-1 text-[11px] text-slate-500 max-w-md">
+                        Primary decision-maker. Sees every region and every asset, and can manage who else receives
+                        read or full access to this dashboard.
+                      </p>
+                      <div class="mt-3 grid grid-cols-2 gap-3 text-[11px] text-slate-600">
+                        <div>
+                          <p class="family-meta-label mb-1">Email</p>
+                          <p class="family-meta-value">you@gmail.com</p>
+                        </div>
+                        <div>
+                          <p class="family-meta-label mb-1">Applies to</p>
+                          <p class="family-meta-value">All regions · All accounts</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col items-end gap-2">
+                    <div class="family-status-pill family-status-full">
+                      <span class="family-status-dot"></span>
+                      ACCESS: FULL
+                    </div>
+                    <button
+                      type="button"
+                      class="text-[11px] font-medium text-slate-500 hover:text-slate-900 inline-flex items-center gap-1"
+                    >
+                      <i class="fa-solid fa-pen-line text-[10px]"></i>
+                      Edit owner profile
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+              <div class="family-divider"></div>
+
+              <!-- Spouse -->
+              <section class="family-card px-5 py-4">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                  <div class="flex items-start gap-4">
+                    <div class="family-avatar w-10 h-10">
+                      <span>S</span>
+                    </div>
+                    <div>
+                      <div class="flex items-center gap-2">
+                        <p class="text-sm font-semibold text-slate-900">
+                          Spouse / partner
+                        </p>
+                        <span class="family-role-tag">
+                          SPOUSE
+                        </span>
+                      </div>
+                      <p class="mt-1 text-[11px] text-slate-500 max-w-md">
+                        Can see the full global picture but cannot change core structure. Ideal when you both
+                        co-manage wealth but one person drives execution.
+                      </p>
+                      <div class="mt-3 grid grid-cols-2 gap-3 text-[11px] text-slate-600">
+                        <div>
+                          <p class="family-meta-label mb-1">Visibility</p>
+                          <p class="family-meta-value">All regions · Read &amp; comment</p>
+                        </div>
+                        <div>
+                          <p class="family-meta-label mb-1">Control</p>
+                          <p class="family-meta-value">Cannot delete accounts or invite others</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col items-end gap-2">
+                    <div class="family-status-pill family-status-shared">
+                      <span class="family-status-dot"></span>
+                      ACCESS: SHARED VIEW
+                    </div>
+                    <button
+                      type="button"
+                      class="text-[11px] font-medium text-slate-500 hover:text-slate-900 inline-flex items-center gap-1"
+                    >
+                      <i class="fa-solid fa-envelope-open-text text-[10px]"></i>
+                      Send invite link
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Beneficiary -->
+              <section class="family-card px-5 py-4">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                  <div class="flex items-start gap-4">
+                    <div class="family-avatar w-10 h-10">
+                      <span>B</span>
+                    </div>
+                    <div>
+                      <div class="flex items-center gap-2">
+                        <p class="text-sm font-semibold text-slate-900">
+                          Beneficiary / next generation
+                        </p>
+                        <span class="family-role-tag">
+                          BENEFICIARY
+                        </span>
+                      </div>
+                      <p class="mt-1 text-[11px] text-slate-500 max-w-md">
+                        A simple, read-only view that can be shared with children or named beneficiaries so they
+                        know what exists, without touching the structure.
+                      </p>
+                      <div class="mt-3 grid grid-cols-2 gap-3 text-[11px] text-slate-600">
+                        <div>
+                          <p class="family-meta-label mb-1">Visibility</p>
+                          <p class="family-meta-value">Selected regions only (e.g. Taiwan)</p>
+                        </div>
+                        <div>
+                          <p class="family-meta-label mb-1">Control</p>
+                          <p class="family-meta-value">Read-only · No export of raw data</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="flex flex-col items-end gap-2">
+                    <div class="family-status-pill family-status-limited">
+                      <span class="family-status-dot"></span>
+                      ACCESS: LIMITED
+                    </div>
+                    <button
+                      type="button"
+                      class="text-[11px] font-medium text-slate-500 hover:text-slate-900 inline-flex items-center gap-1"
+                    >
+                      <i class="fa-solid fa-gear text-[10px]"></i>
+                      Configure regions
+                    </button>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <p class="mt-6 text-[11px] text-slate-400 max-w-xl">
+              Later you’ll be able to connect real emails, set per-country visibility and share a read-only
+              advisor view. For now, treat this as the blueprint of how you want your family governance to look.
+            </p>
           </div>
         </div>
 
