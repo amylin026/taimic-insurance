@@ -406,6 +406,22 @@
             <button
               class="side-item side-subitem"
               type="button"
+              data-page="us-stocks"
+              onclick="switchDashboardPage('us-stocks')"
+            >
+              <span>Stocks</span>
+            </button>
+            <button
+              class="side-item side-subitem"
+              type="button"
+              data-page="us-liabilities"
+              onclick="switchDashboardPage('us-liabilities')"
+            >
+              <span>Liabilities</span>
+            </button>
+            <button
+              class="side-item side-subitem"
+              type="button"
               data-page="us-house"
               onclick="switchDashboardPage('us-house')"
             >
@@ -448,6 +464,22 @@
               onclick="switchDashboardPage('tw-accounts')"
             >
               <span>Accounts</span>
+            </button>
+            <button
+              class="side-item side-subitem"
+              type="button"
+              data-page="tw-stocks"
+              onclick="switchDashboardPage('tw-stocks')"
+            >
+              <span>Stocks</span>
+            </button>
+            <button
+              class="side-item side-subitem"
+              type="button"
+              data-page="tw-liabilities"
+              onclick="switchDashboardPage('tw-liabilities')"
+            >
+              <span>Liabilities</span>
             </button>
             <button
               class="side-item side-subitem"
@@ -970,7 +1002,10 @@
               </section>
             </div>
 
-            
+            <p class="mt-6 text-[11px] text-slate-400 max-w-xl">
+              Later you’ll be able to connect real emails, set per-country visibility and share a read-only
+              advisor view. For now, treat this as the blueprint of how you want your family governance to look.
+            </p>
           </div>
         </div>
 
@@ -985,7 +1020,39 @@
                 US accounts (coming soon)
               </h2>
               <p>
-                Later you can list US brokerage and bank accounts here and see how they feed into the global report.
+                Later you can list US bank and cash accounts here and see how they feed into the global report.
+              </p>
+            </section>
+          </div>
+        </div>
+
+        <div id="page-us-stocks" class="dash-page hidden">
+          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+            <section class="liquid bg-white/5 rounded-2xl p-5 text-[11px] text-slate-700">
+              <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                US assets
+              </p>
+              <h2 class="text-sm font-semibold text-slate-900 mb-1">
+                US stocks &amp; brokerage (coming soon)
+              </h2>
+              <p>
+                Later you’ll be able to map US brokerage accounts and equity positions in more detail.
+              </p>
+            </section>
+          </div>
+        </div>
+
+        <div id="page-us-liabilities" class="dash-page hidden">
+          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+            <section class="liquid bg-white/5 rounded-2xl p-5 text-[11px] text-slate-700">
+              <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                US assets
+              </p>
+              <h2 class="text-sm font-semibold text-slate-900 mb-1">
+                US liabilities (coming soon)
+              </h2>
+              <p>
+                This page will be for US mortgages, credit lines and other liabilities that affect your net worth.
               </p>
             </section>
           </div>
@@ -1050,7 +1117,39 @@
                 Taiwan accounts (coming soon)
               </h2>
               <p>
-                Here you’ll map Taiwan bank and brokerage accounts in more detail.
+                Here you’ll map Taiwan bank and cash accounts in more detail.
+              </p>
+            </section>
+          </div>
+        </div>
+
+        <div id="page-tw-stocks" class="dash-page hidden">
+          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+            <section class="liquid bg-white/5 rounded-2xl p-5 text-[11px] text-slate-700">
+              <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                Taiwan assets
+              </p>
+              <h2 class="text-sm font-semibold text-slate-900 mb-1">
+                Taiwan stocks &amp; brokerage (coming soon)
+              </h2>
+              <p>
+                Later you’ll be able to map Taiwan brokerage accounts and equity holdings here.
+              </p>
+            </section>
+          </div>
+        </div>
+
+        <div id="page-tw-liabilities" class="dash-page hidden">
+          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+            <section class="liquid bg-white/5 rounded-2xl p-5 text-[11px] text-slate-700">
+              <p class="text-[11px] font-semibold tracking-[0.18em] text-slate-500 uppercase mb-1">
+                Taiwan assets
+              </p>
+              <h2 class="text-sm font-semibold text-slate-900 mb-1">
+                Taiwan liabilities (coming soon)
+              </h2>
+              <p>
+                This page will be for Taiwan mortgages, loans and other liabilities that impact your family balance sheet.
               </p>
             </section>
           </div>
