@@ -102,27 +102,23 @@
       transform: translateX(2px);
     }
 
-    /* Header 裡的三條線：手機看到，桌機隱藏 */
-    #sidebar-toggle {
-      padding: 0;
-      border: none;
-      background: transparent;
-      box-shadow: none;
-      cursor: pointer;
-    }
+   /* 三條線的樣式（疊起來） */
+#sidebar-toggle .bar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 9999px;
+  background-color: #64748b;
+}
 
-    #sidebar-toggle .bar {
-      display: block;
-      width: 18px;
-      height: 1.5px;
-      border-radius: 9999px;
-      background-color: #64748b;
-    }
+/* 第二條、第三條往下排一點 */
+#sidebar-toggle .bar + .bar {
+  margin-top: 3px;
+}
 
-    #sidebar-toggle:hover .bar {
-      background-color: #0f172a;
-    }
-
+#sidebar-toggle:hover .bar {
+  background-color: #0f172a;
+}
     /* md 以上才會真正把 sidebar 收掉（目前沒用到，但保留） */
     @media (min-width: 768px) {
       #sidebar.sidebar-collapsed {
@@ -261,52 +257,38 @@
 
   <div id="dashboard-shell" class="min-h-screen flex flex-col bg-[#F5F7FA]">
 
-     <!-- Header -->
+       <!-- Header -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[72px]">
       <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center relative">
-        <!-- 左側：只放 TAIMIC logo -->
-        <div class="flex items-center gap-3">
-          <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
-            <svg class="logo-clock" viewBox="0 0 100 100">
-              <defs>
-                <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#bfdbfe" />
-                  <stop offset="100%" stop-color="#60a5fa" />
-                </linearGradient>
-              </defs>
-              <circle cx="50" cy="50" r="46" class="clock-outer" />
-              <circle cx="50" cy="50" r="38" class="clock-inner" />
-              <circle cx="50" cy="50" r="30" class="clock-core" />
-              <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
-              <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
-              <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
-              <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
-              <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
-              <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
-              <circle cx="50" cy="50" r="3.2" class="center-dot" />
-            </svg>
-            <div class="flex flex-col justify-center">
-              <span class="text-[22px] font-[700] tracking-tight text-[#0066cc] leading-none">TAIMIC</span>
-              <span class="text-[10px] font-[600] tracking-[0.2em] text-gray-500 mt-1 uppercase">Global Wealth</span>
-            </div>
+        <!-- 左側：TAIMIC logo -->
+        <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+          <svg class="logo-clock" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#bfdbfe" />
+                <stop offset="100%" stop-color="#60a5fa" />
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="46" class="clock-outer" />
+            <circle cx="50" cy="50" r="38" class="clock-inner" />
+            <circle cx="50" cy="50" r="30" class="clock-core" />
+            <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
+            <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
+            <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
+            <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
+            <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
+            <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
+            <circle cx="50" cy="50" r="3.2" class="center-dot" />
+          </svg>
+          <div class="flex flex-col justify-center">
+            <span class="text-[22px] font-[700] tracking-tight text-[#0066cc] leading-none">TAIMIC</span>
+            <span class="text-[10px] font-[600] tracking-[0.2em] text-gray-500 mt-1 uppercase">Global Wealth</span>
           </div>
         </div>
 
-        <!-- 右側：手機漢堡 + FX capsule + Export + Avatar -->
+        <!-- 右側：FX (桌機) + Export(桌機) + 三條線(手機) + Avatar -->
         <div class="flex items-center gap-3">
-          <!-- 手機版漢堡：在 A 的左邊，點它打開 mobile menu -->
-          <button
-            id="sidebar-toggle"
-            class="flex md:hidden w-9 h-9 rounded-full border border-slate-200 bg-white items-center justify-center"
-            type="button"
-          >
-            <span class="sr-only">Toggle navigation</span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-          </button>
-
-          <!-- FX capsule：桌機才顯示 -->
+          <!-- FX capsule：桌機顯示 -->
           <div class="hidden md:inline-flex items-center gap-3 rounded-full border border-[#E5E7EB] bg-[#F3F4F6] px-3 py-1.5">
             <div class="text-xs">
               <span class="mr-1">🇺🇸/🇹🇼</span>
@@ -322,13 +304,25 @@
             </div>
           </div>
 
-          <!-- Export：桌機才顯示 -->
+          <!-- Export：桌機顯示 -->
           <button
             type="button"
             class="hidden md:inline-flex items-center gap-2 rounded-full bg-[#002147] text-white text-xs font-semibold px-4 py-2 shadow-sm hover:bg-[#001a70] transition"
           >
             <i class="fa-solid fa-file-export text-[11px]"></i>
             <span>Export full report (PDF)</span>
+          </button>
+
+          <!-- 三條線：只有手機顯示，放在 A 左邊 -->
+          <button
+            id="sidebar-toggle"
+            type="button"
+            class="flex md:hidden flex-col items-center justify-center px-1 py-1"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
           </button>
 
           <!-- Avatar -->
@@ -338,7 +332,7 @@
               type="button"
               class="w-9 h-9 rounded-full bg-[#002147] text-white flex items-center justify-center text-sm font-semibold hover:bg-[#001a70] transition-colors"
             >
-              <span id="dash-user-initial">T</span>
+              <span id="dash-user-initial">A</span>
             </button>
             <div
               id="dash-user-menu"
