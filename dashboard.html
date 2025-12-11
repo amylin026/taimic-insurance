@@ -102,24 +102,25 @@
       transform: translateX(2px);
     }
 
-   /* 三條線的樣式（疊起來） */
-#sidebar-toggle .bar {
-  display: block;
-  width: 18px;
-  height: 2px;
-  border-radius: 9999px;
-  background-color: #64748b;
-}
+    /* 三條線的樣式（疊起來） */
+    .menu-toggle .bar {
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 9999px;
+      background-color: #64748b;
+    }
 
-/* 第二條、第三條往下排一點 */
-#sidebar-toggle .bar + .bar {
-  margin-top: 3px;
-}
+    /* 第二條、第三條往下排一點 */
+    .menu-toggle .bar + .bar {
+      margin-top: 3px;
+    }
 
-#sidebar-toggle:hover .bar {
-  background-color: #0f172a;
-}
-    /* md 以上才會真正把 sidebar 收掉（目前沒用到，但保留） */
+    .menu-toggle:hover .bar {
+      background-color: #0f172a;
+    }
+
+    /* md 以上才會真正把 sidebar 收掉（現在用在桌機三條線） */
     @media (min-width: 768px) {
       #sidebar.sidebar-collapsed {
         display: none !important;
@@ -257,32 +258,47 @@
 
   <div id="dashboard-shell" class="min-h-screen flex flex-col bg-[#F5F7FA]">
 
-       <!-- Header -->
+    <!-- Header -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[72px]">
       <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center relative">
-        <!-- 左側：TAIMIC logo -->
-        <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
-          <svg class="logo-clock" viewBox="0 0 100 100">
-            <defs>
-              <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#bfdbfe" />
-                <stop offset="100%" stop-color="#60a5fa" />
-              </linearGradient>
-            </defs>
-            <circle cx="50" cy="50" r="46" class="clock-outer" />
-            <circle cx="50" cy="50" r="38" class="clock-inner" />
-            <circle cx="50" cy="50" r="30" class="clock-core" />
-            <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
-            <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
-            <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
-            <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
-            <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
-            <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
-            <circle cx="50" cy="50" r="3.2" class="center-dot" />
-          </svg>
-          <div class="flex flex-col justify-center">
-            <span class="text-[22px] font-[700] tracking-tight text-[#0066cc] leading-none">TAIMIC</span>
-            <span class="text-[10px] font-[600] tracking-[0.2em] text-gray-500 mt-1 uppercase">Global Wealth</span>
+        <!-- 左側：三條線 (桌機) + TAIMIC logo -->
+        <div class="flex items-center gap-3">
+          <!-- 桌機三條線：控制左側 sidebar -->
+          <button
+            id="sidebar-toggle-desktop"
+            type="button"
+            class="menu-toggle hidden md:flex flex-col items-center justify-center px-1 py-1"
+          >
+            <span class="sr-only">Toggle sidebar</span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </button>
+
+          <!-- TAIMIC logo -->
+          <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
+            <svg class="logo-clock" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="clockGradient" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#bfdbfe" />
+                  <stop offset="100%" stop-color="#60a5fa" />
+                </linearGradient>
+              </defs>
+              <circle cx="50" cy="50" r="46" class="clock-outer" />
+              <circle cx="50" cy="50" r="38" class="clock-inner" />
+              <circle cx="50" cy="50" r="30" class="clock-core" />
+              <line x1="50" y1="12" x2="50" y2="18" class="clock-tick-line" />
+              <line x1="88" y1="50" x2="82" y2="50" class="clock-tick-line" />
+              <line x1="50" y1="82" x2="50" y2="88" class="clock-tick-line" />
+              <line x1="18" y1="50" x2="12" y2="50" class="clock-tick-line" />
+              <line x1="50" y1="50" x2="50" y2="30" class="hand hand-hour" />
+              <line x1="50" y1="50" x2="66" y2="34" class="hand hand-minute" />
+              <circle cx="50" cy="50" r="3.2" class="center-dot" />
+            </svg>
+            <div class="flex flex-col justify-center">
+              <span class="text-[22px] font-[700] tracking-tight text-[#0066cc] leading-none">TAIMIC</span>
+              <span class="text-[10px] font-[600] tracking-[0.2em] text-gray-500 mt-1 uppercase">Global Wealth</span>
+            </div>
           </div>
         </div>
 
@@ -313,11 +329,11 @@
             <span>Export full report (PDF)</span>
           </button>
 
-          <!-- 三條線：只有手機顯示，放在 A 左邊 -->
+          <!-- 三條線：只有手機顯示，放在 A 左邊，控制右側抽屜 -->
           <button
-            id="sidebar-toggle"
+            id="sidebar-toggle-mobile"
             type="button"
-            class="flex md:hidden flex-col items-center justify-center px-1 py-1"
+            class="menu-toggle flex md:hidden flex-col items-center justify-center px-1 py-1"
           >
             <span class="sr-only">Toggle navigation</span>
             <span class="bar"></span>
@@ -360,13 +376,15 @@
       </div>
     </header>
 
-    <!-- 手機版側邊選單 overlay -->
+    <!-- 手機版側邊選單 overlay（從右邊滑出） -->
     <div
       id="mobile-menu"
       class="md:hidden fixed inset-0 z-50 bg-black/30 backdrop-blur-sm hidden"
-      onclick="if (event.target === this) this.classList.add('hidden');"
     >
-      <div class="absolute right-0 top-0 bottom-0 w-64 bg-white border-l border-slate-200 px-5 py-6 overflow-y-auto">
+      <div
+        id="mobile-menu-panel"
+        class="absolute right-0 top-0 bottom-0 w-64 bg-white border-l border-slate-200 px-5 py-6 overflow-y-auto transform translate-x-full transition-transform duration-200"
+      >
         <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase mb-4">
           Navigation
         </p>
@@ -614,10 +632,7 @@
         </nav>
       </aside>
 
-      <!-- 右側內容：所有 page（Overview, US/TW Accounts, US/TW Stocks, Family, Help, Settings...） -->
-      <!-- 因為實在太長，這裡就是前一版你已經拿到的那整份 dashboard HTML（我沒有動任何設計或文案，只加了 mobile menu） -->
-      <!-- 我在這裡照原樣完整貼上： -->
-
+      <!-- 右側內容：所有 page -->
       <main class="flex-1">
         <!-- Overview page -->
         <div id="page-overview" class="dash-page max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
@@ -945,9 +960,6 @@
             </div>
           </section>
         </div>
-
-        <!-- 其餘 pages：US Accounts / US Stocks / TW Accounts / TW Stocks / Family / Help / Settings -->
-        <!-- （以下就是你之前那份完整檔案裡的內容，我原封不動保留；因為太長就不再口頭解釋） -->
 
         <!-- US assets > Accounts page -->
         <div id="page-us-accounts" class="dash-page hidden">
@@ -2393,19 +2405,66 @@
   <script src="main.js"></script>
 
   <script>
-    function setupMobileMenu() {
-      const toggle = document.getElementById('sidebar-toggle');
+    // 手機：右側抽屜選單；桌機：左側 sidebar 收合
+    function setupMenus() {
+      const mobileToggle = document.getElementById('sidebar-toggle-mobile');
       const mobileMenu = document.getElementById('mobile-menu');
-      if (!toggle || !mobileMenu) return;
-      toggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-      });
+      const mobilePanel = document.getElementById('mobile-menu-panel');
+      const desktopToggle = document.getElementById('sidebar-toggle-desktop');
+      const sidebar = document.getElementById('sidebar');
+
+      // 手機：右側抽屜
+      if (mobileToggle && mobileMenu && mobilePanel) {
+        function openMenu() {
+          mobileMenu.classList.remove('hidden');
+          // 觸發一次 reflow，讓 transition 生效
+          mobilePanel.offsetHeight;
+          mobilePanel.classList.remove('translate-x-full');
+        }
+
+        function closeMenu() {
+          mobilePanel.classList.add('translate-x-full');
+          mobilePanel.addEventListener('transitionend', function handler() {
+            mobilePanel.removeEventListener('transitionend', handler);
+            mobileMenu.classList.add('hidden');
+          }, { once: true });
+        }
+
+        mobileToggle.addEventListener('click', () => {
+          if (mobileMenu.classList.contains('hidden')) {
+            openMenu();
+          } else {
+            closeMenu();
+          }
+        });
+
+        // 點黑色背景關閉
+        mobileMenu.addEventListener('click', (event) => {
+          if (event.target === mobileMenu) {
+            closeMenu();
+          }
+        });
+
+        // 給 mobileNavigate 用
+        window.__closeMobileMenu = closeMenu;
+      }
+
+      // 桌機：左側 sidebar 收合 / 展開
+      if (desktopToggle && sidebar) {
+        desktopToggle.addEventListener('click', () => {
+          sidebar.classList.toggle('sidebar-collapsed');
+        });
+      }
     }
 
     function mobileNavigate(pageKey) {
       switchDashboardPage(pageKey);
-      const mobileMenu = document.getElementById('mobile-menu');
-      if (mobileMenu) mobileMenu.classList.add('hidden');
+      if (window.__closeMobileMenu) {
+        window.__closeMobileMenu();
+      } else {
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu) mobileMenu.classList.add('hidden');
+      }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -2419,7 +2478,7 @@
       const currencyPrefix = document.getElementById('asset-currency-prefix');
       const emptyState = document.getElementById('empty-state');
 
-      setupMobileMenu();
+      setupMenus();
 
       if (!form) {
         switchDashboardPage('overview');
