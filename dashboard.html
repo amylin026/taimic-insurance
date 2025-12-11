@@ -2471,8 +2471,10 @@
     </div>
   </div>
 
+  <!-- 你原本的共用 JS -->
   <script src="main.js"></script>
 
+  <!-- 這裡是整理過後、只保留 dashboard 需要的 JS -->
   <script>
     // 手機右側抽屜
     function setupMobileMenu() {
@@ -2539,413 +2541,63 @@
       });
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const STORAGE_KEY = 'taimic_assets_v1';
-      const FX_TWD_TO_USD = 0.031;
-      let assets = [];
-      let regionChart = null;
-
-      const form = document.getElementById('asset-form');
-      const currencySelect = document.getElementById('asset-currency');
-      const currencyPrefix = document.getElementById('asset-currency-prefix');
-      const emptyState = document.getElementById('empty-state');
-
-      setupMobileMenu();
-      setupDesktopSidebarToggle();
-
-      if (!form) {
-        switchDashboardPage('overview');
-        return;
-      }
-
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-          const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed)) {
-            assets = parsed;
-            if (assets.length && emptyState) emptyState.classList.add('hidden');
-          }
-        }
-      } catch (e) {
-        console.warn('Failed to load assets from localStorage', e);
-      }
-
-      if (currencySelect && currencyPrefix) {
-        currencySelect.addEventListener('change', () => {
-          const cur = currencySelect.value;
-          currencyPrefix.textContent = cur === 'TWD' ? 'NT$' : '$';
-        });
-      }
-
-      if (form) {
-        form.addEventListener('submit', function (e) {
-          e.preventDefault();
-          const name = document.getElementById('asset-name').value.trim();
-          const region = document.getElementById('asset-region').value;
-          const type = document.getElementById('asset-type').value;
-          const currency = document.getElementById('asset-currency').value;
-          const units = parseFloat(document.getElementById('asset-value').value || '0');
-
-          if (!name || !units || units <= 0) return;
-
-          const valueInCurrency = units * 10000;
-          let valueUsd = valueInCurrency;
-          if (currency === 'TWD') valueUsd = valueInCurrency * FX_TWD_TO_USD;
-
-          assets.push({
-            name,
-            region,
-            type,
-            currency,
-            valueInCurrency,
-            valueUsd
-          });
-
-          saveAssets();
-          form.reset();
-          currencySelect.value = 'USD';
-          currencyPrefix.textContent = '$';
-
-          if (emptyState) emptyState.classList.add('hidden');
-          renderDashboard();
-        });
-      }
-
-      function saveAssets() {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(assets));
-        } catch (e) {
-          console.warn('Failed to save assets to localStorage', e);
-        }
-      }
-
-      function renderDashboard() {
-        const total = assets.reduce((sum, a) => sum + a.valueUsd, 0);
-        const regionTotals = { tw: 0, us: 0, offshore: 0 };
-        assets.forEach(a => {
-          if (a.region === 'tw') regionTotals.tw += a.valueUsd;
-          else if (a.region === 'us') regionTotals.us += a.valueUsd;
-          else regionTotals.offshore += a.valueUsd;
-        });
-
-        const networthEl = document.getElementById('networth-value');
-        if (networthEl) networthEl.textContent = formatUsd(total);
-
-        updateRegionLabel(regionTotals.tw, total, 'region-tw-label');
-        updateRegionLabel(regionTotals.us, total, 'region-us-label');
-        updateRegionLabel(regionTotals.offshore, total, 'region-offshore-label');
-
-        renderAssetTable();
-        updateRegionChart(regionTotals);
-        updateRadar(regionTotals);
-        renderAiNotes(regionTotals, total);
-      }
-
-      function formatUsd(x) {
-        return '$' + (x || 0).toLocaleString('en-US', {
-          maximumFractionDigits: 0
-        });
-      }
-
-      function updateRegionLabel(val, total, elId) {
-        const el = document.getElementById(elId);
-        if (!el) return;
-        const pct = total > 0 ? Math.round((val / total) * 100) : 0;
-        el.textContent = `${pct}% · ${formatUsd(val)}`;
-      }
-
-      function renderAssetTable() {
-        const tbody = document.getElementById('asset-table-body');
-        if (!tbody) return;
-        tbody.innerHTML = '';
-
-        if (!assets.length) {
-          const tr = document.createElement('tr');
-          const td = document.createElement('td');
-          td.colSpan = 5;
-          td.className = 'py-4 text-center text-[11px] text-slate-500';
-          td.textContent = 'No accounts added yet.';
-          tr.appendChild(td);
-          tbody.appendChild(tr);
-          return;
-        }
-
-        assets.forEach((a, index) => {
-          const tr = document.createElement('tr');
-
-          const tdName = document.createElement('td');
-          tdName.className = 'py-2 pr-2';
-          tdName.innerHTML = `
-            <div class="font-semibold text-slate-900">${escapeHtml(a.name)}</div>
-            <div class="text-[11px] text-slate-500">${a.currency} · approx. ${a.valueInCurrency.toLocaleString('en-US')}</div>
-          `;
-
-          const tdRegion = document.createElement('td');
-          tdRegion.className = 'px-2 py-2';
-          tdRegion.innerHTML = regionLabelHtml(a.region);
-
-          const tdType = document.createElement('td');
-          tdType.className = 'px-2 py-2';
-          tdType.textContent = typeLabel(a.type);
-
-          const tdVal = document.createElement('td');
-          tdVal.className = 'px-2 py-2 text-right font-mono font-semibold';
-          tdVal.textContent = formatUsd(a.valueUsd);
-
-          const tdFlag = document.createElement('td');
-          tdFlag.className = 'pl-2 pr-1 py-2 text-right text-[10px]';
-          tdFlag.innerHTML = `
-            <div class="flex items-center justify-end gap-2">
-              ${taxFlagHtml(a)}
-              <button
-                type="button"
-                class="asset-delete-btn w-7 h-7 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-100 hover:text-slate-700 text-xs"
-                data-index="${index}"
-              >
-                <i class="fa-solid fa-minus"></i>
-              </button>
-            </div>
-          `;
-
-          tr.appendChild(tdName);
-          tr.appendChild(tdRegion);
-          tr.appendChild(tdType);
-          tr.appendChild(tdVal);
-          tr.appendChild(tdFlag);
-
-          tbody.appendChild(tr);
-        });
-
-        tbody.querySelectorAll('.asset-delete-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const idx = parseInt(btn.dataset.index, 10);
-            if (Number.isNaN(idx)) return;
-            assets.splice(idx, 1);
-            saveAssets();
-            if (!assets.length && emptyState) emptyState.classList.remove('hidden');
-            renderDashboard();
-          });
-        });
-      }
-
-      function regionLabelHtml(region) {
-        if (region === 'tw') return '<span class="inline-flex items-center gap-1 text-[11px]">🇹🇼 <span>Taiwan</span></span>';
-        if (region === 'us') return '<span class="inline-flex items-center gap-1 text-[11px]">🇺🇸 <span>United States</span></span>';
-        return '<span class="inline-flex items-center gap-1 text-[11px]">🌐 <span>Offshore / other</span></span>';
-      }
-
-      function typeLabel(type) {
-        switch (type) {
-          case 'brokerage': return 'Brokerage / stocks';
-          case 'bank': return 'Bank / cash';
-          case 'insurance': return 'Insurance / policy';
-          case 'property': return 'Real estate';
-          default: return 'Other';
-        }
-      }
-
-      function taxFlagHtml(a) {
-        if (a.type === 'insurance' && a.region === 'tw') {
-          return `
-            <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-700 px-2 py-0.5 border border-amber-200">
-              <i class="fa-solid fa-triangle-exclamation text-[9px]"></i>
-              PFIC review
-            </span>
-          `;
-        }
-        if ((a.type === 'bank' || a.type === 'brokerage') && (a.region === 'tw' || a.region === 'offshore')) {
-          return `
-            <span class="inline-flex items-center gap-1 rounded-full bg-sky-50 text-sky-700 px-2 py-0.5 border border-sky-100">
-              <i class="fa-solid fa-circle-info text-[9px]"></i>
-              Counts for FBAR
-            </span>
-          `;
-        }
-        return `
-          <span class="inline-flex items-center gap-1 rounded-full bg-slate-50 text-slate-500 px-2 py-0.5 border border-slate-200">
-            —
-          </span>
-        `;
-      }
-
-      function updateRegionChart(regionTotals) {
-        const canvas = document.getElementById('regionChart');
-        if (!canvas) return;
-        const data = [regionTotals.tw, regionTotals.us, regionTotals.offshore];
-        const ctx = canvas.getContext('2d');
-
-        if (!regionChart) {
-          regionChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-              labels: ['Taiwan', 'US', 'Offshore'],
-              datasets: [{
-                data,
-                backgroundColor: ['#38bdf8', '#4f46e5', '#cbd5f5']
-              }]
-            },
-            options: {
-              plugins: { legend: { display: false } },
-              cutout: '65%'
-            }
-          });
-        } else {
-          regionChart.data.datasets[0].data = data;
-          regionChart.update();
-        }
-      }
-
-      function updateRadar(regionTotals) {
-        const anyTw = regionTotals.tw > 0;
-        const anyOffshore = regionTotals.offshore > 0;
-
-        const pficEl = document.getElementById('radar-pfic');
-        const twEl = document.getElementById('radar-twglobal');
-        if (!pficEl || !twEl) return;
-
-        if (assets.some(a => a.type === 'insurance' && a.region === 'tw')) {
-          pficEl.querySelector('span:last-child').className =
-            'inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-semibold';
-          pficEl.querySelector('span:last-child').innerHTML =
-            '<i class="fa-solid fa-triangle-exclamation text-[9px]"></i> REVIEW';
-        } else {
-          pficEl.querySelector('span:last-child').className =
-            'inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-[10px] font-semibold';
-          pficEl.querySelector('span:last-child').textContent = '—';
-        }
-
-        if (anyTw && anyOffshore) {
-          twEl.querySelector('span:last-child').className =
-            'inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200 text-[10px] font-semibold';
-          twEl.querySelector('span:last-child').innerHTML =
-            '<i class="fa-solid fa-eye text-[9px]"></i> WATCH';
-        } else if (anyTw) {
-          twEl.querySelector('span:last-child').className =
-            'inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-semibold';
-          twEl.querySelector('span:last-child').innerHTML =
-            '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> LOW';
-        } else {
-          twEl.querySelector('span:last-child').className =
-            'inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-[10px] font-semibold';
-          twEl.querySelector('span:last-child').textContent = '—';
-        }
-      }
-
-      function renderAiNotes(regionTotals, total) {
-        const list = document.getElementById('ai-notes-list');
-        if (!list) return;
-        list.innerHTML = '';
-
-        const rawItems = [];
-
-        if (assets.some(a => a.type === 'insurance' && a.region === 'tw')) {
-          rawItems.push({
-            title: 'Confirm PFIC treatment on Taiwan policies',
-            body: 'Export Taiwan policy details and ask your US tax advisor specifically about Form 8621 and whether restructuring is needed.',
-            tag: 'US tax advisor'
-          });
-        }
-
-        if (regionTotals.tw > 0 && regionTotals.us > 0) {
-          rawItems.push({
-            title: 'Run a TW–US inheritance scenario',
-            body: 'Simulate what happens if one spouse passes away while assets are split between Taiwan and the US to check liquidity and tax.',
-            tag: 'Estate / succession'
-          });
-        }
-
-        if (total > 0 && (regionTotals.tw / total > 0.4 || regionTotals.us / total > 0.4)) {
-          rawItems.push({
-            title: 'Decide your target TW vs US FX mix',
-            body: 'Set a target range for how much of your net worth you want in TWD vs USD, then let Taimic alert you when allocations drift.',
-            tag: 'FX & allocation'
-          });
-        }
-
-        if (!rawItems.length) {
-          rawItems.push({
-            title: 'Add a few more accounts to unlock AI notes',
-            body: 'Once we see assets in at least two regions or more than one type, we can surface more specific cross-border suggestions.',
-            tag: 'Setup'
-          });
-        }
-
-        const items = rawItems.slice(0, 2);
-
-        items.forEach((item, idx) => {
-          const li = document.createElement('li');
-          li.className = 'flex gap-3';
-          li.innerHTML = `
-            <div class="flex flex-col items-center">
-              <div class="w-5 h-5 rounded-full bg-[#2563eb] text-white flex items-center justify-center text-[11px] font-semibold">
-                ${idx + 1}
-              </div>
-              ${idx !== items.length - 1 ? '<div class="flex-1 w-px bg-slate-200 mt-1"></div>' : ''}
-            </div>
-            <div class="pt-0.5">
-              <p class="font-semibold text-slate-900 mb-0.5">${escapeHtml(item.title)}</p>
-              <p class="text-[11px] mb-1">${escapeHtml(item.body)}</p>
-              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 text-[10px]">
-                <i class="fa-solid fa-tag text-[9px]"></i>
-                ${escapeHtml(item.tag)}
-              </span>
-            </div>
-          `;
-          list.appendChild(li);
-        });
-
-        if (rawItems.length > 2) {
-          const extra = document.createElement('p');
-          extra.className = 'mt-3 text-[10px] text-slate-400';
-          extra.textContent = `Showing top 2 of ${rawItems.length} insights.`;
-          list.appendChild(extra);
-        }
-      }
-
-      function escapeHtml(str) {
-        return String(str)
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;');
-      }
-
-      switchDashboardPage('overview');
-    });
-
-    function scrollToSection(id) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      window.scrollTo({
-        top: el.getBoundingClientRect().top + window.scrollY - 80,
-        behavior: 'smooth'
-      });
-    }
-
+    // 左側 US / TW 小箭頭展開/收合
     function toggleSideSection(key) {
-      const body = document.getElementById(`side-${key}-children`);
-      const chevron = document.getElementById(`side-${key}-chevron`);
+      const body = document.getElementById('side-' + key + '-children');
+      const chevron = document.getElementById('side-' + key + '-chevron');
       if (!body || !chevron) return;
       body.classList.toggle('hidden');
       chevron.classList.toggle('rotate-90');
     }
 
+    // 切換 dashboard 各頁
     function switchDashboardPage(pageKey) {
       const pages = document.querySelectorAll('.dash-page');
-      pages.forEach(page => {
+      pages.forEach((page) => {
         page.classList.add('hidden');
       });
+
       const target = document.getElementById('page-' + pageKey);
       if (target) {
         target.classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'auto' });
       }
 
+      // 更新 sidebar active 樣式
       const navButtons = document.querySelectorAll('[data-page]');
-      navButtons.forEach(btn => btn.classList.remove('side-item-active'));
+      navButtons.forEach((btn) => btn.classList.remove('side-item-active'));
       const activeButtons = document.querySelectorAll('[data-page="' + pageKey + '"]');
-      activeButtons.forEach(btn => btn.classList.add('side-item-active'));
+      activeButtons.forEach((btn) => btn.classList.add('side-item-active'));
     }
+
+    // Avatar 右上角 user menu
+    function setupUserMenu() {
+      const btn = document.getElementById('dash-user-toggle');
+      const menu = document.getElementById('dash-user-menu');
+      if (!btn || !menu) return;
+
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('hidden');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (menu.classList.contains('hidden')) return;
+        if (!btn.contains(e.target) && !menu.contains(e.target)) {
+          menu.classList.add('hidden');
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 只啟動真的存在的功能
+      setupMobileMenu();
+      setupDesktopSidebarToggle();
+      setupUserMenu();
+
+      // 預設顯示 overview
+      switchDashboardPage('overview');
+    });
   </script>
 </body>
 </html>
