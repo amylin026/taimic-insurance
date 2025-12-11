@@ -120,7 +120,7 @@
       background-color: #0f172a;
     }
 
-    /* md 以上才會真正把 sidebar 收掉（現在用在桌機三條線） */
+    /* md 以上才會真正把 sidebar 收掉（桌機三條線用） */
     @media (min-width: 768px) {
       #sidebar.sidebar-collapsed {
         display: none !important;
@@ -261,7 +261,7 @@
     <!-- Header -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[72px]">
       <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center relative">
-        <!-- 左側：三條線 (桌機) + TAIMIC logo -->
+        <!-- 左側：桌機三條線 + TAIMIC logo -->
         <div class="flex items-center gap-3">
           <!-- 桌機三條線：控制左側 sidebar -->
           <button
@@ -302,7 +302,7 @@
           </div>
         </div>
 
-        <!-- 右側：FX (桌機) + Export(桌機) + 三條線(手機) + Avatar -->
+        <!-- 右側：FX (桌機) + Export(桌機) + Avatar + 三條線(手機) -->
         <div class="flex items-center gap-3">
           <!-- FX capsule：桌機顯示 -->
           <div class="hidden md:inline-flex items-center gap-3 rounded-full border border-[#E5E7EB] bg-[#F3F4F6] px-3 py-1.5">
@@ -327,18 +327,6 @@
           >
             <i class="fa-solid fa-file-export text-[11px]"></i>
             <span>Export full report (PDF)</span>
-          </button>
-
-          <!-- 三條線：只有手機顯示，放在 A 左邊，控制右側抽屜 -->
-          <button
-            id="sidebar-toggle-mobile"
-            type="button"
-            class="menu-toggle flex md:hidden flex-col items-center justify-center px-1 py-1"
-          >
-            <span class="sr-only">Toggle navigation</span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
           </button>
 
           <!-- Avatar -->
@@ -372,6 +360,18 @@
               </button>
             </div>
           </div>
+
+          <!-- 三條線：只有手機顯示，放在 Avatar 右邊 -->
+          <button
+            id="sidebar-toggle-mobile"
+            type="button"
+            class="menu-toggle flex md:hidden flex-col items-center justify-center px-1 py-1"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </button>
         </div>
       </div>
     </header>
@@ -632,7 +632,7 @@
         </nav>
       </aside>
 
-      <!-- 右側內容：所有 page -->
+      <!-- 右側內容 -->
       <main class="flex-1">
         <!-- Overview page -->
         <div id="page-overview" class="dash-page max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
@@ -2302,11 +2302,80 @@
           </div>
         </div>
 
-        <!-- US / TW 其他 placeholder pages、Help、Settings（與前版相同，略過解釋但都在檔案裡） -->
-        <!-- ... 其餘 page-us-liabilities / page-us-house / page-us-crypto / page-us-insurance /
-                page-tw-liabilities / page-tw-house / page-tw-crypto / page-tw-insurance /
-                page-help / page-settings 都完整保留 ... -->
-        <!-- 為了篇幅，就不再逐行說明，實際檔案已包含全部 HTML。 -->
+        <!-- 其他 pages：簡單 placeholder，先讓導覽正常運作 -->
+        <div id="page-us-liabilities" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
+            US liabilities
+          </h1>
+          <p class="text-sm text-[#4B5563]">Placeholder section for US liabilities detail.</p>
+        </div>
+
+        <div id="page-us-house" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
+            US real estate
+          </h1>
+          <p class="text-sm text-[#4B5563]">Placeholder section for US house &amp; property details.</p>
+        </div>
+
+        <div id="page-us-crypto" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
+            US crypto
+          </h1>
+          <p class="text-sm text-[#4B5563]">Placeholder section for US crypto holdings.</p>
+        </div>
+
+        <div id="page-us-insurance" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
+            US insurance
+          </h1>
+          <p class="text-sm text-[#4B5563]">Placeholder section for US insurance policies.</p>
+        </div>
+
+        <div id="page-tw-liabilities" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
+            Taiwan liabilities
+          </h1>
+          <p class="text-sm text-[#4B5563]">Placeholder section for Taiwan liabilities detail.</p>
+        </div>
+
+        <div id="page-tw-house" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
+            Taiwan real estate
+          </h1>
+          <p class="text-sm text-[#4B5563]">Placeholder section for Taiwan house &amp; land.</p>
+        </div>
+
+        <div id="page-tw-crypto" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
+            Taiwan crypto
+          </h1>
+          <p class="text-sm text-[#4B5563]">Placeholder section for Taiwan crypto holdings.</p>
+        </div>
+
+        <div id="page-tw-insurance" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
+            Taiwan insurance
+          </h1>
+          <p class="text-sm text-[#4B5563]">Placeholder section for Taiwan insurance policies.</p>
+        </div>
+
+        <div id="page-help" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-4">
+            Help center
+          </h1>
+          <p class="text-sm text-[#4B5563] mb-2">
+            This is a placeholder for help center content. Add FAQs and guides here.
+          </p>
+        </div>
+
+        <div id="page-settings" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-4">
+            Settings
+          </h1>
+          <p class="text-sm text-[#4B5563] mb-2">
+            This is a placeholder for user &amp; report settings.
+          </p>
+        </div>
       </main>
     </div>
 
@@ -2405,56 +2474,49 @@
   <script src="main.js"></script>
 
   <script>
-    // 手機：右側抽屜選單；桌機：左側 sidebar 收合
-    function setupMenus() {
-      const mobileToggle = document.getElementById('sidebar-toggle-mobile');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const mobilePanel = document.getElementById('mobile-menu-panel');
-      const desktopToggle = document.getElementById('sidebar-toggle-desktop');
-      const sidebar = document.getElementById('sidebar');
+    // 手機右側抽屜
+    function setupMobileMenu() {
+      const toggle = document.getElementById('sidebar-toggle-mobile');
+      const overlay = document.getElementById('mobile-menu');
+      const panel = document.getElementById('mobile-menu-panel');
+      if (!toggle || !overlay || !panel) return;
 
-      // 手機：右側抽屜
-      if (mobileToggle && mobileMenu && mobilePanel) {
-        function openMenu() {
-          mobileMenu.classList.remove('hidden');
-          // 觸發一次 reflow，讓 transition 生效
-          mobilePanel.offsetHeight;
-          mobilePanel.classList.remove('translate-x-full');
-        }
-
-        function closeMenu() {
-          mobilePanel.classList.add('translate-x-full');
-          mobilePanel.addEventListener('transitionend', function handler() {
-            mobilePanel.removeEventListener('transitionend', handler);
-            mobileMenu.classList.add('hidden');
-          }, { once: true });
-        }
-
-        mobileToggle.addEventListener('click', () => {
-          if (mobileMenu.classList.contains('hidden')) {
-            openMenu();
-          } else {
-            closeMenu();
-          }
-        });
-
-        // 點黑色背景關閉
-        mobileMenu.addEventListener('click', (event) => {
-          if (event.target === mobileMenu) {
-            closeMenu();
-          }
-        });
-
-        // 給 mobileNavigate 用
-        window.__closeMobileMenu = closeMenu;
+      function openMenu() {
+        overlay.classList.remove('hidden');
+        // 觸發 reflow 讓 transition 生效
+        panel.offsetHeight;
+        panel.classList.remove('translate-x-full');
       }
 
-      // 桌機：左側 sidebar 收合 / 展開
-      if (desktopToggle && sidebar) {
-        desktopToggle.addEventListener('click', () => {
-          sidebar.classList.toggle('sidebar-collapsed');
-        });
+      function closeMenu() {
+        panel.classList.add('translate-x-full');
+        panel.addEventListener(
+          'transitionend',
+          function handler() {
+            panel.removeEventListener('transitionend', handler);
+            overlay.classList.add('hidden');
+          },
+          { once: true }
+        );
       }
+
+      toggle.addEventListener('click', () => {
+        if (overlay.classList.contains('hidden')) {
+          openMenu();
+        } else {
+          closeMenu();
+        }
+      });
+
+      // 點黑色背景關閉
+      overlay.addEventListener('click', (event) => {
+        if (event.target === overlay) {
+          closeMenu();
+        }
+      });
+
+      // 提供給 mobileNavigate 用
+      window.__closeMobileMenu = closeMenu;
     }
 
     function mobileNavigate(pageKey) {
@@ -2462,9 +2524,19 @@
       if (window.__closeMobileMenu) {
         window.__closeMobileMenu();
       } else {
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (mobileMenu) mobileMenu.classList.add('hidden');
+        const overlay = document.getElementById('mobile-menu');
+        if (overlay) overlay.classList.add('hidden');
       }
+    }
+
+    // 桌機左側 sidebar 收合
+    function setupDesktopSidebarToggle() {
+      const btn = document.getElementById('sidebar-toggle-desktop');
+      const sidebar = document.getElementById('sidebar');
+      if (!btn || !sidebar) return;
+      btn.addEventListener('click', () => {
+        sidebar.classList.toggle('sidebar-collapsed');
+      });
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -2478,7 +2550,8 @@
       const currencyPrefix = document.getElementById('asset-currency-prefix');
       const emptyState = document.getElementById('empty-state');
 
-      setupMenus();
+      setupMobileMenu();
+      setupDesktopSidebarToggle();
 
       if (!form) {
         switchDashboardPage('overview');
