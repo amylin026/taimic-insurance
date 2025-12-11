@@ -261,24 +261,11 @@
 
   <div id="dashboard-shell" class="min-h-screen flex flex-col bg-[#F5F7FA]">
 
-    <!-- Header -->
+     <!-- Header -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm h-[72px]">
       <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center relative">
-        <!-- 左側：三條線 + TAIMIC（同一排） -->
-        <div class="flex items-center gap-3 -ml-3">
-          <!-- 三條線：手機顯示 -->
-          <button
-            id="sidebar-toggle"
-            class="flex md:hidden flex-col justify-center gap-[3px] -ml-2"
-            type="button"
-          >
-            <span class="sr-only">Toggle navigation</span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-          </button>
-
-          <!-- TAIMIC logo：跟 index 一樣 -->
+        <!-- 左側：只放 TAIMIC logo -->
+        <div class="flex items-center gap-3">
           <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
             <svg class="logo-clock" viewBox="0 0 100 100">
               <defs>
@@ -305,9 +292,21 @@
           </div>
         </div>
 
-        <!-- 右側：匯率膠囊 + 匯出 + 使用者 -->
-        <div class="flex items-center gap-4">
-          <!-- FX capsule -->
+        <!-- 右側：手機漢堡 + FX capsule + Export + Avatar -->
+        <div class="flex items-center gap-3">
+          <!-- 手機版漢堡：在 A 的左邊，點它打開 mobile menu -->
+          <button
+            id="sidebar-toggle"
+            class="flex md:hidden w-9 h-9 rounded-full border border-slate-200 bg-white items-center justify-center"
+            type="button"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </button>
+
+          <!-- FX capsule：桌機才顯示 -->
           <div class="hidden md:inline-flex items-center gap-3 rounded-full border border-[#E5E7EB] bg-[#F3F4F6] px-3 py-1.5">
             <div class="text-xs">
               <span class="mr-1">🇺🇸/🇹🇼</span>
@@ -323,6 +322,7 @@
             </div>
           </div>
 
+          <!-- Export：桌機才顯示 -->
           <button
             type="button"
             class="hidden md:inline-flex items-center gap-2 rounded-full bg-[#002147] text-white text-xs font-semibold px-4 py-2 shadow-sm hover:bg-[#001a70] transition"
@@ -331,6 +331,7 @@
             <span>Export full report (PDF)</span>
           </button>
 
+          <!-- Avatar -->
           <div class="relative">
             <button
               id="dash-user-toggle"
