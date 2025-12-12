@@ -2189,13 +2189,16 @@
           );
         }
 
-        toggle.addEventListener('click', () => {
-          if (overlay.classList.contains('hidden')) {
-            openMenu();
-          } else {
-            closeMenu();
-          }
-        });
+       toggle.addEventListener('click', (e) => {  // 1. 這裡括號內加一個 e
+  e.stopPropagation();                     // 2. 加上這行！
+  // 這行的意思是：「點擊事件到此為止」，不要傳出去給 main.js 知道
+
+  if (overlay.classList.contains('hidden')) {
+    openMenu();
+  } else {
+    closeMenu();
+  }
+});
 
         // 點黑色背景關閉
         overlay.addEventListener('click', (event) => {
