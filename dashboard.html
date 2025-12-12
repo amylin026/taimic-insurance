@@ -2177,16 +2177,20 @@
         }
 
         function closeMenu() {
-          panel.classList.add('translate-x-full');
-          panel.addEventListener(
-            'transitionend',
-            function handler() {
-              panel.removeEventListener('transitionend', handler);
-              overlay.classList.add('hidden');
-            },
-            { once: true }
-          );
-        }
+  panel.classList.add('translate-x-full');
+  
+  // 定義一個具名函式，方便除錯且邏輯清晰
+  const transitionHandler = () => {
+    // 🔥 關鍵修正：只有當選單「真的還縮在旁邊 (有 translate-x-full)」的時候，才隱藏黑底
+    // 如果你已經按了按鈕把選單打開了 (移除了 translate-x-full)，這行就不會執行！
+    if (panel.classList.contains('translate-x-full')) {
+      overlay.classList.add('hidden');
+    }
+  };
+
+  // 綁定這個聰明的監聽器
+  panel.addEventListener('transitionend', transitionHandler, { once: true });
+}
 
        toggle.addEventListener('click', (e) => {  // 1. 這裡括號內加一個 e
   e.stopPropagation();                     // 2. 加上這行！
