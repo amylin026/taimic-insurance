@@ -1895,7 +1895,7 @@
               <div class="flex flex-wrap items-center gap-3">
                 <button
                   type="button"
-                  class="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-transparent text-[11px] font-medium text-slate-700 px-3 py-2 hover:bg白 hover:border-slate-400"
+                  class="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-transparent text-[11px] font-medium text-slate-700 px-3 py-2 hover:bg-white hover:border-slate-400"
                 >
                   <i class="fa-solid fa-file-export text-[10px]"></i>
                   <span>Export access matrix</span>
@@ -2084,7 +2084,7 @@
     id="auth-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
   >
-    <div class="w-full max-w-sm bg白 rounded-2xl shadow-2xl p-6 relative">
+    <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 relative">
       <button
         type="button"
         onclick="closeAuthModal && closeAuthModal()"
@@ -2099,7 +2099,7 @@
             type="button"
             id="auth-tab-login"
             onclick="openAuthModal && openAuthModal('login')"
-            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg白 text-slate-900 shadow-sm"
+            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-900 shadow-sm"
           >
             Log in
           </button>
@@ -2143,7 +2143,7 @@
       <button
         id="auth-submit"
         type="button"
-        class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text白 text-sm font-semibold py-2.5 shadow-sm transition"
+        class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition"
       >
         <span id="auth-submit-text">Login</span>
         <i class="fa-solid fa-arrow-right-long text-xs"></i>
@@ -2176,7 +2176,9 @@
         panel.classList.add('translate-x-full');
         panel.addEventListener(
           'transitionend',
-          function handler() {
+          function handler(e) {
+            // 只處理 panel 本身的 transitionend
+            if (e && e.target !== panel) return;
             panel.removeEventListener('transitionend', handler);
             overlay.classList.add('hidden');
           },
@@ -2271,11 +2273,27 @@
       });
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    function initDashboard() {
       setupMobileMenu();
       setupDesktopSidebarToggle();
       setupUserMenu();
       switchDashboardPage('overview');
+    }
+
+    // ✅ 防止重複綁事件（不動功能，只避免重複）
+    let __dashInited = false;
+    function safeInitDashboard() {
+      if (__dashInited) return;
+      __dashInited = true;
+      initDashboard();
+    }
+
+    // ✅ 等 include-partials.js 載完（最穩）
+    document.addEventListener('partials:loaded', safeInitDashboard);
+
+    // ✅ 保底：就算你沒用 include，也能 init
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(safeInitDashboard, 0);
     });
   </script>
 </body>
