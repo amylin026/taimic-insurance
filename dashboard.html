@@ -5,22 +5,16 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Tailwind + Chart.js -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- Icons & fonts -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
-  <!-- Serif heading font for magazine / family governance look -->
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;600;700&display=swap" rel="stylesheet" />
-  <!-- ✅ Add Playfair Display (you used it in inline font-family) -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
 
-  <!-- 設計系統 -->
   <link rel="stylesheet" href="main.css" />
 
-  <!-- 液態玻璃樣式（只負責 .liquid 卡片 + sidebar） -->
   <style>
     .liquid {
       /* ✅ Fix: keep blur (stable). url(#filter) inside backdrop-filter is not reliably supported */
@@ -249,7 +243,6 @@
 
 <body class="min-h-screen bg-[#F5F7FA] text-[#002147] overflow-x-hidden">
 
-  <!-- 全局 SVG 濾鏡：液態玻璃（保留給未來用；目前 backdrop-filter 不用 url(#filter)） -->
   <svg width="0" height="0" style="position:absolute;left:-9999px;top:-9999px;">
     <defs>
       <filter id="liquid_glass_filter">
@@ -261,12 +254,9 @@
   </svg>
 
   <div id="dashboard-shell" class="min-h-screen flex flex-col bg-[#F5F7FA] pt-[72px]">
-    <!-- Header -->
     <header class="bg-white border-b border-gray-200 fixed top-0 w-full z-40 shadow-sm h-[72px]">
       <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center relative">
-        <!-- 左側：桌機三條線 + TAIMIC logo -->
         <div class="flex items-center gap-3">
-          <!-- 桌機三條線：控制左側 sidebar -->
           <button
             id="sidebar-toggle-desktop"
             type="button"
@@ -278,7 +268,6 @@
             <span class="bar"></span>
           </button>
 
-          <!-- TAIMIC logo -->
           <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
             <svg class="logo-clock w-10 h-10" viewBox="0 0 100 100">
               <defs>
@@ -305,9 +294,7 @@
           </div>
         </div>
 
-        <!-- 右側：FX (桌機) + Export(桌機) + Avatar + 三條線(手機) -->
         <div class="flex items-center gap-3">
-          <!-- FX capsule：桌機顯示 -->
           <div class="hidden md:inline-flex items-center gap-3 rounded-full border border-[#E5E7EB] bg-[#F3F4F6] px-3 py-1.5">
             <div class="text-xs">
               <span class="mr-1">🇺🇸/🇹🇼</span>
@@ -323,7 +310,6 @@
             </div>
           </div>
 
-          <!-- Export：桌機顯示 -->
           <button
             type="button"
             class="hidden md:inline-flex items-center gap-2 rounded-full bg-[#002147] text-white text-xs font-semibold px-4 py-2 shadow-sm hover:bg-[#001a70] transition"
@@ -332,7 +318,6 @@
             <span>Export full report (PDF)</span>
           </button>
 
-          <!-- Avatar -->
           <div class="relative">
             <button
               id="dash-user-toggle"
@@ -364,7 +349,6 @@
             </div>
           </div>
 
-          <!-- 三條線：只有手機顯示，放在 Avatar 右邊 -->
           <button
             id="sidebar-toggle-mobile"
             type="button"
@@ -379,7 +363,6 @@
       </div>
     </header>
 
-    <!-- 手機版側邊選單 overlay（從右邊滑出） -->
     <div
       id="mobile-menu"
       class="md:hidden fixed top-[72px] left-0 right-0 bottom-0 z-30 bg-black/30 backdrop-blur-sm hidden"
@@ -456,18 +439,13 @@
       </div>
     </div>
 
-    <!-- =================================================== -->
-    <!-- Main layout：左側導覽 + 右側內容                     -->
-    <!-- =================================================== -->
     <div class="flex flex-1 relative">
 
-      <!-- 左側 Sidebar (桌機) -->
       <aside
         id="sidebar"
         class="hidden md:flex flex-col w-64 px-5 py-6 border-r border-slate-200/70 bg-white/60 backdrop-blur-xl"
       >
         <nav class="space-y-1">
-          <!-- Overview -->
           <button
             class="side-item side-item-active"
             type="button"
@@ -477,7 +455,6 @@
             <span>Overview</span>
           </button>
 
-          <!-- Family members -->
           <button
             class="side-item"
             type="button"
@@ -487,7 +464,6 @@
             <span>Family members</span>
           </button>
 
-          <!-- US assets -->
           <button
             class="side-item"
             type="button"
@@ -549,7 +525,6 @@
             </button>
           </div>
 
-          <!-- Taiwan assets -->
           <button
             class="side-item"
             type="button"
@@ -611,7 +586,6 @@
             </button>
           </div>
 
-          <!-- 底部：Help / Settings -->
           <div class="pt-4 mt-2 border-t border-slate-200/70 space-y-1">
             <button
               class="side-bottom-link"
@@ -635,37 +609,31 @@
         </nav>
       </aside>
 
-      <!-- 右側內容 -->
       <main class="flex-1">
-        <!-- Overview page：用 partial 載入 -->
         <div
           id="page-overview"
           class="dash-page"
           data-include="pages/overview.html"
         ></div>
 
-        <!-- US assets > Accounts page：用 partial 載入 -->
         <div
           id="page-us-accounts"
           class="dash-page hidden"
           data-include="pages/us-accounts.html"
         ></div>
 
-        <!-- US assets > Stocks page：用 partial 載入 -->
         <div
           id="page-us-stocks"
           class="dash-page hidden"
           data-include="pages/us-stocks.html"
         ></div>
 
-        <!-- ⭐ 新增：US assets > House page：用 partial 載入 -->
         <div
           id="page-us-house"
           class="dash-page hidden"
           data-include="pages/us-house.html"
         ></div>
 
-        <!-- ✅ 新增：US assets > Crypto placeholder（避免點了白屏） -->
         <div id="page-us-crypto" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
           <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
             US crypto
@@ -673,7 +641,6 @@
           <p class="text-sm text-[#4B5563]">Placeholder section for US crypto holdings.</p>
         </div>
 
-        <!-- ✅ 新增：US assets > Insurance placeholder（避免點了白屏） -->
         <div id="page-us-insurance" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
           <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
             US insurance
@@ -681,11 +648,8 @@
           <p class="text-sm text-[#4B5563]">Placeholder section for US insurance policies.</p>
         </div>
 
-        <!-- Taiwan assets > Accounts page -->
         <div id="page-tw-accounts" class="dash-page hidden">
-          <!-- 下面開始是你原本的 Taiwan accounts 內容，我完全沒動 -->
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
-            <!-- Title -->
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
               <div>
                 <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
@@ -710,10 +674,8 @@
               </div>
             </div>
 
-            <!-- Summary header -->
             <section class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Total balance (USD equiv) -->
                 <div>
                   <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
                     Total balance (USD equiv.)
@@ -726,7 +688,6 @@
                   </p>
                 </div>
 
-                <!-- Original currency -->
                 <div>
                   <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
                     Original currency total
@@ -739,7 +700,6 @@
                   </p>
                 </div>
 
-                <!-- FBAR risk badge -->
                 <div>
                   <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
                     FBAR risk status
@@ -757,7 +717,6 @@
               </div>
             </section>
 
-            <!-- Accounts table -->
             <section class="bg-white border border-gray-100 rounded-xl shadow-sm">
               <div class="px-6 pt-5 pb-3 flex items-center justify-between">
                 <div>
@@ -789,7 +748,6 @@
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-gray-100">
-                    <!-- Row 1 -->
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
                       <td class="py-5 px-6">
                         <div class="flex items-center gap-3">
@@ -841,7 +799,6 @@
                       </td>
                     </tr>
 
-                    <!-- Row 2 -->
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
                       <td class="py-5 px-6">
                         <div class="flex items-center gap-3">
@@ -893,7 +850,6 @@
                       </td>
                     </tr>
 
-                    <!-- Row 3 -->
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
                       <td class="py-5 px-6">
                         <div class="flex items-center gap-3">
@@ -945,7 +901,6 @@
                       </td>
                     </tr>
 
-                    <!-- Row 4 -->
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
                       <td class="py-5 px-6">
                         <div class="flex items-center gap-3">
@@ -1006,12 +961,8 @@
           </div>
         </div>
 
-        <!-- Taiwan assets > Stocks page -->
         <div id="page-tw-stocks" class="dash-page hidden">
-          <!-- 你原本 tw-stocks 內容（未更動） -->
-          <!-- （此段以下你貼的內容很長，我照原樣保留） -->
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
-            <!-- Title -->
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
               <div>
                 <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
@@ -1036,10 +987,8 @@
               </div>
             </div>
 
-            <!-- Exposure banner -->
             <section class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- USD value -->
                 <div>
                   <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
                     Total value (USD)
@@ -1052,7 +1001,6 @@
                   </p>
                 </div>
 
-                <!-- FX drag -->
                 <div>
                   <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
                     FX drag (vs. pure TWD performance)
@@ -1065,7 +1013,6 @@
                   </p>
                 </div>
 
-                <!-- PFIC warning -->
                 <div>
                   <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
                     PFIC exposure
@@ -1085,7 +1032,6 @@
               </div>
             </section>
 
-            <!-- Holdings table -->
             <section class="bg-white border border-gray-100 rounded-xl shadow-sm">
               <div class="px-6 pt-5 pb-3 flex items-center justify-between">
                 <div>
@@ -1117,7 +1063,6 @@
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-gray-100">
-                    <!-- 2330.TW TSMC (common stock) -->
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
                       <td class="py-4 px-6 align-top">
                         <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
@@ -1158,7 +1103,6 @@
                       </td>
                     </tr>
 
-                    <!-- 0050.TW PFIC risk ETF -->
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
                       <td class="py-4 px-6 align-top">
                         <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
@@ -1199,7 +1143,6 @@
                       </td>
                     </tr>
 
-                    <!-- 00878.TW high dividend ETF (PFIC) -->
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
                       <td class="py-4 px-6 align-top">
                         <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
@@ -1240,7 +1183,6 @@
                       </td>
                     </tr>
 
-                    <!-- 2882.TW Common stock example -->
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
                       <td class="py-4 px-6 align-top">
                         <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
@@ -1291,10 +1233,8 @@
           </div>
         </div>
 
-        <!-- Family members page -->
         <div id="page-family" class="dash-page hidden family-page">
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
-            <!-- Top: title + actions -->
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
               <div>
                 <p class="text-[11px] font-semibold tracking-[0.26em] text-slate-500 uppercase mb-2">
@@ -1327,11 +1267,9 @@
               </div>
             </div>
 
-            <!-- Members row -->
             <div class="space-y-4">
               <section class="family-card px-5 py-4">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <!-- 左邊：MEMBERS + 3 active + 頭像列 -->
                   <div class="flex flex-col md:flex-row md:items-center gap-4">
                     <div class="flex items-center gap-2 text-[11px]">
                       <span class="text-[11px] font-semibold text-slate-900 tracking-[0.16em] uppercase">
@@ -1342,21 +1280,17 @@
                       </span>
                     </div>
 
-                    <!-- 頭像列：O / S / B -->
                     <div class="flex items-center gap-4">
-                      <!-- Owner -->
                       <div class="flex flex-col items-center gap-1">
                         <div class="relative">
                           <div class="family-avatar w-9 h-9 text-[12px]">
                             <span>O</span>
                           </div>
-                          <!-- 線上綠點 -->
                           <span class="absolute -right-0.5 -bottom-0.5 w-3 h-3 rounded-full border border-white bg-emerald-400"></span>
                         </div>
                         <span class="text-[10px] text-slate-500">Owner</span>
                       </div>
 
-                      <!-- Spouse -->
                       <div class="flex flex-col items-center gap-1">
                         <div class="relative">
                           <div class="family-avatar w-9 h-9 text-[12px]">
@@ -1367,7 +1301,6 @@
                         <span class="text-[10px] text-slate-500">Spouse</span>
                       </div>
 
-                      <!-- Beneficiary -->
                       <div class="flex flex-col items-center gap-1">
                         <div class="relative">
                           <div class="family-avatar w-9 h-9 text-[12px]">
@@ -1380,7 +1313,6 @@
                     </div>
                   </div>
 
-                  <!-- 右邊：Invite member 按鈕 -->
                   <button
                     type="button"
                     class="inline-flex items-center gap-2 rounded-full bg-[#002FA7] hover:bg-[#001a70] text-white text-[11px] font-semibold px-4 py-2 shadow-sm"
@@ -1395,7 +1327,6 @@
           </div>
         </div>
 
-        <!-- US assets > Liabilities page：這個目前還沒拆，保留你之後要用 -->
         <div id="page-us-liabilities" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
           <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
             US liabilities
@@ -1403,12 +1334,8 @@
           <p class="text-sm text-[#4B5563]">Placeholder section for US liabilities (you can later replace with partial).</p>
         </div>
 
-        <!-- Taiwan assets > Liabilities page -->
         <div id="page-tw-liabilities" class="dash-page hidden">
-          <!-- 你原本 tw-liabilities 內容（未更動） -->
-          <!-- （此段以下你貼的內容很長，我照原樣保留） -->
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
-            <!-- Title -->
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
               <div>
                 <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
@@ -1433,9 +1360,7 @@
               </div>
             </div>
 
-            <!-- Summary Header: 3 Key Metrics Cards -->
             <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <!-- 1) Total Debt (USD Equiv) -->
               <div class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
                 <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
                   Total debt (USD equiv.)
@@ -1449,7 +1374,6 @@
                 </p>
               </div>
 
-              <!-- 2) Weighted Avg Rate (Good News) -->
               <div class="bg-green-50 border border-green-100 rounded-xl shadow-sm px-6 py-5">
                 <p class="text-[11px] tracking-[0.18em] uppercase text-green-800/70 mb-1">
                   Weighted avg rate
@@ -1467,7 +1391,6 @@
                 </p>
               </div>
 
-              <!-- 3) Monthly FX Burden -->
               <div class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
                 <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
                   Monthly FX burden
@@ -1481,7 +1404,6 @@
               </div>
             </section>
 
-            <!-- Liabilities Table (Currency focus) -->
             <section class="bg-white border border-gray-100 rounded-xl shadow-sm">
               <div class="px-6 pt-5 pb-3 flex items-center justify-between">
                 <div>
@@ -1514,7 +1436,6 @@
                   </thead>
 
                   <tbody class="divide-y divide-gray-100">
-                    <!-- Bank of Taiwan Mortgage -->
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
                       <td class="py-5 px-6">
                         <div class="flex items-center gap-3">
@@ -1574,7 +1495,6 @@
                       </td>
                     </tr>
 
-                    <!-- Land Bank Personal Loan (Insufficient Funds example) -->
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
                       <td class="py-5 px-6">
                         <div class="flex items-center gap-3">
@@ -1634,7 +1554,6 @@
                       </td>
                     </tr>
 
-                    <!-- Cathay United Mortgage -->
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
                       <td class="py-5 px-6">
                         <div class="flex items-center gap-3">
@@ -1704,10 +1623,8 @@
           </div>
         </div>
 
-        <!-- ✅ Taiwan assets > House page (UPDATED: Legacy Vault) -->
         <div id="page-tw-house" class="dash-page hidden">
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
-            <!-- Title -->
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
               <div>
                 <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
@@ -1735,15 +1652,13 @@
               </div>
             </div>
 
-            <!-- Summary header: The "Arbitrage" View -->
             <section class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- 1) Est. Market Value (USD) -->
                 <div>
                   <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
                     Est. market value (USD equiv.)
                   </p>
-                  <p class="text-2xl md:text-3xl font-semibold tracking-tight text-[#002147]"
+                  <p class="text-2xl md:text-3xl font-semibold tracking-tight text-[#002147]">
                     $2,100,000.00
                   </p>
                   <p class="mt-1 text-[11px] text-[#6B7280]">
@@ -1751,12 +1666,11 @@
                   </p>
                 </div>
 
-                <!-- 2) Official Tax Value (The Gap) -->
                 <div>
                   <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
                     Official tax value (assessed)
                   </p>
-                  <p class="text-xl md:text-2xl font-semibold text-[#002147]"
+                  <p class="text-xl md:text-2xl font-semibold text-[#002147]">
                     $450,000.00
                   </p>
                   <div class="mt-2 inline-flex items-center gap-2 rounded-full bg-[#F3F4F6] border border-[#E5E7EB] px-3 py-1">
@@ -1770,7 +1684,6 @@
                   </p>
                 </div>
 
-                <!-- 3) Ownership Complexity -->
                 <div>
                   <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
                     Ownership complexity
@@ -1797,12 +1710,9 @@
               </div>
             </section>
 
-            <!-- Property Cards (Card View) -->
             <section class="space-y-4">
-              <!-- Card 1 -->
               <article class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden">
                 <div class="p-5 flex flex-col lg:flex-row gap-5">
-                  <!-- Left: Visual & ID -->
                   <div class="flex gap-4 lg:w-[340px]">
                     <img
                       src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=900&q=80"
@@ -1833,7 +1743,6 @@
                     </div>
                   </div>
 
-                  <!-- Middle: Valuation Gap -->
                   <div class="flex-1 lg:border-l lg:border-r lg:border-gray-100 lg:px-6">
                     <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-2">
                       The valuation gap
@@ -1874,7 +1783,6 @@
                     </div>
                   </div>
 
-                  <!-- Right: Compliance & Risks -->
                   <div class="lg:w-[300px]">
                     <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-2">
                       Ownership &amp; US reporting
@@ -1887,6 +1795,7 @@
                       <p class="mt-1 font-mono tabular-nums text-[16px] font-semibold text-[#002147]">
                         33% Share
                       </p>
+
                       <p class="mt-2 text-[10px] tracking-[0.16em] uppercase text-[#9CA3AF]">
                         US tax status
                       </p>
@@ -1904,10 +1813,8 @@
                 </div>
               </article>
 
-              <!-- Card 2 -->
               <article class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden">
                 <div class="p-5 flex flex-col lg:flex-row gap-5">
-                  <!-- Left -->
                   <div class="flex gap-4 lg:w-[340px]">
                     <img
                       src="https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&w=900&q=80"
@@ -1938,7 +1845,6 @@
                     </div>
                   </div>
 
-                  <!-- Middle -->
                   <div class="flex-1 lg:border-l lg:border-r lg:border-gray-100 lg:px-6">
                     <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-2">
                       The valuation gap
@@ -1979,7 +1885,6 @@
                     </div>
                   </div>
 
-                  <!-- Right -->
                   <div class="lg:w-[300px]">
                     <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-2">
                       Ownership &amp; US reporting
@@ -2002,7 +1907,6 @@
                           Personal use (no income)
                         </span>
                       </div>
-
                       <p class="mt-2 text-[11px] text-[#6B7280]">
                         No rental income flagged. Keep basic ownership docs for inheritance planning.
                       </p>
@@ -2011,7 +1915,6 @@
                 </div>
               </article>
 
-              <!-- Add button row -->
               <div class="flex items-center justify-end pt-1">
                 <button
                   type="button"
@@ -2059,7 +1962,6 @@
       </main>
     </div>
 
-    <!-- footer bar -->
     <footer class="bg-[#f4f6fb] border-t border-gray-200">
       <div class="max-w-[1440px] mx-auto px-6 py-4">
         <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
@@ -2076,10 +1978,8 @@
 
   </div>
 
-  <!-- 共用 overlay -->
   <div id="modal-overlay" class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"></div>
 
-  <!-- Auth overlay -->
   <div
     id="auth-overlay"
     class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
@@ -2151,12 +2051,9 @@
     </div>
   </div>
 
-  <!-- 共用 JS -->
   <script src="main.js"></script>
-  <!-- partial 載入器 -->
   <script src="include-partials.js"></script>
 
-  <!-- Dashboard 專用 JS -->
   <script>
     (function () {
       // 手機右側抽屜
