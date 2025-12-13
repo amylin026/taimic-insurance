@@ -30,11 +30,6 @@
       border: 1px solid rgba(255, 255, 255, 0.45);
     }
 
-    /* 大金額：統一用襯線字體（舊錢 vibe） */
-    .metric-figure {
-      font-family: 'Playfair Display', 'Merriweather', ui-serif, Georgia, 'Times New Roman', serif;
-    }
-
     /* Sidebar：上半部是文字型連結 */
     .side-item {
       display: flex;
@@ -546,9 +541,10 @@
 
         <div id="page-us-stocks" class="dash-page hidden" data-include="pages/us-stocks.html"></div>
 
-        <!-- ✅ US liabilities：改用 partial（你的 pages/us-liabilities.html） -->
+        <!-- ✅ US liabilities：partial -->
         <div id="page-us-liabilities" class="dash-page hidden" data-include="pages/us-liabilities.html"></div>
 
+        <!-- ✅ US house：partial（你剛剛貼給我的那份） -->
         <div id="page-us-house" class="dash-page hidden" data-include="pages/us-house.html"></div>
 
         <div id="page-us-crypto" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
@@ -598,7 +594,8 @@
                   <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
                     Total balance (USD equiv.)
                   </p>
-                  <p class="text-2xl md:text-3xl font-semibold tracking-tight text-[#002147] metric-figure">
+                  <!-- 用跟 US Accounts 一樣的 font-serif -->
+                  <p class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
                     $105,200.00
                   </p>
                   <p class="mt-1 text-[11px] text-[#6B7280]">
@@ -912,7 +909,7 @@
                   <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
                     Total value (USD)
                   </p>
-                  <p class="text-2xl md:text-3xl font-semibold tracking-tight text-[#002147] metric-figure">
+                  <p class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
                     $52,100.00
                   </p>
                   <p class="mt-1 text-[11px] text-[#6B7280]">
@@ -1279,7 +1276,7 @@
                 <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
                   Total debt (USD equiv.)
                 </p>
-                <p class="text-2xl md:text-3xl font-semibold tracking-tight text-[#002147] metric-figure">
+                <p class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
                   $310,000.00
                 </p>
                 <p class="mt-1 text-[11px] text-[#6B7280]">
@@ -1572,7 +1569,7 @@
                   <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
                     Est. market value (USD equiv.)
                   </p>
-                  <p class="text-2xl md:text-3xl font-semibold tracking-tight text-[#002147] metric-figure">
+                  <p class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
                     $2,100,000.00
                   </p>
                   <p class="mt-1 text-[11px] text-[#6B7280]">
@@ -1584,7 +1581,7 @@
                   <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
                     Official tax value (assessed)
                   </p>
-                  <p class="text-xl md:text-2xl font-semibold text-[#002147] metric-figure">
+                  <p class="text-xl md:text-2xl font-semibold font-serif text-[#002147]">
                     $450,000.00
                   </p>
                   <div class="mt-2 inline-flex items-center gap-2 rounded-full bg-[#F3F4F6] border border-[#E5E7EB] px-3 py-1">
