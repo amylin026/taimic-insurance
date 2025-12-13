@@ -581,11 +581,288 @@
 
         <div id="page-us-stocks" class="dash-page hidden" data-include="pages/us-stocks.html"></div>
 
+        <!-- ✅ UPDATED: US FUNDS (The Efficiency Engine) -->
         <div id="page-us-funds" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
-          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
-            US funds
-          </h1>
-          <p class="text-sm text-[#4B5563]">Placeholder section for US funds / ETFs.</p>
+          <div class="flex flex-col gap-1">
+            <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
+              US assets
+            </p>
+            <h1
+              class="text-xl md:text-2xl lg:text-3xl font-semibold tracking-tight text-[#002147] leading-tight"
+              style="font-family: 'Playfair Display', serif;"
+            >
+              Funds
+            </h1>
+            <p class="text-sm text-slate-600 max-w-2xl">
+              <span class="font-semibold text-[#002147]">The Efficiency Engine</span> — low-cost index ETFs, tax efficiency, and dividend yield.
+            </p>
+          </div>
+
+          <!-- Summary Header (Cost & Yield) -->
+          <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- 1) Total Fund Value -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+              <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
+                Total fund value
+              </p>
+              <div class="mt-2 flex items-end justify-between gap-3">
+                <div class="text-2xl md:text-3xl font-semibold text-[#002147] font-mono tabular-nums">
+                  $850,000.00
+                </div>
+                <span class="inline-flex items-center rounded-full bg-slate-50 text-slate-600 border border-slate-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
+                  Core index
+                </span>
+              </div>
+              <p class="mt-2 text-sm text-slate-600">
+                Built for long-term compounding with minimal drag.
+              </p>
+            </div>
+
+            <!-- 2) Weighted Expense Ratio -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+              <div class="flex items-center justify-between gap-3">
+                <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
+                  Weighted expense ratio
+                </p>
+                <span class="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
+                  Pride metric
+                </span>
+              </div>
+
+              <div class="mt-2 flex items-end justify-between gap-3">
+                <div class="text-2xl md:text-3xl font-semibold text-emerald-700 font-mono tabular-nums">
+                  0.04%
+                </div>
+                <div class="text-[11px] text-slate-500">
+                  Lower is better
+                </div>
+              </div>
+
+              <!-- Visual bar comparison -->
+              <div class="mt-4 space-y-3">
+                <div>
+                  <div class="flex items-center justify-between text-[11px] text-slate-500">
+                    <span>Avg Mutual Fund</span>
+                    <span class="font-mono tabular-nums">0.80%</span>
+                  </div>
+                  <div class="mt-1 h-2 rounded-full bg-slate-200 overflow-hidden">
+                    <div class="h-full w-full bg-slate-400/70 rounded-full"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="flex items-center justify-between text-[11px] text-slate-500">
+                    <span>Your Portfolio</span>
+                    <span class="font-mono tabular-nums text-emerald-700 font-semibold">0.04%</span>
+                  </div>
+                  <div class="mt-1 h-2 rounded-full bg-slate-200 overflow-hidden">
+                    <div class="h-full w-[5%] bg-emerald-500 rounded-full"></div>
+                  </div>
+                </div>
+              </div>
+
+              <p class="mt-3 text-sm text-slate-600">
+                About <span class="font-mono tabular-nums font-semibold text-[#002147]">~95%</span> cheaper than a typical mutual fund fee.
+              </p>
+            </div>
+
+            <!-- 3) Dividend Yield (TTM) -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+              <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
+                Dividend yield (TTM)
+              </p>
+              <div class="mt-2 flex items-end justify-between gap-3">
+                <div class="text-2xl md:text-3xl font-semibold text-[#002147] font-mono tabular-nums">
+                  1.85%
+                </div>
+                <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  Qualified dividends
+                </span>
+              </div>
+              <p class="mt-2 text-sm text-slate-600">
+                Focus on after-tax income quality (not just headline yield).
+              </p>
+            </div>
+          </div>
+
+          <!-- Funds Table (The "Boglehead" View) -->
+          <div class="mt-6 bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+            <div class="px-5 py-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div>
+                <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
+                  The Boglehead view
+                </p>
+                <h2
+                  class="text-lg font-semibold text-[#002147]"
+                  style="font-family: 'Playfair Display', serif;"
+                >
+                  Funds table
+                </h2>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
+                  Low fees
+                </span>
+                <span class="inline-flex items-center rounded-full bg-slate-50 text-slate-600 border border-slate-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
+                  Tax efficiency
+                </span>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="min-w-[980px] w-full">
+                <thead class="bg-slate-50">
+                  <tr class="text-left text-[11px] uppercase tracking-[0.2em] text-slate-500">
+                    <th class="px-5 py-3 font-semibold">Fund name</th>
+                    <th class="px-5 py-3 font-semibold">Category</th>
+                    <th class="px-5 py-3 font-semibold">Expense ratio</th>
+                    <th class="px-5 py-3 font-semibold">Tax status</th>
+                    <th class="px-5 py-3 font-semibold text-right">Market value</th>
+                  </tr>
+                </thead>
+
+                <tbody class="divide-y divide-slate-100">
+                  <tr class="hover:bg-slate-50/70 transition-colors">
+                    <td class="px-5 py-4">
+                      <div class="flex flex-col">
+                        <span class="text-[#002fa7] font-bold">VOO</span>
+                        <span class="text-sm text-slate-700">Vanguard S&amp;P 500 ETF</span>
+                      </div>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="inline-flex items-center rounded-full bg-slate-100 text-slate-600 px-2.5 py-1 text-[11px] font-semibold">
+                        Large Cap Blend
+                      </span>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="font-mono tabular-nums font-semibold text-emerald-700">0.03%</span>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        Tax efficient
+                      </span>
+                    </td>
+                    <td class="px-5 py-4 text-right">
+                      <div class="font-mono tabular-nums font-semibold text-[#002147]">$320,000.00</div>
+                    </td>
+                  </tr>
+
+                  <tr class="hover:bg-slate-50/70 transition-colors">
+                    <td class="px-5 py-4">
+                      <div class="flex flex-col">
+                        <span class="text-[#002fa7] font-bold">VTI</span>
+                        <span class="text-sm text-slate-700">Vanguard Total Stock Market ETF</span>
+                      </div>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="inline-flex items-center rounded-full bg-slate-100 text-slate-600 px-2.5 py-1 text-[11px] font-semibold">
+                        US Total Market
+                      </span>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="font-mono tabular-nums font-semibold text-emerald-700">0.03%</span>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        Tax efficient
+                      </span>
+                    </td>
+                    <td class="px-5 py-4 text-right">
+                      <div class="font-mono tabular-nums font-semibold text-[#002147]">$210,000.00</div>
+                    </td>
+                  </tr>
+
+                  <tr class="hover:bg-slate-50/70 transition-colors">
+                    <td class="px-5 py-4">
+                      <div class="flex flex-col">
+                        <span class="text-[#002fa7] font-bold">VXUS</span>
+                        <span class="text-sm text-slate-700">Vanguard Total International Stock ETF</span>
+                      </div>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="inline-flex items-center rounded-full bg-slate-100 text-slate-600 px-2.5 py-1 text-[11px] font-semibold">
+                        International
+                      </span>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="font-mono tabular-nums font-semibold text-emerald-700">0.07%</span>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        Tax efficient
+                      </span>
+                    </td>
+                    <td class="px-5 py-4 text-right">
+                      <div class="font-mono tabular-nums font-semibold text-[#002147]">$140,000.00</div>
+                    </td>
+                  </tr>
+
+                  <tr class="hover:bg-slate-50/70 transition-colors">
+                    <td class="px-5 py-4">
+                      <div class="flex flex-col">
+                        <span class="text-[#002fa7] font-bold">BND</span>
+                        <span class="text-sm text-slate-700">Vanguard Total Bond Market ETF</span>
+                      </div>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="inline-flex items-center rounded-full bg-slate-100 text-slate-600 px-2.5 py-1 text-[11px] font-semibold">
+                        US Aggregate Bond
+                      </span>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="font-mono tabular-nums font-semibold text-emerald-700">0.03%</span>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="inline-flex items-center gap-2 rounded-full bg-slate-50 text-slate-600 border border-slate-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                        Taxable event
+                      </span>
+                    </td>
+                    <td class="px-5 py-4 text-right">
+                      <div class="font-mono tabular-nums font-semibold text-[#002147]">$110,000.00</div>
+                    </td>
+                  </tr>
+
+                  <tr class="hover:bg-slate-50/70 transition-colors">
+                    <td class="px-5 py-4">
+                      <div class="flex flex-col">
+                        <span class="text-[#002fa7] font-bold">SCHD</span>
+                        <span class="text-sm text-slate-700">Schwab U.S. Dividend Equity ETF</span>
+                      </div>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="inline-flex items-center rounded-full bg-slate-100 text-slate-600 px-2.5 py-1 text-[11px] font-semibold">
+                        Dividend Equity
+                      </span>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="font-mono tabular-nums font-semibold text-emerald-700">0.06%</span>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="inline-flex items-center gap-2 rounded-full bg-slate-50 text-slate-600 border border-slate-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
+                        <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                        Taxable event
+                      </span>
+                    </td>
+                    <td class="px-5 py-4 text-right">
+                      <div class="font-mono tabular-nums font-semibold text-[#002147]">$70,000.00</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="px-5 py-4 bg-white">
+              <p class="text-xs text-slate-500">
+                Demo numbers. “Tax status” is a simplified signal: ETFs are generally more tax-efficient than mutual funds, while high distributions (e.g., bond interest / high dividend) can still create taxable income.
+              </p>
+            </div>
+          </div>
         </div>
 
         <!-- ✅ NOW PARTIAL: US BONDS -->
@@ -604,11 +881,267 @@
 
         <div id="page-tw-stocks" class="dash-page hidden" data-include="pages/tw-stocks.html"></div>
 
+        <!-- ✅ UPDATED: TAIWAN FUNDS (The Risk Scanner) -->
         <div id="page-tw-funds" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
-          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
-            Taiwan funds
-          </h1>
-          <p class="text-sm text-[#4B5563]">Placeholder section for Taiwan funds / mutual funds / ETFs.</p>
+          <div class="flex flex-col gap-1">
+            <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
+              Taiwan assets
+            </p>
+            <h1
+              class="text-xl md:text-2xl lg:text-3xl font-semibold tracking-tight text-[#002147] leading-tight"
+              style="font-family: 'Playfair Display', serif;"
+            >
+              Funds
+            </h1>
+            <p class="text-sm text-slate-600 max-w-2xl">
+              <span class="font-semibold text-[#002147]">The Risk Scanner</span> — active funds, high fees, and the <span class="font-semibold text-amber-700">PFIC</span> tax trap.
+            </p>
+          </div>
+
+          <!-- Summary Header (PFIC Warning System) -->
+          <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- 1) Total Value (USD Equiv) -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+              <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
+                Total value (USD equiv)
+              </p>
+              <div class="mt-2 flex items-end justify-between gap-3">
+                <div class="text-2xl md:text-3xl font-semibold text-[#002147] font-mono tabular-nums">
+                  $120,000.00
+                </div>
+                <span class="inline-flex items-center rounded-full bg-slate-50 text-slate-600 border border-slate-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
+                  FX converted
+                </span>
+              </div>
+              <p class="mt-2 text-sm text-slate-600">
+                Converted for consolidated reporting (demo values).
+              </p>
+            </div>
+
+            <!-- 2) PFIC Exposure (Killer Feature) -->
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 shadow-sm">
+              <div class="flex items-center justify-between gap-3">
+                <p class="text-[11px] tracking-[0.24em] text-amber-700 uppercase">
+                  PFIC exposure
+                </p>
+                <span class="inline-flex items-center gap-2 rounded-full bg-amber-300 text-amber-950 border border-amber-400/70 px-3 py-1 text-[11px] font-extrabold tracking-[0.18em] uppercase shadow-sm">
+                  <i class="fa-solid fa-triangle-exclamation text-[12px]"></i>
+                  Alert
+                </span>
+              </div>
+
+              <div class="mt-3 flex items-start gap-3">
+                <div class="w-11 h-11 rounded-2xl bg-amber-200 text-amber-950 flex items-center justify-center shadow-sm">
+                  <i class="fa-solid fa-siren-on text-lg"></i>
+                </div>
+                <div class="flex-1">
+                  <div
+                    class="text-2xl md:text-3xl font-semibold text-rose-700 leading-none"
+                    style="font-family: 'Playfair Display', serif;"
+                  >
+                    Critical Risk
+                  </div>
+                  <div class="mt-1 text-xs text-amber-900 font-semibold tracking-[0.16em] uppercase">
+                    Form 8621 required
+                  </div>
+                </div>
+              </div>
+
+              <p class="mt-3 text-sm text-amber-900/80">
+                Foreign mutual funds/ETFs can trigger punitive US tax treatment for US persons.
+              </p>
+            </div>
+
+            <!-- 3) Est. Hidden Fees -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+              <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
+                Est. hidden fees
+              </p>
+              <div class="mt-2 flex items-end justify-between gap-3">
+                <div class="text-2xl md:text-3xl font-semibold text-orange-700 font-mono tabular-nums">
+                  ~$2,400 / yr
+                </div>
+                <span class="inline-flex items-center rounded-full bg-orange-50 text-orange-700 border border-orange-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
+                  Mgmt fee drag
+                </span>
+              </div>
+              <p class="mt-2 text-sm text-slate-600">
+                Illustrative: based on ~2% expense ratio on current value.
+              </p>
+            </div>
+          </div>
+
+          <!-- Funds Table (The "Compliance" View) -->
+          <div class="mt-6 bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+            <div class="px-5 py-4 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div>
+                <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
+                  The compliance view
+                </p>
+                <h2
+                  class="text-lg font-semibold text-[#002147]"
+                  style="font-family: 'Playfair Display', serif;"
+                >
+                  Funds table
+                </h2>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="inline-flex items-center rounded-full bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
+                  PFIC flagged
+                </span>
+                <span class="inline-flex items-center rounded-full bg-rose-50 text-rose-700 border border-rose-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
+                  High fee warning
+                </span>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="min-w-[1040px] w-full">
+                <thead class="bg-slate-50">
+                  <tr class="text-left text-[11px] uppercase tracking-[0.2em] text-slate-500">
+                    <th class="px-5 py-3 font-semibold">Fund name</th>
+                    <th class="px-5 py-3 font-semibold">US tax classification</th>
+                    <th class="px-5 py-3 font-semibold">Dist. yield</th>
+                    <th class="px-5 py-3 font-semibold">Expense ratio</th>
+                    <th class="px-5 py-3 font-semibold text-right">Value</th>
+                  </tr>
+                </thead>
+
+                <tbody class="divide-y divide-slate-100">
+                  <tr class="hover:bg-amber-50/40 transition-colors">
+                    <td class="px-5 py-4">
+                      <div class="flex flex-col">
+                        <span class="text-sm text-slate-800 font-semibold">
+                          Allianz Global AI Fund <span class="text-slate-500 font-normal">(安聯AI人工智慧基金)</span>
+                        </span>
+                        <span class="text-xs text-slate-500 font-mono tabular-nums">
+                          ISIN: LU0000000001
+                        </span>
+                      </div>
+                    </td>
+                    <td class="px-5 py-4">
+                      <!-- Most prominent element -->
+                      <span
+                        class="inline-flex items-center gap-2 rounded-full bg-amber-300 text-amber-950 px-4 py-1.5 text-[11px] font-extrabold tracking-[0.20em] uppercase shadow-sm ring-2 ring-amber-400/70"
+                        title="Punitive tax rates apply. Consider selling."
+                      >
+                        ⚠️ PFIC
+                        <i class="fa-solid fa-triangle-exclamation text-[12px]"></i>
+                      </span>
+                    </td>
+                    <td class="px-5 py-4">
+                      <div class="font-mono tabular-nums font-semibold text-[#002147]">8.5%</div>
+                      <div class="text-xs text-rose-700 font-semibold">
+                        Fully Taxable as Ordinary Income
+                      </div>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="font-mono tabular-nums font-semibold text-orange-700">1.80%</span>
+                    </td>
+                    <td class="px-5 py-4 text-right">
+                      <div class="font-mono tabular-nums font-semibold text-[#002147]">$45,000.00</div>
+                      <div class="text-xs text-slate-500 font-mono tabular-nums">NT$1,430,000</div>
+                    </td>
+                  </tr>
+
+                  <tr class="hover:bg-amber-50/40 transition-colors">
+                    <td class="px-5 py-4">
+                      <div class="flex flex-col">
+                        <span class="text-sm text-slate-800 font-semibold">
+                          Fidelity Global Technology Fund <span class="text-slate-500 font-normal">(富達全球科技基金)</span>
+                        </span>
+                        <span class="text-xs text-slate-500 font-mono tabular-nums">
+                          ISIN: LU0000000002
+                        </span>
+                      </div>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span
+                        class="inline-flex items-center gap-2 rounded-full bg-amber-300 text-amber-950 px-4 py-1.5 text-[11px] font-extrabold tracking-[0.20em] uppercase shadow-sm ring-2 ring-amber-400/70"
+                        title="Punitive tax rates apply. Consider selling."
+                      >
+                        ⚠️ PFIC
+                        <i class="fa-solid fa-triangle-exclamation text-[12px]"></i>
+                      </span>
+                    </td>
+                    <td class="px-5 py-4">
+                      <div class="font-mono tabular-nums font-semibold text-[#002147]">6.2%</div>
+                      <div class="text-xs text-rose-700 font-semibold">
+                        Fully Taxable as Ordinary Income
+                      </div>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="font-mono tabular-nums font-semibold text-orange-700">1.65%</span>
+                    </td>
+                    <td class="px-5 py-4 text-right">
+                      <div class="font-mono tabular-nums font-semibold text-[#002147]">$38,000.00</div>
+                      <div class="text-xs text-slate-500 font-mono tabular-nums">NT$1,210,000</div>
+                    </td>
+                  </tr>
+
+                  <tr class="hover:bg-amber-50/40 transition-colors">
+                    <td class="px-5 py-4">
+                      <div class="flex flex-col">
+                        <span class="text-sm text-slate-800 font-semibold">
+                          JPM Global High Dividend Fund <span class="text-slate-500 font-normal">(高股息配息型基金)</span>
+                        </span>
+                        <span class="text-xs text-slate-500 font-mono tabular-nums">
+                          ISIN: LU0000000003
+                        </span>
+                      </div>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span
+                        class="inline-flex items-center gap-2 rounded-full bg-amber-300 text-amber-950 px-4 py-1.5 text-[11px] font-extrabold tracking-[0.20em] uppercase shadow-sm ring-2 ring-amber-400/70"
+                        title="Punitive tax rates apply. Consider selling."
+                      >
+                        ⚠️ PFIC
+                        <i class="fa-solid fa-triangle-exclamation text-[12px]"></i>
+                      </span>
+                    </td>
+                    <td class="px-5 py-4">
+                      <div class="font-mono tabular-nums font-semibold text-[#002147]">10.1%</div>
+                      <div class="text-xs text-rose-700 font-semibold">
+                        Fully Taxable as Ordinary Income
+                      </div>
+                    </td>
+                    <td class="px-5 py-4">
+                      <span class="font-mono tabular-nums font-semibold text-orange-700">2.05%</span>
+                    </td>
+                    <td class="px-5 py-4 text-right">
+                      <div class="font-mono tabular-nums font-semibold text-[#002147]">$37,000.00</div>
+                      <div class="text-xs text-slate-500 font-mono tabular-nums">NT$1,180,000</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="px-5 py-4 bg-white">
+              <p class="text-xs text-slate-500">
+                Demo numbers. The PFIC badge is intentionally prominent — for US persons, PFIC reporting and taxation can materially change after-tax outcomes.
+              </p>
+            </div>
+          </div>
+
+          <!-- Optional compliance callout (still within page; light-mode Swiss bank tone) -->
+          <div class="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-5">
+            <div class="flex items-start gap-3">
+              <div class="w-11 h-11 rounded-2xl bg-amber-200 text-amber-950 flex items-center justify-center shadow-sm">
+                <i class="fa-solid fa-shield-halved text-lg"></i>
+              </div>
+              <div>
+                <h3 class="text-sm font-semibold text-[#002147]" style="font-family: 'Playfair Display', serif;">
+                  PFIC warning system
+                </h3>
+                <p class="mt-1 text-sm text-amber-900/80">
+                  When a fund is classified as PFIC, additional reporting (e.g., Form 8621) and potentially punitive tax outcomes may apply for US persons.
+                  Use this page as a “risk scanner” and review options with a qualified tax professional.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- ✅ NOW PARTIAL: TAIWAN BONDS -->
