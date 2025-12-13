@@ -31,8 +31,8 @@
       <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
         Total outstanding
       </p>
-      <p class="text-2xl md:text-3xl font-semibold tracking-tight text-[#002147]"
-         style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
+      <!-- ⭐ 跟 US Accounts 一樣：用 font-serif，移除 inline font-family -->
+      <p class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
         $452,000.00
       </p>
       <p class="mt-1 text-[11px] text-[#6B7280]">
@@ -64,8 +64,8 @@
 
             <!-- Center text -->
             <div class="absolute inset-0 flex flex-col items-center justify-center">
-              <div class="text-[20px] leading-none font-semibold text-[#002147]"
-                   style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
+              <!-- ⭐ 這裡也改用 font-serif，不用 inline Playfair -->
+              <div class="text-[20px] leading-none font-semibold font-serif text-[#002147]">
                 785
               </div>
               <div class="mt-1 inline-flex items-center rounded-full bg-emerald-50 border border-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
