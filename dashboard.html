@@ -1851,13 +1851,18 @@
           panel.classList.remove('translate-x-full');
         }
 
+        // ✅ FIX: transitionend 有時不觸發 → 加 fallback timeout，避免黑幕卡住
         function closeMenu() {
           panel.classList.add('translate-x-full');
 
-          const transitionHandler = () => {
-            if (panel.classList.contains('translate-x-full')) {
-              overlay.classList.add('hidden');
-            }
+          const fallback = setTimeout(() => {
+            overlay.classList.add('hidden');
+          }, 260);
+
+          const transitionHandler = (e) => {
+            if (e && e.propertyName && e.propertyName !== 'transform') return;
+            clearTimeout(fallback);
+            overlay.classList.add('hidden');
           };
 
           panel.addEventListener('transitionend', transitionHandler, { once: true });
@@ -1913,6 +1918,18 @@
         chevron.classList.toggle('rotate-90');
       };
 
+      // ✅ FIX: 切到 us-* / tw-* 頁時，自動展開對應的 sidebar section（不然 active item 會藏在 hidden 裡）
+      function ensureSideSectionOpenFor(pageKey) {
+        const key = pageKey.startsWith('us-') ? 'us' : pageKey.startsWith('tw-') ? 'tw' : null;
+        if (!key) return;
+
+        const body = document.getElementById('side-' + key + '-children');
+        const chevron = document.getElementById('side-' + key + '-chevron');
+
+        if (body && body.classList.contains('hidden')) body.classList.remove('hidden');
+        if (chevron && !chevron.classList.contains('rotate-90')) chevron.classList.add('rotate-90');
+      }
+
       // 切換 dashboard 各頁
       window.switchDashboardPage = function (pageKey) {
         const pages = document.querySelectorAll('.dash-page');
@@ -1925,6 +1942,9 @@
           target.classList.remove('hidden');
           window.scrollTo({ top: 0, behavior: 'auto' });
         }
+
+        // ✅ 自動展開 US/TW 子選單（讓你看得到 active 的那顆）
+        ensureSideSectionOpenFor(pageKey);
 
         // 更新 sidebar active 樣式
         const navButtons = document.querySelectorAll('[data-page]');
