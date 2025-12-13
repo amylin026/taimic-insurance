@@ -1,0 +1,274 @@
+<div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
+  <!-- Title -->
+  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+    <div>
+      <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
+        US assets · Accounts
+      </p>
+      <h1 class="text-[26px] md:text-[30px] font-semibold tracking-tight text-[#002147] font-serif">
+        US cash &amp; bank accounts
+      </h1>
+      <p class="mt-2 text-xs md:text-sm text-[#4B5563] max-w-xl">
+        Focus on yield and liquidity in a high-rate environment. These balances stay in the US domestic system.
+      </p>
+    </div>
+    <div class="flex flex-wrap gap-2 text-[11px] text-[#4B5563]">
+      <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-blue-900 px-2.5 py-1 border border-blue-100">
+        <i class="fa-solid fa-piggy-bank text-[10px]"></i>
+        Yield oriented
+      </span>
+      <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 text-[#4B5563] px-2.5 py-1 border border-slate-200">
+        <i class="fa-solid fa-dollar-sign text-[10px]"></i>
+        USD only
+      </span>
+    </div>
+  </div>
+
+  <!-- Summary header -->
+  <section class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Total Balance -->
+      <div>
+        <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+          Total balance
+        </p>
+        <p class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
+          $245,000.00
+        </p>
+        <p class="mt-1 text-[11px] text-[#6B7280]">
+          Across 4 US institutions
+        </p>
+      </div>
+
+      <!-- Avg APY -->
+      <div>
+        <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+          Weighted avg. APY
+        </p>
+        <div class="inline-flex items-center gap-2 rounded-full bg-emerald-50 border border-emerald-100 px-3 py-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          <span class="text-base font-semibold font-mono tabular-nums text-emerald-700">
+            4.25%
+          </span>
+          <span class="text-[11px] text-emerald-700">
+            blended yield
+          </span>
+        </div>
+        <p class="mt-1 text-[11px] text-[#6B7280]">
+          Concentrated in high-yield savings and CDs
+        </p>
+      </div>
+
+      <!-- Monthly interest -->
+      <div>
+        <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+          Est. monthly interest
+        </p>
+        <p class="text-lg md:text-xl font-semibold font-mono tabular-nums text-[#005F48]">
+          +$850.00<span class="text-xs text-[#6B7280]">/mo</span>
+        </p>
+        <p class="mt-1 text-[11px] text-[#6B7280]">
+          Before tax, assuming current APY levels
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Accounts table -->
+  <section class="bg-white border border-gray-100 rounded-xl shadow-sm">
+    <div class="px-6 pt-5 pb-3 flex items-center justify-between">
+      <div>
+        <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+          US accounts
+        </p>
+        <h2 class="text-sm font-semibold text-[#002147]">
+          Deposit &amp; cash positions
+        </h2>
+      </div>
+      <button
+        type="button"
+        class="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 text-[11px] font-semibold text-blue-900 px-3 py-1.5 hover:bg-blue-100"
+      >
+        <i class="fa-solid fa-plus text-[10px]"></i>
+        <span>Add US account</span>
+      </button>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-xs text-left border-collapse">
+        <thead>
+          <tr class="text-[11px] uppercase tracking-[0.14em] text-[#9CA3AF] border-t border-b border-gray-100">
+            <th class="py-3 px-6 font-medium">Institution</th>
+            <th class="py-3 px-4 font-medium">Type</th>
+            <th class="py-3 px-4 font-medium">APY</th>
+            <th class="py-3 px-4 font-medium">Status</th>
+            <th class="py-3 px-6 font-medium text-right">Balance (USD)</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <!-- Row 1 -->
+          <tr class="hover:bg-[#F9FAFB] transition-colors">
+            <td class="py-5 px-6">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-[11px] font-semibold text-blue-900">
+                  C
+                </div>
+                <div>
+                  <p class="text-[13px] font-semibold text-[#002147]">
+                    Chase Premier Checking
+                  </p>
+                  <p class="text-[11px] text-[#6B7280]">
+                    Main domestic spend account
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="py-5 px-4 align-top text-[#4B5563]">
+              Checking
+            </td>
+            <td class="py-5 px-4 align-top">
+              <div class="inline-flex items-center gap-1.5">
+                <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                  0.30%
+                </span>
+              </div>
+            </td>
+            <td class="py-5 px-4 align-top">
+              <span class="inline-flex items-center rounded-full bg-slate-100 text-[#4B5563] px-2 py-0.5 text-[10px] font-medium">
+                Active
+              </span>
+            </td>
+            <td class="py-5 px-6 align-top text-right">
+              <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                $32,500.00
+              </span>
+            </td>
+          </tr>
+
+          <!-- Row 2 -->
+          <tr class="hover:bg-[#F9FAFB] transition-colors">
+            <td class="py-5 px-6">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-[11px] font-semibold text-blue-900">
+                  A
+                </div>
+                <div>
+                  <p class="text-[13px] font-semibold text-[#002147]">
+                    Ally High-Yield Savings
+                  </p>
+                  <p class="text-[11px] text-[#6B7280]">
+                    Online savings, no ATM card
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="py-5 px-4 align-top text-[#4B5563]">
+              Savings
+            </td>
+            <td class="py-5 px-4 align-top">
+              <div class="inline-flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                  4.40%
+                </span>
+              </div>
+            </td>
+            <td class="py-5 px-4 align-top">
+              <span class="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 px-2 py-0.5 text-[10px] font-medium">
+                Active
+              </span>
+            </td>
+            <td class="py-5 px-6 align-top text-right">
+              <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                $140,000.00
+              </span>
+            </td>
+          </tr>
+
+          <!-- Row 3 -->
+          <tr class="hover:bg-[#F9FAFB] transition-colors">
+            <td class="py-5 px-6">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-[11px] font-semibold text-blue-900">
+                  C
+                </div>
+                <div>
+                  <p class="text-[13px] font-semibold text-[#002147]">
+                    Capital One 360 CD (12m)
+                  </p>
+                  <p class="text-[11px] text-[#6B7280]">
+                    Laddered deposit, auto-renew off
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="py-5 px-4 align-top text-[#4B5563]">
+              CD
+            </td>
+            <td class="py-5 px-4 align-top">
+              <div class="inline-flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                  4.80%
+                </span>
+              </div>
+            </td>
+            <td class="py-5 px-4 align-top">
+              <span class="inline-flex items-center rounded-full bg-slate-100 text-[#4B5563] px-2 py-0.5 text-[10px] font-medium">
+                Active
+              </span>
+            </td>
+            <td class="py-5 px-6 align-top text-right">
+              <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                $55,000.00
+              </span>
+            </td>
+          </tr>
+
+          <!-- Row 4 -->
+          <tr class="hover:bg-[#F9FAFB] transition-colors">
+            <td class="py-5 px-6">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-[11px] font-semibold text-blue-900">
+                  W
+                </div>
+                <div>
+                  <p class="text-[13px] font-semibold text-[#002147]">
+                    Wells Fargo Savings
+                  </p>
+                  <p class="text-[11px] text-[#6B7280]">
+                    Legacy account kept for history
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="py-5 px-4 align-top text-[#4B5563]">
+              Savings
+            </td>
+            <td class="py-5 px-4 align-top">
+              <div class="inline-flex items-center gap-1.5">
+                <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                  0.10%
+                </span>
+              </div>
+            </td>
+            <td class="py-5 px-4 align-top">
+              <span class="inline-flex items-center rounded-full bg-slate-100 text-[#4B5563] px-2 py-0.5 text-[10px] font-medium">
+                Active
+              </span>
+            </td>
+            <td class="py-5 px-6 align-top text-right">
+              <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                $17,500.00
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="px-6 py-3 border-t border-gray-100 text-[11px] text-[#6B7280]">
+      APY data is illustrative. In production, these figures sync from connected institutions or manual inputs.
+    </div>
+  </section>
+</div>
