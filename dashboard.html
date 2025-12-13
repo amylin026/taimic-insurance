@@ -256,7 +256,7 @@
     </defs>
   </svg>
 
-<div id="dashboard-shell" class="min-h-screen flex flex-col bg-[#F5F7FA] pt-[72px]">
+  <div id="dashboard-shell" class="min-h-screen flex flex-col bg-[#F5F7FA] pt-[72px]">
     <!-- Header -->
     <header class="bg-white border-b border-gray-200 fixed top-0 w-full z-40 shadow-sm h-[72px]">
       <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center relative">
@@ -362,10 +362,10 @@
 
           <!-- 三條線：只有手機顯示，放在 Avatar 右邊 -->
           <button
-  id="sidebar-toggle-mobile"
-  type="button"
-  class="menu-toggle flex md:hidden flex-col items-center justify-center p-2 relative z-50"
->
+            id="sidebar-toggle-mobile"
+            type="button"
+            class="menu-toggle flex md:hidden flex-col items-center justify-center p-2 relative z-50"
+          >
             <span class="sr-only">Toggle navigation</span>
             <span class="bar"></span>
             <span class="bar"></span>
@@ -377,9 +377,9 @@
 
     <!-- 手機版側邊選單 overlay（從右邊滑出） -->
     <div
-  id="mobile-menu"
-  class="md:hidden fixed top-[72px] left-0 right-0 bottom-0 z-30 bg-black/30 backdrop-blur-sm hidden"
->
+      id="mobile-menu"
+      class="md:hidden fixed top-[72px] left-0 right-0 bottom-0 z-30 bg-black/30 backdrop-blur-sm hidden"
+    >
       <div
         id="mobile-menu-panel"
         class="absolute right-0 top-0 bottom-0 w-64 bg-white border-l border-slate-200 px-5 py-6 overflow-y-auto transform translate-x-full transition-transform duration-200"
@@ -640,246 +640,12 @@
           data-include="pages/overview.html"
         ></div>
 
-     <!-- US assets > Accounts page -->
-<div
-  id="page-us-accounts"
-  class="dash-page hidden"
-  data-include="pages/us-accounts.html"
-></div>
-
-                <!-- Avg APY -->
-                <div>
-                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
-                    Weighted avg. APY
-                  </p>
-                  <div class="inline-flex items-center gap-2 rounded-full bg-emerald-50 border border-emerald-100 px-3 py-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                    <span class="text-base font-semibold font-mono tabular-nums text-emerald-700">
-                      4.25%
-                    </span>
-                    <span class="text-[11px] text-emerald-700">
-                      blended yield
-                    </span>
-                  </div>
-                  <p class="mt-1 text-[11px] text-[#6B7280]">
-                    Concentrated in high-yield savings and CDs
-                  </p>
-                </div>
-
-                <!-- Monthly interest -->
-                <div>
-                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
-                    Est. monthly interest
-                  </p>
-                  <p class="text-lg md:text-xl font-semibold font-mono tabular-nums text-[#005F48]">
-                    +$850.00<span class="text-xs text-[#6B7280]">/mo</span>
-                  </p>
-                  <p class="mt-1 text-[11px] text-[#6B7280]">
-                    Before tax, assuming current APY levels
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            <!-- Accounts table -->
-            <section class="bg-white border border-gray-100 rounded-xl shadow-sm">
-              <div class="px-6 pt-5 pb-3 flex items-center justify-between">
-                <div>
-                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
-                    US accounts
-                  </p>
-                  <h2 class="text-sm font-semibold text-[#002147]">
-                    Deposit &amp; cash positions
-                  </h2>
-                </div>
-                <button
-                  type="button"
-                  class="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 text-[11px] font-semibold text-blue-900 px-3 py-1.5 hover:bg-blue-100"
-                >
-                  <i class="fa-solid fa-plus text-[10px]"></i>
-                  <span>Add US account</span>
-                </button>
-              </div>
-
-              <div class="overflow-x-auto">
-                <table class="min-w-full text-xs text-left border-collapse">
-                  <thead>
-                    <tr class="text-[11px] uppercase tracking-[0.14em] text-[#9CA3AF] border-t border-b border-gray-100">
-                      <th class="py-3 px-6 font-medium">Institution</th>
-                      <th class="py-3 px-4 font-medium">Type</th>
-                      <th class="py-3 px-4 font-medium">APY</th>
-                      <th class="py-3 px-4 font-medium">Status</th>
-                      <th class="py-3 px-6 font-medium text-right">Balance (USD)</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-gray-100">
-                    <!-- Row 1 -->
-                    <tr class="hover:bg-[#F9FAFB] transition-colors">
-                      <td class="py-5 px-6">
-                        <div class="flex items-center gap-3">
-                          <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-[11px] font-semibold text-blue-900">
-                            C
-                          </div>
-                          <div>
-                            <p class="text-[13px] font-semibold text-[#002147]">
-                              Chase Premier Checking
-                            </p>
-                            <p class="text-[11px] text-[#6B7280]">
-                              Main domestic spend account
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="py-5 px-4 align-top text-[#4B5563]">
-                        Checking
-                      </td>
-                      <td class="py-5 px-4 align-top">
-                        <div class="inline-flex items-center gap-1.5">
-                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">
-                            0.30%
-                          </span>
-                        </div>
-                      </td>
-                      <td class="py-5 px-4 align-top">
-                        <span class="inline-flex items-center rounded-full bg-slate-100 text-[#4B5563] px-2 py-0.5 text-[10px] font-medium">
-                          Active
-                        </span>
-                      </td>
-                      <td class="py-5 px-6 align-top text-right">
-                        <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
-                          $32,500.00
-                        </span>
-                      </td>
-                    </tr>
-
-                    <!-- Row 2 -->
-                    <tr class="hover:bg-[#F9FAFB] transition-colors">
-                      <td class="py-5 px-6">
-                        <div class="flex items-center gap-3">
-                          <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-[11px] font-semibold text-blue-900">
-                            A
-                          </div>
-                          <div>
-                            <p class="text-[13px] font-semibold text-[#002147]">
-                              Ally High-Yield Savings
-                            </p>
-                            <p class="text-[11px] text-[#6B7280]">
-                              Online savings, no ATM card
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="py-5 px-4 align-top text-[#4B5563]">
-                        Savings
-                      </td>
-                      <td class="py-5 px-4 align-top">
-                        <div class="inline-flex items-center gap-1.5">
-                          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">
-                            4.40%
-                          </span>
-                        </div>
-                      </td>
-                      <td class="py-5 px-4 align-top">
-                        <span class="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 px-2 py-0.5 text-[10px] font-medium">
-                          Active
-                        </span>
-                      </td>
-                      <td class="py-5 px-6 align-top text-right">
-                        <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
-                          $140,000.00
-                        </span>
-                      </td>
-                    </tr>
-
-                    <!-- Row 3 -->
-                    <tr class="hover:bg-[#F9FAFB] transition-colors">
-                      <td class="py-5 px-6">
-                        <div class="flex items-center gap-3">
-                          <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-[11px] font-semibold text-blue-900">
-                            C
-                          </div>
-                          <div>
-                            <p class="text-[13px] font-semibold text-[#002147]">
-                              Capital One 360 CD (12m)
-                            </p>
-                            <p class="text-[11px] text-[#6B7280]">
-                              Laddered deposit, auto-renew off
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="py-5 px-4 align-top text-[#4B5563]">
-                        CD
-                      </td>
-                      <td class="py-5 px-4 align-top">
-                        <div class="inline-flex items-center gap-1.5">
-                          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">
-                            4.80%
-                          </span>
-                        </div>
-                      </td>
-                      <td class="py-5 px-4 align-top">
-                        <span class="inline-flex items-center rounded-full bg-slate-100 text-[#4B5563] px-2 py-0.5 text-[10px] font-medium">
-                          Active
-                        </span>
-                      </td>
-                      <td class="py-5 px-6 align-top text-right">
-                        <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
-                          $55,000.00
-                        </span>
-                      </td>
-                    </tr>
-
-                    <!-- Row 4 -->
-                    <tr class="hover:bg-[#F9FAFB] transition-colors">
-                      <td class="py-5 px-6">
-                        <div class="flex items-center gap-3">
-                          <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-[11px] font-semibold text-blue-900">
-                            W
-                          </div>
-                          <div>
-                            <p class="text-[13px] font-semibold text-[#002147]">
-                              Wells Fargo Savings
-                            </p>
-                            <p class="text-[11px] text-[#6B7280]">
-                              Legacy account kept for history
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="py-5 px-4 align-top text-[#4B5563]">
-                        Savings
-                      </td>
-                      <td class="py-5 px-4 align-top">
-                        <div class="inline-flex items-center gap-1.5">
-                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">
-                            0.10%
-                          </span>
-                        </div>
-                      </td>
-                      <td class="py-5 px-4 align-top">
-                        <span class="inline-flex items-center rounded-full bg-slate-100 text-[#4B5563] px-2 py-0.5 text-[10px] font-medium">
-                          Active
-                        </span>
-                      </td>
-                      <td class="py-5 px-6 align-top text-right">
-                        <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
-                          $17,500.00
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <div class="px-6 py-3 border-t border-gray-100 text-[11px] text-[#6B7280]">
-                APY data is illustrative. In production, these figures sync from connected institutions or manual inputs.
-              </div>
-            </section>
-          </div>
-        </div>
+        <!-- US assets > Accounts page：用 partial 載入 -->
+        <div
+          id="page-us-accounts"
+          class="dash-page hidden"
+          data-include="pages/us-accounts.html"
+        ></div>
 
         <!-- US assets > Stocks page -->
         <div id="page-us-stocks" class="dash-page hidden">
@@ -1940,8 +1706,7 @@
           </div>
         </div>
 
-        <!-- 其他 pages：簡單 placeholder，先讓導覽正常運作 -->
-        <!-- ✅ UPDATED: US assets > Liabilities page -->
+        <!-- US assets > Liabilities page -->
         <div id="page-us-liabilities" class="dash-page hidden">
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
             <!-- Title -->
@@ -2304,7 +2069,7 @@
           <p class="text-sm text-[#4B5563]">Placeholder section for US insurance policies.</p>
         </div>
 
-        <!-- ✅ UPDATED: Taiwan assets > Liabilities page -->
+        <!-- Taiwan assets > Liabilities page -->
         <div id="page-tw-liabilities" class="dash-page hidden">
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
             <!-- Title -->
@@ -2645,22 +2410,20 @@
     </div>
 
     <!-- footer bar -->
-  <footer class="bg-[#f4f6fb] border-t border-gray-200">
-  <div class="max-w-[1440px] mx-auto px-6 py-4">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
-      
-      <div class="text-center md:text-left">© 2025 Taimic Inc. All Rights Reserved.</div>
-      
-      <div class="flex items-center gap-4 text-gray-400">
-        <i class="fa-brands fa-x-twitter hover:text-gray-600 transition-colors cursor-pointer"></i>
-        <i class="fa-brands fa-discord hover:text-gray-600 transition-colors cursor-pointer"></i>
-        <i class="fa-brands fa-instagram hover:text-gray-600 transition-colors cursor-pointer"></i>
-        <i class="fa-brands fa-github hover:text-gray-600 transition-colors cursor-pointer"></i>
+    <footer class="bg-[#f4f6fb] border-t border-gray-200">
+      <div class="max-w-[1440px] mx-auto px-6 py-4">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+          <div class="text-center md:text-left">© 2025 Taimic Inc. All Rights Reserved.</div>
+          <div class="flex items-center gap-4 text-gray-400">
+            <i class="fa-brands fa-x-twitter hover:text-gray-600 transition-colors cursor-pointer"></i>
+            <i class="fa-brands fa-discord hover:text-gray-600 transition-colors cursor-pointer"></i>
+            <i class="fa-brands fa-instagram hover:text-gray-600 transition-colors cursor-pointer"></i>
+            <i class="fa-brands fa-github hover:text-gray-600 transition-colors cursor-pointer"></i>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</footer>
-  
+    </footer>
+
   </div>
 
   <!-- 共用 overlay -->
@@ -2765,31 +2528,25 @@
         }
 
         function closeMenu() {
-  panel.classList.add('translate-x-full');
-  
-  // 定義一個具名函式，方便除錯且邏輯清晰
-  const transitionHandler = () => {
-    // 🔥 關鍵修正：只有當選單「真的還縮在旁邊 (有 translate-x-full)」的時候，才隱藏黑底
-    // 如果你已經按了按鈕把選單打開了 (移除了 translate-x-full)，這行就不會執行！
-    if (panel.classList.contains('translate-x-full')) {
-      overlay.classList.add('hidden');
-    }
-  };
+          panel.classList.add('translate-x-full');
 
-  // 綁定這個聰明的監聽器
-  panel.addEventListener('transitionend', transitionHandler, { once: true });
-}
+          const transitionHandler = () => {
+            if (panel.classList.contains('translate-x-full')) {
+              overlay.classList.add('hidden');
+            }
+          };
 
-       toggle.addEventListener('click', (e) => {  // 1. 這裡括號內加一個 e
-  e.stopPropagation();                     // 2. 加上這行！
-  // 這行的意思是：「點擊事件到此為止」，不要傳出去給 main.js 知道
+          panel.addEventListener('transitionend', transitionHandler, { once: true });
+        }
 
-  if (overlay.classList.contains('hidden')) {
-    openMenu();
-  } else {
-    closeMenu();
-  }
-});
+        toggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (overlay.classList.contains('hidden')) {
+            openMenu();
+          } else {
+            closeMenu();
+          }
+        });
 
         // 點黑色背景關閉
         overlay.addEventListener('click', (event) => {
