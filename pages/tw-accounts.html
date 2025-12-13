@@ -1,0 +1,310 @@
+<div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
+  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+    <div>
+      <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
+        Taiwan assets · Accounts
+      </p>
+      <h1 class="text-[26px] md:text-[30px] font-semibold tracking-tight text-[#002147] font-serif">
+        Taiwan bank accounts (FBAR view)
+      </h1>
+      <p class="mt-2 text-xs md:text-sm text-[#4B5563] max-w-xl">
+        Local TWD and FX deposits, translated into USD for IRS reporting and global allocation.
+      </p>
+    </div>
+    <div class="flex flex-wrap gap-2 text-[11px] text-[#4B5563]">
+      <span class="inline-flex items-center gap-1 rounded-full bg-green-50 text-green-900 px-2.5 py-1 border border-green-100">
+        <i class="fa-solid fa-earth-asia text-[10px]"></i>
+        Foreign accounts
+      </span>
+      <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-800 px-2.5 py-1 border border-amber-200">
+        <i class="fa-solid fa-scale-balanced text-[10px]"></i>
+        FBAR sensitive
+      </span>
+    </div>
+  </div>
+
+  <section class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div>
+        <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+          Total balance (USD equiv.)
+        </p>
+        <p class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
+          $105,200.00
+        </p>
+        <p class="mt-1 text-[11px] text-[#6B7280]">
+          Converted using end-of-year FX estimates
+        </p>
+      </div>
+
+      <div>
+        <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+          Original currency total
+        </p>
+        <p class="text-base font-mono tabular-nums text-[#002147]">
+          NT$ 3,419,000
+        </p>
+        <p class="mt-1 text-[11px] text-[#6B7280]">
+          Includes TWD and foreign-currency sub-accounts
+        </p>
+      </div>
+
+      <div>
+        <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+          FBAR risk status
+        </p>
+        <div class="inline-flex items-center gap-2 rounded-full bg-amber-50 border border-amber-200 px-3 py-1.5">
+          <span class="text-base">⚠️</span>
+          <span class="text-[11px] font-semibold text-amber-800 tracking-[0.12em] uppercase">
+            FBAR filing required
+          </span>
+        </div>
+        <p class="mt-1 text-[11px] text-[#6B7280]">
+          Aggregate non-US balance exceeds $10,000 USD threshold.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white border border-gray-100 rounded-xl shadow-sm">
+    <div class="px-6 pt-5 pb-3 flex items-center justify-between">
+      <div>
+        <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+          Taiwan accounts
+        </p>
+        <h2 class="text-sm font-semibold text-[#002147]">
+          Deposits, FX and compliance flags
+        </h2>
+      </div>
+      <button
+        type="button"
+        class="inline-flex items-center gap-2 rounded-full border border-green-100 bg-green-50 text-[11px] font-semibold text-green-900 px-3 py-1.5 hover:bg-green-100"
+      >
+        <i class="fa-solid fa-plus text-[10px]"></i>
+        <span>Add Taiwan account</span>
+      </button>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-xs text-left border-collapse">
+        <thead>
+          <tr class="text-[11px] uppercase tracking-[0.14em] text-[#9CA3AF] border-t border-b border-gray-100">
+            <th class="py-3 px-6 font-medium">Institution</th>
+            <th class="py-3 px-4 font-medium">Type</th>
+            <th class="py-3 px-4 font-medium">FX rate</th>
+            <th class="py-3 px-4 font-medium">Compliance</th>
+            <th class="py-3 px-6 font-medium text-right">Balance</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <tr class="hover:bg-[#F9FAFB] transition-colors">
+            <td class="py-5 px-6">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[11px] font-semibold text-green-900">
+                  C
+                </div>
+                <div>
+                  <p class="text-[13px] font-semibold text-[#002147]">
+                    CTBC Bank – Main TWD
+                  </p>
+                  <p class="text-[11px] text-[#6B7280]">
+                    Salary and daily expenses
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="py-5 px-4 align-top text-[#4B5563]">
+              TWD Deposit
+            </td>
+            <td class="py-5 px-4 align-top">
+              <div class="flex flex-col gap-0.5">
+                <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                  Ex: 32.50
+                </span>
+                <span class="inline-flex items-center gap-1 text-[11px] text-emerald-600">
+                  <i class="fa-solid fa-arrow-trend-up text-[10px]"></i>
+                  +0.3% vs last year
+                </span>
+              </div>
+            </td>
+            <td class="py-5 px-4 align-top">
+              <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-800 px-2 py-0.5 text-[10px] font-medium border border-amber-200">
+                <i class="fa-solid fa-file-circle-exclamation text-[9px]"></i>
+                Reportable
+              </span>
+              <p class="mt-1 text-[10px] text-[#6B7280] max-w-[180px]">
+                Included in FBAR aggregate. Keep year-end statement.
+              </p>
+            </td>
+            <td class="py-5 px-6 align-top text-right">
+              <div class="flex flex-col items-end">
+                <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                  $34,000
+                </span>
+                <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">
+                  NT$ 1,105,000
+                </span>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="hover:bg-[#F9FAFB] transition-colors">
+            <td class="py-5 px-6">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[11px] font-semibold text-green-900">
+                  P
+                </div>
+                <div>
+                  <p class="text-[13px] font-semibold text-[#002147]">
+                    Chunghwa Post – Savings
+                  </p>
+                  <p class="text-[11px] text-[#6B7280]">
+                    Low-activity parking account
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="py-5 px-4 align-top text-[#4B5563]">
+              TWD Deposit
+            </td>
+            <td class="py-5 px-4 align-top">
+              <div class="flex flex-col gap-0.5">
+                <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                  Ex: 32.50
+                </span>
+                <span class="inline-flex items-center gap-1 text-[11px] text-[#6B7280]">
+                  <i class="fa-solid fa-minus text-[9px]"></i>
+                  Stable
+                </span>
+              </div>
+            </td>
+            <td class="py-5 px-4 align-top">
+              <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-800 px-2 py-0.5 text-[10px] font-medium border border-amber-200">
+                <i class="fa-solid fa-file-circle-exclamation text-[9px]"></i>
+                Reportable
+              </span>
+              <p class="mt-1 text-[10px] text-[#6B7280] max-w-[180px]">
+                Small but still part of total if combined balances &gt; $10k.
+              </p>
+            </td>
+            <td class="py-5 px-6 align-top text-right">
+              <div class="flex flex-col items-end">
+                <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                  $8,600
+                </span>
+                <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">
+                  NT$ 279,000
+                </span>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="hover:bg-[#F9FAFB] transition-colors">
+            <td class="py-5 px-6">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[11px] font-semibold text-green-900">
+                  F
+                </div>
+                <div>
+                  <p class="text-[13px] font-semibold text-[#002147]">
+                    Fubon – USD FX account
+                  </p>
+                  <p class="text-[11px] text-[#6B7280]">
+                    Holds USD inside Taiwan banking system
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="py-5 px-4 align-top text-[#4B5563]">
+              Foreign currency deposit
+            </td>
+            <td class="py-5 px-4 align-top">
+              <div class="flex flex-col gap-0.5">
+                <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                  Ex: 1.00
+                </span>
+                <span class="inline-flex items-center gap-1 text-[11px] text-emerald-600">
+                  <i class="fa-solid fa-arrow-trend-up text-[10px]"></i>
+                  USD base
+                </span>
+              </div>
+            </td>
+            <td class="py-5 px-4 align-top">
+              <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-800 px-2 py-0.5 text-[10px] font-medium border border-amber-200">
+                <i class="fa-solid fa-file-circle-exclamation text-[9px]"></i>
+                Reportable
+              </span>
+              <p class="mt-1 text-[10px] text-[#6B7280] max-w-[180px]">
+                US-dollar denominated, but legally a foreign account.
+              </p>
+            </td>
+            <td class="py-5 px-6 align-top text-right">
+              <div class="flex flex-col items-end">
+                <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                  $42,600
+                </span>
+                <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">
+                  USD 42,600
+                </span>
+              </div>
+            </td>
+          </tr>
+
+          <tr class="hover:bg-[#F9FAFB] transition-colors">
+            <td class="py-5 px-6">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[11px] font-semibold text-green-900">
+                  M
+                </div>
+                <div>
+                  <p class="text-[13px] font-semibold text-[#002147]">
+                    Mega Bank – Children&apos;s account
+                  </p>
+                  <p class="text-[11px] text-[#6B7280]">
+                    Small educational savings, under joint control
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="py-5 px-4 align-top text-[#4B5563]">
+              TWD Deposit
+            </td>
+            <td class="py-5 px-4 align-top">
+              <div class="flex flex-col gap-0.5">
+                <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                  Ex: 32.50
+                </span>
+                <span class="inline-flex items-center gap-1 text-[11px] text-[#6B7280]">
+                  <i class="fa-solid fa-minus text-[9px]"></i>
+                  Stable
+                </span>
+              </div>
+            </td>
+            <td class="py-5 px-4 align-top">
+              <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 text-[#4B5563] px-2 py-0.5 text-[10px] font-medium border border-slate-200">
+                Monitored
+              </span>
+              <p class="mt-1 text-[10px] text-[#6B7280] max-w-[180px]">
+                Small balance; still appears in family map but below typical FBAR materiality on its own.
+              </p>
+            </td>
+            <td class="py-5 px-6 align-top text-right">
+              <div class="flex flex-col items-end">
+                <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                  $20,000
+                </span>
+                <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">
+                  NT$ 630,000
+                </span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="px-6 py-3 border-t border-gray-100 text-[11px] text-[#6B7280]">
+      FBAR guidance here is informational only. Final filing decisions should be confirmed with your US tax advisor.
+    </div>
+  </section>
+</div>
