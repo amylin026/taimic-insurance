@@ -1,0 +1,272 @@
+<div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
+  <!-- Header -->
+  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+    <div>
+      <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
+        Taiwan assets · Crypto
+      </p>
+      <h1 class="text-[26px] md:text-[30px] font-semibold tracking-tight text-[#002147] font-serif">
+        Liquidity Bridge
+      </h1>
+      <p class="mt-2 text-xs md:text-sm text-[#4B5563] max-w-2xl">
+        Stablecoin-forward view: monitor <span class="font-semibold">USDT dominance</span>, exchange exposure, and the
+        <span class="font-semibold">TWD premium</span> often seen in Taiwan C2C rails.
+      </p>
+    </div>
+
+    <div class="flex flex-wrap gap-2 text-[11px] text-[#4B5563]">
+      <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 text-emerald-900 px-2.5 py-1 border border-emerald-100">
+        <i class="fa-solid fa-bridge-water text-[10px]"></i>
+        Cross-border rail
+      </span>
+      <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-blue-900 px-2.5 py-1 border border-blue-100">
+        <i class="fa-solid fa-shield-halved text-[10px]"></i>
+        VASP safety
+      </span>
+      <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 text-slate-700 px-2.5 py-1 border border-slate-200">
+        <i class="fa-solid fa-coins text-[10px]"></i>
+        Stablecoin focus
+      </span>
+    </div>
+  </div>
+
+  <!-- Summary Header: 3 metric cards -->
+  <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
+      <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+        Total value (USD equiv.)
+      </p>
+      <p class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
+        $85,000.00
+      </p>
+      <p class="mt-1 text-[11px] text-[#6B7280]">
+        Consolidated across exchanges (USD).
+      </p>
+    </div>
+
+    <div class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
+      <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-2">
+        Stablecoin ratio
+      </p>
+
+      <div class="flex items-center justify-between gap-3">
+        <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 border border-emerald-100 px-3 py-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span class="text-[11px] font-semibold text-emerald-900 tracking-[0.12em] uppercase">
+            85% USDT
+          </span>
+        </span>
+
+        <span class="text-[11px] text-[#6B7280]">
+          Volatile: <span class="font-mono tabular-nums">15%</span>
+        </span>
+      </div>
+
+      <!-- Mini bar chart -->
+      <div class="mt-3">
+        <div class="h-2 rounded-full bg-slate-100 overflow-hidden border border-slate-200">
+          <div class="h-full bg-emerald-300" style="width:85%"></div>
+        </div>
+        <div class="mt-2 flex justify-between text-[10px] text-[#6B7280]">
+          <span>USDT</span>
+          <span>BTC/ETH</span>
+        </div>
+      </div>
+
+      <p class="mt-2 text-[11px] text-[#6B7280]">
+        Taiwanese users often treat USDT as “digital USD” savings.
+      </p>
+    </div>
+
+    <div class="bg-amber-50 border border-amber-200 rounded-xl shadow-sm px-6 py-5">
+      <p class="text-[11px] tracking-[0.18em] uppercase text-amber-800/70 mb-1">
+        Exchange exposure
+      </p>
+      <p class="text-base font-semibold text-amber-900">
+        ⚠️ 90% on Centralized Exch
+      </p>
+      <p class="mt-2 text-[11px] text-amber-900/80">
+        Consider self-custody for long-term holdings to reduce counterparty risk.
+      </p>
+
+      <div class="mt-3 inline-flex items-center gap-2 rounded-full bg-white/70 border border-amber-200 px-3 py-1">
+        <i class="fa-solid fa-lightbulb text-[10px] text-amber-700"></i>
+        <span class="text-[11px] font-semibold text-amber-800 tracking-[0.12em] uppercase">
+          Suggestion
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Holdings Table -->
+  <section class="bg-white border border-gray-100 rounded-xl shadow-sm">
+    <div class="px-6 pt-5 pb-3 flex items-center justify-between">
+      <div>
+        <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+          Holdings
+        </p>
+        <h2 class="text-sm font-semibold text-[#002147]">
+          Exchange view with location + USDT premium (Taiwan rail)
+        </h2>
+      </div>
+
+      <button
+        type="button"
+        class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white text-[11px] font-semibold text-[#002147] px-3 py-1.5 hover:bg-[#F3F4F6]"
+      >
+        <i class="fa-solid fa-plus text-[10px]"></i>
+        <span>Add wallet / exchange</span>
+      </button>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-xs text-left border-collapse">
+        <thead>
+          <tr class="text-[11px] uppercase tracking-[0.14em] text-[#9CA3AF] border-t border-b border-gray-100">
+            <th class="py-3 px-6 font-medium">Asset</th>
+            <th class="py-3 px-4 font-medium">Location</th>
+            <th class="py-3 px-4 font-medium">USDT premium</th>
+            <th class="py-3 px-4 font-medium">TWD equivalent</th>
+            <th class="py-3 px-6 font-medium text-right">Value (USD)</th>
+          </tr>
+        </thead>
+
+        <tbody class="divide-y divide-gray-100">
+          <!-- USDT -->
+          <tr class="hover:bg-[#F9FAFB] transition-colors">
+            <td class="py-5 px-6">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center">
+                  <span class="text-[11px] font-semibold text-emerald-800">T</span>
+                </div>
+                <div>
+                  <p class="text-[13px] font-semibold text-[#002147]">Tether</p>
+                  <p class="text-[11px] text-[#6B7280]">USDT</p>
+                </div>
+              </div>
+            </td>
+
+            <td class="py-5 px-4 align-top">
+              <div class="flex flex-col gap-1">
+                <span class="text-[12px] font-semibold text-[#002147]">MAX Exchange</span>
+                <span class="inline-flex items-center gap-2 rounded-full bg-blue-50 border border-blue-100 px-2.5 py-1 text-[10px] font-semibold text-blue-900 w-fit">
+                  <i class="fa-solid fa-circle-check text-[10px]"></i>
+                  TW Compliant
+                </span>
+              </div>
+            </td>
+
+            <td class="py-5 px-4 align-top">
+              <div class="flex flex-col gap-0.5">
+                <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                  32.8 TWD
+                </span>
+                <span class="text-[10px] text-[#6B7280]">
+                  vs official <span class="font-mono tabular-nums">32.5</span>
+                </span>
+              </div>
+            </td>
+
+            <td class="py-5 px-4 align-top">
+              <span class="text-[12px] text-[#9CA3AF]">
+                NT$ 2,788,000
+              </span>
+            </td>
+
+            <td class="py-5 px-6 align-top text-right">
+              <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                $72,250.00
+              </span>
+            </td>
+          </tr>
+
+          <!-- USDC -->
+          <tr class="hover:bg-[#F9FAFB] transition-colors">
+            <td class="py-5 px-6">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center">
+                  <span class="text-[11px] font-semibold text-blue-800">U</span>
+                </div>
+                <div>
+                  <p class="text-[13px] font-semibold text-[#002147]">USD Coin</p>
+                  <p class="text-[11px] text-[#6B7280]">USDC</p>
+                </div>
+              </div>
+            </td>
+
+            <td class="py-5 px-4 align-top">
+              <div class="flex flex-col gap-1">
+                <span class="text-[12px] font-semibold text-[#002147]">BitoPro</span>
+                <span class="inline-flex items-center gap-2 rounded-full bg-blue-50 border border-blue-100 px-2.5 py-1 text-[10px] font-semibold text-blue-900 w-fit">
+                  <i class="fa-solid fa-circle-check text-[10px]"></i>
+                  TW Compliant
+                </span>
+              </div>
+            </td>
+
+            <td class="py-5 px-4 align-top">
+              <span class="text-[12px] text-[#9CA3AF]">—</span>
+            </td>
+
+            <td class="py-5 px-4 align-top">
+              <span class="text-[12px] text-[#9CA3AF]">
+                NT$ 310,000
+              </span>
+            </td>
+
+            <td class="py-5 px-6 align-top text-right">
+              <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                $9,500.00
+              </span>
+            </td>
+          </tr>
+
+          <!-- BTC (Offshore) -->
+          <tr class="hover:bg-[#F9FAFB] transition-colors">
+            <td class="py-5 px-6">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-orange-50 border border-orange-100 flex items-center justify-center">
+                  <span class="text-[12px] font-semibold text-orange-800">₿</span>
+                </div>
+                <div>
+                  <p class="text-[13px] font-semibold text-[#002147]">Bitcoin</p>
+                  <p class="text-[11px] text-[#6B7280]">BTC</p>
+                </div>
+              </div>
+            </td>
+
+            <td class="py-5 px-4 align-top">
+              <div class="flex flex-col gap-1">
+                <span class="text-[12px] font-semibold text-[#002147]">Binance</span>
+                <span class="inline-flex items-center gap-2 rounded-full bg-slate-100 border border-slate-200 px-2.5 py-1 text-[10px] font-semibold text-slate-700 w-fit">
+                  <i class="fa-solid fa-globe text-[10px]"></i>
+                  Offshore
+                </span>
+              </div>
+            </td>
+
+            <td class="py-5 px-4 align-top">
+              <span class="text-[12px] text-[#9CA3AF]">—</span>
+            </td>
+
+            <td class="py-5 px-4 align-top">
+              <span class="text-[12px] text-[#9CA3AF]">
+                NT$ 112,000
+              </span>
+            </td>
+
+            <td class="py-5 px-6 align-top text-right">
+              <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                $3,250.00
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="px-6 py-3 border-t border-gray-100 text-[11px] text-[#6B7280]">
+      “USDT premium” is a Taiwan-market indicator (often from C2C rails). Labels are informational—always assess exchange risk and custody practices.
+    </div>
+  </section>
+</div>
