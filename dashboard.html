@@ -130,7 +130,6 @@
     }
 
     /* ============= Family members page 專用樣式 ============= */
-
     .family-page {
       background-color: #F9FAFB;
     }
@@ -475,133 +474,59 @@
             </span>
           </button>
           <div id="side-us-children" class="ml-4 mt-1 space-y-1 hidden">
-            <button
-              class="side-item side-subitem"
-              type="button"
-              data-page="us-accounts"
-              onclick="switchDashboardPage('us-accounts')"
-            >
+            <button class="side-item side-subitem" type="button" data-page="us-accounts" onclick="switchDashboardPage('us-accounts')">
               <span>Accounts</span>
             </button>
-            <button
-              class="side-item side-subitem"
-              type="button"
-              data-page="us-stocks"
-              onclick="switchDashboardPage('us-stocks')"
-            >
+            <button class="side-item side-subitem" type="button" data-page="us-stocks" onclick="switchDashboardPage('us-stocks')">
               <span>Stocks</span>
             </button>
-            <button
-              class="side-item side-subitem"
-              type="button"
-              data-page="us-liabilities"
-              onclick="switchDashboardPage('us-liabilities')"
-            >
+            <button class="side-item side-subitem" type="button" data-page="us-liabilities" onclick="switchDashboardPage('us-liabilities')">
               <span>Liabilities</span>
             </button>
-            <button
-              class="side-item side-subitem"
-              type="button"
-              data-page="us-house"
-              onclick="switchDashboardPage('us-house')"
-            >
+            <button class="side-item side-subitem" type="button" data-page="us-house" onclick="switchDashboardPage('us-house')">
               <span>House</span>
             </button>
-            <button
-              class="side-item side-subitem"
-              type="button"
-              data-page="us-crypto"
-              onclick="switchDashboardPage('us-crypto')"
-            >
+            <button class="side-item side-subitem" type="button" data-page="us-crypto" onclick="switchDashboardPage('us-crypto')">
               <span>Crypto</span>
             </button>
-            <button
-              class="side-item side-subitem"
-              type="button"
-              data-page="us-insurance"
-              onclick="switchDashboardPage('us-insurance')"
-            >
+            <button class="side-item side-subitem" type="button" data-page="us-insurance" onclick="switchDashboardPage('us-insurance')">
               <span>Insurance</span>
             </button>
           </div>
 
-          <button
-            class="side-item"
-            type="button"
-            onclick="toggleSideSection('tw')"
-          >
+          <button class="side-item" type="button" onclick="toggleSideSection('tw')">
             <span class="flex items-center gap-1">
               <span id="side-tw-chevron" class="inline-block text-xs transition-transform">&gt;</span>
               <span>Taiwan assets</span>
             </span>
           </button>
           <div id="side-tw-children" class="ml-4 mt-1 space-y-1 hidden">
-            <button
-              class="side-item side-subitem"
-              type="button"
-              data-page="tw-accounts"
-              onclick="switchDashboardPage('tw-accounts')"
-            >
+            <button class="side-item side-subitem" type="button" data-page="tw-accounts" onclick="switchDashboardPage('tw-accounts')">
               <span>Accounts</span>
             </button>
-            <button
-              class="side-item side-subitem"
-              type="button"
-              data-page="tw-stocks"
-              onclick="switchDashboardPage('tw-stocks')"
-            >
+            <button class="side-item side-subitem" type="button" data-page="tw-stocks" onclick="switchDashboardPage('tw-stocks')">
               <span>Stocks</span>
             </button>
-            <button
-              class="side-item side-subitem"
-              type="button"
-              data-page="tw-liabilities"
-              onclick="switchDashboardPage('tw-liabilities')"
-            >
+            <button class="side-item side-subitem" type="button" data-page="tw-liabilities" onclick="switchDashboardPage('tw-liabilities')">
               <span>Liabilities</span>
             </button>
-            <button
-              class="side-item side-subitem"
-              type="button"
-              data-page="tw-house"
-              onclick="switchDashboardPage('tw-house')"
-            >
+            <button class="side-item side-subitem" type="button" data-page="tw-house" onclick="switchDashboardPage('tw-house')">
               <span>House</span>
             </button>
-            <button
-              class="side-item side-subitem"
-              type="button"
-              data-page="tw-crypto"
-              onclick="switchDashboardPage('tw-crypto')"
-            >
+            <button class="side-item side-subitem" type="button" data-page="tw-crypto" onclick="switchDashboardPage('tw-crypto')">
               <span>Crypto</span>
             </button>
-            <button
-              class="side-item side-subitem"
-              type="button"
-              data-page="tw-insurance"
-              onclick="switchDashboardPage('tw-insurance')"
-            >
+            <button class="side-item side-subitem" type="button" data-page="tw-insurance" onclick="switchDashboardPage('tw-insurance')">
               <span>Insurance</span>
             </button>
           </div>
 
           <div class="pt-4 mt-2 border-t border-slate-200/70 space-y-1">
-            <button
-              class="side-bottom-link"
-              type="button"
-              data-page="help"
-              onclick="switchDashboardPage('help')"
-            >
+            <button class="side-bottom-link" type="button" data-page="help" onclick="switchDashboardPage('help')">
               <i class="fa-regular fa-circle-question"></i>
               <span>Help center</span>
             </button>
-            <button
-              class="side-bottom-link"
-              type="button"
-              data-page="settings"
-              onclick="switchDashboardPage('settings')"
-            >
+            <button class="side-bottom-link" type="button" data-page="settings" onclick="switchDashboardPage('settings')">
               <i class="fa-solid fa-gear"></i>
               <span>Settings</span>
             </button>
@@ -610,29 +535,16 @@
       </aside>
 
       <main class="flex-1">
-        <div
-          id="page-overview"
-          class="dash-page"
-          data-include="pages/overview.html"
-        ></div>
+        <div id="page-overview" class="dash-page" data-include="pages/overview.html"></div>
 
-        <div
-          id="page-us-accounts"
-          class="dash-page hidden"
-          data-include="pages/us-accounts.html"
-        ></div>
+        <div id="page-us-accounts" class="dash-page hidden" data-include="pages/us-accounts.html"></div>
 
-        <div
-          id="page-us-stocks"
-          class="dash-page hidden"
-          data-include="pages/us-stocks.html"
-        ></div>
+        <div id="page-us-stocks" class="dash-page hidden" data-include="pages/us-stocks.html"></div>
 
-        <div
-          id="page-us-house"
-          class="dash-page hidden"
-          data-include="pages/us-house.html"
-        ></div>
+        <!-- ✅ US liabilities：改用 partial（你的 pages/us-liabilities.html） -->
+        <div id="page-us-liabilities" class="dash-page hidden" data-include="pages/us-liabilities.html"></div>
+
+        <div id="page-us-house" class="dash-page hidden" data-include="pages/us-house.html"></div>
 
         <div id="page-us-crypto" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
           <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
@@ -648,6 +560,7 @@
           <p class="text-sm text-[#4B5563]">Placeholder section for US insurance policies.</p>
         </div>
 
+        <!-- ===================== TAIWAN: ACCOUNTS (INLINE) ===================== -->
         <div id="page-tw-accounts" class="dash-page hidden">
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
@@ -961,6 +874,7 @@
           </div>
         </div>
 
+        <!-- ===================== TAIWAN: STOCKS (INLINE) ===================== -->
         <div id="page-tw-stocks" class="dash-page hidden">
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
@@ -1233,6 +1147,7 @@
           </div>
         </div>
 
+        <!-- ===================== FAMILY (INLINE) ===================== -->
         <div id="page-family" class="dash-page hidden family-page">
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
@@ -1326,12 +1241,8 @@
 
           </div>
         </div>
-<div
-  id="page-us-liabilities"
-  class="dash-page hidden"
-  data-include="pages/us-liabilities.html"
-></div>
 
+        <!-- ===================== TAIWAN: LIABILITIES (INLINE) ===================== -->
         <div id="page-tw-liabilities" class="dash-page hidden">
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
@@ -1621,6 +1532,7 @@
           </div>
         </div>
 
+        <!-- ===================== TAIWAN: HOUSE (INLINE) ===================== -->
         <div id="page-tw-house" class="dash-page hidden">
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
@@ -2079,8 +1991,7 @@
         function openMenu() {
           overlay.classList.remove('hidden');
           lockScroll();
-          // 觸發 reflow 讓 transition 生效
-          panel.offsetHeight;
+          panel.offsetHeight; // reflow
           panel.classList.remove('translate-x-full');
         }
 
@@ -2099,36 +2010,28 @@
 
         toggle.addEventListener('click', (e) => {
           e.stopPropagation();
-          if (overlay.classList.contains('hidden')) {
-            openMenu();
-          } else {
-            closeMenu();
-          }
+          if (overlay.classList.contains('hidden')) openMenu();
+          else closeMenu();
         });
 
-        // 點黑色背景關閉
         overlay.addEventListener('click', (event) => {
-          if (event.target === overlay) {
-            closeMenu();
-          }
+          if (event.target === overlay) closeMenu();
         });
 
-        // 提供給 mobileNavigate 用
         window.__closeMobileMenu = closeMenu;
       }
 
-      // 給手機側邊選單用的導航
+      // 手機導航
       window.mobileNavigate = function (pageKey) {
         switchDashboardPage(pageKey);
-        if (window.__closeMobileMenu) {
-          window.__closeMobileMenu();
-        } else {
+        if (window.__closeMobileMenu) window.__closeMobileMenu();
+        else {
           const overlay = document.getElementById('mobile-menu');
           if (overlay) overlay.classList.add('hidden');
         }
       };
 
-      // 桌機左側 sidebar 收合
+      // 桌機 sidebar 收合
       function setupDesktopSidebarToggle() {
         const btn = document.getElementById('sidebar-toggle-desktop');
         const sidebar = document.getElementById('sidebar');
@@ -2147,7 +2050,6 @@
         chevron.classList.toggle('rotate-90');
       };
 
-      // ✅ 自動展開對應 section（避免 active item 藏起來）
       function ensureSideSectionOpen(key) {
         const body = document.getElementById('side-' + key + '-children');
         const chevron = document.getElementById('side-' + key + '-chevron');
@@ -2156,31 +2058,68 @@
         chevron.classList.add('rotate-90');
       }
 
+      // ✅ 切頁保險：如果 include-partials.js 沒載 hidden pages，這裡會按需載入
+      function loadPartialIfNeeded(container) {
+        if (!container) return;
+        const url = container.getAttribute('data-include');
+        if (!url) return;
+
+        // 如果已經有內容了，就當作 loaded（避免重複 fetch）
+        if (container.dataset.loaded === '1') return;
+        if ((container.innerHTML || '').trim().length > 0) {
+          container.dataset.loaded = '1';
+          return;
+        }
+
+        fetch(url)
+          .then((r) => {
+            if (!r.ok) throw new Error('Failed to load: ' + url + ' (' + r.status + ')');
+            return r.text();
+          })
+          .then((html) => {
+            container.innerHTML = html;
+            container.dataset.loaded = '1';
+          })
+          .catch((err) => {
+            console.error(err);
+            container.innerHTML = `
+              <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+                <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
+                  Load error
+                </p>
+                <h1 class="text-[22px] md:text-[26px] font-semibold tracking-tight text-[#002147]">
+                  Failed to load partial
+                </h1>
+                <p class="mt-2 text-sm text-[#4B5563]">
+                  Could not load <span class="font-mono">${url}</span>. Check file path / deployment.
+                </p>
+              </div>
+            `;
+            container.dataset.loaded = '1';
+          });
+      }
+
       // 切換 dashboard 各頁
       window.switchDashboardPage = function (pageKey) {
-        // 先找目標頁（避免不存在時白屏）
         let target = document.getElementById('page-' + pageKey);
 
-        // ✅ fallback：找不到就回 overview（避免整頁變空白）
         if (!target) {
           console.warn('[Dashboard] Page not found:', pageKey, '→ fallback to overview');
           pageKey = 'overview';
           target = document.getElementById('page-overview');
         }
 
-        // 如果是 US/TW 子頁，自動展開左側區塊（桌機 sidebar）
         if (pageKey.startsWith('us-')) ensureSideSectionOpen('us');
         if (pageKey.startsWith('tw-')) ensureSideSectionOpen('tw');
 
         const pages = document.querySelectorAll('.dash-page');
-        pages.forEach((page) => {
-          page.classList.add('hidden');
-        });
+        pages.forEach((page) => page.classList.add('hidden'));
 
-        if (target) {
-          target.classList.remove('hidden');
-          window.scrollTo({ top: 0, behavior: 'auto' });
-        }
+        // ✅ 先確保 partial 真的被載進來
+        loadPartialIfNeeded(target);
+
+        target.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'auto' });
 
         // 更新 sidebar active 樣式
         const navButtons = document.querySelectorAll('[data-page]');
@@ -2189,7 +2128,7 @@
         activeButtons.forEach((btn) => btn.classList.add('side-item-active'));
       };
 
-      // Avatar 右上角 user menu
+      // Avatar menu
       function setupUserMenu() {
         const btn = document.getElementById('dash-user-toggle');
         const menu = document.getElementById('dash-user-menu');
@@ -2215,7 +2154,6 @@
         switchDashboardPage('overview');
       }
 
-      // 不管 DOMContentLoaded 有沒有發過，都會跑一次 init
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initDashboard);
       } else {
