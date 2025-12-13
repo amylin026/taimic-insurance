@@ -1149,100 +1149,12 @@
           </div>
         </div>
 
-        <!-- ===================== FAMILY (INLINE) ===================== -->
-        <div id="page-family" class="dash-page hidden family-page">
-          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
-            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
-              <div>
-                <p class="text-[11px] font-semibold tracking-[0.26em] text-slate-500 uppercase mb-2">
-                  Family governance
-                </p>
-                <h1 class="family-heading text-[26px] md:text-[32px] font-semibold text-slate-900 leading-tight">
-                  Family members &amp; access
-                </h1>
-                <p class="mt-3 text-xs md:text-sm text-slate-600 max-w-xl">
-                  Define who can see what inside your cross-border report. Start from the owner, then add spouse,
-                  children and trusted advisors instead of sharing passwords.
-                </p>
-              </div>
-
-              <div class="flex flex-wrap items-center gap-3">
-                <button
-                  type="button"
-                  class="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-transparent text-[11px] font-medium text-slate-700 px-3 py-2 hover:bg-white hover:border-slate-400"
-                >
-                  <i class="fa-solid fa-file-export text-[10px]"></i>
-                  <span>Export access matrix</span>
-                </button>
-                <button
-                  type="button"
-                  class="inline-flex items-center gap-2 rounded-full bg-[#002FA7] hover:bg-[#001a70] text-white text-[11px] font-semibold px-4 py-2 shadow-sm"
-                >
-                  <i class="fa-solid fa-user-plus text-[10px]"></i>
-                  <span>Invite member</span>
-                </button>
-              </div>
-            </div>
-
-            <div class="space-y-4">
-              <section class="family-card px-5 py-4">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div class="flex flex-col md:flex-row md:items-center gap-4">
-                    <div class="flex items-center gap-2 text-[11px]">
-                      <span class="text-[11px] font-semibold text-slate-900 tracking-[0.16em] uppercase">
-                        Members
-                      </span>
-                      <span class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-500">
-                        3 active
-                      </span>
-                    </div>
-
-                    <div class="flex items-center gap-4">
-                      <div class="flex flex-col items-center gap-1">
-                        <div class="relative">
-                          <div class="family-avatar w-9 h-9 text-[12px]">
-                            <span>O</span>
-                          </div>
-                          <span class="absolute -right-0.5 -bottom-0.5 w-3 h-3 rounded-full border border-white bg-emerald-400"></span>
-                        </div>
-                        <span class="text-[10px] text-slate-500">Owner</span>
-                      </div>
-
-                      <div class="flex flex-col items-center gap-1">
-                        <div class="relative">
-                          <div class="family-avatar w-9 h-9 text-[12px]">
-                            <span>S</span>
-                          </div>
-                          <span class="absolute -right-0.5 -bottom-0.5 w-3 h-3 rounded-full border border-white bg-emerald-400"></span>
-                        </div>
-                        <span class="text-[10px] text-slate-500">Spouse</span>
-                      </div>
-
-                      <div class="flex flex-col items-center gap-1">
-                        <div class="relative">
-                          <div class="family-avatar w-9 h-9 text-[12px]">
-                            <span>B</span>
-                          </div>
-                          <span class="absolute -right-0.5 -bottom-0.5 w-3 h-3 rounded-full border border-white bg-emerald-400"></span>
-                        </div>
-                        <span class="text-[10px] text-slate-500">Beneficiary</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    class="inline-flex items-center gap-2 rounded-full bg-[#002FA7] hover:bg-[#001a70] text-white text-[11px] font-semibold px-4 py-2 shadow-sm"
-                  >
-                    <i class="fa-solid fa-user-plus text-[10px]"></i>
-                    <span>Invite member</span>
-                  </button>
-                </div>
-              </section>
-            </div>
-
-          </div>
-        </div>
+      <!-- ===================== FAMILY (PARTIAL) ===================== -->
+<div
+  id="page-family"
+  class="dash-page hidden family-page"
+  data-include="pages/family.html"
+></div>
 
         <!-- ===================== TAIWAN: LIABILITIES (INLINE) ===================== -->
         <div id="page-tw-liabilities" class="dash-page hidden">
