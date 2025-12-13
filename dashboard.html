@@ -237,6 +237,23 @@
       height: 1px;
       background: linear-gradient(to right, rgba(148, 163, 184, 0.28), rgba(148, 163, 184, 0.06));
     }
+
+    /* ==========================================================
+       ✅ Insurance 字體統一（照 us-accounts 的標題/大數字 serif）
+       不改你的 partial 檔，載入後自動套用
+       ========================================================== */
+    #page-us-insurance h1,
+    #page-tw-insurance h1 {
+      font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
+    }
+
+    /* Insurance 頁面所有 mono/tabular 的數字 → 改成 serif（避免你不要的那種數字字體） */
+    #page-us-insurance .font-mono,
+    #page-tw-insurance .font-mono,
+    #page-us-insurance .tabular-nums,
+    #page-tw-insurance .tabular-nums {
+      font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
+    }
   </style>
 </head>
 
@@ -581,18 +598,18 @@
 
         <div id="page-us-stocks" class="dash-page hidden" data-include="pages/us-stocks.html"></div>
 
-        <!-- ✅ UPDATED: US FUNDS (The Efficiency Engine) -->
+        <!-- ✅ UPDATED: US FUNDS (Typography + title) -->
         <div id="page-us-funds" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
           <div class="flex flex-col gap-1">
             <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
               US assets
             </p>
-            <h1
-              class="text-xl md:text-2xl lg:text-3xl font-semibold tracking-tight text-[#002147] leading-tight"
-              style="font-family: 'Playfair Display', serif;"
-            >
-              Funds
+
+            <!-- ✅ Title: match us-accounts style + add "US" -->
+            <h1 class="text-[26px] md:text-[30px] font-semibold tracking-tight text-[#002147] font-serif leading-tight">
+              US funds
             </h1>
+
             <p class="text-sm text-slate-600 max-w-2xl">
               <span class="font-semibold text-[#002147]">The Efficiency Engine</span> — low-cost index ETFs, tax efficiency, and dividend yield.
             </p>
@@ -606,7 +623,8 @@
                 Total fund value
               </p>
               <div class="mt-2 flex items-end justify-between gap-3">
-                <div class="text-2xl md:text-3xl font-semibold text-[#002147] font-mono tabular-nums">
+                <!-- ✅ Number: serif like us-accounts -->
+                <div class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
                   $850,000.00
                 </div>
                 <span class="inline-flex items-center rounded-full bg-slate-50 text-slate-600 border border-slate-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
@@ -630,7 +648,8 @@
               </div>
 
               <div class="mt-2 flex items-end justify-between gap-3">
-                <div class="text-2xl md:text-3xl font-semibold text-emerald-700 font-mono tabular-nums">
+                <!-- ✅ Number: serif -->
+                <div class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-emerald-700">
                   0.04%
                 </div>
                 <div class="text-[11px] text-slate-500">
@@ -672,7 +691,8 @@
                 Dividend yield (TTM)
               </p>
               <div class="mt-2 flex items-end justify-between gap-3">
-                <div class="text-2xl md:text-3xl font-semibold text-[#002147] font-mono tabular-nums">
+                <!-- ✅ Number: serif -->
+                <div class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
                   1.85%
                 </div>
                 <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
@@ -881,18 +901,18 @@
 
         <div id="page-tw-stocks" class="dash-page hidden" data-include="pages/tw-stocks.html"></div>
 
-        <!-- ✅ UPDATED: TAIWAN FUNDS (The Risk Scanner) -->
+        <!-- ✅ UPDATED: TAIWAN FUNDS (Typography) -->
         <div id="page-tw-funds" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
           <div class="flex flex-col gap-1">
             <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
               Taiwan assets
             </p>
-            <h1
-              class="text-xl md:text-2xl lg:text-3xl font-semibold tracking-tight text-[#002147] leading-tight"
-              style="font-family: 'Playfair Display', serif;"
-            >
+
+            <!-- ✅ Title: match us-accounts serif -->
+            <h1 class="text-[26px] md:text-[30px] font-semibold tracking-tight text-[#002147] font-serif leading-tight">
               Funds
             </h1>
+
             <p class="text-sm text-slate-600 max-w-2xl">
               <span class="font-semibold text-[#002147]">The Risk Scanner</span> — active funds, high fees, and the <span class="font-semibold text-amber-700">PFIC</span> tax trap.
             </p>
@@ -906,7 +926,8 @@
                 Total value (USD equiv)
               </p>
               <div class="mt-2 flex items-end justify-between gap-3">
-                <div class="text-2xl md:text-3xl font-semibold text-[#002147] font-mono tabular-nums">
+                <!-- ✅ Number: serif -->
+                <div class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
                   $120,000.00
                 </div>
                 <span class="inline-flex items-center rounded-full bg-slate-50 text-slate-600 border border-slate-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
@@ -958,7 +979,8 @@
                 Est. hidden fees
               </p>
               <div class="mt-2 flex items-end justify-between gap-3">
-                <div class="text-2xl md:text-3xl font-semibold text-orange-700 font-mono tabular-nums">
+                <!-- ✅ Number: serif -->
+                <div class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-orange-700">
                   ~$2,400 / yr
                 </div>
                 <span class="inline-flex items-center rounded-full bg-orange-50 text-orange-700 border border-orange-200 px-3 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
