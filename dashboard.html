@@ -14,8 +14,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
   <!-- Serif heading font for magazine / family governance look -->
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;600;700&display=swap" rel="stylesheet" />
-  <!-- ✅ Add: Playfair Display for property names (Swiss Bank look) -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
 
   <!-- 設計系統 -->
   <link rel="stylesheet" href="main.css" />
@@ -636,71 +634,126 @@
       <!-- 右側內容 -->
       <main class="flex-1">
         <!-- Overview page：用 partial 載入 -->
-        <div id="page-overview" class="dash-page" data-include="pages/overview.html"></div>
+        <div
+          id="page-overview"
+          class="dash-page"
+          data-include="pages/overview.html"
+        ></div>
 
         <!-- US assets > Accounts page：用 partial 載入 -->
-        <div id="page-us-accounts" class="dash-page hidden" data-include="pages/us-accounts.html"></div>
+        <div
+          id="page-us-accounts"
+          class="dash-page hidden"
+          data-include="pages/us-accounts.html"
+        ></div>
 
         <!-- US assets > Stocks page：用 partial 載入 -->
-        <div id="page-us-stocks" class="dash-page hidden" data-include="pages/us-stocks.html"></div>
+        <div
+          id="page-us-stocks"
+          class="dash-page hidden"
+          data-include="pages/us-stocks.html"
+        ></div>
+
+        <!-- ⭐ 新增：US assets > House page：用 partial 載入 -->
+        <div
+          id="page-us-house"
+          class="dash-page hidden"
+          data-include="pages/us-house.html"
+        ></div>
 
         <!-- Taiwan assets > Accounts page -->
         <div id="page-tw-accounts" class="dash-page hidden">
-          <!-- (unchanged) -->
-          <!-- ... your existing Taiwan Accounts content stays exactly the same ... -->
-          <!-- NOTE: kept as-is; omitted here only if you later split partials -->
-          <!-- In this file, it is unchanged from your previous version. -->
-          <!-- To keep "整份" fully literal, I kept your content below unchanged. -->
+          <!-- 下面開始是你原本的 Taiwan accounts 內容，我完全沒動 -->
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
+            <!-- Title -->
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
               <div>
-                <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">Taiwan assets · Accounts</p>
-                <h1 class="text-[26px] md:text-[30px] font-semibold tracking-tight text-[#002147] font-serif">Taiwan bank accounts (FBAR view)</h1>
+                <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
+                  Taiwan assets · Accounts
+                </p>
+                <h1 class="text-[26px] md:text-[30px] font-semibold tracking-tight text-[#002147] font-serif">
+                  Taiwan bank accounts (FBAR view)
+                </h1>
                 <p class="mt-2 text-xs md:text-sm text-[#4B5563] max-w-xl">
                   Local TWD and FX deposits, translated into USD for IRS reporting and global allocation.
                 </p>
               </div>
               <div class="flex flex-wrap gap-2 text-[11px] text-[#4B5563]">
                 <span class="inline-flex items-center gap-1 rounded-full bg-green-50 text-green-900 px-2.5 py-1 border border-green-100">
-                  <i class="fa-solid fa-earth-asia text-[10px]"></i> Foreign accounts
+                  <i class="fa-solid fa-earth-asia text-[10px]"></i>
+                  Foreign accounts
                 </span>
                 <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-800 px-2.5 py-1 border border-amber-200">
-                  <i class="fa-solid fa-scale-balanced text-[10px]"></i> FBAR sensitive
+                  <i class="fa-solid fa-scale-balanced text-[10px]"></i>
+                  FBAR sensitive
                 </span>
               </div>
             </div>
 
+            <!-- Summary header -->
             <section class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Total balance (USD equiv) -->
                 <div>
-                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">Total balance (USD equiv.)</p>
-                  <p class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">$105,200.00</p>
-                  <p class="mt-1 text-[11px] text-[#6B7280]">Converted using end-of-year FX estimates</p>
+                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+                    Total balance (USD equiv.)
+                  </p>
+                  <p class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
+                    $105,200.00
+                  </p>
+                  <p class="mt-1 text-[11px] text-[#6B7280]">
+                    Converted using end-of-year FX estimates
+                  </p>
                 </div>
+
+                <!-- Original currency -->
                 <div>
-                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">Original currency total</p>
-                  <p class="text-base font-mono tabular-nums text-[#002147]">NT$ 3,419,000</p>
-                  <p class="mt-1 text-[11px] text-[#6B7280]">Includes TWD and foreign-currency sub-accounts</p>
+                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+                    Original currency total
+                  </p>
+                  <p class="text-base font-mono tabular-nums text-[#002147]">
+                    NT$ 3,419,000
+                  </p>
+                  <p class="mt-1 text-[11px] text-[#6B7280]">
+                    Includes TWD and foreign-currency sub-accounts
+                  </p>
                 </div>
+
+                <!-- FBAR risk badge -->
                 <div>
-                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">FBAR risk status</p>
+                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+                    FBAR risk status
+                  </p>
                   <div class="inline-flex items-center gap-2 rounded-full bg-amber-50 border border-amber-200 px-3 py-1.5">
                     <span class="text-base">⚠️</span>
-                    <span class="text-[11px] font-semibold text-amber-800 tracking-[0.12em] uppercase">FBAR filing required</span>
+                    <span class="text-[11px] font-semibold text-amber-800 tracking-[0.12em] uppercase">
+                      FBAR filing required
+                    </span>
                   </div>
-                  <p class="mt-1 text-[11px] text-[#6B7280]">Aggregate non-US balance exceeds $10,000 USD threshold.</p>
+                  <p class="mt-1 text-[11px] text-[#6B7280]">
+                    Aggregate non-US balance exceeds $10,000 USD threshold.
+                  </p>
                 </div>
               </div>
             </section>
 
+            <!-- Accounts table -->
             <section class="bg-white border border-gray-100 rounded-xl shadow-sm">
               <div class="px-6 pt-5 pb-3 flex items-center justify-between">
                 <div>
-                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">Taiwan accounts</p>
-                  <h2 class="text-sm font-semibold text-[#002147]">Deposits, FX and compliance flags</h2>
+                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+                    Taiwan accounts
+                  </p>
+                  <h2 class="text-sm font-semibold text-[#002147]">
+                    Deposits, FX and compliance flags
+                  </h2>
                 </div>
-                <button type="button" class="inline-flex items-center gap-2 rounded-full border border-green-100 bg-green-50 text-[11px] font-semibold text-green-900 px-3 py-1.5 hover:bg-green-100">
-                  <i class="fa-solid fa-plus text-[10px]"></i><span>Add Taiwan account</span>
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-2 rounded-full border border-green-100 bg-green-50 text-[11px] font-semibold text-green-900 px-3 py-1.5 hover:bg-green-100"
+                >
+                  <i class="fa-solid fa-plus text-[10px]"></i>
+                  <span>Add Taiwan account</span>
                 </button>
               </div>
 
@@ -720,32 +773,50 @@
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
                       <td class="py-5 px-6">
                         <div class="flex items-center gap-3">
-                          <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[11px] font-semibold text-green-900">C</div>
+                          <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[11px] font-semibold text-green-900">
+                            C
+                          </div>
                           <div>
-                            <p class="text-[13px] font-semibold text-[#002147]">CTBC Bank – Main TWD</p>
-                            <p class="text-[11px] text-[#6B7280]">Salary and daily expenses</p>
+                            <p class="text-[13px] font-semibold text-[#002147]">
+                              CTBC Bank – Main TWD
+                            </p>
+                            <p class="text-[11px] text-[#6B7280]">
+                              Salary and daily expenses
+                            </p>
                           </div>
                         </div>
                       </td>
-                      <td class="py-5 px-4 align-top text-[#4B5563]">TWD Deposit</td>
+                      <td class="py-5 px-4 align-top text-[#4B5563]">
+                        TWD Deposit
+                      </td>
                       <td class="py-5 px-4 align-top">
                         <div class="flex flex-col gap-0.5">
-                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">Ex: 32.50</span>
+                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                            Ex: 32.50
+                          </span>
                           <span class="inline-flex items-center gap-1 text-[11px] text-emerald-600">
-                            <i class="fa-solid fa-arrow-trend-up text-[10px]"></i> +0.3% vs last year
+                            <i class="fa-solid fa-arrow-trend-up text-[10px]"></i>
+                            +0.3% vs last year
                           </span>
                         </div>
                       </td>
                       <td class="py-5 px-4 align-top">
                         <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-800 px-2 py-0.5 text-[10px] font-medium border border-amber-200">
-                          <i class="fa-solid fa-file-circle-exclamation text-[9px]"></i> Reportable
+                          <i class="fa-solid fa-file-circle-exclamation text-[9px]"></i>
+                          Reportable
                         </span>
-                        <p class="mt-1 text-[10px] text-[#6B7280] max-w-[180px]">Included in FBAR aggregate. Keep year-end statement.</p>
+                        <p class="mt-1 text-[10px] text-[#6B7280] max-w-[180px]">
+                          Included in FBAR aggregate. Keep year-end statement.
+                        </p>
                       </td>
                       <td class="py-5 px-6 align-top text-right">
                         <div class="flex flex-col items-end">
-                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">$34,000</span>
-                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">NT$ 1,105,000</span>
+                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                            $34,000
+                          </span>
+                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">
+                            NT$ 1,105,000
+                          </span>
                         </div>
                       </td>
                     </tr>
@@ -754,32 +825,50 @@
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
                       <td class="py-5 px-6">
                         <div class="flex items-center gap-3">
-                          <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[11px] font-semibold text-green-900">P</div>
+                          <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[11px] font-semibold text-green-900">
+                            P
+                          </div>
                           <div>
-                            <p class="text-[13px] font-semibold text-[#002147]">Chunghwa Post – Savings</p>
-                            <p class="text-[11px] text-[#6B7280]">Low-activity parking account</p>
+                            <p class="text-[13px] font-semibold text-[#002147]">
+                              Chunghwa Post – Savings
+                            </p>
+                            <p class="text-[11px] text-[#6B7280]">
+                              Low-activity parking account
+                            </p>
                           </div>
                         </div>
                       </td>
-                      <td class="py-5 px-4 align-top text-[#4B5563]">TWD Deposit</td>
+                      <td class="py-5 px-4 align-top text-[#4B5563]">
+                        TWD Deposit
+                      </td>
                       <td class="py-5 px-4 align-top">
                         <div class="flex flex-col gap-0.5">
-                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">Ex: 32.50</span>
+                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                            Ex: 32.50
+                          </span>
                           <span class="inline-flex items-center gap-1 text-[11px] text-[#6B7280]">
-                            <i class="fa-solid fa-minus text-[9px]"></i> Stable
+                            <i class="fa-solid fa-minus text-[9px]"></i>
+                            Stable
                           </span>
                         </div>
                       </td>
                       <td class="py-5 px-4 align-top">
                         <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-800 px-2 py-0.5 text-[10px] font-medium border border-amber-200">
-                          <i class="fa-solid fa-file-circle-exclamation text-[9px]"></i> Reportable
+                          <i class="fa-solid fa-file-circle-exclamation text-[9px]"></i>
+                          Reportable
                         </span>
-                        <p class="mt-1 text-[10px] text-[#6B7280] max-w-[180px]">Small but still part of total if combined balances &gt; $10k.</p>
+                        <p class="mt-1 text-[10px] text-[#6B7280] max-w-[180px]">
+                          Small but still part of total if combined balances &gt; $10k.
+                        </p>
                       </td>
                       <td class="py-5 px-6 align-top text-right">
                         <div class="flex flex-col items-end">
-                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">$8,600</span>
-                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">NT$ 279,000</span>
+                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                            $8,600
+                          </span>
+                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">
+                            NT$ 279,000
+                          </span>
                         </div>
                       </td>
                     </tr>
@@ -788,32 +877,50 @@
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
                       <td class="py-5 px-6">
                         <div class="flex items-center gap-3">
-                          <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[11px] font-semibold text-green-900">F</div>
+                          <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[11px] font-semibold text-green-900">
+                            F
+                          </div>
                           <div>
-                            <p class="text-[13px] font-semibold text-[#002147]">Fubon – USD FX account</p>
-                            <p class="text-[11px] text-[#6B7280]">Holds USD inside Taiwan banking system</p>
+                            <p class="text-[13px] font-semibold text-[#002147]">
+                              Fubon – USD FX account
+                            </p>
+                            <p class="text-[11px] text-[#6B7280]">
+                              Holds USD inside Taiwan banking system
+                            </p>
                           </div>
                         </div>
                       </td>
-                      <td class="py-5 px-4 align-top text-[#4B5563]">Foreign currency deposit</td>
+                      <td class="py-5 px-4 align-top text-[#4B5563]">
+                        Foreign currency deposit
+                      </td>
                       <td class="py-5 px-4 align-top">
                         <div class="flex flex-col gap-0.5">
-                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">Ex: 1.00</span>
+                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                            Ex: 1.00
+                          </span>
                           <span class="inline-flex items-center gap-1 text-[11px] text-emerald-600">
-                            <i class="fa-solid fa-arrow-trend-up text-[10px]"></i> USD base
+                            <i class="fa-solid fa-arrow-trend-up text-[10px]"></i>
+                            USD base
                           </span>
                         </div>
                       </td>
                       <td class="py-5 px-4 align-top">
                         <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-800 px-2 py-0.5 text-[10px] font-medium border border-amber-200">
-                          <i class="fa-solid fa-file-circle-exclamation text-[9px]"></i> Reportable
+                          <i class="fa-solid fa-file-circle-exclamation text-[9px]"></i>
+                          Reportable
                         </span>
-                        <p class="mt-1 text-[10px] text-[#6B7280] max-w-[180px]">US-dollar denominated, but legally a foreign account.</p>
+                        <p class="mt-1 text-[10px] text-[#6B7280] max-w-[180px]">
+                          US-dollar denominated, but legally a foreign account.
+                        </p>
                       </td>
                       <td class="py-5 px-6 align-top text-right">
                         <div class="flex flex-col items-end">
-                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">$42,600</span>
-                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">USD 42,600</span>
+                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                            $42,600
+                          </span>
+                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">
+                            USD 42,600
+                          </span>
                         </div>
                       </td>
                     </tr>
@@ -822,32 +929,49 @@
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
                       <td class="py-5 px-6">
                         <div class="flex items-center gap-3">
-                          <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[11px] font-semibold text-green-900">M</div>
+                          <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[11px] font-semibold text-green-900">
+                            M
+                          </div>
                           <div>
-                            <p class="text-[13px] font-semibold text-[#002147]">Mega Bank – Children&apos;s account</p>
-                            <p class="text-[11px] text-[#6B7280]">Small educational savings, under joint control</p>
+                            <p class="text-[13px] font-semibold text-[#002147]">
+                              Mega Bank – Children&apos;s account
+                            </p>
+                            <p class="text-[11px] text-[#6B7280]">
+                              Small educational savings, under joint control
+                            </p>
                           </div>
                         </div>
                       </td>
-                      <td class="py-5 px-4 align-top text-[#4B5563]">TWD Deposit</td>
+                      <td class="py-5 px-4 align-top text-[#4B5563]">
+                        TWD Deposit
+                      </td>
                       <td class="py-5 px-4 align-top">
                         <div class="flex flex-col gap-0.5">
-                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">Ex: 32.50</span>
+                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                            Ex: 32.50
+                          </span>
                           <span class="inline-flex items-center gap-1 text-[11px] text-[#6B7280]">
-                            <i class="fa-solid fa-minus text-[9px]"></i> Stable
+                            <i class="fa-solid fa-minus text-[9px]"></i>
+                            Stable
                           </span>
                         </div>
                       </td>
                       <td class="py-5 px-4 align-top">
-                        <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 text-[#4B5563] px-2 py-0.5 text-[10px] font-medium border border-slate-200">Monitored</span>
+                        <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 text-[#4B5563] px-2 py-0.5 text-[10px] font-medium border border-slate-200">
+                          Monitored
+                        </span>
                         <p class="mt-1 text-[10px] text-[#6B7280] max-w-[180px]">
                           Small balance; still appears in family map but below typical FBAR materiality on its own.
                         </p>
                       </td>
                       <td class="py-5 px-6 align-top text-right">
                         <div class="flex flex-col items-end">
-                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">$20,000</span>
-                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">NT$ 630,000</span>
+                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                            $20,000
+                          </span>
+                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">
+                            NT$ 630,000
+                          </span>
                         </div>
                       </td>
                     </tr>
@@ -864,59 +988,98 @@
 
         <!-- Taiwan assets > Stocks page -->
         <div id="page-tw-stocks" class="dash-page hidden">
-          <!-- (unchanged from your previous version) -->
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
+            <!-- Title -->
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
               <div>
-                <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">Taiwan assets · Stocks</p>
-                <h1 class="text-[26px] md:text-[30px] font-semibold tracking-tight text-[#002147] font-serif">Taiwan equity &amp; PFIC exposure</h1>
+                <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
+                  Taiwan assets · Stocks
+                </p>
+                <h1 class="text-[26px] md:text-[30px] font-semibold tracking-tight text-[#002147] font-serif">
+                  Taiwan equity &amp; PFIC exposure
+                </h1>
                 <p class="mt-2 text-xs md:text-sm text-[#4B5563] max-w-xl">
                   TW-listed stocks and ETFs, translated into USD – with special attention to PFIC risk and FX drag.
                 </p>
               </div>
               <div class="flex flex-wrap gap-2 text-[11px] text-[#4B5563]">
                 <span class="inline-flex items-center gap-1 rounded-full bg-green-50 text-green-900 px-2.5 py-1 border border-green-100">
-                  <i class="fa-solid fa-leaf text-[10px]"></i> Local exposure
+                  <i class="fa-solid fa-leaf text-[10px]"></i>
+                  Local exposure
                 </span>
                 <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-800 px-2.5 py-1 border border-amber-200">
-                  <i class="fa-solid fa-bomb text-[10px]"></i> PFIC risk monitor
+                  <i class="fa-solid fa-bomb text-[10px]"></i>
+                  PFIC risk monitor
                 </span>
               </div>
             </div>
 
+            <!-- Exposure banner -->
             <section class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
               <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- USD value -->
                 <div>
-                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">Total value (USD)</p>
-                  <p class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">$52,100.00</p>
-                  <p class="mt-1 text-[11px] text-[#6B7280]">Based on latest available FX snapshot.</p>
+                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+                    Total value (USD)
+                  </p>
+                  <p class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
+                    $52,100.00
+                  </p>
+                  <p class="mt-1 text-[11px] text-[#6B7280]">
+                    Based on latest available FX snapshot.
+                  </p>
                 </div>
+
+                <!-- FX drag -->
                 <div>
-                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">FX drag (vs. pure TWD performance)</p>
-                  <p class="text-base font-mono tabular-nums text-[#CC5500]">-$1,200 USD impact</p>
-                  <p class="mt-1 text-[11px] text-[#6B7280]">TWD depreciation has offset part of local stock gains.</p>
+                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+                    FX drag (vs. pure TWD performance)
+                  </p>
+                  <p class="text-base font-mono tabular-nums text-[#CC5500]">
+                    -$1,200 USD impact
+                  </p>
+                  <p class="mt-1 text-[11px] text-[#6B7280]">
+                    TWD depreciation has offset part of local stock gains.
+                  </p>
                 </div>
+
+                <!-- PFIC warning -->
                 <div>
-                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">PFIC exposure</p>
+                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+                    PFIC exposure
+                  </p>
                   <div class="rounded-lg bg-amber-50 border border-amber-200 px-3 py-2 flex items-start gap-2">
                     <span class="mt-0.5 text-sm">⚠️</span>
                     <div>
-                      <p class="text-[12px] font-semibold text-amber-800">2 holdings flagged as potential PFIC</p>
-                      <p class="text-[11px] text-amber-800">Non-US ETFs and funds can receive harsh US tax treatment. Review with your advisor.</p>
+                      <p class="text-[12px] font-semibold text-amber-800">
+                        2 holdings flagged as potential PFIC
+                      </p>
+                      <p class="text-[11px] text-amber-800">
+                        Non-US ETFs and funds can receive harsh US tax treatment. Review with your advisor.
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
             </section>
 
+            <!-- Holdings table -->
             <section class="bg-white border border-gray-100 rounded-xl shadow-sm">
               <div class="px-6 pt-5 pb-3 flex items-center justify-between">
                 <div>
-                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">Taiwan equity holdings</p>
-                  <h2 class="text-sm font-semibold text-[#002147]">Local stocks, ETFs and funds</h2>
+                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+                    Taiwan equity holdings
+                  </p>
+                  <h2 class="text-sm font-semibold text-[#002147]">
+                    Local stocks, ETFs and funds
+                  </h2>
                 </div>
-                <button type="button" class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white text-[11px] font-semibold text-[#002147] px-3 py-1.5 hover:bg-[#F3F4F6]">
-                  <i class="fa-solid fa-filter-circle-dollar text-[10px]"></i><span>Filter by tax risk</span>
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white text-[11px] font-semibold text-[#002147] px-3 py-1.5 hover:bg-[#F3F4F6]"
+                >
+                  <i class="fa-solid fa-filter-circle-dollar text-[10px]"></i>
+                  <span>Filter by tax risk</span>
                 </button>
               </div>
 
@@ -932,86 +1095,166 @@
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-gray-100">
+                    <!-- 2330.TW TSMC (common stock) -->
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
-                      <td class="py-4 px-6 align-top"><span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">2330.TW</span></td>
+                      <td class="py-4 px-6 align-top">
+                        <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                          2330.TW
+                        </span>
+                      </td>
                       <td class="py-4 px-4 align-top">
-                        <p class="text-[13px] text-[#002147]">TSMC</p>
-                        <p class="text-[11px] text-[#6B7280]">Taiwan Semiconductor Manufacturing Co.</p>
+                        <p class="text-[13px] text-[#002147]">
+                          TSMC
+                        </p>
+                        <p class="text-[11px] text-[#6B7280]">
+                          Taiwan Semiconductor Manufacturing Co.
+                        </p>
                       </td>
                       <td class="py-4 px-4 align-top">
                         <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 text-[#4B5563] px-2 py-0.5 text-[10px] font-medium border border-slate-200">
-                          <i class="fa-solid fa-circle-check text-[9px]"></i> Common stock
+                          <i class="fa-solid fa-circle-check text-[9px]"></i>
+                          Common stock
                         </span>
-                        <p class="mt-1 text-[10px] text-[#6B7280] max-w-[180px]">Generally not treated as PFIC for US tax purposes.</p>
+                        <p class="mt-1 text-[10px] text-[#6B7280] max-w-[180px]">
+                          Generally not treated as PFIC for US tax purposes.
+                        </p>
                       </td>
-                      <td class="py-4 px-4 align-top"><span class="font-mono tabular-nums text-[#002147]">NT$ 980.00</span></td>
+                      <td class="py-4 px-4 align-top">
+                        <span class="font-mono tabular-nums text-[#002147]">
+                          NT$ 980.00
+                        </span>
+                      </td>
                       <td class="py-4 px-6 align-top text-right">
                         <div class="flex flex-col items-end">
-                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">$45,200</span>
-                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">NT$ 1,450,000</span>
+                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                            $45,200
+                          </span>
+                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">
+                            NT$ 1,450,000
+                          </span>
                         </div>
                       </td>
                     </tr>
 
+                    <!-- 0050.TW PFIC risk ETF -->
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
-                      <td class="py-4 px-6 align-top"><span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">0050.TW</span></td>
+                      <td class="py-4 px-6 align-top">
+                        <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                          0050.TW
+                        </span>
+                      </td>
                       <td class="py-4 px-4 align-top">
-                        <p class="text-[13px] text-[#002147]">Yuanta Taiwan 50</p>
-                        <p class="text-[11px] text-[#6B7280]">Domestic index ETF</p>
+                        <p class="text-[13px] text-[#002147]">
+                          Yuanta Taiwan 50
+                        </p>
+                        <p class="text-[11px] text-[#6B7280]">
+                          Domestic index ETF
+                        </p>
                       </td>
                       <td class="py-4 px-4 align-top">
                         <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-800 px-2 py-0.5 text-[10px] font-medium border border-amber-200">
-                          <i class="fa-solid fa-triangle-exclamation text-[9px]"></i> Passive foreign inv.
+                          <i class="fa-solid fa-triangle-exclamation text-[9px]"></i>
+                          Passive foreign inv.
                         </span>
-                        <p class="mt-1 text-[10px] text-[#6B7280] max-w-[200px]">Potential PFIC. US taxpayers often face punitive mark-to-market or QEF elections.</p>
+                        <p class="mt-1 text-[10px] text-[#6B7280] max-w-[200px]">
+                          Potential PFIC. US taxpayers often face punitive mark-to-market or QEF elections.
+                        </p>
                       </td>
-                      <td class="py-4 px-4 align-top"><span class="font-mono tabular-nums text-[#002147]">NT$ 156.30</span></td>
+                      <td class="py-4 px-4 align-top">
+                        <span class="font-mono tabular-nums text-[#002147]">
+                          NT$ 156.30
+                        </span>
+                      </td>
                       <td class="py-4 px-6 align-top text-right">
                         <div class="flex flex-col items-end">
-                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">$5,800</span>
-                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">NT$ 186,000</span>
+                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                            $5,800
+                          </span>
+                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">
+                            NT$ 186,000
+                          </span>
                         </div>
                       </td>
                     </tr>
 
+                    <!-- 00878.TW high dividend ETF (PFIC) -->
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
-                      <td class="py-4 px-6 align-top"><span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">00878.TW</span></td>
+                      <td class="py-4 px-6 align-top">
+                        <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                          00878.TW
+                        </span>
+                      </td>
                       <td class="py-4 px-4 align-top">
-                        <p class="text-[13px] text-[#002147]">Yuanta High Dividend</p>
-                        <p class="text-[11px] text-[#6B7280]">High-yield equity ETF</p>
+                        <p class="text-[13px] text-[#002147]">
+                          Yuanta High Dividend
+                        </p>
+                        <p class="text-[11px] text-[#6B7280]">
+                          High-yield equity ETF
+                        </p>
                       </td>
                       <td class="py-4 px-4 align-top">
                         <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-800 px-2 py-0.5 text-[10px] font-medium border border-amber-200">
-                          <i class="fa-solid fa-triangle-exclamation text-[9px]"></i> Passive foreign inv.
+                          <i class="fa-solid fa-triangle-exclamation text-[9px]"></i>
+                          Passive foreign inv.
                         </span>
-                        <p class="mt-1 text-[10px] text-[#6B7280] max-w-[200px]">Likely PFIC. Dividend-focused foreign ETFs need special US tax handling.</p>
+                        <p class="mt-1 text-[10px] text-[#6B7280] max-w-[200px]">
+                          Likely PFIC. Dividend-focused foreign ETFs need special US tax handling.
+                        </p>
                       </td>
-                      <td class="py-4 px-4 align-top"><span class="font-mono tabular-nums text-[#002147]">NT$ 21.50</span></td>
+                      <td class="py-4 px-4 align-top">
+                        <span class="font-mono tabular-nums text-[#002147]">
+                          NT$ 21.50
+                        </span>
+                      </td>
                       <td class="py-4 px-6 align-top text-right">
                         <div class="flex flex-col items-end">
-                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">$1,100</span>
-                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">NT$ 35,000</span>
+                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                            $1,100
+                          </span>
+                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">
+                            NT$ 35,000
+                          </span>
                         </div>
                       </td>
                     </tr>
 
+                    <!-- 2882.TW Common stock example -->
                     <tr class="hover:bg-[#F9FAFB] transition-colors">
-                      <td class="py-4 px-6 align-top"><span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">2882.TW</span></td>
+                      <td class="py-4 px-6 align-top">
+                        <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                          2882.TW
+                        </span>
+                      </td>
                       <td class="py-4 px-4 align-top">
-                        <p class="text-[13px] text-[#002147]">Cathay Financial</p>
-                        <p class="text-[11px] text-[#6B7280]">Large cap financial stock</p>
+                        <p class="text-[13px] text-[#002147]">
+                          Cathay Financial
+                        </p>
+                        <p class="text-[11px] text-[#6B7280]">
+                          Large cap financial stock
+                        </p>
                       </td>
                       <td class="py-4 px-4 align-top">
                         <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 text-[#4B5563] px-2 py-0.5 text-[10px] font-medium border border-slate-200">
-                          <i class="fa-solid fa-circle-check text-[9px]"></i> Common stock
+                          <i class="fa-solid fa-circle-check text-[9px]"></i>
+                          Common stock
                         </span>
-                        <p class="mt-1 text-[10px] text-[#6B7280] max-w-[180px]">Equity position, typically outside PFIC scope.</p>
+                        <p class="mt-1 text-[10px] text-[#6B7280] max-w-[180px]">
+                          Equity position, typically outside PFIC scope.
+                        </p>
                       </td>
-                      <td class="py-4 px-4 align-top"><span class="font-mono tabular-nums text-[#002147]">NT$ 46.20</span></td>
+                      <td class="py-4 px-4 align-top">
+                        <span class="font-mono tabular-nums text-[#002147]">
+                          NT$ 46.20
+                        </span>
+                      </td>
                       <td class="py-4 px-6 align-top text-right">
                         <div class="flex flex-col items-end">
-                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">$5,000</span>
-                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">NT$ 160,000</span>
+                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                            $5,000
+                          </span>
+                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">
+                            NT$ 160,000
+                          </span>
                         </div>
                       </td>
                     </tr>
@@ -1028,12 +1271,16 @@
 
         <!-- Family members page -->
         <div id="page-family" class="dash-page hidden family-page">
-          <!-- (unchanged) -->
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+            <!-- Top: title + actions -->
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
               <div>
-                <p class="text-[11px] font-semibold tracking-[0.26em] text-slate-500 uppercase mb-2">Family governance</p>
-                <h1 class="family-heading text-[26px] md:text-[32px] font-semibold text-slate-900 leading-tight">Family members &amp; access</h1>
+                <p class="text-[11px] font-semibold tracking-[0.26em] text-slate-500 uppercase mb-2">
+                  Family governance
+                </p>
+                <h1 class="family-heading text-[26px] md:text-[32px] font-semibold text-slate-900 leading-tight">
+                  Family members &amp; access
+                </h1>
                 <p class="mt-3 text-xs md:text-sm text-slate-600 max-w-xl">
                   Define who can see what inside your cross-border report. Start from the owner, then add spouse,
                   children and trusted advisors instead of sharing passwords.
@@ -1041,44 +1288,69 @@
               </div>
 
               <div class="flex flex-wrap items-center gap-3">
-                <button type="button" class="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-transparent text-[11px] font-medium text-slate-700 px-3 py-2 hover:bg-white hover:border-slate-400">
-                  <i class="fa-solid fa-file-export text-[10px]"></i><span>Export access matrix</span>
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-transparent text-[11px] font-medium text-slate-700 px-3 py-2 hover:bg-white hover:border-slate-400"
+                >
+                  <i class="fa-solid fa-file-export text-[10px]"></i>
+                  <span>Export access matrix</span>
                 </button>
-                <button type="button" class="inline-flex items-center gap-2 rounded-full bg-[#002FA7] hover:bg-[#001a70] text-white text-[11px] font-semibold px-4 py-2 shadow-sm">
-                  <i class="fa-solid fa-user-plus text-[10px]"></i><span>Invite member</span>
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-2 rounded-full bg-[#002FA7] hover:bg-[#001a70] text-white text-[11px] font-semibold px-4 py-2 shadow-sm"
+                >
+                  <i class="fa-solid fa-user-plus text-[10px]"></i>
+                  <span>Invite member</span>
                 </button>
               </div>
             </div>
 
+            <!-- Members row -->
             <div class="space-y-4">
               <section class="family-card px-5 py-4">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <!-- 左邊：MEMBERS + 3 active + 頭像列 -->
                   <div class="flex flex-col md:flex-row md:items-center gap-4">
                     <div class="flex items-center gap-2 text-[11px]">
-                      <span class="text-[11px] font-semibold text-slate-900 tracking-[0.16em] uppercase">Members</span>
-                      <span class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-500">3 active</span>
+                      <span class="text-[11px] font-semibold text-slate-900 tracking-[0.16em] uppercase">
+                        Members
+                      </span>
+                      <span class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-500">
+                        3 active
+                      </span>
                     </div>
 
+                    <!-- 頭像列：O / S / B -->
                     <div class="flex items-center gap-4">
+                      <!-- Owner -->
                       <div class="flex flex-col items-center gap-1">
                         <div class="relative">
-                          <div class="family-avatar w-9 h-9 text-[12px]"><span>O</span></div>
+                          <div class="family-avatar w-9 h-9 text-[12px]">
+                            <span>O</span>
+                          </div>
+                          <!-- 線上綠點 -->
                           <span class="absolute -right-0.5 -bottom-0.5 w-3 h-3 rounded-full border border-white bg-emerald-400"></span>
                         </div>
                         <span class="text-[10px] text-slate-500">Owner</span>
                       </div>
 
+                      <!-- Spouse -->
                       <div class="flex flex-col items-center gap-1">
                         <div class="relative">
-                          <div class="family-avatar w-9 h-9 text-[12px]"><span>S</span></div>
+                          <div class="family-avatar w-9 h-9 text-[12px]">
+                            <span>S</span>
+                          </div>
                           <span class="absolute -right-0.5 -bottom-0.5 w-3 h-3 rounded-full border border-white bg-emerald-400"></span>
                         </div>
                         <span class="text-[10px] text-slate-500">Spouse</span>
                       </div>
 
+                      <!-- Beneficiary -->
                       <div class="flex flex-col items-center gap-1">
                         <div class="relative">
-                          <div class="family-avatar w-9 h-9 text-[12px]"><span>B</span></div>
+                          <div class="family-avatar w-9 h-9 text-[12px]">
+                            <span>B</span>
+                          </div>
                           <span class="absolute -right-0.5 -bottom-0.5 w-3 h-3 rounded-full border border-white bg-emerald-400"></span>
                         </div>
                         <span class="text-[10px] text-slate-500">Beneficiary</span>
@@ -1086,712 +1358,365 @@
                     </div>
                   </div>
 
-                  <button type="button" class="inline-flex items-center gap-2 rounded-full bg-[#002FA7] hover:bg-[#001a70] text-white text-[11px] font-semibold px-4 py-2 shadow-sm">
-                    <i class="fa-solid fa-user-plus text-[10px]"></i><span>Invite member</span>
+                  <!-- 右邊：Invite member 按鈕 -->
+                  <button
+                    type="button"
+                    class="inline-flex items-center gap-2 rounded-full bg-[#002FA7] hover:bg-[#001a70] text-white text-[11px] font-semibold px-4 py-2 shadow-sm"
+                  >
+                    <i class="fa-solid fa-user-plus text-[10px]"></i>
+                    <span>Invite member</span>
                   </button>
                 </div>
               </section>
             </div>
+
           </div>
         </div>
 
-        <!-- US assets > Liabilities page（partial） -->
-        <div id="page-us-liabilities" class="dash-page hidden" data-include="pages/us-liabilities.html"></div>
+        <!-- US assets > Liabilities page：這個目前還沒拆，保留你之後要用 -->
+        <div id="page-us-liabilities" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
+            US liabilities
+          </h1>
+          <p class="text-sm text-[#4B5563]">Placeholder section for US liabilities (you can later replace with partial).</p>
+        </div>
 
-        <!-- =================================================== -->
-        <!-- ✅ NEW: US Assets > House (Equity Monitor)           -->
-        <!-- =================================================== -->
-        <div id="page-us-house" class="dash-page hidden">
+        <!-- Taiwan assets > Liabilities page -->
+        <div id="page-tw-liabilities" class="dash-page hidden">
           <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
             <!-- Title -->
             <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
               <div>
                 <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
-                  US assets · House
+                  Taiwan assets · Liabilities
                 </p>
-                <h1 class="text-[26px] md:text-[30px] font-semibold tracking-tight text-[#002147]"
-                    style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
-                  The Equity Monitor
+                <h1 class="text-[26px] md:text-[30px] font-semibold tracking-tight text-[#002147] font-serif">
+                  Strategic leverage &amp; FX risk
                 </h1>
-                <p class="mt-2 text-xs md:text-sm text-[#4B5563] max-w-2xl">
-                  Live valuation snapshots + leverage view. Track what matters: <span class="font-semibold">net equity</span>, not just price.
-                </p>
-              </div>
-
-              <div class="flex flex-wrap gap-2 text-[11px] text-[#4B5563]">
-                <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-blue-900 px-2.5 py-1 border border-blue-100">
-                  <i class="fa-solid fa-chart-line text-[10px]"></i>
-                  Wealth building
-                </span>
-                <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-800 px-2.5 py-1 border border-amber-200">
-                  <i class="fa-solid fa-link text-[10px]"></i>
-                  Leverage view
-                </span>
-                <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 text-slate-700 px-2.5 py-1 border border-slate-200">
-                  <i class="fa-solid fa-signal text-[10px]"></i>
-                  Live Zestimate
-                </span>
-              </div>
-            </div>
-
-            <!-- Summary Header (3 key metrics) -->
-            <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <!-- Total Est. Value -->
-              <div class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
-                <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
-                  Total est. value
-                </p>
-                <p class="text-2xl md:text-3xl font-semibold tracking-tight text-[#002147]"
-                   style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
-                  $1,450,000.00
-                </p>
-                <p class="mt-1 text-[11px] text-[#6B7280]">
-                  Source: Zestimate-style estimate (demo)
-                </p>
-              </div>
-
-              <!-- Net Equity -->
-              <div class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
-                <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
-                  Net equity (real wealth)
-                </p>
-                <div class="flex items-end justify-between gap-4">
-                  <p class="text-2xl md:text-3xl font-semibold tracking-tight text-[#002147]"
-                     style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
-                    $850,000.00
-                  </p>
-                  <span class="inline-flex items-center rounded-full bg-blue-50 border border-blue-100 px-2.5 py-1 text-[11px] font-semibold text-[#002147]">
-                    Equity
-                  </span>
-                </div>
-                <p class="mt-2 text-[11px] text-[#6B7280]">
-                  Value − mortgage balance (portfolio view).
-                </p>
-              </div>
-
-              <!-- LTV -->
-              <div class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
-                <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
-                  Loan-to-value (LTV)
-                </p>
-                <div class="flex items-end justify-between gap-4">
-                  <p class="text-xl md:text-2xl font-semibold font-mono tabular-nums text-[#002147]">
-                    41%
-                  </p>
-                  <span class="inline-flex items-center rounded-full bg-slate-100 border border-slate-200 px-2.5 py-1 text-[11px] font-semibold text-slate-700">
-                    Safe (&lt;80%)
-                  </span>
-                </div>
-                <p class="mt-2 text-[11px] text-[#6B7280]">
-                  Conservative leverage level for refinancing flexibility.
-                </p>
-              </div>
-            </section>
-
-            <!-- Cards header row -->
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">Properties</p>
-                <h2 class="text-sm font-semibold text-[#002147]">Card view (1–3 homes typical)</h2>
-              </div>
-
-              <button type="button"
-                class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white text-[11px] font-semibold text-[#002147] px-3 py-1.5 hover:bg-[#F3F4F6]">
-                <i class="fa-solid fa-plus text-[10px]"></i>
-                <span>Add property</span>
-              </button>
-            </div>
-
-            <!-- Property Cards -->
-            <div class="space-y-4">
-              <!-- Property 1 -->
-              <section class="bg-white border border-gray-100 rounded-xl shadow-sm p-5">
-                <div class="flex flex-col lg:flex-row lg:items-center gap-5">
-                  <!-- Left: Visual & ID -->
-                  <div class="flex items-start gap-4 lg:w-[42%]">
-                    <img
-                      src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1200&q=80"
-                      alt="Modern US house"
-                      class="w-28 h-24 rounded-xl object-cover border border-slate-200"
-                      loading="lazy"
-                    />
-                    <div class="min-w-0">
-                      <p class="text-[11px] tracking-[0.16em] uppercase text-[#9CA3AF]">Property</p>
-                      <p class="text-[15px] font-semibold text-[#002147] truncate"
-                         style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
-                        123 Maple Ave
-                      </p>
-                      <p class="mt-0.5 text-[12px] text-[#4B5563] truncate">
-                        Sunnyvale, CA 94086
-                      </p>
-
-                      <div class="mt-2 flex flex-wrap gap-2">
-                        <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-blue-900 px-2.5 py-1 border border-blue-100 text-[11px] font-semibold">
-                          <i class="fa-solid fa-house-circle-check text-[10px]"></i>
-                          Primary residence
-                        </span>
-                        <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 text-slate-700 px-2.5 py-1 border border-slate-200 text-[11px]">
-                          <i class="fa-solid fa-clock text-[10px]"></i>
-                          Updated: just now
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Middle: Valuation -->
-                  <div class="lg:w-[30%]">
-                    <p class="text-[11px] tracking-[0.16em] uppercase text-[#9CA3AF] mb-1">Valuation</p>
-                    <div class="flex items-end justify-between gap-4">
-                      <p class="text-xl md:text-2xl font-semibold text-[#002147]"
-                         style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
-                        $1.45M
-                      </p>
-                      <span class="inline-flex items-center gap-1 rounded-full bg-white border border-slate-200 px-2 py-0.5 text-[11px] text-slate-700">
-                        <span class="w-4 h-4 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold">Z</span>
-                        Zillow estimate
-                      </span>
-                    </div>
-
-                    <div class="mt-2 flex items-center gap-2 text-[12px]">
-                      <span class="inline-flex items-center gap-1 text-emerald-700">
-                        <i class="fa-solid fa-arrow-trend-up text-[11px]"></i>
-                        +$120k
-                      </span>
-                      <span class="text-[#6B7280]">(all time)</span>
-                    </div>
-
-                    <div class="mt-3 grid grid-cols-2 gap-3">
-                      <div class="rounded-lg bg-[#F9FAFB] border border-slate-200 px-3 py-2">
-                        <p class="text-[10px] uppercase tracking-[0.16em] text-[#9CA3AF]">Mortgage balance</p>
-                        <p class="mt-1 font-mono tabular-nums text-[12px] font-semibold text-[#002147]">$600,000</p>
-                      </div>
-                      <div class="rounded-lg bg-[#F9FAFB] border border-slate-200 px-3 py-2">
-                        <p class="text-[10px] uppercase tracking-[0.16em] text-[#9CA3AF]">Est. equity</p>
-                        <p class="mt-1 font-mono tabular-nums text-[12px] font-semibold text-[#002147]">$850,000</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Right: Tax & Loan -->
-                  <div class="lg:w-[28%]">
-                    <p class="text-[11px] tracking-[0.16em] uppercase text-[#9CA3AF] mb-1">Tax &amp; loan</p>
-
-                    <div class="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2">
-                      <div class="flex items-center justify-between gap-3">
-                        <p class="font-mono tabular-nums text-[13px] font-semibold text-amber-900">
-                          2.875% FIXED
-                        </p>
-                        <span class="inline-flex items-center rounded-full bg-white/70 border border-amber-200 px-2 py-0.5 text-[10px] font-semibold text-amber-900">
-                          Golden handcuff
-                        </span>
-                      </div>
-                      <p class="mt-1 text-[11px] text-amber-900/80">
-                        Low-rate asset — protect it.
-                      </p>
-                    </div>
-
-                    <div class="mt-3 flex flex-col gap-2">
-                      <span class="inline-flex items-center gap-2 rounded-full bg-green-50 border border-green-100 px-3 py-1.5 text-[11px] font-semibold text-green-900">
-                        <i class="fa-solid fa-circle-check text-[11px]"></i>
-                        Interest deductible
-                      </span>
-                      <span class="inline-flex items-center gap-2 rounded-full bg-slate-100 border border-slate-200 px-3 py-1.5 text-[11px] text-slate-700">
-                        <i class="fa-solid fa-file-invoice-dollar text-[11px]"></i>
-                        Property tax: <span class="font-mono tabular-nums font-semibold">$11,800/yr</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              <!-- Property 2 -->
-              <section class="bg-white border border-gray-100 rounded-xl shadow-sm p-5">
-                <div class="flex flex-col lg:flex-row lg:items-center gap-5">
-                  <div class="flex items-start gap-4 lg:w-[42%]">
-                    <img
-                      src="https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1200&q=80"
-                      alt="US rental house"
-                      class="w-28 h-24 rounded-xl object-cover border border-slate-200"
-                      loading="lazy"
-                    />
-                    <div class="min-w-0">
-                      <p class="text-[11px] tracking-[0.16em] uppercase text-[#9CA3AF]">Property</p>
-                      <p class="text-[15px] font-semibold text-[#002147] truncate"
-                         style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
-                        88 Ocean View Dr
-                      </p>
-                      <p class="mt-0.5 text-[12px] text-[#4B5563] truncate">
-                        San Diego, CA 92101
-                      </p>
-
-                      <div class="mt-2 flex flex-wrap gap-2">
-                        <span class="inline-flex items-center gap-1 rounded-full bg-green-50 text-green-900 px-2.5 py-1 border border-green-100 text-[11px] font-semibold">
-                          <i class="fa-solid fa-key text-[10px]"></i>
-                          Rental
-                        </span>
-                        <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 text-slate-700 px-2.5 py-1 border border-slate-200 text-[11px]">
-                          <i class="fa-solid fa-signal text-[10px]"></i>
-                          Live rent comps
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="lg:w-[30%]">
-                    <p class="text-[11px] tracking-[0.16em] uppercase text-[#9CA3AF] mb-1">Valuation</p>
-                    <div class="flex items-end justify-between gap-4">
-                      <p class="text-xl md:text-2xl font-semibold text-[#002147]"
-                         style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
-                        $620k
-                      </p>
-                      <span class="inline-flex items-center gap-1 rounded-full bg-white border border-slate-200 px-2 py-0.5 text-[11px] text-slate-700">
-                        <span class="w-4 h-4 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold">Z</span>
-                        Zillow estimate
-                      </span>
-                    </div>
-
-                    <div class="mt-2 flex items-center gap-2 text-[12px]">
-                      <span class="inline-flex items-center gap-1 text-emerald-700">
-                        <i class="fa-solid fa-arrow-trend-up text-[11px]"></i>
-                        +$68k
-                      </span>
-                      <span class="text-[#6B7280]">(all time)</span>
-                    </div>
-
-                    <div class="mt-3 grid grid-cols-2 gap-3">
-                      <div class="rounded-lg bg-[#F9FAFB] border border-slate-200 px-3 py-2">
-                        <p class="text-[10px] uppercase tracking-[0.16em] text-[#9CA3AF]">Mortgage</p>
-                        <p class="mt-1 font-mono tabular-nums text-[12px] font-semibold text-[#002147]">$290,000</p>
-                      </div>
-                      <div class="rounded-lg bg-[#F9FAFB] border border-slate-200 px-3 py-2">
-                        <p class="text-[10px] uppercase tracking-[0.16em] text-[#9CA3AF]">Est. equity</p>
-                        <p class="mt-1 font-mono tabular-nums text-[12px] font-semibold text-[#002147]">$330,000</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="lg:w-[28%]">
-                    <p class="text-[11px] tracking-[0.16em] uppercase text-[#9CA3AF] mb-1">Tax &amp; loan</p>
-
-                    <div class="rounded-lg border border-slate-200 bg-[#F9FAFB] px-3 py-2">
-                      <div class="flex items-center justify-between gap-3">
-                        <p class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
-                          6.25% ARM
-                        </p>
-                        <span class="inline-flex items-center rounded-full bg-white border border-slate-200 px-2 py-0.5 text-[10px] font-semibold text-slate-700">
-                          Refi watch
-                        </span>
-                      </div>
-                      <p class="mt-1 text-[11px] text-[#6B7280]">
-                        Consider refi when spreads normalize.
-                      </p>
-                    </div>
-
-                    <div class="mt-3 flex flex-col gap-2">
-                      <span class="inline-flex items-center gap-2 rounded-full bg-amber-50 border border-amber-200 px-3 py-1.5 text-[11px] font-semibold text-amber-900">
-                        <i class="fa-solid fa-triangle-exclamation text-[11px]"></i>
-                        Rental income reportable
-                      </span>
-                      <span class="inline-flex items-center gap-2 rounded-full bg-slate-100 border border-slate-200 px-3 py-1.5 text-[11px] text-slate-700">
-                        <i class="fa-solid fa-receipt text-[11px]"></i>
-                        Depreciation: <span class="font-mono tabular-nums font-semibold">active</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            </div>
-
-            <div class="text-[11px] text-[#6B7280]">
-              Estimates are informational. In production, valuation sources can be connected (Zillow/Redfin/MLS) with user consent.
-            </div>
-          </div>
-        </div>
-
-        <div id="page-us-crypto" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
-          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">US crypto</h1>
-          <p class="text-sm text-[#4B5563]">Placeholder section for US crypto holdings.</p>
-        </div>
-
-        <div id="page-us-insurance" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
-          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">US insurance</h1>
-          <p class="text-sm text-[#4B5563]">Placeholder section for US insurance policies.</p>
-        </div>
-
-        <!-- Taiwan assets > Liabilities page -->
-        <div id="page-tw-liabilities" class="dash-page hidden">
-          <!-- (unchanged) -->
-          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
-            <!-- ... your existing Taiwan Liabilities content stays exactly the same ... -->
-            <!-- (kept as-is from your previous version) -->
-            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-              <div>
-                <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">Taiwan assets · Liabilities</p>
-                <h1 class="text-[26px] md:text-[30px] font-semibold tracking-tight text-[#002147] font-serif">Strategic leverage &amp; FX risk</h1>
                 <p class="mt-2 text-xs md:text-sm text-[#4B5563] max-w-2xl">
                   Low-rate leverage view: cheap TWD debt can be strategically beneficial, but monthly FX burden and cash flow discipline matter.
                 </p>
               </div>
               <div class="flex flex-wrap gap-2 text-[11px] text-[#4B5563]">
                 <span class="inline-flex items-center gap-1 rounded-full bg-green-50 text-green-900 px-2.5 py-1 border border-green-100">
-                  <i class="fa-solid fa-leaf text-[10px]"></i> Low-rate edge
+                  <i class="fa-solid fa-leaf text-[10px]"></i>
+                  Low-rate edge
                 </span>
                 <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-blue-900 px-2.5 py-1 border border-blue-100">
-                  <i class="fa-solid fa-arrows-rotate text-[10px]"></i> Cross-border cashflow
+                  <i class="fa-solid fa-arrows-rotate text-[10px]"></i>
+                  Cross-border cashflow
                 </span>
               </div>
             </div>
 
+            <!-- Summary Header: 3 Key Metrics Cards -->
             <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <!-- 1) Total Debt (USD Equiv) -->
               <div class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
-                <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">Total debt (USD equiv.)</p>
+                <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+                  Total debt (USD equiv.)
+                </p>
                 <p class="text-2xl md:text-3xl font-semibold tracking-tight text-[#002147]"
                    style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
                   $310,000.00
                 </p>
-                <p class="mt-1 text-[11px] text-[#6B7280]">3 active loans · translated for global view</p>
+                <p class="mt-1 text-[11px] text-[#6B7280]">
+                  3 active loans · translated for global view
+                </p>
               </div>
 
+              <!-- 2) Weighted Avg Rate (Good News) -->
               <div class="bg-green-50 border border-green-100 rounded-xl shadow-sm px-6 py-5">
-                <p class="text-[11px] tracking-[0.18em] uppercase text-green-800/70 mb-1">Weighted avg rate</p>
+                <p class="text-[11px] tracking-[0.18em] uppercase text-green-800/70 mb-1">
+                  Weighted avg rate
+                </p>
                 <div class="flex items-end justify-between gap-4">
-                  <p class="text-2xl md:text-3xl font-semibold font-mono tabular-nums text-green-900">2.15%</p>
-                  <span class="inline-flex items-center rounded-full bg-white/70 border border-green-200 px-2.5 py-1 text-[11px] font-semibold text-green-800">Cheap debt</span>
+                  <p class="text-2xl md:text-3xl font-semibold font-mono tabular-nums text-green-900">
+                    2.15%
+                  </p>
+                  <span class="inline-flex items-center rounded-full bg-white/70 border border-green-200 px-2.5 py-1 text-[11px] font-semibold text-green-800">
+                    Cheap debt
+                  </span>
                 </div>
-                <p class="mt-2 text-[11px] text-green-900/70">You’re “winning” vs typical US borrowing costs — keep it stable and avoid FX surprises.</p>
+                <p class="mt-2 text-[11px] text-green-900/70">
+                  You’re “winning” vs typical US borrowing costs — keep it stable and avoid FX surprises.
+                </p>
               </div>
 
+              <!-- 3) Monthly FX Burden -->
               <div class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
-                <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">Monthly FX burden</p>
-                <p class="text-xl md:text-2xl font-semibold font-mono tabular-nums text-[#002147]">NT$ 45,000</p>
-                <p class="mt-1 text-[11px] text-[#6B7280]">approx. <span class="font-mono tabular-nums">$1,400 USD</span></p>
+                <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+                  Monthly FX burden
+                </p>
+                <p class="text-xl md:text-2xl font-semibold font-mono tabular-nums text-[#002147]">
+                  NT$ 45,000
+                </p>
+                <p class="mt-1 text-[11px] text-[#6B7280]">
+                  approx. <span class="font-mono tabular-nums">$1,400 USD</span>
+                </p>
               </div>
             </section>
 
-            <!-- ... table stays unchanged ... -->
-            <!-- (kept from your previous version) -->
-            <!-- (for brevity: already included in your file content) -->
+            <!-- Liabilities Table (Currency focus) -->
+            <section class="bg-white border border-gray-100 rounded-xl shadow-sm">
+              <div class="px-6 pt-5 pb-3 flex items-center justify-between">
+                <div>
+                  <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+                    Taiwan liabilities
+                  </p>
+                  <h2 class="text-sm font-semibold text-[#002147]">
+                    Currency-aware payments &amp; balance stack
+                  </h2>
+                </div>
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white text-[11px] font-semibold text-[#002147] px-3 py-1.5 hover:bg-[#F3F4F6]"
+                >
+                  <i class="fa-solid fa-plus text-[10px]"></i>
+                  <span>Add loan</span>
+                </button>
+              </div>
+
+              <div class="overflow-x-auto">
+                <table class="w-full text-xs text-left border-collapse">
+                  <thead>
+                    <tr class="text-[11px] uppercase tracking-[0.14em] text-[#9CA3AF] border-t border-b border-gray-100">
+                      <th class="py-3 px-6 font-medium">Lender</th>
+                      <th class="py-3 px-4 font-medium">Type</th>
+                      <th class="py-3 px-4 font-medium">Interest rate</th>
+                      <th class="py-3 px-4 font-medium">Next payment</th>
+                      <th class="py-3 px-6 font-medium text-right">Balance</th>
+                    </tr>
+                  </thead>
+
+                  <tbody class="divide-y divide-gray-100">
+                    <!-- Bank of Taiwan Mortgage -->
+                    <tr class="hover:bg-[#F9FAFB] transition-colors">
+                      <td class="py-5 px-6">
+                        <div class="flex items-center gap-3">
+                          <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[11px] font-semibold text-green-900">
+                            B
+                          </div>
+                          <div>
+                            <p class="text-[13px] font-semibold text-[#002147]">
+                              Bank of Taiwan
+                            </p>
+                            <p class="text-[11px] text-[#6B7280]">
+                              Home loan · TWD-based
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td class="py-5 px-4 align-top">
+                        <span class="inline-flex items-center gap-2 text-[#4B5563]">
+                          <i class="fa-solid fa-house text-[12px] text-slate-500"></i>
+                          Mortgage
+                        </span>
+                      </td>
+
+                      <td class="py-5 px-4 align-top">
+                        <div class="inline-flex items-center gap-2">
+                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                            2.06%
+                          </span>
+                          <span class="inline-flex items-center rounded-full bg-green-50 border border-green-100 px-2 py-0.5 text-[10px] font-semibold text-green-800">
+                            Low Rate
+                          </span>
+                        </div>
+                      </td>
+
+                      <td class="py-5 px-4 align-top">
+                        <div class="flex flex-col gap-1">
+                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                            Dec 25
+                          </span>
+                          <span class="inline-flex items-center gap-2 text-[11px] text-[#6B7280]">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            Funds OK
+                          </span>
+                        </div>
+                      </td>
+
+                      <td class="py-5 px-6 align-top text-right">
+                        <div class="flex flex-col items-end">
+                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                            $310,000
+                          </span>
+                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">
+                            NT$ 10,000,000
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- Land Bank Personal Loan (Insufficient Funds example) -->
+                    <tr class="hover:bg-[#F9FAFB] transition-colors">
+                      <td class="py-5 px-6">
+                        <div class="flex items-center gap-3">
+                          <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[11px] font-semibold text-green-900">
+                            L
+                          </div>
+                          <div>
+                            <p class="text-[13px] font-semibold text-[#002147]">
+                              Land Bank
+                            </p>
+                            <p class="text-[11px] text-[#6B7280]">
+                              Personal loan · amortizing
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td class="py-5 px-4 align-top">
+                        <span class="inline-flex items-center gap-2 text-[#4B5563]">
+                          <i class="fa-solid fa-receipt text-[12px] text-slate-500"></i>
+                          Personal loan
+                        </span>
+                      </td>
+
+                      <td class="py-5 px-4 align-top">
+                        <div class="inline-flex items-center gap-2">
+                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                            2.40%
+                          </span>
+                          <span class="inline-flex items-center rounded-full bg-green-50 border border-green-100 px-2 py-0.5 text-[10px] font-semibold text-green-800">
+                            Low Rate
+                          </span>
+                        </div>
+                      </td>
+
+                      <td class="py-5 px-4 align-top">
+                        <div class="flex flex-col gap-1">
+                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                            Dec 18
+                          </span>
+                          <span class="inline-flex items-center gap-2 text-[11px] text-[#B91C1C]">
+                            <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                            Insufficient Funds
+                          </span>
+                        </div>
+                      </td>
+
+                      <td class="py-5 px-6 align-top text-right">
+                        <div class="flex flex-col items-end">
+                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                            $18,600
+                          </span>
+                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">
+                            NT$ 600,000
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <!-- Cathay United Mortgage -->
+                    <tr class="hover:bg-[#F9FAFB] transition-colors">
+                      <td class="py-5 px-6">
+                        <div class="flex items-center gap-3">
+                          <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-[11px] font-semibold text-green-900">
+                            C
+                          </div>
+                          <div>
+                            <p class="text-[13px] font-semibold text-[#002147]">
+                              Cathay United Bank
+                            </p>
+                            <p class="text-[11px] text-[#6B7280]">
+                              Mortgage · promo fixed period
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td class="py-5 px-4 align-top">
+                        <span class="inline-flex items-center gap-2 text-[#4B5563]">
+                          <i class="fa-solid fa-house text-[12px] text-slate-500"></i>
+                          Mortgage
+                        </span>
+                      </td>
+
+                      <td class="py-5 px-4 align-top">
+                        <div class="inline-flex items-center gap-2">
+                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                            1.95%
+                          </span>
+                          <span class="inline-flex items-center rounded-full bg-green-50 border border-green-100 px-2 py-0.5 text-[10px] font-semibold text-green-800">
+                            Low Rate
+                          </span>
+                        </div>
+                      </td>
+
+                      <td class="py-5 px-4 align-top">
+                        <div class="flex flex-col gap-1">
+                          <span class="font-mono tabular-nums text-[13px] text-[#002147]">
+                            Jan 05
+                          </span>
+                          <span class="inline-flex items-center gap-2 text-[11px] text-[#6B7280]">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            Funds OK
+                          </span>
+                        </div>
+                      </td>
+
+                      <td class="py-5 px-6 align-top text-right">
+                        <div class="flex flex-col items-end">
+                          <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                            $72,000
+                          </span>
+                          <span class="font-mono tabular-nums text-[11px] text-[#6B7280]">
+                            NT$ 2,320,000
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="px-6 py-3 border-t border-gray-100 text-[11px] text-[#6B7280]">
+                “Insufficient Funds” is a cashflow warning. In production, this compares linked TWD account balance vs next payment amount.
+              </div>
+            </section>
           </div>
         </div>
 
-        <!-- =================================================== -->
-        <!-- ✅ NEW: Taiwan Assets > House (Legacy Vault)         -->
-        <!-- =================================================== -->
-        <div id="page-tw-house" class="dash-page hidden">
-          <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
-            <!-- Title -->
-            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-              <div>
-                <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
-                  Taiwan assets · House
-                </p>
-                <h1 class="text-[26px] md:text-[30px] font-semibold tracking-tight text-[#002147]"
-                    style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
-                  The Legacy Vault
-                </h1>
-                <p class="mt-2 text-xs md:text-sm text-[#4B5563] max-w-2xl">
-                  Taiwan real estate often has a huge gap between <span class="font-semibold">market value</span> and
-                  <span class="font-semibold">official assessed value</span> (公告現值) — that gap is “hidden wealth” in inheritance planning.
-                </p>
-              </div>
-
-              <div class="flex flex-wrap gap-2 text-[11px] text-[#4B5563]">
-                <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-900 px-2.5 py-1 border border-amber-200">
-                  <i class="fa-solid fa-vault text-[10px]"></i>
-                  Legacy
-                </span>
-                <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 text-slate-700 px-2.5 py-1 border border-slate-200">
-                  <i class="fa-solid fa-scale-balanced text-[10px]"></i>
-                  Tax basis gap
-                </span>
-                <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 text-blue-900 px-2.5 py-1 border border-blue-100">
-                  <i class="fa-solid fa-people-arrows text-[10px]"></i>
-                  Ownership %
-                </span>
-              </div>
-            </div>
-
-            <!-- Summary Header (Arbitrage View) -->
-            <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <!-- Est. Market Value -->
-              <div class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
-                <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
-                  Est. market value (USD)
-                </p>
-                <p class="text-2xl md:text-3xl font-semibold tracking-tight text-[#002147]"
-                   style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
-                  $2,100,000.00
-                </p>
-                <p class="mt-1 text-[11px] text-[#6B7280]">
-                  Converted from TWD (demo FX).
-                </p>
-              </div>
-
-              <!-- Official Tax Value -->
-              <div class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
-                <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
-                  Official tax value (USD)
-                </p>
-                <div class="flex items-end justify-between gap-4">
-                  <p class="text-2xl md:text-3xl font-semibold tracking-tight text-[#002147]"
-                     style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
-                    $450,000.00
-                  </p>
-                  <span class="inline-flex items-center rounded-full bg-blue-50 border border-blue-100 px-2.5 py-1 text-[11px] font-semibold text-[#002147]">
-                    Taxable basis (est.)
-                  </span>
-                </div>
-                <p class="mt-2 text-[11px] text-[#6B7280]">
-                  The “gap” can reduce taxable estate vs market perception (illustrative).
-                </p>
-              </div>
-
-              <!-- Ownership Complexity -->
-              <div class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
-                <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
-                  Ownership complexity
-                </p>
-                <div class="flex items-end justify-between gap-4">
-                  <p class="text-xl md:text-2xl font-semibold text-[#002147]"
-                     style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
-                    Joint tenancy
-                  </p>
-                  <span class="inline-flex items-center gap-2 rounded-full bg-amber-50 border border-amber-200 px-2.5 py-1 text-[11px] font-semibold text-amber-900">
-                    ⚠️ 1 shared
-                  </span>
-                </div>
-                <p class="mt-2 text-[11px] text-[#6B7280]">
-                  1 property shared with siblings — track % + consent.
-                </p>
-              </div>
-            </section>
-
-            <!-- Cards header row -->
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">Properties</p>
-                <h2 class="text-sm font-semibold text-[#002147]">Cross-border specifics (market vs assessed)</h2>
-              </div>
-
-              <button type="button"
-                class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white text-[11px] font-semibold text-[#002147] px-3 py-1.5 hover:bg-[#F3F4F6]">
-                <i class="fa-solid fa-plus text-[10px]"></i>
-                <span>Add property</span>
-              </button>
-            </div>
-
-            <!-- Property Cards -->
-            <div class="space-y-4">
-              <!-- Property 1: Legacy Asset -->
-              <section class="bg-white border border-gray-100 rounded-xl shadow-sm p-5">
-                <div class="flex flex-col lg:flex-row lg:items-center gap-5">
-                  <!-- Left: Visual & ID -->
-                  <div class="flex items-start gap-4 lg:w-[42%]">
-                    <img
-                      src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1200&q=80"
-                      alt="Taiwan apartment building"
-                      class="w-28 h-24 rounded-xl object-cover border border-slate-200"
-                      loading="lazy"
-                    />
-                    <div class="min-w-0">
-                      <p class="text-[11px] tracking-[0.16em] uppercase text-[#9CA3AF]">Property</p>
-                      <p class="text-[15px] font-semibold text-[#002147] truncate"
-                         style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
-                        Da&apos;an District Apartment
-                      </p>
-                      <p class="mt-0.5 text-[12px] text-[#4B5563] truncate">
-                        Taipei · Daan (台北大安)
-                      </p>
-
-                      <div class="mt-2 flex flex-wrap gap-2">
-                        <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-900 px-2.5 py-1 border border-amber-200 text-[11px] font-semibold">
-                          <i class="fa-solid fa-crown text-[10px]"></i>
-                          Legacy asset
-                        </span>
-                        <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 text-slate-700 px-2.5 py-1 border border-slate-200 text-[11px]">
-                          <i class="fa-solid fa-file-signature text-[10px]"></i>
-                          Assessed value tracked
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Middle: Valuation Gap -->
-                  <div class="lg:w-[34%]">
-                    <p class="text-[11px] tracking-[0.16em] uppercase text-[#9CA3AF] mb-1">Valuation gap</p>
-
-                    <div class="rounded-xl border border-slate-200 bg-[#F9FAFB] p-4">
-                      <div class="flex items-start justify-between gap-4">
-                        <div>
-                          <p class="text-[10px] tracking-[0.16em] uppercase text-[#9CA3AF]">Market price (est.)</p>
-                          <p class="mt-1 text-[18px] font-semibold text-slate-700"
-                             style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
-                            NT$ 65,000,000
-                          </p>
-                        </div>
-                        <span class="inline-flex items-center gap-1 rounded-full bg-white border border-slate-200 px-2 py-0.5 text-[11px] text-slate-700">
-                          <i class="fa-solid fa-chart-column text-[10px]"></i>
-                          Market
-                        </span>
-                      </div>
-
-                      <div class="mt-3 border-t border-slate-200/70 pt-3 flex items-start justify-between gap-4">
-                        <div>
-                          <p class="text-[10px] tracking-[0.16em] uppercase text-[#9CA3AF]">Assessed value (official)</p>
-                          <p class="mt-1 font-mono tabular-nums text-[14px] font-semibold text-[#002147]">
-                            NT$ 12,000,000
-                          </p>
-                        </div>
-                        <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 border border-blue-100 px-2 py-0.5 text-[11px] font-semibold text-[#002147]">
-                          <i class="fa-solid fa-scale-balanced text-[10px]"></i>
-                          Tax basis
-                        </span>
-                      </div>
-                    </div>
-
-                    <p class="mt-2 text-[11px] text-[#6B7280]">
-                      Design goal: visually show “hidden wealth” vs taxable basis.
-                    </p>
-                  </div>
-
-                  <!-- Right: Compliance & Risks -->
-                  <div class="lg:w-[24%]">
-                    <p class="text-[11px] tracking-[0.16em] uppercase text-[#9CA3AF] mb-1">Compliance &amp; risks</p>
-
-                    <div class="flex flex-col gap-2">
-                      <span class="inline-flex items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-2">
-                        <span class="text-[11px] text-[#6B7280]">Ownership</span>
-                        <span class="font-mono tabular-nums text-[12px] font-semibold text-[#002147]">33% share</span>
-                      </span>
-
-                      <span class="inline-flex items-center gap-2 rounded-full bg-amber-50 border border-amber-200 px-3 py-1.5 text-[11px] font-semibold text-amber-900">
-                        <i class="fa-solid fa-triangle-exclamation text-[11px]"></i>
-                        Rental income reportable (US)
-                      </span>
-
-                      <span class="inline-flex items-center gap-2 rounded-full bg-slate-100 border border-slate-200 px-3 py-1.5 text-[11px] text-slate-700">
-                        <i class="fa-solid fa-users text-[11px]"></i>
-                        Shared with siblings
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              <!-- Property 2: Parents' Home -->
-              <section class="bg-white border border-gray-100 rounded-xl shadow-sm p-5">
-                <div class="flex flex-col lg:flex-row lg:items-center gap-5">
-                  <div class="flex items-start gap-4 lg:w-[42%]">
-                    <img
-                      src="https://images.unsplash.com/photo-1526481280695-3c687fd5432c?auto=format&fit=crop&w=1200&q=80"
-                      alt="Taiwan family home"
-                      class="w-28 h-24 rounded-xl object-cover border border-slate-200"
-                      loading="lazy"
-                    />
-                    <div class="min-w-0">
-                      <p class="text-[11px] tracking-[0.16em] uppercase text-[#9CA3AF]">Property</p>
-                      <p class="text-[15px] font-semibold text-[#002147] truncate"
-                         style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
-                        Parents&apos; Home
-                      </p>
-                      <p class="mt-0.5 text-[12px] text-[#4B5563] truncate">
-                        Taichung · West District (台中西區)
-                      </p>
-
-                      <div class="mt-2 flex flex-wrap gap-2">
-                        <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 text-amber-900 px-2.5 py-1 border border-amber-200 text-[11px] font-semibold">
-                          <i class="fa-solid fa-house-chimney text-[10px]"></i>
-                          Parents&apos; home
-                        </span>
-                        <span class="inline-flex items-center gap-1 rounded-full bg-green-50 text-green-900 px-2.5 py-1 border border-green-100 text-[11px] font-semibold">
-                          <i class="fa-solid fa-shield-heart text-[10px]"></i>
-                          Personal use
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="lg:w-[34%]">
-                    <p class="text-[11px] tracking-[0.16em] uppercase text-[#9CA3AF] mb-1">Valuation gap</p>
-
-                    <div class="rounded-xl border border-slate-200 bg-[#F9FAFB] p-4">
-                      <div class="flex items-start justify-between gap-4">
-                        <div>
-                          <p class="text-[10px] tracking-[0.16em] uppercase text-[#9CA3AF]">Market price (est.)</p>
-                          <p class="mt-1 text-[18px] font-semibold text-slate-700"
-                             style="font-family:'Playfair Display','Merriweather',ui-serif,Georgia,serif;">
-                            NT$ 28,000,000
-                          </p>
-                        </div>
-                        <span class="inline-flex items-center gap-1 rounded-full bg-white border border-slate-200 px-2 py-0.5 text-[11px] text-slate-700">
-                          <i class="fa-solid fa-location-dot text-[10px]"></i>
-                          Local comps
-                        </span>
-                      </div>
-
-                      <div class="mt-3 border-t border-slate-200/70 pt-3 flex items-start justify-between gap-4">
-                        <div>
-                          <p class="text-[10px] tracking-[0.16em] uppercase text-[#9CA3AF]">Assessed value (official)</p>
-                          <p class="mt-1 font-mono tabular-nums text-[14px] font-semibold text-[#002147]">
-                            NT$ 6,500,000
-                          </p>
-                        </div>
-                        <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 border border-blue-100 px-2 py-0.5 text-[11px] font-semibold text-[#002147]">
-                          <i class="fa-solid fa-scale-balanced text-[10px]"></i>
-                          Tax basis
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="lg:w-[24%]">
-                    <p class="text-[11px] tracking-[0.16em] uppercase text-[#9CA3AF] mb-1">Compliance &amp; risks</p>
-
-                    <div class="flex flex-col gap-2">
-                      <span class="inline-flex items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-2">
-                        <span class="text-[11px] text-[#6B7280]">Ownership</span>
-                        <span class="font-mono tabular-nums text-[12px] font-semibold text-[#002147]">100%</span>
-                      </span>
-
-                      <span class="inline-flex items-center gap-2 rounded-full bg-green-50 border border-green-100 px-3 py-1.5 text-[11px] font-semibold text-green-900">
-                        <i class="fa-solid fa-circle-check text-[11px]"></i>
-                        Personal use (no income)
-                      </span>
-
-                      <span class="inline-flex items-center gap-2 rounded-full bg-slate-100 border border-slate-200 px-3 py-1.5 text-[11px] text-slate-700">
-                        <i class="fa-solid fa-file-circle-check text-[11px]"></i>
-                        Keep deed + assessed docs
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            </div>
-
-            <div class="text-[11px] text-[#6B7280]">
-              “Assessed value” is jurisdiction-specific and can include 公告現值 / 課稅現值. This dashboard view is for planning &amp; recordkeeping only.
-            </div>
-          </div>
+        <div id="page-tw-house" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
+            Taiwan real estate
+          </h1>
+          <p class="text-sm text-[#4B5563]">Placeholder section for Taiwan house &amp; land.</p>
         </div>
 
         <div id="page-tw-crypto" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
-          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">Taiwan crypto</h1>
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
+            Taiwan crypto
+          </h1>
           <p class="text-sm text-[#4B5563]">Placeholder section for Taiwan crypto holdings.</p>
         </div>
 
         <div id="page-tw-insurance" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
-          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">Taiwan insurance</h1>
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
+            Taiwan insurance
+          </h1>
           <p class="text-sm text-[#4B5563]">Placeholder section for Taiwan insurance policies.</p>
         </div>
 
         <div id="page-help" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
-          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-4">Help center</h1>
-          <p class="text-sm text-[#4B5563] mb-2">This is a placeholder for help center content. Add FAQs and guides here.</p>
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-4">
+            Help center
+          </h1>
+          <p class="text-sm text-[#4B5563] mb-2">
+            This is a placeholder for help center content. Add FAQs and guides here.
+          </p>
         </div>
 
         <div id="page-settings" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
-          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-4">Settings</h1>
-          <p class="text-sm text-[#4B5563] mb-2">This is a placeholder for user &amp; report settings.</p>
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-4">
+            Settings
+          </h1>
+          <p class="text-sm text-[#4B5563] mb-2">
+            This is a placeholder for user &amp; report settings.
+          </p>
         </div>
       </main>
     </div>
@@ -1817,33 +1742,71 @@
   <div id="modal-overlay" class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"></div>
 
   <!-- Auth overlay -->
-  <div id="auth-overlay" class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+  <div
+    id="auth-overlay"
+    class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+  >
     <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 relative">
-      <button type="button" onclick="closeAuthModal && closeAuthModal()" class="absolute right-3 top-3 text-slate-400 hover:text-slate-600 text-sm">
+      <button
+        type="button"
+        onclick="closeAuthModal && closeAuthModal()"
+        class="absolute right-3 top-3 text-slate-400 hover:text-slate-600 text-sm"
+      >
         <i class="fa-solid fa-xmark"></i>
       </button>
 
       <div class="flex justify-center mb-4">
         <div class="inline-flex bg-slate-100 rounded-full p-1">
-          <button type="button" id="auth-tab-login" onclick="openAuthModal && openAuthModal('login')" class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-900 shadow-sm">
+          <button
+            type="button"
+            id="auth-tab-login"
+            onclick="openAuthModal && openAuthModal('login')"
+            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-900 shadow-sm"
+          >
             Log in
           </button>
-          <button type="button" id="auth-tab-register" onclick="openAuthModal && openAuthModal('register')" class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100">
+          <button
+            type="button"
+            id="auth-tab-register"
+            onclick="openAuthModal && openAuthModal('register')"
+            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+          >
             Sign up
           </button>
         </div>
       </div>
 
-      <h2 id="auth-title" class="text-lg font-semibold text-slate-900 mb-1 text-center">Login to Taimic</h2>
+      <h2 id="auth-title" class="text-lg font-semibold text-slate-900 mb-1 text-center">
+        Login to Taimic
+      </h2>
+
       <div id="auth-message" class="text-sm h-5 text-center"></div>
 
-      <label class="block text-xs font-medium text-slate-700 mt-2 mb-1">Email</label>
-      <input id="auth-email" type="email" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]" placeholder="you@gmail.com" />
+      <label class="block text-xs font-medium text-slate-700 mt-2 mb-1">
+        Email
+      </label>
+      <input
+        id="auth-email"
+        type="email"
+        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
+        placeholder="you@gmail.com"
+      />
 
-      <label class="block text-xs font-medium text-slate-700 mt-3 mb-1">Password</label>
-      <input id="auth-password" type="password" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]" placeholder="••••••••" />
+      <label class="block text-xs font-medium text-slate-700 mt-3 mb-1">
+        Password
+      </label>
+      <input
+        id="auth-password"
+        type="password"
+        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
+        placeholder="••••••••"
+      />
 
-      <button id="auth-submit" type="button" class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition">
+      <button
+        id="auth-submit"
+        type="button"
+        class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition"
+      >
         <span id="auth-submit-text">Login</span>
         <i class="fa-solid fa-arrow-right-long text-xs"></i>
       </button>
@@ -1871,22 +1834,18 @@
 
         function openMenu() {
           overlay.classList.remove('hidden');
-          panel.offsetHeight; // reflow
+          // 觸發 reflow 讓 transition 生效
+          panel.offsetHeight;
           panel.classList.remove('translate-x-full');
         }
 
-        // ✅ FIX: transitionend 有時不觸發 → 加 fallback timeout，避免黑幕卡住
         function closeMenu() {
           panel.classList.add('translate-x-full');
 
-          const fallback = setTimeout(() => {
-            overlay.classList.add('hidden');
-          }, 260);
-
-          const transitionHandler = (e) => {
-            if (e && e.propertyName && e.propertyName !== 'transform') return;
-            clearTimeout(fallback);
-            overlay.classList.add('hidden');
+          const transitionHandler = () => {
+            if (panel.classList.contains('translate-x-full')) {
+              overlay.classList.add('hidden');
+            }
           };
 
           panel.addEventListener('transitionend', transitionHandler, { once: true });
@@ -1894,23 +1853,30 @@
 
         toggle.addEventListener('click', (e) => {
           e.stopPropagation();
-          if (overlay.classList.contains('hidden')) openMenu();
-          else closeMenu();
+          if (overlay.classList.contains('hidden')) {
+            openMenu();
+          } else {
+            closeMenu();
+          }
         });
 
         // 點黑色背景關閉
         overlay.addEventListener('click', (event) => {
-          if (event.target === overlay) closeMenu();
+          if (event.target === overlay) {
+            closeMenu();
+          }
         });
 
+        // 提供給 mobileNavigate 用
         window.__closeMobileMenu = closeMenu;
       }
 
       // 給手機側邊選單用的導航
       window.mobileNavigate = function (pageKey) {
         switchDashboardPage(pageKey);
-        if (window.__closeMobileMenu) window.__closeMobileMenu();
-        else {
+        if (window.__closeMobileMenu) {
+          window.__closeMobileMenu();
+        } else {
           const overlay = document.getElementById('mobile-menu');
           if (overlay) overlay.classList.add('hidden');
         }
@@ -1935,28 +1901,18 @@
         chevron.classList.toggle('rotate-90');
       };
 
-      // ✅ FIX: 切到 us-* / tw-* 頁時，自動展開對應的 sidebar section
-      function ensureSideSectionOpenFor(pageKey) {
-        const key = pageKey.startsWith('us-') ? 'us' : pageKey.startsWith('tw-') ? 'tw' : null;
-        if (!key) return;
-        const body = document.getElementById('side-' + key + '-children');
-        const chevron = document.getElementById('side-' + key + '-chevron');
-        if (body && body.classList.contains('hidden')) body.classList.remove('hidden');
-        if (chevron && !chevron.classList.contains('rotate-90')) chevron.classList.add('rotate-90');
-      }
-
       // 切換 dashboard 各頁
       window.switchDashboardPage = function (pageKey) {
         const pages = document.querySelectorAll('.dash-page');
-        pages.forEach((page) => page.classList.add('hidden'));
+        pages.forEach((page) => {
+          page.classList.add('hidden');
+        });
 
         const target = document.getElementById('page-' + pageKey);
         if (target) {
           target.classList.remove('hidden');
           window.scrollTo({ top: 0, behavior: 'auto' });
         }
-
-        ensureSideSectionOpenFor(pageKey);
 
         // 更新 sidebar active 樣式
         const navButtons = document.querySelectorAll('[data-page]');
@@ -1991,6 +1947,7 @@
         switchDashboardPage('overview');
       }
 
+      // 不管 DOMContentLoaded 有沒有發過，都會跑一次 init
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initDashboard);
       } else {
