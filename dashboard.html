@@ -392,7 +392,6 @@
           Stocks
         </button>
 
-        <!-- ✅ ADDED -->
         <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-funds')">
           Funds
         </button>
@@ -412,7 +411,6 @@
           Crypto
         </button>
 
-        <!-- ✅ UPDATED: remove Insurance icon (per request) -->
         <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-insurance')">
           <span>Insurance</span>
         </button>
@@ -427,7 +425,6 @@
           Stocks
         </button>
 
-        <!-- ✅ ADDED -->
         <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-funds')">
           Funds
         </button>
@@ -447,7 +444,6 @@
           Crypto
         </button>
 
-        <!-- ✅ UPDATED: remove Insurance icon (per request) -->
         <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-insurance')">
           <span>Insurance</span>
         </button>
@@ -507,7 +503,6 @@
               <span>Stocks</span>
             </button>
 
-            <!-- ✅ ADDED -->
             <button class="side-item side-subitem" type="button" data-page="us-funds" onclick="switchDashboardPage('us-funds')">
               <span>Funds</span>
             </button>
@@ -527,7 +522,6 @@
               <span>Crypto</span>
             </button>
 
-            <!-- ✅ UPDATED: remove Insurance icon (per request) -->
             <button class="side-item side-subitem" type="button" data-page="us-insurance" onclick="switchDashboardPage('us-insurance')">
               <span>Insurance</span>
             </button>
@@ -547,7 +541,6 @@
               <span>Stocks</span>
             </button>
 
-            <!-- ✅ ADDED -->
             <button class="side-item side-subitem" type="button" data-page="tw-funds" onclick="switchDashboardPage('tw-funds')">
               <span>Funds</span>
             </button>
@@ -567,7 +560,6 @@
               <span>Crypto</span>
             </button>
 
-            <!-- ✅ UPDATED: remove Insurance icon (per request) -->
             <button class="side-item side-subitem" type="button" data-page="tw-insurance" onclick="switchDashboardPage('tw-insurance')">
               <span>Insurance</span>
             </button>
@@ -979,294 +971,8 @@
 
         <div id="page-us-crypto" class="dash-page hidden" data-include="pages/us-crypto.html"></div>
 
-        <!-- ===================== US: INSURANCE (UPDATED FONT per request) ===================== -->
-        <div id="page-us-insurance" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
-          <!-- Page header -->
-          <div class="flex flex-col gap-2">
-            <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
-              US assets &nbsp;›&nbsp; Insurance
-            </p>
-
-            <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-              <div>
-                <h1 class="text-[28px] md:text-[34px] font-semibold tracking-tight text-[#002147] font-serif">
-                  US insurance
-                </h1>
-                <p class="mt-1 text-sm text-slate-600">
-                  <span class="font-semibold text-slate-700">The Tax-Free Vault</span> — wealth transfer &amp; tax-free cash accumulation (Whole Life).
-                </p>
-              </div>
-
-              <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-600">
-                <i class="fa-solid fa-lock text-[11px] text-slate-400"></i>
-                <span class="text-[10px] tracking-[0.22em] uppercase text-slate-400">Vault Focus</span>
-                <span class="font-mono tabular-nums font-semibold text-[#002147]">Cash Value</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Summary metrics -->
-          <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <!-- 1) Total Death Benefit -->
-            <div class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-5">
-              <div class="flex items-start justify-between">
-                <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
-                  Total Death Benefit
-                </p>
-                <span class="inline-flex items-center gap-2 text-[11px] text-slate-500">
-                  <i class="fa-solid fa-shield-halved text-[11px]"></i>
-                  <span class="tracking-[0.18em] uppercase">Estate</span>
-                </span>
-              </div>
-
-              <div class="mt-3">
-                <div class="text-2xl md:text-3xl font-semibold tracking-tight text-[#002147] font-serif">
-                  $5,000,000.00
-                </div>
-                <p class="mt-2 text-xs text-slate-500">
-                  Tax-Free Payout
-                </p>
-              </div>
-            </div>
-
-            <!-- 2) Total Cash Value -->
-            <div class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-5">
-              <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
-                Total Cash Value
-              </p>
-
-              <div class="mt-3 flex items-center justify-between gap-3">
-                <span class="inline-flex items-center gap-2 rounded-full bg-green-50 text-green-800 px-3 py-1.5 text-sm font-semibold">
-                  <i class="fa-solid fa-coins text-[12px]"></i>
-                  <span class="font-serif tracking-tight">$340,500.00</span>
-                </span>
-
-                <span class="text-xs text-slate-500">
-                  The Liquid Asset
-                </span>
-              </div>
-
-              <p class="mt-3 text-xs text-slate-500">
-                Treated like a “backup savings account” with tax-advantaged accumulation.
-              </p>
-            </div>
-
-            <!-- 3) Policy Loans -->
-            <div class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-5">
-              <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
-                Policy Loans
-              </p>
-
-              <div class="mt-3 flex items-baseline justify-between gap-3">
-                <div class="text-2xl md:text-3xl font-semibold tracking-tight text-[#002147] font-serif">
-                  $0.00
-                </div>
-
-                <span class="text-xs text-slate-500">
-                  Available Line of Credit
-                </span>
-              </div>
-
-              <p class="mt-3 text-xs text-slate-500">
-                Borrow against cash value (carrier rules apply). Track utilization here.
-              </p>
-            </div>
-          </div>
-
-          <!-- Policies table -->
-          <div class="mt-8 bg-white rounded-2xl border border-slate-200/70 shadow-sm overflow-hidden">
-            <div class="px-5 py-4 border-b border-slate-200/70 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-              <div>
-                <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
-                  Policies
-                </p>
-                <h2 class="mt-1 text-lg font-semibold tracking-tight text-[#002147] font-['Playfair_Display']">
-                  The Bank View
-                </h2>
-              </div>
-
-              <div class="flex flex-wrap items-center gap-2 text-xs">
-                <span class="text-slate-500 hidden md:inline">Type:</span>
-                <span class="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 text-blue-800 px-2.5 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
-                  Whole Life
-                </span>
-                <span class="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 text-slate-700 px-2.5 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
-                  Term Life
-                </span>
-                <span class="inline-flex items-center rounded-full border border-purple-200 bg-purple-50 text-purple-800 px-2.5 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
-                  IUL
-                </span>
-              </div>
-            </div>
-
-            <div class="overflow-x-auto">
-              <table class="min-w-full text-sm">
-                <thead class="bg-slate-50">
-                  <tr class="text-left text-xs text-slate-500">
-                    <th class="px-5 py-3 font-medium tracking-wider uppercase">Carrier</th>
-                    <th class="px-5 py-3 font-medium tracking-wider uppercase">Type</th>
-                    <th class="px-5 py-3 font-medium tracking-wider uppercase">Cash Value (Accumulation)</th>
-                    <th class="px-5 py-3 font-medium tracking-wider uppercase">Death Benefit</th>
-                    <th class="px-5 py-3 font-medium tracking-wider uppercase">Premium Status</th>
-                  </tr>
-                </thead>
-
-                <tbody class="divide-y divide-slate-200/70">
-                  <!-- Row 1 -->
-                  <tr class="hover:bg-slate-50/60 transition-colors">
-                    <td class="px-5 py-4">
-                      <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-[#002147] text-white flex items-center justify-center text-[11px] font-semibold tracking-[0.12em]">
-                          MM
-                        </div>
-                        <div>
-                          <p class="font-medium text-slate-900">MassMutual</p>
-                          <p class="text-xs text-slate-500">Policy • ****-4821</p>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td class="px-5 py-4">
-                      <span class="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 text-blue-800 px-2.5 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
-                        Whole Life
-                      </span>
-                    </td>
-
-                    <td class="px-5 py-4">
-                      <div class="font-mono tabular-nums font-semibold text-slate-900">$124,000.00</div>
-                      <div class="mt-1 text-xs text-green-700">↗ +4.5% Dividend</div>
-                    </td>
-
-                    <td class="px-5 py-4">
-                      <div class="font-mono tabular-nums font-semibold text-[#002147]">$2,000,000</div>
-                    </td>
-
-                    <td class="px-5 py-4">
-                      <span class="inline-flex items-center gap-2 text-sm text-green-700 font-semibold">
-                        <i class="fa-solid fa-circle-check text-[14px]"></i>
-                        Paid Up
-                      </span>
-                    </td>
-                  </tr>
-
-                  <!-- Row 2 -->
-                  <tr class="hover:bg-slate-50/60 transition-colors">
-                    <td class="px-5 py-4">
-                      <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-[#001a70] text-white flex items-center justify-center text-[11px] font-semibold tracking-[0.12em]">
-                          NM
-                        </div>
-                        <div>
-                          <p class="font-medium text-slate-900">Northwestern Mutual</p>
-                          <p class="text-xs text-slate-500">Policy • ****-1930</p>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td class="px-5 py-4">
-                      <span class="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 text-blue-800 px-2.5 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
-                        Whole Life
-                      </span>
-                    </td>
-
-                    <td class="px-5 py-4">
-                      <div class="font-mono tabular-nums font-semibold text-slate-900">$216,500.00</div>
-                      <div class="mt-1 text-xs text-green-700">↗ +3.8% Dividend</div>
-                    </td>
-
-                    <td class="px-5 py-4">
-                      <div class="font-mono tabular-nums font-semibold text-[#002147]">$2,500,000</div>
-                    </td>
-
-                    <td class="px-5 py-4">
-                      <span class="text-sm text-slate-600">
-                        Due: <span class="font-mono tabular-nums">Dec 20</span>
-                      </span>
-                    </td>
-                  </tr>
-
-                  <!-- Row 3 -->
-                  <tr class="hover:bg-slate-50/60 transition-colors">
-                    <td class="px-5 py-4">
-                      <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center text-[11px] font-semibold tracking-[0.12em]">
-                          PR
-                        </div>
-                        <div>
-                          <p class="font-medium text-slate-900">Prudential</p>
-                          <p class="text-xs text-slate-500">Policy • ****-7742</p>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td class="px-5 py-4">
-                      <span class="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 text-slate-700 px-2.5 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
-                        Term Life
-                      </span>
-                    </td>
-
-                    <td class="px-5 py-4">
-                      <div class="font-mono tabular-nums font-semibold text-slate-900">$0.00</div>
-                      <div class="mt-1 text-xs text-slate-500">— No cash accumulation</div>
-                    </td>
-
-                    <td class="px-5 py-4">
-                      <div class="font-mono tabular-nums font-semibold text-[#002147]">$400,000</div>
-                    </td>
-
-                    <td class="px-5 py-4">
-                      <span class="text-sm text-slate-600">
-                        Due: <span class="font-mono tabular-nums">Jan 05</span>
-                      </span>
-                    </td>
-                  </tr>
-
-                  <!-- Row 4 -->
-                  <tr class="hover:bg-slate-50/60 transition-colors">
-                    <td class="px-5 py-4">
-                      <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-full bg-purple-700 text-white flex items-center justify-center text-[11px] font-semibold tracking-[0.12em]">
-                          IUL
-                        </div>
-                        <div>
-                          <p class="font-medium text-slate-900">Nationwide</p>
-                          <p class="text-xs text-slate-500">Policy • ****-5518</p>
-                        </div>
-                      </div>
-                    </td>
-
-                    <td class="px-5 py-4">
-                      <span class="inline-flex items-center rounded-full border border-purple-200 bg-purple-50 text-purple-800 px-2.5 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
-                        IUL
-                      </span>
-                    </td>
-
-                    <td class="px-5 py-4">
-                      <div class="font-mono tabular-nums font-semibold text-slate-900">$0.00</div>
-                      <div class="mt-1 text-xs text-slate-500">↗ Index crediting (variable)</div>
-                    </td>
-
-                    <td class="px-5 py-4">
-                      <div class="font-mono tabular-nums font-semibold text-[#002147]">$100,000</div>
-                    </td>
-
-                    <td class="px-5 py-4">
-                      <span class="text-sm text-slate-600">
-                        Due: <span class="font-mono tabular-nums">Feb 01</span>
-                      </span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="px-5 py-4 border-t border-slate-200/70 bg-white">
-              <p class="text-xs text-slate-500">
-                Cash value and dividends are carrier-specific and may be non-guaranteed. Use this view to monitor liquidity (cash value) vs. protection (death benefit).
-              </p>
-            </div>
-          </div>
-        </div>
+        <!-- ===================== US: INSURANCE (NOW PARTIAL) ===================== -->
+        <div id="page-us-insurance" class="dash-page hidden" data-include="pages/us-insurance.html"></div>
 
         <!-- ===================== TAIWAN: ACCOUNTS (PARTIAL) ===================== -->
         <div id="page-tw-accounts" class="dash-page hidden" data-include="pages/tw-accounts.html"></div>
@@ -1427,7 +1133,6 @@
                     </td>
 
                     <td class="px-5 py-4">
-                      <!-- Investment grade -->
                       <span class="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-semibold text-slate-700 font-mono tabular-nums">
                         BBB
                       </span>
@@ -1471,7 +1176,6 @@
                     </td>
 
                     <td class="px-5 py-4">
-                      <!-- Junk / High yield -->
                       <span class="inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-[11px] font-semibold text-amber-900 font-mono tabular-nums">
                         BB-
                       </span>
