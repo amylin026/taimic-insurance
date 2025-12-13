@@ -480,6 +480,15 @@
             <button class="side-item side-subitem" type="button" data-page="us-stocks" onclick="switchDashboardPage('us-stocks')">
               <span>Stocks</span>
             </button>
+
+            <!-- ✅ ADDED -->
+            <button class="side-item side-subitem" type="button" data-page="us-funds" onclick="switchDashboardPage('us-funds')">
+              <span>Funds</span>
+            </button>
+            <button class="side-item side-subitem" type="button" data-page="us-bonds" onclick="switchDashboardPage('us-bonds')">
+              <span>Bonds</span>
+            </button>
+
             <button class="side-item side-subitem" type="button" data-page="us-liabilities" onclick="switchDashboardPage('us-liabilities')">
               <span>Liabilities</span>
             </button>
@@ -507,6 +516,15 @@
             <button class="side-item side-subitem" type="button" data-page="tw-stocks" onclick="switchDashboardPage('tw-stocks')">
               <span>Stocks</span>
             </button>
+
+            <!-- ✅ ADDED -->
+            <button class="side-item side-subitem" type="button" data-page="tw-funds" onclick="switchDashboardPage('tw-funds')">
+              <span>Funds</span>
+            </button>
+            <button class="side-item side-subitem" type="button" data-page="tw-bonds" onclick="switchDashboardPage('tw-bonds')">
+              <span>Bonds</span>
+            </button>
+
             <button class="side-item side-subitem" type="button" data-page="tw-liabilities" onclick="switchDashboardPage('tw-liabilities')">
               <span>Liabilities</span>
             </button>
@@ -540,6 +558,21 @@
         <div id="page-us-accounts" class="dash-page hidden" data-include="pages/us-accounts.html"></div>
 
         <div id="page-us-stocks" class="dash-page hidden" data-include="pages/us-stocks.html"></div>
+
+        <!-- ✅ ADDED: US funds / bonds pages -->
+        <div id="page-us-funds" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
+            US funds
+          </h1>
+          <p class="text-sm text-[#4B5563]">Placeholder section for US funds / ETFs.</p>
+        </div>
+
+        <div id="page-us-bonds" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
+            US bonds
+          </h1>
+          <p class="text-sm text-[#4B5563]">Placeholder section for US fixed income holdings.</p>
+        </div>
 
         <!-- ✅ US liabilities：partial -->
         <div id="page-us-liabilities" class="dash-page hidden" data-include="pages/us-liabilities.html"></div>
@@ -1149,12 +1182,27 @@
           </div>
         </div>
 
-      <!-- ===================== FAMILY (PARTIAL) ===================== -->
-<div
-  id="page-family"
-  class="dash-page hidden family-page"
-  data-include="pages/family.html"
-></div>
+        <!-- ✅ ADDED: TAIWAN FUNDS / BONDS pages -->
+        <div id="page-tw-funds" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
+            Taiwan funds
+          </h1>
+          <p class="text-sm text-[#4B5563]">Placeholder section for Taiwan funds / mutual funds / ETFs.</p>
+        </div>
+
+        <div id="page-tw-bonds" class="dash-page hidden max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          <h1 class="text-xl md:text-2xl font-semibold tracking-tight text-[#002147] mb-2">
+            Taiwan bonds
+          </h1>
+          <p class="text-sm text-[#4B5563]">Placeholder section for Taiwan fixed income holdings.</p>
+        </div>
+
+        <!-- ===================== FAMILY (PARTIAL) ===================== -->
+        <div
+          id="page-family"
+          class="dash-page hidden family-page"
+          data-include="pages/family.html"
+        ></div>
 
         <!-- ===================== TAIWAN: LIABILITIES (INLINE) ===================== -->
         <div id="page-tw-liabilities" class="dash-page hidden">
