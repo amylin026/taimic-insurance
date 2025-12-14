@@ -5,6 +5,10 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- ✅ reduce font swap/jump (preconnect) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -252,6 +256,18 @@
     #page-tw-insurance .font-mono,
     #page-us-insurance .tabular-nums,
     #page-tw-insurance .tabular-nums {
+      font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
+    }
+
+    /* ==========================================================
+       ✅ STOP the ugly font "jump" (FOUT):
+       Force KPI/number fonts to stable system serif inside pages.
+       This prevents swapping to/from Google Playfair during load.
+       ========================================================== */
+    .dash-page .font-serif,
+    .dash-page .ov-privacy,
+    .dash-page [style*="Playfair Display"],
+    .dash-page [style*="Merriweather"] {
       font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
     }
   </style>
@@ -664,7 +680,7 @@
         chevron.classList.add('rotate-90');
       }
 
-      // ✅ 一次根治：每次切頁都抓最新 partial（避免 Safari/CDN 快取只害到數字）
+      // ✅ 每次切頁都抓最新 partial（避免快取造成字體偶發回跳）
       function withBust(url) {
         const sep = url.includes('?') ? '&' : '?';
         return `${url}${sep}t=${Date.now()}`;
@@ -711,7 +727,6 @@
         const pages = document.querySelectorAll('.dash-page');
         pages.forEach((page) => page.classList.add('hidden'));
 
-        // ✅ 每次切頁都抓最新（你現在在調字體，這樣才不會「看起來又變回去」）
         loadPartialAlways(target);
 
         target.classList.remove('hidden');
