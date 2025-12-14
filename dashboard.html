@@ -583,6 +583,94 @@
     </div>
   </div>
 
+  <!-- ✅ GLOBAL (dashboard-level) Add Holding modal so it works with partial loading -->
+  <div id="usStocksHoldingModal" class="fixed inset-0 z-[60] hidden" aria-hidden="true">
+    <div id="usStocksHoldingBackdrop" class="absolute inset-0 bg-black/30"></div>
+
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+      <div class="w-full max-w-lg rounded-2xl bg-white shadow-xl border border-gray-100">
+        <div class="p-5 border-b border-gray-100 flex items-center justify-between">
+          <div>
+            <h3 class="text-lg font-semibold text-[#002147]">Add holding</h3>
+            <p class="text-xs text-gray-500">
+              Example: TSM, 1000 shares, cost 5.00
+            </p>
+          </div>
+          <button id="usStocksHoldingClose" type="button" class="h-9 w-9 rounded-lg hover:bg-gray-50 text-gray-500" aria-label="Close">
+            ✕
+          </button>
+        </div>
+
+        <form id="usStocksHoldingForm" class="p-5 space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Ticker</span>
+              <input
+                id="usStocksHoldingTicker"
+                class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2A4A]/20"
+                placeholder="TSM"
+                autocomplete="off"
+                required
+              />
+            </label>
+
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Quantity</span>
+              <input
+                id="usStocksHoldingQty"
+                type="number"
+                step="0.01"
+                min="0"
+                class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2A4A]/20"
+                placeholder="1000"
+                required
+              />
+            </label>
+
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Cost / share</span>
+              <input
+                id="usStocksHoldingCost"
+                type="number"
+                step="0.0001"
+                min="0"
+                class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2A4A]/20"
+                placeholder="5.00"
+                required
+              />
+            </label>
+          </div>
+
+          <div class="flex items-center justify-end gap-2 pt-2">
+            <button
+              id="usStocksHoldingCancel"
+              type="button"
+              class="rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="rounded-xl bg-[#0B2A4A] px-4 py-2 text-sm font-semibold text-white hover:opacity-95"
+            >
+              Save
+            </button>
+          </div>
+
+          <p class="text-[11px] text-gray-400">
+            Prices / market value / P&amp;L will auto-update after we connect the Cloudflare quotes backend.
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="usStocksHoldingToast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[70] hidden">
+    <div class="rounded-full bg-[#0B2A4A] text-white text-sm px-4 py-2 shadow-lg">
+      Saved. Quotes will update after backend is connected.
+    </div>
+  </div>
+
   <script src="main.js"></script>
   <!-- ✅ REMOVED: include-partials.js（避免跟你自己的 loader 打架 / 覆蓋） -->
 
@@ -686,7 +774,241 @@
         return `${url}${sep}t=${Date.now()}`;
       }
 
-      function loadPartialAlways(container) {
+      // =========================
+      // ✅ US Stocks – Add Holding (dashboard-level, works with partials)
+      // =========================
+      const US_STOCKS_STORAGE_KEY = "taimic_us_stocks_holdings_v1";
+
+      function genId() {
+        if (window.crypto && typeof crypto.randomUUID === "function") return crypto.randomUUID();
+        return "id_" + Math.random().toString(16).slice(2) + "_" + Date.now();
+      }
+
+      function safeUpper(s) {
+        return String(s || "").trim().toUpperCase();
+      }
+
+      function loadHoldings() {
+        try { return JSON.parse(localStorage.getItem(US_STOCKS_STORAGE_KEY) || "[]"); }
+        catch { return []; }
+      }
+
+      function saveHoldings(list) {
+        localStorage.setItem(US_STOCKS_STORAGE_KEY, JSON.stringify(list));
+      }
+
+      function fmtNum(n) {
+        const x = Number(n);
+        if (!Number.isFinite(x)) return "0.00";
+        return x.toFixed(2);
+      }
+
+      function fmtUsd(n) {
+        const x = Number(n);
+        if (!Number.isFinite(x)) return "$0.00";
+        return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(x);
+      }
+
+      const UsStocksUI = (function () {
+        const ids = {
+          modal: "usStocksHoldingModal",
+          backdrop: "usStocksHoldingBackdrop",
+          close: "usStocksHoldingClose",
+          cancel: "usStocksHoldingCancel",
+          form: "usStocksHoldingForm",
+          ticker: "usStocksHoldingTicker",
+          qty: "usStocksHoldingQty",
+          cost: "usStocksHoldingCost",
+          toast: "usStocksHoldingToast"
+        };
+
+        let prevBodyOverflow = "";
+
+        function $(id) { return document.getElementById(id); }
+
+        function open() {
+          const modal = $(ids.modal);
+          if (!modal) return;
+          modal.classList.remove("hidden");
+          modal.setAttribute("aria-hidden", "false");
+          prevBodyOverflow = document.body.style.overflow;
+          document.body.style.overflow = "hidden";
+          $(ids.ticker)?.focus();
+        }
+
+        function close() {
+          const modal = $(ids.modal);
+          if (!modal) return;
+          modal.classList.add("hidden");
+          modal.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = prevBodyOverflow || "";
+          $(ids.form)?.reset();
+        }
+
+        function toast() {
+          const t = $(ids.toast);
+          if (!t) return;
+          t.classList.remove("hidden");
+          setTimeout(() => t.classList.add("hidden"), 1600);
+        }
+
+        function ensureTbody() {
+          const page = document.getElementById("page-us-stocks");
+          if (!page) return null;
+
+          let tbody = page.querySelector("#usHoldingsTbody");
+          if (tbody) return tbody;
+
+          // If your partial didn't add the id, we set it automatically.
+          tbody = page.querySelector("table tbody");
+          if (tbody) tbody.id = "usHoldingsTbody";
+          return tbody || null;
+        }
+
+        function rowExists(tbody, holdingId) {
+          if (!tbody) return false;
+          return !!tbody.querySelector(`[data-holding-id="${holdingId}"]`);
+        }
+
+        function prependPendingRow(holding) {
+          const tbody = ensureTbody();
+          if (!tbody) return;
+
+          if (rowExists(tbody, holding.id)) return;
+
+          const qty = Number(holding.quantity || 0);
+          const cost = Number(holding.costBasis || 0);
+
+          const tr = document.createElement("tr");
+          tr.className = "hover:bg-[#F9FAFB] transition-colors";
+          tr.setAttribute("data-holding-id", holding.id);
+
+          tr.innerHTML = `
+            <td class="py-4 px-6">
+              <div class="flex flex-col">
+                <span class="text-[13px] font-semibold text-[#002147]">${holding.ticker}</span>
+                <span class="text-[11px] text-[#6B7280]">${holding.name || "—"}</span>
+              </div>
+            </td>
+            <td class="py-4 px-4 align-top">
+              <span class="font-mono tabular-nums text-[#002147]">${fmtNum(qty)}</span>
+            </td>
+            <td class="py-4 px-4 align-top">
+              <span class="font-mono tabular-nums text-gray-400">—</span>
+            </td>
+            <td class="py-4 px-4 align-top">
+              <span class="font-mono tabular-nums text-[#6B7280]">${fmtUsd(cost)}</span>
+            </td>
+            <td class="py-4 px-4 align-top">
+              <span class="font-mono tabular-nums text-gray-400">—</span>
+            </td>
+            <td class="py-4 px-6 align-top text-right">
+              <span class="font-mono tabular-nums text-[13px] font-semibold text-gray-400">—</span>
+            </td>
+          `;
+
+          tbody.prepend(tr);
+        }
+
+        function hydrateFromStorage() {
+          const tbody = ensureTbody();
+          if (!tbody) return;
+
+          const holdings = loadHoldings();
+          if (!holdings.length) return;
+
+          // newest first
+          const ordered = holdings
+            .slice()
+            .sort((a, b) => (a.createdAt || "").localeCompare(b.createdAt || ""))
+            .reverse();
+
+          ordered.forEach((h) => prependPendingRow(h));
+        }
+
+        function bindModalEventsOnce() {
+          const backdrop = $(ids.backdrop);
+          const closeBtn = $(ids.close);
+          const cancelBtn = $(ids.cancel);
+          const form = $(ids.form);
+
+          if (backdrop) backdrop.addEventListener("click", close);
+          if (closeBtn) closeBtn.addEventListener("click", close);
+          if (cancelBtn) cancelBtn.addEventListener("click", close);
+
+          document.addEventListener("keydown", (e) => {
+            const modal = $(ids.modal);
+            if (!modal || modal.classList.contains("hidden")) return;
+            if (e.key === "Escape") close();
+          });
+
+          if (form) {
+            form.addEventListener("submit", (e) => {
+              e.preventDefault();
+
+              const ticker = safeUpper($(ids.ticker)?.value);
+              const quantity = Number($(ids.qty)?.value);
+              const costBasis = Number($(ids.cost)?.value);
+
+              if (!ticker) return;
+              if (!Number.isFinite(quantity) || quantity <= 0) return;
+              if (!Number.isFinite(costBasis) || costBasis < 0) return;
+
+              const holding = {
+                id: genId(),
+                ticker,
+                name: "",
+                quantity,
+                costBasis,
+                createdAt: new Date().toISOString()
+              };
+
+              const list = loadHoldings();
+              list.push(holding);
+              saveHoldings(list);
+
+              close();
+              prependPendingRow(holding);
+              toast();
+            });
+          }
+        }
+
+        return {
+          open,
+          close,
+          hydrateFromStorage,
+          bindModalEventsOnce,
+          ensureTbody
+        };
+      })();
+
+      // ✅ This is the key fix for partials: scripts in innerHTML don't reliably run,
+      // so we use event delegation from the dashboard level.
+      function setupUsStocksDelegation() {
+        document.addEventListener("click", (e) => {
+          const btn = e.target.closest("#btnAddHolding");
+          if (!btn) return;
+
+          // Only when the button is inside the US Stocks page container
+          const inUsStocks = btn.closest("#page-us-stocks");
+          if (!inUsStocks) return;
+
+          UsStocksUI.open();
+        });
+      }
+
+      // ✅ after each partial load, re-hydrate US stocks table from LocalStorage
+      function afterPartialLoad(pageKey, container) {
+        if (pageKey === "us-stocks") {
+          // ensure tbody id exists (even if your partial forgot it)
+          UsStocksUI.ensureTbody();
+          // show saved holdings without duplicating
+          UsStocksUI.hydrateFromStorage();
+        }
+      }
+
+      function loadPartialAlways(container, pageKey) {
         if (!container) return;
         const url = container.getAttribute('data-include');
         if (!url) return;
@@ -698,6 +1020,7 @@
           })
           .then((html) => {
             container.innerHTML = html;
+            afterPartialLoad(pageKey, container);
           })
           .catch((err) => {
             console.error(err);
@@ -713,12 +1036,15 @@
 
       // 切換 dashboard 各頁
       window.switchDashboardPage = function (pageKey) {
+        window.__currentDashboardPage = pageKey;
+
         let target = document.getElementById('page-' + pageKey);
 
         if (!target) {
           console.warn('[Dashboard] Page not found:', pageKey, '→ fallback to overview');
           pageKey = 'overview';
           target = document.getElementById('page-overview');
+          window.__currentDashboardPage = pageKey;
         }
 
         if (pageKey.startsWith('us-')) ensureSideSectionOpen('us');
@@ -727,7 +1053,7 @@
         const pages = document.querySelectorAll('.dash-page');
         pages.forEach((page) => page.classList.add('hidden'));
 
-        loadPartialAlways(target);
+        loadPartialAlways(target, pageKey);
 
         target.classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'auto' });
@@ -762,6 +1088,11 @@
         setupMobileMenu();
         setupDesktopSidebarToggle();
         setupUserMenu();
+
+        // ✅ US Stocks Add Holding wiring (once)
+        UsStocksUI.bindModalEventsOnce();
+        setupUsStocksDelegation();
+
         switchDashboardPage('overview');
       }
 
