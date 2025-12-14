@@ -822,20 +822,24 @@
         chevron.classList.add('rotate-90');
       }
 
-      // ✅ 切頁保險：如果 include-partials.js 沒載 hidden pages，這裡會按需載入
+      // ✅ 強制讓 partial 永遠拿最新（避免 Safari/瀏覽器快取 + dataset.loaded 卡死）
+      const PARTIALS_VERSION = "2025-12-14-02"; // 你每次更新 pages/* 就改這串
+
+      function withVersion(url) {
+        const sep = url.includes('?') ? '&' : '?';
+        return `${url}${sep}v=${encodeURIComponent(PARTIALS_VERSION)}`;
+      }
+
+      // ✅ 切頁保險：按需載入 + 版本號快取破壞 + no-store
       function loadPartialIfNeeded(container) {
         if (!container) return;
         const url = container.getAttribute('data-include');
         if (!url) return;
 
-        // 如果已經有內容了，就當作 loaded（避免重複 fetch）
-        if (container.dataset.loaded === '1') return;
-        if ((container.innerHTML || '').trim().length > 0) {
-          container.dataset.loaded = '1';
-          return;
-        }
+        // ✅ 只有在「同一個版本」才允許略過 fetch
+        if (container.dataset.loaded === '1' && container.dataset.v === PARTIALS_VERSION) return;
 
-        fetch(url)
+        fetch(withVersion(url), { cache: 'no-store' })
           .then((r) => {
             if (!r.ok) throw new Error('Failed to load: ' + url + ' (' + r.status + ')');
             return r.text();
@@ -843,6 +847,7 @@
           .then((html) => {
             container.innerHTML = html;
             container.dataset.loaded = '1';
+            container.dataset.v = PARTIALS_VERSION;
           })
           .catch((err) => {
             console.error(err);
@@ -860,6 +865,7 @@
               </div>
             `;
             container.dataset.loaded = '1';
+            container.dataset.v = PARTIALS_VERSION;
           });
       }
 
@@ -879,7 +885,7 @@
         const pages = document.querySelectorAll('.dash-page');
         pages.forEach((page) => page.classList.add('hidden'));
 
-        // ✅ 先確保 partial 真的被載進來
+        // ✅ 先確保 partial 真的被載進來（而且一定是最新版本）
         loadPartialIfNeeded(target);
 
         target.classList.remove('hidden');
