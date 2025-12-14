@@ -583,7 +583,7 @@
     </div>
   </div>
 
-  <!-- ✅ GLOBAL (dashboard-level) Add Holding modal so it works with partial loading -->
+  <!-- ✅ US Stocks: Add Holding Modal (dashboard-level so it works with partial loading) -->
   <div id="usStocksHoldingModal" class="fixed inset-0 z-[60] hidden" aria-hidden="true">
     <div id="usStocksHoldingBackdrop" class="absolute inset-0 bg-black/30"></div>
 
@@ -593,7 +593,7 @@
           <div>
             <h3 class="text-lg font-semibold text-[#002147]">Add holding</h3>
             <p class="text-xs text-gray-500">
-              Example: TSM, 1000 shares, cost 5.00
+              Example: AAPL, 1000 shares, cost 5.00
             </p>
           </div>
           <button id="usStocksHoldingClose" type="button" class="h-9 w-9 rounded-lg hover:bg-gray-50 text-gray-500" aria-label="Close">
@@ -608,7 +608,7 @@
               <input
                 id="usStocksHoldingTicker"
                 class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2A4A]/20"
-                placeholder="TSM"
+                placeholder="AAPL"
                 autocomplete="off"
                 required
               />
@@ -658,7 +658,7 @@
           </div>
 
           <p class="text-[11px] text-gray-400">
-            Prices / market value / P&amp;L will auto-update after we connect the Cloudflare quotes backend.
+            Prices / market value / P&amp;L will auto-update from TwelveData via Cloudflare.
           </p>
         </form>
       </div>
@@ -667,7 +667,7 @@
 
   <div id="usStocksHoldingToast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[70] hidden">
     <div class="rounded-full bg-[#0B2A4A] text-white text-sm px-4 py-2 shadow-lg">
-      Saved. Quotes will update after backend is connected.
+      Saved. Updating quotes…
     </div>
   </div>
 
@@ -676,7 +676,15 @@
 
   <script>
     (function () {
-      // 手機右側抽屜
+      // =========================
+      // ✅ Quotes endpoint (TwelveData via Cloudflare Worker)
+      // If you later route this under taimic.tech/api/quotes, change this to "/api/quotes"
+      // =========================
+      const QUOTES_API_BASE = "https://taimic-quotes.amy20060226.workers.dev";
+
+      // =========================
+      // Mobile right drawer
+      // =========================
       function setupMobileMenu() {
         const toggle = document.getElementById('sidebar-toggle-mobile');
         const overlay = document.getElementById('mobile-menu');
@@ -731,7 +739,7 @@
         window.__closeMobileMenu = closeMenu;
       }
 
-      // 手機導航
+      // Mobile navigation
       window.mobileNavigate = function (pageKey) {
         switchDashboardPage(pageKey);
         if (window.__closeMobileMenu) window.__closeMobileMenu();
@@ -741,7 +749,7 @@
         }
       };
 
-      // 桌機 sidebar 收合
+      // Desktop sidebar collapse
       function setupDesktopSidebarToggle() {
         const btn = document.getElementById('sidebar-toggle-desktop');
         const sidebar = document.getElementById('sidebar');
@@ -751,7 +759,7 @@
         });
       }
 
-      // 左側 US / TW 小箭頭展開/收合
+      // Left US/TW section expand/collapse
       window.toggleSideSection = function (key) {
         const body = document.getElementById('side-' + key + '-children');
         const chevron = document.getElementById('side-' + key + '-chevron');
@@ -768,14 +776,14 @@
         chevron.classList.add('rotate-90');
       }
 
-      // ✅ 每次切頁都抓最新 partial（避免快取造成字體偶發回跳）
+      // ✅ Always bust cache when loading partials
       function withBust(url) {
         const sep = url.includes('?') ? '&' : '?';
         return `${url}${sep}t=${Date.now()}`;
       }
 
       // =========================
-      // ✅ US Stocks – Add Holding (dashboard-level, works with partials)
+      // ✅ US Stocks: Add Holding + Quotes refresh (dashboard-level, works with partial loading)
       // =========================
       const US_STOCKS_STORAGE_KEY = "taimic_us_stocks_holdings_v1";
 
@@ -807,6 +815,11 @@
         const x = Number(n);
         if (!Number.isFinite(x)) return "$0.00";
         return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(x);
+      }
+
+      function fmtPct(x) {
+        const v = x * 100;
+        return `${v >= 0 ? "+" : ""}${v.toFixed(2)}%`;
       }
 
       const UsStocksUI = (function () {
@@ -845,11 +858,13 @@
           $(ids.form)?.reset();
         }
 
-        function toast() {
+        function toast(text) {
           const t = $(ids.toast);
           if (!t) return;
+          const inner = t.querySelector("div");
+          if (inner && typeof text === "string") inner.textContent = text;
           t.classList.remove("hidden");
-          setTimeout(() => t.classList.add("hidden"), 1600);
+          setTimeout(() => t.classList.add("hidden"), 1400);
         }
 
         function ensureTbody() {
@@ -859,7 +874,6 @@
           let tbody = page.querySelector("#usHoldingsTbody");
           if (tbody) return tbody;
 
-          // If your partial didn't add the id, we set it automatically.
           tbody = page.querySelector("table tbody");
           if (tbody) tbody.id = "usHoldingsTbody";
           return tbody || null;
@@ -873,7 +887,6 @@
         function prependPendingRow(holding) {
           const tbody = ensureTbody();
           if (!tbody) return;
-
           if (rowExists(tbody, holding.id)) return;
 
           const qty = Number(holding.quantity || 0);
@@ -917,7 +930,6 @@
           const holdings = loadHoldings();
           if (!holdings.length) return;
 
-          // newest first
           const ordered = holdings
             .slice()
             .sort((a, b) => (a.createdAt || "").localeCompare(b.createdAt || ""))
@@ -943,7 +955,7 @@
           });
 
           if (form) {
-            form.addEventListener("submit", (e) => {
+            form.addEventListener("submit", async (e) => {
               e.preventDefault();
 
               const ticker = safeUpper($(ids.ticker)?.value);
@@ -969,7 +981,10 @@
 
               close();
               prependPendingRow(holding);
-              toast();
+              toast("Saved. Updating quotes…");
+
+              // ✅ after adding, refresh quotes and fill Price/MV/P&L
+              await refreshUsStocksQuotesAndUpdate();
             });
           }
         }
@@ -977,20 +992,20 @@
         return {
           open,
           close,
+          toast,
           hydrateFromStorage,
           bindModalEventsOnce,
           ensureTbody
         };
       })();
 
-      // ✅ This is the key fix for partials: scripts in innerHTML don't reliably run,
-      // so we use event delegation from the dashboard level.
+      // Event delegation: scripts inside partial may not run, so dashboard listens globally
       function setupUsStocksDelegation() {
         document.addEventListener("click", (e) => {
           const btn = e.target.closest("#btnAddHolding");
           if (!btn) return;
 
-          // Only when the button is inside the US Stocks page container
+          // only if the button sits inside the US stocks page container
           const inUsStocks = btn.closest("#page-us-stocks");
           if (!inUsStocks) return;
 
@@ -998,13 +1013,104 @@
         });
       }
 
-      // ✅ after each partial load, re-hydrate US stocks table from LocalStorage
+      async function refreshUsStocksQuotesAndUpdate() {
+        const page = document.getElementById("page-us-stocks");
+        if (!page || page.classList.contains("hidden")) return;
+
+        const tbody = page.querySelector("#usHoldingsTbody") || page.querySelector("table tbody");
+        if (!tbody) return;
+
+        const holdings = loadHoldings();
+        if (!holdings.length) return;
+
+        const symbols = [...new Set(holdings.map(h => safeUpper(h.ticker)).filter(Boolean))];
+        if (!symbols.length) return;
+
+        const endpoint = `${QUOTES_API_BASE}/api/quotes?symbols=${encodeURIComponent(symbols.join(","))}&t=${Date.now()}`;
+
+        let quotes = {};
+        try {
+          const res = await fetch(endpoint, { cache: "no-store" });
+          quotes = await res.json();
+        } catch (err) {
+          console.warn("[Quotes] fetch failed", err);
+          UsStocksUI.toast("Quotes fetch failed.");
+          return;
+        }
+
+        // Update only the rows we inserted (data-holding-id)
+        holdings.forEach((h) => {
+          const tr = tbody.querySelector(`[data-holding-id="${h.id}"]`);
+          if (!tr) return;
+
+          const sym = safeUpper(h.ticker);
+          const q = quotes[sym] || {};
+          const last = (q.price == null ? null : Number(q.price));
+          const qty = Number(h.quantity || 0);
+          const cost = Number(h.costBasis || 0);
+
+          const mv = last == null ? null : last * qty;
+          const costTotal = qty * cost;
+          const gain = (last == null ? null : mv - costTotal);
+          const ret = (last == null || costTotal <= 0) ? null : gain / costTotal;
+
+          const tds = tr.querySelectorAll("td");
+          if (tds.length < 6) return;
+
+          // Price cell
+          const priceSpan = tds[2].querySelector("span") || tds[2];
+          if (last == null) {
+            priceSpan.className = "font-mono tabular-nums text-gray-400";
+            priceSpan.textContent = "—";
+          } else {
+            priceSpan.className = "font-mono tabular-nums text-[#002147]";
+            priceSpan.textContent = fmtUsd(last);
+          }
+
+          // Gain cell (+ ret)
+          const gainTd = tds[4];
+          let mainGainSpan = gainTd.querySelector("span") || gainTd;
+
+          // remove old ret line
+          const oldRet = gainTd.querySelector(".taimic-ret");
+          if (oldRet) oldRet.remove();
+
+          if (gain == null) {
+            mainGainSpan.className = "font-mono tabular-nums text-gray-400";
+            mainGainSpan.textContent = "—";
+          } else {
+            const good = gain >= 0;
+            mainGainSpan.className = `font-mono tabular-nums ${good ? "text-[#005F48]" : "text-[#B91C1C]"}`;
+            mainGainSpan.textContent = `${good ? "+" : "−"}${fmtUsd(Math.abs(gain))}`;
+
+            if (ret != null) {
+              const retDiv = document.createElement("div");
+              retDiv.className = `taimic-ret mt-1 text-[11px] ${good ? "text-[#005F48]" : "text-[#B91C1C]"}`;
+              retDiv.textContent = fmtPct(ret);
+              gainTd.appendChild(retDiv);
+            }
+          }
+
+          // Market value cell
+          const mvSpan = tds[5].querySelector("span") || tds[5];
+          if (mv == null) {
+            mvSpan.className = "font-mono tabular-nums text-[13px] font-semibold text-gray-400";
+            mvSpan.textContent = "—";
+          } else {
+            mvSpan.className = "font-mono tabular-nums text-[13px] font-semibold text-[#002147]";
+            mvSpan.textContent = fmtUsd(mv);
+          }
+        });
+
+        UsStocksUI.toast("Quotes updated.");
+      }
+
       function afterPartialLoad(pageKey, container) {
         if (pageKey === "us-stocks") {
-          // ensure tbody id exists (even if your partial forgot it)
           UsStocksUI.ensureTbody();
-          // show saved holdings without duplicating
           UsStocksUI.hydrateFromStorage();
+          // Fill prices for inserted rows
+          refreshUsStocksQuotesAndUpdate();
         }
       }
 
@@ -1034,17 +1140,14 @@
           });
       }
 
-      // 切換 dashboard 各頁
+      // Switch dashboard page
       window.switchDashboardPage = function (pageKey) {
-        window.__currentDashboardPage = pageKey;
-
         let target = document.getElementById('page-' + pageKey);
 
         if (!target) {
           console.warn('[Dashboard] Page not found:', pageKey, '→ fallback to overview');
           pageKey = 'overview';
           target = document.getElementById('page-overview');
-          window.__currentDashboardPage = pageKey;
         }
 
         if (pageKey.startsWith('us-')) ensureSideSectionOpen('us');
@@ -1058,7 +1161,7 @@
         target.classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'auto' });
 
-        // 更新 sidebar active 樣式
+        // Sidebar active state
         const navButtons = document.querySelectorAll('[data-page]');
         navButtons.forEach((btn) => btn.classList.remove('side-item-active'));
         const activeButtons = document.querySelectorAll('[data-page="' + pageKey + '"]');
