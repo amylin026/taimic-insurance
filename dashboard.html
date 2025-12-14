@@ -391,154 +391,64 @@
           Navigation
         </p>
 
-        <button class="side-item" type="button" onclick="mobileNavigate('overview')">
-          Overview
-        </button>
+        <button class="side-item" type="button" onclick="mobileNavigate('overview')">Overview</button>
+        <button class="side-item mt-2" type="button" onclick="mobileNavigate('family')">Family members</button>
 
-        <button class="side-item mt-2" type="button" onclick="mobileNavigate('family')">
-          Family members
-        </button>
+        <p class="mt-5 text-[10px] tracking-[0.2em] text-slate-400 uppercase">US assets</p>
+        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-accounts')">Accounts</button>
+        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-stocks')">Stocks</button>
+        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-funds')">Funds</button>
+        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-bonds')"><span>Bonds</span></button>
+        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-liabilities')">Liabilities</button>
+        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-house')">House</button>
+        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-crypto')">Crypto</button>
+        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-insurance')"><span>Insurance</span></button>
 
-        <p class="mt-5 text-[10px] tracking-[0.2em] text-slate-400 uppercase">
-          US assets
-        </p>
-        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-accounts')">
-          Accounts
-        </button>
-        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-stocks')">
-          Stocks
-        </button>
+        <p class="mt-5 text-[10px] tracking-[0.2em] text-slate-400 uppercase">Taiwan assets</p>
+        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-accounts')">Accounts</button>
+        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-stocks')">Stocks</button>
+        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-funds')">Funds</button>
+        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-bonds')"><span>Bonds</span></button>
+        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-liabilities')">Liabilities</button>
+        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-house')">House</button>
+        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-crypto')">Crypto</button>
+        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-insurance')"><span>Insurance</span></button>
 
-        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-funds')">
-          Funds
-        </button>
-
-        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-bonds')">
-          <span>Bonds</span>
-        </button>
-
-        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-liabilities')">
-          Liabilities
-        </button>
-        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-house')">
-          House
-        </button>
-        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-crypto')">
-          Crypto
-        </button>
-
-        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('us-insurance')">
-          <span>Insurance</span>
-        </button>
-
-        <p class="mt-5 text-[10px] tracking-[0.2em] text-slate-400 uppercase">
-          Taiwan assets
-        </p>
-        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-accounts')">
-          Accounts
-        </button>
-        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-stocks')">
-          Stocks
-        </button>
-
-        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-funds')">
-          Funds
-        </button>
-
-        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-bonds')">
-          <span>Bonds</span>
-        </button>
-
-        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-liabilities')">
-          Liabilities
-        </button>
-        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-house')">
-          House
-        </button>
-        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-crypto')">
-          Crypto
-        </button>
-
-        <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-insurance')">
-          <span>Insurance</span>
-        </button>
-
-        <p class="mt-5 text-[10px] tracking-[0.2em] text-slate-400 uppercase">
-          Other
-        </p>
-        <button class="side-item" type="button" onclick="mobileNavigate('help')">
-          Help center
-        </button>
-        <button class="side-item" type="button" onclick="mobileNavigate('settings')">
-          Settings
-        </button>
+        <p class="mt-5 text-[10px] tracking-[0.2em] text-slate-400 uppercase">Other</p>
+        <button class="side-item" type="button" onclick="mobileNavigate('help')">Help center</button>
+        <button class="side-item" type="button" onclick="mobileNavigate('settings')">Settings</button>
       </div>
     </div>
 
     <div class="flex flex-1 relative">
-
       <aside
         id="sidebar"
         class="hidden md:flex flex-col w-64 px-5 py-6 border-r border-slate-200/70 bg-white/60 backdrop-blur-xl"
       >
         <nav class="space-y-1">
-          <button
-            class="side-item side-item-active"
-            type="button"
-            data-page="overview"
-            onclick="switchDashboardPage('overview')"
-          >
+          <button class="side-item side-item-active" type="button" data-page="overview" onclick="switchDashboardPage('overview')">
             <span>Overview</span>
           </button>
 
-          <button
-            class="side-item"
-            type="button"
-            data-page="family"
-            onclick="switchDashboardPage('family')"
-          >
+          <button class="side-item" type="button" data-page="family" onclick="switchDashboardPage('family')">
             <span>Family members</span>
           </button>
 
-          <button
-            class="side-item"
-            type="button"
-            onclick="toggleSideSection('us')"
-          >
+          <button class="side-item" type="button" onclick="toggleSideSection('us')">
             <span class="flex items-center gap-1">
               <span id="side-us-chevron" class="inline-block text-xs transition-transform">&gt;</span>
               <span>US assets</span>
             </span>
           </button>
           <div id="side-us-children" class="ml-4 mt-1 space-y-1 hidden">
-            <button class="side-item side-subitem" type="button" data-page="us-accounts" onclick="switchDashboardPage('us-accounts')">
-              <span>Accounts</span>
-            </button>
-            <button class="side-item side-subitem" type="button" data-page="us-stocks" onclick="switchDashboardPage('us-stocks')">
-              <span>Stocks</span>
-            </button>
-
-            <button class="side-item side-subitem" type="button" data-page="us-funds" onclick="switchDashboardPage('us-funds')">
-              <span>Funds</span>
-            </button>
-
-            <button class="side-item side-subitem" type="button" data-page="us-bonds" onclick="switchDashboardPage('us-bonds')">
-              <span>Bonds</span>
-            </button>
-
-            <button class="side-item side-subitem" type="button" data-page="us-liabilities" onclick="switchDashboardPage('us-liabilities')">
-              <span>Liabilities</span>
-            </button>
-            <button class="side-item side-subitem" type="button" data-page="us-house" onclick="switchDashboardPage('us-house')">
-              <span>House</span>
-            </button>
-            <button class="side-item side-subitem" type="button" data-page="us-crypto" onclick="switchDashboardPage('us-crypto')">
-              <span>Crypto</span>
-            </button>
-
-            <button class="side-item side-subitem" type="button" data-page="us-insurance" onclick="switchDashboardPage('us-insurance')">
-              <span>Insurance</span>
-            </button>
+            <button class="side-item side-subitem" type="button" data-page="us-accounts" onclick="switchDashboardPage('us-accounts')"><span>Accounts</span></button>
+            <button class="side-item side-subitem" type="button" data-page="us-stocks" onclick="switchDashboardPage('us-stocks')"><span>Stocks</span></button>
+            <button class="side-item side-subitem" type="button" data-page="us-funds" onclick="switchDashboardPage('us-funds')"><span>Funds</span></button>
+            <button class="side-item side-subitem" type="button" data-page="us-bonds" onclick="switchDashboardPage('us-bonds')"><span>Bonds</span></button>
+            <button class="side-item side-subitem" type="button" data-page="us-liabilities" onclick="switchDashboardPage('us-liabilities')"><span>Liabilities</span></button>
+            <button class="side-item side-subitem" type="button" data-page="us-house" onclick="switchDashboardPage('us-house')"><span>House</span></button>
+            <button class="side-item side-subitem" type="button" data-page="us-crypto" onclick="switchDashboardPage('us-crypto')"><span>Crypto</span></button>
+            <button class="side-item side-subitem" type="button" data-page="us-insurance" onclick="switchDashboardPage('us-insurance')"><span>Insurance</span></button>
           </div>
 
           <button class="side-item" type="button" onclick="toggleSideSection('tw')">
@@ -548,90 +458,52 @@
             </span>
           </button>
           <div id="side-tw-children" class="ml-4 mt-1 space-y-1 hidden">
-            <button class="side-item side-subitem" type="button" data-page="tw-accounts" onclick="switchDashboardPage('tw-accounts')">
-              <span>Accounts</span>
-            </button>
-            <button class="side-item side-subitem" type="button" data-page="tw-stocks" onclick="switchDashboardPage('tw-stocks')">
-              <span>Stocks</span>
-            </button>
-
-            <button class="side-item side-subitem" type="button" data-page="tw-funds" onclick="switchDashboardPage('tw-funds')">
-              <span>Funds</span>
-            </button>
-
-            <button class="side-item side-subitem" type="button" data-page="tw-bonds" onclick="switchDashboardPage('tw-bonds')">
-              <span>Bonds</span>
-            </button>
-
-            <button class="side-item side-subitem" type="button" data-page="tw-liabilities" onclick="switchDashboardPage('tw-liabilities')">
-              <span>Liabilities</span>
-            </button>
-            <button class="side-item side-subitem" type="button" data-page="tw-house" onclick="switchDashboardPage('tw-house')">
-              <span>House</span>
-            </button>
-            <button class="side-item side-subitem" type="button" data-page="tw-crypto" onclick="switchDashboardPage('tw-crypto')">
-              <span>Crypto</span>
-            </button>
-
-            <button class="side-item side-subitem" type="button" data-page="tw-insurance" onclick="switchDashboardPage('tw-insurance')">
-              <span>Insurance</span>
-            </button>
+            <button class="side-item side-subitem" type="button" data-page="tw-accounts" onclick="switchDashboardPage('tw-accounts')"><span>Accounts</span></button>
+            <button class="side-item side-subitem" type="button" data-page="tw-stocks" onclick="switchDashboardPage('tw-stocks')"><span>Stocks</span></button>
+            <button class="side-item side-subitem" type="button" data-page="tw-funds" onclick="switchDashboardPage('tw-funds')"><span>Funds</span></button>
+            <button class="side-item side-subitem" type="button" data-page="tw-bonds" onclick="switchDashboardPage('tw-bonds')"><span>Bonds</span></button>
+            <button class="side-item side-subitem" type="button" data-page="tw-liabilities" onclick="switchDashboardPage('tw-liabilities')"><span>Liabilities</span></button>
+            <button class="side-item side-subitem" type="button" data-page="tw-house" onclick="switchDashboardPage('tw-house')"><span>House</span></button>
+            <button class="side-item side-subitem" type="button" data-page="tw-crypto" onclick="switchDashboardPage('tw-crypto')"><span>Crypto</span></button>
+            <button class="side-item side-subitem" type="button" data-page="tw-insurance" onclick="switchDashboardPage('tw-insurance')"><span>Insurance</span></button>
           </div>
 
           <div class="pt-4 mt-2 border-t border-slate-200/70 space-y-1">
             <button class="side-bottom-link" type="button" data-page="help" onclick="switchDashboardPage('help')">
-              <i class="fa-regular fa-circle-question"></i>
-              <span>Help center</span>
+              <i class="fa-regular fa-circle-question"></i><span>Help center</span>
             </button>
             <button class="side-bottom-link" type="button" data-page="settings" onclick="switchDashboardPage('settings')">
-              <i class="fa-solid fa-gear"></i>
-              <span>Settings</span>
+              <i class="fa-solid fa-gear"></i><span>Settings</span>
             </button>
           </div>
         </nav>
       </aside>
 
       <main class="flex-1">
-        <!-- ✅ NOW PARTIAL: OVERVIEW -->
         <div id="page-overview" class="dash-page" data-include="pages/overview.html"></div>
 
         <div id="page-us-accounts" class="dash-page hidden" data-include="pages/us-accounts.html"></div>
-
         <div id="page-us-stocks" class="dash-page hidden" data-include="pages/us-stocks.html"></div>
-
         <div id="page-us-funds" class="dash-page hidden" data-include="pages/us-funds.html"></div>
-
         <div id="page-us-bonds" class="dash-page hidden" data-include="pages/us-bonds.html"></div>
-
         <div id="page-us-liabilities" class="dash-page hidden" data-include="pages/us-liabilities.html"></div>
-
         <div id="page-us-house" class="dash-page hidden" data-include="pages/us-house.html"></div>
-
         <div id="page-us-crypto" class="dash-page hidden" data-include="pages/us-crypto.html"></div>
-
         <div id="page-us-insurance" class="dash-page hidden" data-include="pages/us-insurance.html"></div>
 
         <div id="page-tw-accounts" class="dash-page hidden" data-include="pages/tw-accounts.html"></div>
-
         <div id="page-tw-stocks" class="dash-page hidden" data-include="pages/tw-stocks.html"></div>
-
         <div id="page-tw-funds" class="dash-page hidden" data-include="pages/tw-funds.html"></div>
-
         <div id="page-tw-bonds" class="dash-page hidden" data-include="pages/tw-bonds.html"></div>
 
         <div id="page-family" class="dash-page hidden family-page" data-include="pages/family.html"></div>
 
         <div id="page-tw-liabilities" class="dash-page hidden" data-include="pages/tw-liabilities.html"></div>
-
         <div id="page-tw-house" class="dash-page hidden" data-include="pages/tw-house.html"></div>
-
         <div id="page-tw-crypto" class="dash-page hidden" data-include="pages/tw-crypto.html"></div>
-
         <div id="page-tw-insurance" class="dash-page hidden" data-include="pages/tw-insurance.html"></div>
 
         <div id="page-help" class="dash-page hidden" data-include="pages/help.html"></div>
-
-        <!-- ✅ NOW PARTIAL: SETTINGS (only change here) -->
         <div id="page-settings" class="dash-page hidden" data-include="pages/settings.html"></div>
       </main>
     </div>
@@ -654,71 +526,41 @@
 
   <div id="modal-overlay" class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"></div>
 
-  <div
-    id="auth-overlay"
-    class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-  >
+  <div id="auth-overlay" class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
     <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 relative">
-      <button
-        type="button"
-        onclick="closeAuthModal && closeAuthModal()"
-        class="absolute right-3 top-3 text-slate-400 hover:text-slate-600 text-sm"
-      >
+      <button type="button" onclick="closeAuthModal && closeAuthModal()"
+        class="absolute right-3 top-3 text-slate-400 hover:text-slate-600 text-sm">
         <i class="fa-solid fa-xmark"></i>
       </button>
 
       <div class="flex justify-center mb-4">
         <div class="inline-flex bg-slate-100 rounded-full p-1">
-          <button
-            type="button"
-            id="auth-tab-login"
-            onclick="openAuthModal && openAuthModal('login')"
-            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-900 shadow-sm"
-          >
+          <button type="button" id="auth-tab-login" onclick="openAuthModal && openAuthModal('login')"
+            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-900 shadow-sm">
             Log in
           </button>
-          <button
-            type="button"
-            id="auth-tab-register"
-            onclick="openAuthModal && openAuthModal('register')"
-            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100"
-          >
+          <button type="button" id="auth-tab-register" onclick="openAuthModal && openAuthModal('register')"
+            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100">
             Sign up
           </button>
         </div>
       </div>
 
-      <h2 id="auth-title" class="text-lg font-semibold text-slate-900 mb-1 text-center">
-        Login to Taimic
-      </h2>
-
+      <h2 id="auth-title" class="text-lg font-semibold text-slate-900 mb-1 text-center">Login to Taimic</h2>
       <div id="auth-message" class="text-sm h-5 text-center"></div>
 
-      <label class="block text-xs font-medium text-slate-700 mt-2 mb-1">
-        Email
-      </label>
-      <input
-        id="auth-email"
-        type="email"
+      <label class="block text-xs font-medium text-slate-700 mt-2 mb-1">Email</label>
+      <input id="auth-email" type="email"
         class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
-        placeholder="you@gmail.com"
-      />
+        placeholder="you@gmail.com" />
 
-      <label class="block text-xs font-medium text-slate-700 mt-3 mb-1">
-        Password
-      </label>
-      <input
-        id="auth-password"
-        type="password"
+      <label class="block text-xs font-medium text-slate-700 mt-3 mb-1">Password</label>
+      <input id="auth-password" type="password"
         class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
-        placeholder="••••••••"
-      />
+        placeholder="••••••••" />
 
-      <button
-        id="auth-submit"
-        type="button"
-        class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition"
-      >
+      <button id="auth-submit" type="button"
+        class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition">
         <span id="auth-submit-text">Login</span>
         <i class="fa-solid fa-arrow-right-long text-xs"></i>
       </button>
@@ -726,7 +568,7 @@
   </div>
 
   <script src="main.js"></script>
-  <script src="include-partials.js"></script>
+  <!-- ✅ REMOVED: include-partials.js（避免跟你自己的 loader 打架 / 覆蓋） -->
 
   <script>
     (function () {
@@ -822,50 +664,34 @@
         chevron.classList.add('rotate-90');
       }
 
-      // ✅ 強制讓 partial 永遠拿最新（避免 Safari/瀏覽器快取 + dataset.loaded 卡死）
-      const PARTIALS_VERSION = "2025-12-14-02"; // 你每次更新 pages/* 就改這串
-
-      function withVersion(url) {
+      // ✅ 一次根治：每次切頁都抓最新 partial（避免 Safari/CDN 快取只害到數字）
+      function withBust(url) {
         const sep = url.includes('?') ? '&' : '?';
-        return `${url}${sep}v=${encodeURIComponent(PARTIALS_VERSION)}`;
+        return `${url}${sep}t=${Date.now()}`;
       }
 
-      // ✅ 切頁保險：按需載入 + 版本號快取破壞 + no-store
-      function loadPartialIfNeeded(container) {
+      function loadPartialAlways(container) {
         if (!container) return;
         const url = container.getAttribute('data-include');
         if (!url) return;
 
-        // ✅ 只有在「同一個版本」才允許略過 fetch
-        if (container.dataset.loaded === '1' && container.dataset.v === PARTIALS_VERSION) return;
-
-        fetch(withVersion(url), { cache: 'no-store' })
+        fetch(withBust(url), { cache: 'no-store' })
           .then((r) => {
             if (!r.ok) throw new Error('Failed to load: ' + url + ' (' + r.status + ')');
             return r.text();
           })
           .then((html) => {
             container.innerHTML = html;
-            container.dataset.loaded = '1';
-            container.dataset.v = PARTIALS_VERSION;
           })
           .catch((err) => {
             console.error(err);
             container.innerHTML = `
               <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
-                <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
-                  Load error
-                </p>
-                <h1 class="text-[22px] md:text-[26px] font-semibold tracking-tight text-[#002147]">
-                  Failed to load partial
-                </h1>
-                <p class="mt-2 text-sm text-[#4B5563]">
-                  Could not load <span class="font-mono">${url}</span>. Check file path / deployment.
-                </p>
+                <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">Load error</p>
+                <h1 class="text-[22px] md:text-[26px] font-semibold tracking-tight text-[#002147]">Failed to load partial</h1>
+                <p class="mt-2 text-sm text-[#4B5563]">Could not load <span class="font-mono">${url}</span>. Check file path / deployment.</p>
               </div>
             `;
-            container.dataset.loaded = '1';
-            container.dataset.v = PARTIALS_VERSION;
           });
       }
 
@@ -885,8 +711,8 @@
         const pages = document.querySelectorAll('.dash-page');
         pages.forEach((page) => page.classList.add('hidden'));
 
-        // ✅ 先確保 partial 真的被載進來（而且一定是最新版本）
-        loadPartialIfNeeded(target);
+        // ✅ 每次切頁都抓最新（你現在在調字體，這樣才不會「看起來又變回去」）
+        loadPartialAlways(target);
 
         target.classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'auto' });
