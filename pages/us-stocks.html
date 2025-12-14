@@ -13,7 +13,6 @@
       </p>
     </div>
 
-    <!-- Add Holding button (dashboard will bind behavior) -->
     <div class="flex flex-wrap items-center gap-2 text-[11px] text-[#4B5563]">
       <button
         id="btnAddHolding"
@@ -61,8 +60,8 @@
             </button>
           </div>
         </div>
+
         <div class="h-40 rounded-lg bg-[#F5F7FA] border border-[#E5E7EB] px-3 py-2 flex items-center">
-          <!-- Smooth area chart using SVG -->
           <svg viewBox="0 0 260 120" class="w-full h-full" aria-hidden="true">
             <defs>
               <linearGradient id="usEquityArea" x1="0" y1="0" x2="0" y2="1">
@@ -70,9 +69,7 @@
                 <stop offset="100%" stop-color="#005F48" stop-opacity="0.02" />
               </linearGradient>
             </defs>
-            <!-- baseline -->
             <path d="M0 95 H260" stroke="#D1D5DB" stroke-width="1" fill="none" />
-            <!-- smooth area -->
             <path
               d="M0 95
                  C 30 92, 50 88, 70 82
@@ -83,7 +80,6 @@
               fill="url(#usEquityArea)"
               stroke="none"
             />
-            <!-- smooth line -->
             <path
               d="M0 95
                  C 30 92, 50 88, 70 82
@@ -96,7 +92,6 @@
               stroke-linecap="round"
               stroke-linejoin="round"
             />
-            <!-- latest point -->
             <circle cx="260" cy="38" r="4" fill="#005F48" />
           </svg>
         </div>
@@ -104,20 +99,20 @@
 
       <!-- Key metrics -->
       <div class="flex flex-col justify-between gap-4">
-        <!-- Total equity -->
+        <!-- Total equity (✅ will be updated by dashboard.js) -->
         <div>
           <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
             Total equity
           </p>
-          <p class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
-            $840,250.00
+          <p id="usStocksTotalEquity" class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
+            —
           </p>
           <p class="mt-1 text-[11px] text-[#6B7280]">
             Across taxable and retirement US brokerage accounts.
           </p>
         </div>
 
-        <!-- Gain / loss -->
+        <!-- Gain / loss (✅ will be updated by dashboard.js) -->
         <div class="space-y-2">
           <div class="flex flex-wrap items-center gap-2">
             <span class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF]">
@@ -125,29 +120,21 @@
             </span>
             <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 border border-emerald-100 px-3 py-1 text-[11px] font-semibold text-[#005F48]">
               <i class="fa-solid fa-arrow-trend-up text-[10px]"></i>
-              <span class="font-serif tracking-tight">
-                +$124,500.00
+              <span id="usStocksUnrealizedGainVal" class="font-serif tracking-tight">
+                —
               </span>
-              <span class="font-serif tracking-tight">
-                (+17.4%)
+              <span id="usStocksUnrealizedGainPct" class="font-serif tracking-tight">
+                —
               </span>
             </span>
           </div>
 
           <div class="flex items-center gap-2 text-[11px]">
-            <span class="text-[#6B7280]">
-              Today
-            </span>
-            <span class="font-serif tracking-tight text-[#CC5500]">
-              -$230.00
-            </span>
-            <span class="text-[#9CA3AF]">
-              Minor pullback after recent highs
-            </span>
+            <span class="text-[#6B7280]">Last updated</span>
+            <span id="usStocksAsOf" class="text-[#9CA3AF]">—</span>
           </div>
         </div>
 
-        <!-- Small hint -->
         <p class="text-[11px] text-[#6B7280]">
           Capital gains are unrealized until you sell. Taimic keeps track of cost basis highlights – your tax advisor
           gives the final call on when and how to harvest.
@@ -167,6 +154,7 @@
           US equities &amp; ETFs
         </h2>
       </div>
+
       <button
         type="button"
         class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white text-[11px] font-semibold text-[#002147] px-3 py-1.5 hover:bg-[#F3F4F6]"
@@ -189,104 +177,11 @@
           </tr>
         </thead>
 
+        <!-- ✅ no more hardcoded rows -->
         <tbody id="usHoldingsTbody" class="divide-y divide-gray-100">
-          <!-- AAPL -->
-          <tr class="hover:bg-[#F9FAFB] transition-colors">
-            <td class="py-4 px-6">
-              <div class="flex flex-col">
-                <span class="text-[13px] font-semibold text-[#002147]">AAPL</span>
-                <span class="text-[11px] text-[#6B7280]">Apple Inc.</span>
-              </div>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">150.00</span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">$220.50</span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#6B7280]">$142.50</span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#005F48]">+$11,700.00</span>
-            </td>
-            <td class="py-4 px-6 align-top text-right">
-              <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">$33,075.00</span>
-            </td>
-          </tr>
-
-          <!-- VOO -->
-          <tr class="hover:bg-[#F9FAFB] transition-colors">
-            <td class="py-4 px-6">
-              <div class="flex flex-col">
-                <span class="text-[13px] font-semibold text-[#002147]">VOO</span>
-                <span class="text-[11px] text-[#6B7280]">Vanguard S&amp;P 500 ETF</span>
-              </div>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">320.00</span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">$420.10</span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#6B7280]">$345.25</span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#005F48]">+$24,000.00</span>
-            </td>
-            <td class="py-4 px-6 align-top text-right">
-              <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">$134,432.00</span>
-            </td>
-          </tr>
-
-          <!-- MSFT -->
-          <tr class="hover:bg-[#F9FAFB] transition-colors">
-            <td class="py-4 px-6">
-              <div class="flex flex-col">
-                <span class="text-[13px] font-semibold text-[#002147]">MSFT</span>
-                <span class="text-[11px] text-[#6B7280]">Microsoft Corp.</span>
-              </div>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">210.00</span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">$390.80</span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#6B7280]">$255.40</span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#005F48]">+$28,448.00</span>
-            </td>
-            <td class="py-4 px-6 align-top text-right">
-              <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">$82,068.00</span>
-            </td>
-          </tr>
-
-          <!-- TSLA (loss example) -->
-          <tr class="hover:bg-[#F9FAFB] transition-colors">
-            <td class="py-4 px-6">
-              <div class="flex flex-col">
-                <span class="text-[13px] font-semibold text-[#002147]">TSLA</span>
-                <span class="text-[11px] text-[#6B7280]">Tesla Inc.</span>
-              </div>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">90.00</span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">$190.20</span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#6B7280]">$245.00</span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#B91C1C]">-$4,932.00</span>
-            </td>
-            <td class="py-4 px-6 align-top text-right">
-              <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">$17,118.00</span>
+          <tr>
+            <td colspan="6" class="px-6 py-8 text-sm text-gray-400">
+              No holdings yet. Click <span class="font-semibold text-[#0B2A4A]">Add Holding</span> to get started.
             </td>
           </tr>
         </tbody>
