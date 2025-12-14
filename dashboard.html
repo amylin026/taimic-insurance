@@ -382,6 +382,11 @@
       const US_STOCKS_STORAGE_KEY = "taimic_us_stocks_holdings_v1";
       const $ = (id) => document.getElementById(id);
 
+      // ✅ Overview sample baseline (so Overview looks normal even before user adds holdings)
+      const OVERVIEW_BASE_NET_WORTH = 3420500; // sample
+      const OVERVIEW_BASE_STOCKS = 980000;     // sample "Stocks" slice in overview
+      const OVERVIEW_FX_NOTE_TEXT = "📉 -$1,200 due to TWD drop";
+
       function withBust(url) {
         const sep = url.includes('?') ? '&' : '?';
         return `${url}${sep}t=${Date.now()}`;
@@ -425,27 +430,21 @@
       // =========================
       // Level-1 chart: no backend needed.
       // Uses current totalMV to generate a classy "moving" curve.
-      // Works with either:
-      //  - ids: #usStocksChart + #usStocksLine/#usStocksArea/#usStocksDot
-      //  - or fallback: first svg + path order (baseline/area/line)
       // =========================
       function updateUsStocksChart(totalMV) {
         const page = document.getElementById("page-us-stocks");
         if (!page) return;
 
-        // Prefer explicit id, fallback to first svg inside the page
         let svg = page.querySelector("#usStocksChart");
         if (!svg) svg = page.querySelector("svg");
         if (!svg) return;
 
-        // Prefer ids, fallback to path order
         let line = svg.querySelector("#usStocksLine");
         let area = svg.querySelector("#usStocksArea");
         let dot = svg.querySelector("#usStocksDot");
 
         if (!line || !area) {
           const paths = svg.querySelectorAll("path");
-          // expected: [baseline, area, line]
           if (paths.length >= 3) {
             area = area || paths[1];
             line = line || paths[2];
@@ -459,7 +458,6 @@
 
         const base = Math.max(1, Number(totalMV) || 1);
 
-        // Gentle uptrend + mild waves (looks "real" without being TradingView)
         const values = [];
         let v = base * 0.72;
         for (let i = 0; i < n; i++) {
@@ -690,7 +688,7 @@
       })();
 
       // --------------------------
-      // US Stocks render/update/delete
+      // Quotes + helpers (shared)
       // --------------------------
       async function fetchQuotes(symbols) {
         const endpoint = `${QUOTES_API_BASE}/api/quotes?symbols=${encodeURIComponent(symbols.join(","))}&t=${Date.now()}`;
@@ -698,6 +696,74 @@
         return await res.json();
       }
 
+      // --------------------------
+      // Overview sync (✅ this is the part that makes Overview change)
+      // --------------------------
+      async function refreshOverviewFromHoldings(stocksMVOverride = null, asOfOverride = "") {
+        const page = document.getElementById("page-overview");
+        if (!page) return;
+
+        let stocksMV = stocksMVOverride;
+        let asOf = asOfOverride || "";
+
+        // If caller didn't pass a value, compute from holdings + quotes
+        if (!Number.isFinite(Number(stocksMV))) {
+          const holdings = loadHoldings();
+
+          // No holdings yet -> show baseline sample numbers
+          if (!holdings.length) {
+            const netWorthEl = page.querySelector("#overviewNetWorth");
+            const netWorthDonutEl = page.querySelector("#overviewNetWorthDonut");
+            const stocksEl = page.querySelector("#overviewStocksMV");
+            const fxEl = page.querySelector("#overviewFxNote");
+
+            if (netWorthEl) netWorthEl.textContent = fmtUsd(OVERVIEW_BASE_NET_WORTH);
+            if (netWorthDonutEl) netWorthDonutEl.textContent = fmtUsd(OVERVIEW_BASE_NET_WORTH);
+            if (stocksEl) stocksEl.textContent = fmtUsd(OVERVIEW_BASE_STOCKS);
+            if (fxEl) fxEl.textContent = OVERVIEW_FX_NOTE_TEXT;
+
+            return;
+          }
+
+          const symbols = [...new Set(holdings.map(h => safeUpper(h.ticker)).filter(Boolean))];
+          if (!symbols.length) return;
+
+          let quotes = {};
+          try {
+            quotes = await fetchQuotes(symbols);
+          } catch (e) {
+            console.warn("[Overview] quotes fetch failed", e);
+            return;
+          }
+
+          stocksMV = holdings.reduce((sum, h) => {
+            const sym = safeUpper(h.ticker);
+            const p = quotes?.[sym]?.price;
+            const qty = Number(h.quantity || 0);
+            if (p == null || !Number.isFinite(qty)) return sum;
+            return sum + Number(p) * qty;
+          }, 0);
+
+          asOf = symbols.map(s => quotes?.[s]?.asOf).find(Boolean) || "";
+        }
+
+        const stocksMVNum = Number(stocksMV);
+        const computedNetWorth = (OVERVIEW_BASE_NET_WORTH - OVERVIEW_BASE_STOCKS) + (Number.isFinite(stocksMVNum) ? stocksMVNum : 0);
+
+        const netWorthEl = page.querySelector("#overviewNetWorth");
+        const netWorthDonutEl = page.querySelector("#overviewNetWorthDonut");
+        const stocksEl = page.querySelector("#overviewStocksMV");
+        const fxEl = page.querySelector("#overviewFxNote");
+
+        if (netWorthEl) netWorthEl.textContent = fmtUsd(computedNetWorth);
+        if (netWorthDonutEl) netWorthDonutEl.textContent = fmtUsd(computedNetWorth);
+        if (stocksEl) stocksEl.textContent = fmtUsd(stocksMVNum);
+        if (fxEl) fxEl.textContent = OVERVIEW_FX_NOTE_TEXT;
+      }
+
+      // --------------------------
+      // US Stocks render/update/delete
+      // --------------------------
       function ensureTbody() {
         const page = document.getElementById("page-us-stocks");
         if (!page) return null;
@@ -743,14 +809,20 @@
           gainPctEl.textContent = pct == null ? "(—)" : `(${fmtPct(pct)})`;
         }
 
-        const asOf = enriched.find(x => x.asOf)?.asOf;
+        const asOf = enriched.find(x => x.asOf)?.asOf || "";
         const asOfEl = page.querySelector("#usStocksAsOf");
         if (asOfEl) {
           asOfEl.textContent = asOf ? new Date(asOf).toLocaleString() : "—";
         }
 
-        // ✅ Level-1 chart update (no backend)
         updateUsStocksChart(totalMV);
+
+        // ✅ Sync Overview too (no extra backend)
+        if (enriched.length) {
+          refreshOverviewFromHoldings(totalMV, asOf);
+        } else {
+          refreshOverviewFromHoldings(null, "");
+        }
       }
 
       function renderTable(enriched) {
@@ -896,9 +968,13 @@
         });
       }
 
+      // ✅ called after a partial is loaded into the page container
       function afterPartialLoad(pageKey) {
         if (pageKey === "us-stocks") {
           refreshUsStocksQuotesAndRender();
+        }
+        if (pageKey === "overview") {
+          refreshOverviewFromHoldings(null, "");
         }
       }
 
