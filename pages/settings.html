@@ -24,7 +24,7 @@
     }
     .settings-tab:hover { color: #0f172a; transform: translateX(2px); }
 
-    /* Active tab styling + 3px brand line (Swiss) */
+    /* ✅ Active tab styling (Removed the blue 3px line; keep clean highlight) */
     #tab-profile:checked ~ .settings-layout .settings-nav label[for="tab-profile"],
     #tab-family:checked ~ .settings-layout .settings-nav label[for="tab-family"],
     #tab-connections:checked ~ .settings-layout .settings-nav label[for="tab-connections"],
@@ -35,22 +35,6 @@
       color: #0f172a;
       box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
       font-weight: 600;
-    }
-
-    #tab-profile:checked ~ .settings-layout .settings-nav label[for="tab-profile"]::before,
-    #tab-family:checked ~ .settings-layout .settings-nav label[for="tab-family"]::before,
-    #tab-connections:checked ~ .settings-layout .settings-nav label[for="tab-connections"]::before,
-    #tab-notifications:checked ~ .settings-layout .settings-nav label[for="tab-notifications"]::before,
-    #tab-security:checked ~ .settings-layout .settings-nav label[for="tab-security"]::before,
-    #tab-billing:checked ~ .settings-layout .settings-nav label[for="tab-billing"]::before {
-      content: "";
-      position: absolute;
-      left: 0.55rem;
-      top: 0.55rem;
-      bottom: 0.55rem;
-      width: 3px;
-      border-radius: 9999px;
-      background: #002fa7;
     }
   </style>
 
@@ -247,7 +231,6 @@
           </div>
 
           <div class="mt-5 border border-slate-200 rounded-2xl overflow-hidden bg-white">
-            <!-- Row -->
             <div class="flex items-center justify-between gap-3 px-4 py-3 border-b border-gray-200">
               <div class="flex items-center gap-3">
                 <div class="w-9 h-9 rounded-full bg-[#002147] text-white flex items-center justify-center text-xs font-bold tracking-[0.18em]">
@@ -335,7 +318,6 @@
           </div>
 
           <div class="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <!-- US -->
             <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
               <div class="px-4 py-3 bg-[#F5F7FA] border-b border-gray-200">
                 <div class="flex items-center justify-between">
@@ -373,7 +355,6 @@
               </div>
             </div>
 
-            <!-- Taiwan -->
             <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
               <div class="px-4 py-3 bg-[#F5F7FA] border-b border-gray-200">
                 <div class="flex items-center justify-between">
@@ -434,7 +415,6 @@
           </p>
 
           <div class="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <!-- Compliance Alerts -->
             <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
               <div class="px-4 py-3 bg-[#F5F7FA] border-b border-gray-200">
                 <div class="text-sm font-semibold text-slate-900">Compliance Alerts</div>
@@ -468,7 +448,6 @@
               </div>
             </div>
 
-            <!-- Market Updates -->
             <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
               <div class="px-4 py-3 bg-[#F5F7FA] border-b border-gray-200">
                 <div class="text-sm font-semibold text-slate-900">Market Updates</div>
