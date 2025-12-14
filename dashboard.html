@@ -254,6 +254,18 @@
     #page-tw-insurance .tabular-nums {
       font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
     }
+
+    /* ==========================================================
+       ✅ Overview: Privacy Mode（只模糊數字，不改其他）
+       ========================================================== */
+    .privacy-sensitive {
+      transition: filter 180ms ease;
+    }
+    .privacy-on .privacy-sensitive {
+      filter: blur(7px);
+      -webkit-filter: blur(7px);
+      user-select: none;
+    }
   </style>
 </head>
 
@@ -592,7 +604,11 @@
       </aside>
 
       <main class="flex-1">
-        <div id="page-overview" class="dash-page" data-include="pages/overview.html"></div>
+
+        <!-- ✅ OVERVIEW: React/Tailwind (Daily Financial Briefing) -->
+        <div id="page-overview" class="dash-page">
+          <div id="overview-react-root"></div>
+        </div>
 
         <div id="page-us-accounts" class="dash-page hidden" data-include="pages/us-accounts.html"></div>
 
@@ -878,11 +894,16 @@
         const pages = document.querySelectorAll('.dash-page');
         pages.forEach((page) => page.classList.add('hidden'));
 
-        // ✅ 先確保 partial 真的被載進來
+        // ✅ 先確保 partial 真的被載進來（overview 沒 data-include，會自然略過）
         loadPartialIfNeeded(target);
 
         target.classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'auto' });
+
+        // ✅ Overview 顯示時：讓圖表做一次 resize（避免 hidden 初次渲染尺寸不對）
+        if (pageKey === 'overview' && window.__overviewOnShow) {
+          try { window.__overviewOnShow(); } catch (e) {}
+        }
 
         // 更新 sidebar active 樣式
         const navButtons = document.querySelectorAll('[data-page]');
@@ -922,6 +943,440 @@
       } else {
         initDashboard();
       }
+    })();
+  </script>
+
+  <!-- ✅ React (CDN) for Overview only -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- ✅ Overview React/Tailwind -->
+  <script type="text/babel">
+    const { useEffect, useMemo, useRef, useState } = React;
+
+    function OverviewPage() {
+      const [privacy, setPrivacy] = useState(() => {
+        try { return localStorage.getItem('taimic_privacy') === '1'; } catch (e) { return false; }
+      });
+
+      const sparkRef = useRef(null);
+      const donutRef = useRef(null);
+      const chartsRef = useRef({ spark: null, donut: null });
+
+      const navy = '#0B3B8C';       // US (Navy Blue)
+      const forest = '#1F6F43';     // TW (Forest Green)
+      const oxford = '#002147';
+
+      const assetBreakdown = useMemo(() => ([
+        { name: 'Real Estate', value: 1400000, color: '#0B3B8C' },
+        { name: 'Stocks',      value: 980000,  color: '#1F6F43' },
+        { name: 'Cash',        value: 145000,  color: '#64748B' },
+        { name: 'Insurance',   value: 620000,  color: '#60A5FA' },
+        { name: 'Crypto',      value: 275500,  color: '#F59E0B' },
+      ]), []);
+
+      const netWorth = 3420500.00;
+      const fxImpact = -1200;
+      const usPct = 62;
+      const twPct = 38;
+
+      // charts: create / update
+      useEffect(() => {
+        if (typeof Chart === 'undefined') return;
+
+        // sparkline (30 days)
+        const sparkCanvas = sparkRef.current;
+        if (sparkCanvas && !chartsRef.current.spark) {
+          const ctx = sparkCanvas.getContext('2d');
+          const labels = Array.from({ length: 30 }, (_, i) => String(i + 1));
+          const series = [
+            3310000, 3322000, 3309000, 3331000, 3344000, 3350000, 3343000, 3362000, 3371000, 3368000,
+            3379000, 3381000, 3375000, 3388000, 3392000, 3386000, 3399000, 3402000, 3397000, 3408000,
+            3410000, 3405000, 3416000, 3421000, 3419000, 3424000, 3420000, 3422500, 3426000, 3420500
+          ];
+
+          const gradient = ctx.createLinearGradient(0, 0, 0, sparkCanvas.height || 80);
+          gradient.addColorStop(0, 'rgba(31, 111, 67, 0.16)');
+          gradient.addColorStop(1, 'rgba(31, 111, 67, 0.00)');
+
+          chartsRef.current.spark = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels,
+              datasets: [{
+                data: series,
+                borderColor: forest,
+                borderWidth: 2,
+                fill: true,
+                backgroundColor: gradient,
+                tension: 0.42,
+                pointRadius: 0,
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: { legend: { display: false }, tooltip: { enabled: false } },
+              scales: {
+                x: { display: false },
+                y: { display: false }
+              }
+            }
+          });
+        }
+
+        // donut
+        const donutCanvas = donutRef.current;
+        if (donutCanvas && !chartsRef.current.donut) {
+          const dctx = donutCanvas.getContext('2d');
+          chartsRef.current.donut = new Chart(dctx, {
+            type: 'doughnut',
+            data: {
+              labels: assetBreakdown.map(a => a.name),
+              datasets: [{
+                data: assetBreakdown.map(a => a.value),
+                backgroundColor: assetBreakdown.map(a => a.color),
+                borderWidth: 0,
+                hoverOffset: 4,
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              cutout: '72%',
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  callbacks: {
+                    label: (ctx) => {
+                      const v = ctx.raw || 0;
+                      return ` ${ctx.label}: $${Number(v).toLocaleString()}`;
+                    }
+                  }
+                }
+              }
+            }
+          });
+        }
+
+        // expose resize hook (called when Overview becomes visible)
+        window.__overviewOnShow = () => {
+          try {
+            if (chartsRef.current.spark) chartsRef.current.spark.resize();
+            if (chartsRef.current.donut) chartsRef.current.donut.resize();
+          } catch (e) {}
+        };
+
+        return () => {};
+      }, [assetBreakdown]);
+
+      useEffect(() => {
+        try { localStorage.setItem('taimic_privacy', privacy ? '1' : '0'); } catch (e) {}
+      }, [privacy]);
+
+      const fmtMoney = (n) => {
+        return '$' + Number(n).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      };
+
+      const fxText = fxImpact < 0
+        ? `📉 ${fmtMoney(Math.abs(fxImpact))} due to TWD drop`
+        : `📈 ${fmtMoney(Math.abs(fxImpact))} due to TWD rise`;
+
+      return (
+        <div className={"max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6 " + (privacy ? "privacy-on" : "")}
+             style={{ fontFamily: "'Inter', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial" }}>
+          {/* Hero */}
+          <div className="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-7 md:p-10">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-[11px] font-semibold tracking-[0.24em] uppercase text-[#9CA3AF]">
+                  GLOBAL NET WORTH (USD)
+                </p>
+                <div className="mt-2 flex flex-wrap items-center gap-3">
+                  <div
+                    className="privacy-sensitive text-[40px] md:text-[54px] leading-none font-semibold tracking-tight text-[#002147]"
+                    style={{ fontFamily: "'Playfair Display', ui-serif, Georgia, 'Times New Roman', serif" }}
+                  >
+                    {fmtMoney(netWorth)}
+                  </div>
+
+                  <span className={
+                    "inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold border " +
+                    (fxImpact < 0 ? "bg-amber-50 border-amber-200 text-amber-700" : "bg-emerald-50 border-emerald-200 text-emerald-700")
+                  }>
+                    <span className="privacy-sensitive">{fxText}</span>
+                  </span>
+                </div>
+
+                <p className="mt-3 text-xs md:text-sm text-[#4B5563] max-w-2xl">
+                  Daily financial briefing for a cross-border family: wealth visualization (dopamine) + risk monitoring (compliance).
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setPrivacy(v => !v)}
+                className="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 bg-white hover:bg-slate-50 shadow-sm transition"
+                aria-label="Toggle Privacy Mode"
+                title="Privacy Mode"
+              >
+                <i className={(privacy ? "fa-regular fa-eye-slash" : "fa-regular fa-eye") + " text-sm text-slate-600"}></i>
+              </button>
+            </div>
+
+            <div className="mt-6 h-[72px] md:h-[86px]">
+              <canvas ref={sparkRef}></canvas>
+            </div>
+
+            <div className="mt-3 flex items-center justify-between text-[11px] text-slate-400">
+              <span className="uppercase tracking-[0.24em]">30D Trend</span>
+              <span className="uppercase tracking-[0.24em]">Privacy Mode blurs numbers for screenshots</span>
+            </div>
+          </div>
+
+          {/* Peace of mind grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Compliance */}
+            <div className="bg-white rounded-xl border border-slate-200/70 shadow-sm p-5">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-9 h-9 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center">
+                    <i className="fa-solid fa-shield-halved text-emerald-700 text-sm"></i>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-slate-400">
+                      Compliance health
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-slate-900">
+                      <span className="inline-flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        All Systems Go
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <p className="mt-3 text-xs text-[#4B5563]">
+                FBAR filing ready. No PFIC alerts.
+              </p>
+            </div>
+
+            {/* Geo allocation */}
+            <div className="bg-white rounded-xl border border-slate-200/70 shadow-sm p-5">
+              <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-slate-400">
+                Geo-allocation
+              </p>
+
+              <div className="mt-3">
+                <div className="h-3 w-full rounded-full bg-slate-100 overflow-hidden border border-slate-200">
+                  <div className="h-full" style={{ width: usPct + '%', background: navy }}></div>
+                  <div className="h-full" style={{ width: twPct + '%', background: forest }}></div>
+                </div>
+
+                <div className="mt-3 flex items-center justify-between text-xs">
+                  <span className="inline-flex items-center gap-2 text-slate-700">
+                    <span className="w-2.5 h-2.5 rounded-full" style={{ background: navy }}></span>
+                    🇺🇸 <span className="privacy-sensitive">{usPct}%</span> US
+                  </span>
+                  <span className="inline-flex items-center gap-2 text-slate-700">
+                    <span className="w-2.5 h-2.5 rounded-full" style={{ background: forest }}></span>
+                    🇹🇼 <span className="privacy-sensitive">{twPct}%</span> TW
+                  </span>
+                </div>
+
+                <p className="mt-2 text-xs text-[#4B5563]">
+                  Quick check: geopolitical exposure & concentration risk.
+                </p>
+              </div>
+            </div>
+
+            {/* Cash runway */}
+            <div className="bg-white rounded-xl border border-slate-200/70 shadow-sm p-5">
+              <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-slate-400">
+                Liquid cash runway
+              </p>
+              <div className="mt-3">
+                <div
+                  className="privacy-sensitive text-[24px] md:text-[26px] font-semibold tracking-tight text-[#002147]"
+                  style={{ fontFamily: "'Playfair Display', ui-serif, Georgia, 'Times New Roman', serif" }}
+                >
+                  {fmtMoney(145000)} <span className="text-sm text-slate-500 font-sans">Available</span>
+                </div>
+                <p className="mt-1 text-xs text-[#4B5563]">
+                  Covering <span className="privacy-sensitive font-semibold text-slate-700">12</span> months of expenses.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Asset class matrix */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Donut */}
+            <div className="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-6">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-slate-400">
+                    Asset breakdown
+                  </p>
+                  <h2 className="mt-1 text-[16px] font-semibold text-slate-900">
+                    Portfolio composition
+                  </h2>
+                </div>
+              </div>
+
+              <div className="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                <div className="relative h-[220px] md:h-[240px]">
+                  <canvas ref={donutRef}></canvas>
+
+                  <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                    <p className="text-[10px] tracking-[0.24em] uppercase text-slate-400">Total</p>
+                    <div
+                      className="privacy-sensitive text-[18px] md:text-[20px] font-semibold text-[#002147]"
+                      style={{ fontFamily: "'Playfair Display', ui-serif, Georgia, 'Times New Roman', serif" }}
+                    >
+                      {fmtMoney(netWorth)}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  {assetBreakdown.map((a) => (
+                    <div key={a.name} className="flex items-center justify-between gap-3 text-sm">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full" style={{ background: a.color }}></span>
+                        <span className="text-slate-700">{a.name}</span>
+                      </div>
+                      <span className="privacy-sensitive text-slate-900 font-semibold">
+                        {fmtMoney(a.value)}
+                      </span>
+                    </div>
+                  ))}
+                  <p className="pt-2 text-xs text-[#4B5563]">
+                    Elegant, thin donut to keep “Swiss Bank” clarity.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Top movers feed */}
+            <div className="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-6">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-slate-400">
+                    Top movers
+                  </p>
+                  <h2 className="mt-1 text-[16px] font-semibold text-slate-900">
+                    What moved the needle today
+                  </h2>
+                </div>
+                <span className="text-[11px] text-slate-400 uppercase tracking-[0.24em]">Today</span>
+              </div>
+
+              <div className="mt-5 space-y-3">
+                <MoverRow
+                  name="TSMC (2330.TW)"
+                  pct={"+2.4%"}
+                  delta={"+$4,200"}
+                  tone="up"
+                />
+                <MoverRow
+                  name="NVIDIA (NVDA)"
+                  pct={"-1.1%"}
+                  delta={"-$1,100"}
+                  tone="down"
+                />
+                <MoverRow
+                  name="Forex Impact (TWD/USD)"
+                  pct={"-0.3%"}
+                  delta={"-$800"}
+                  tone="down"
+                  badge={{ text: "FX", color: "bg-slate-100 text-slate-700 border-slate-200" }}
+                />
+              </div>
+
+              <div className="mt-5 p-4 rounded-xl border border-slate-200 bg-slate-50">
+                <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-slate-400">
+                  Cross-border lens
+                </p>
+                <p className="mt-1 text-xs text-[#4B5563]">
+                  FX impact is tracked separately from market performance (this is your “Taimic Magic”).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* AI Insight banner */}
+          <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5 md:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-xl bg-white border border-blue-100 flex items-center justify-center">
+                <i className="fa-solid fa-wand-magic-sparkles text-blue-700 text-sm"></i>
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold tracking-[0.24em] uppercase text-blue-700/70">
+                  AI Insight
+                </p>
+                <p className="mt-1 text-sm text-[#1F2937]">
+                  Insight: Your Taiwan insurance policy <span className="font-semibold">“Fubon Life”</span> is approaching its maturity date next month.
+                  We recommend reviewing tax implications.
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#002147] text-white text-xs font-semibold px-4 py-2.5 shadow-sm hover:bg-[#001a70] transition self-start md:self-auto"
+            >
+              <span>View Suggestion</span>
+              <i className="fa-solid fa-arrow-right-long text-[11px]"></i>
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    function MoverRow({ name, pct, delta, tone, badge }) {
+      const up = tone === 'up';
+      return (
+        <div className="flex items-center justify-between gap-4 rounded-xl border border-slate-200/70 bg-white px-4 py-3">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2">
+              <p className="text-sm font-semibold text-slate-900 truncate">{name}</p>
+              {badge ? (
+                <span className={"text-[10px] font-semibold px-2 py-0.5 rounded-full border " + badge.color}>
+                  {badge.text}
+                </span>
+              ) : null}
+            </div>
+            <p className="mt-0.5 text-xs text-slate-500">
+              Intraday change
+            </p>
+          </div>
+
+          <div className="text-right shrink-0">
+            <div className={"privacy-sensitive text-sm font-semibold " + (up ? "text-emerald-700" : "text-rose-700")}>
+              {pct}
+            </div>
+            <div className={"privacy-sensitive text-xs " + (up ? "text-emerald-700/80" : "text-rose-700/80")}>
+              ({delta})
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    (function mountOverview() {
+      const rootEl = document.getElementById('overview-react-root');
+      if (!rootEl || rootEl.dataset.mounted === '1') return;
+
+      // React 18 createRoot if available; fallback to render
+      if (ReactDOM.createRoot) {
+        ReactDOM.createRoot(rootEl).render(<OverviewPage />);
+      } else {
+        ReactDOM.render(<OverviewPage />, rootEl);
+      }
+
+      rootEl.dataset.mounted = '1';
     })();
   </script>
 </body>
