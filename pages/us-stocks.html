@@ -1,358 +1,635 @@
-<div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
-  <!-- Title -->
-  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-    <div>
-      <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
-        US assets · Stocks
-      </p>
-      <h1 class="text-[26px] md:text-[30px] font-semibold tracking-tight text-[#002147] font-serif">
-        US equity growth engine
-      </h1>
-      <p class="mt-2 text-xs md:text-sm text-[#4B5563] max-w-xl">
-        Public US equities and ETFs – the core engine of long-term growth and capital gains.
-      </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Taimic – US Stocks</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    html, body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
+    .font-serif { font-family: "Playfair Display", Georgia, "Times New Roman", Times, serif; }
+  </style>
+</head>
+
+<body class="bg-[#F5F7FA]">
+  <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
+    <!-- Title -->
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+      <div>
+        <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
+          US assets · Stocks
+        </p>
+        <h1 class="text-[26px] md:text-[30px] font-semibold tracking-tight text-[#002147] font-serif">
+          US equity growth engine
+        </h1>
+        <p class="mt-2 text-xs md:text-sm text-[#4B5563] max-w-xl">
+          Public US equities and ETFs – the core engine of long-term growth and capital gains.
+        </p>
+      </div>
+
+      <!-- ✅ UPDATED: Add Holding button (others unchanged) -->
+      <div class="flex flex-wrap items-center gap-2 text-[11px] text-[#4B5563]">
+        <button
+          id="btnAddHolding"
+          type="button"
+          class="inline-flex items-center gap-2 rounded-full bg-[#0B2A4A] text-white px-3 py-1.5 font-semibold shadow-sm hover:opacity-95"
+        >
+          <span class="text-[14px] leading-none">+</span>
+          <span>Add Holding</span>
+        </button>
+
+        <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 text-emerald-800 px-2.5 py-1 border border-emerald-100">
+          <i class="fa-solid fa-chart-line text-[10px]"></i>
+          Performance focused
+        </span>
+        <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 text-[#4B5563] px-2.5 py-1 border border-slate-200">
+          <i class="fa-solid fa-sack-dollar text-[10px]"></i>
+          Unrealized gains
+        </span>
+      </div>
     </div>
 
-    <!-- ✅ UPDATED: Add Holding button (others unchanged) -->
-    <div class="flex flex-wrap items-center gap-2 text-[11px] text-[#4B5563]">
-      <button
-        id="btnAddHolding"
-        type="button"
-        class="inline-flex items-center gap-2 rounded-full bg-[#0B2A4A] text-white px-3 py-1.5 font-semibold shadow-sm hover:opacity-95"
-      >
-        <span class="text-[14px] leading-none">+</span>
-        <span>Add Holding</span>
-      </button>
+    <!-- Portfolio performance hero -->
+    <section class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
+      <div class="grid grid-cols-1 lg:grid-cols-[1.3fr,1fr] gap-6 items-stretch">
+        <!-- Area chart -->
+        <div class="flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+                Portfolio value
+              </p>
+              <p class="text-xs text-[#6B7280]">
+                Last 12 months · daily close
+              </p>
+            </div>
+            <div class="inline-flex rounded-full bg-[#F3F4F6] p-1 text-[11px]">
+              <button class="px-2.5 py-0.5 rounded-full bg-white text-[#002147] font-semibold shadow-sm">
+                1Y
+              </button>
+              <button class="px-2.5 py-0.5 rounded-full text-[#6B7280]">
+                6M
+              </button>
+              <button class="px-2.5 py-0.5 rounded-full text-[#6B7280]">
+                1M
+              </button>
+            </div>
+          </div>
+          <div class="h-40 rounded-lg bg-[#F5F7FA] border border-[#E5E7EB] px-3 py-2 flex items-center">
+            <!-- Smooth area chart using SVG -->
+            <svg viewBox="0 0 260 120" class="w-full h-full" aria-hidden="true">
+              <defs>
+                <linearGradient id="usEquityArea" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#005F48" stop-opacity="0.35" />
+                  <stop offset="100%" stop-color="#005F48" stop-opacity="0.02" />
+                </linearGradient>
+              </defs>
+              <!-- baseline -->
+              <path d="M0 95 H260" stroke="#D1D5DB" stroke-width="1" fill="none" />
+              <!-- smooth area -->
+              <path
+                d="M0 95
+                   C 30 92, 50 88, 70 82
+                   C 90 76, 110 70, 130 66
+                   C 150 62, 170 54, 190 50
+                   C 210 46, 235 42, 260 38
+                   L 260 120 L 0 120 Z"
+                fill="url(#usEquityArea)"
+                stroke="none"
+              />
+              <!-- smooth line -->
+              <path
+                d="M0 95
+                   C 30 92, 50 88, 70 82
+                   C 90 76, 110 70, 130 66
+                   C 150 62, 170 54, 190 50
+                   C 210 46, 235 42, 260 38"
+                fill="none"
+                stroke="#005F48"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <!-- latest point -->
+              <circle cx="260" cy="38" r="4" fill="#005F48" />
+            </svg>
+          </div>
+        </div>
 
-      <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 text-emerald-800 px-2.5 py-1 border border-emerald-100">
-        <i class="fa-solid fa-chart-line text-[10px]"></i>
-        Performance focused
-      </span>
-      <span class="inline-flex items-center gap-1 rounded-full bg-slate-100 text-[#4B5563] px-2.5 py-1 border border-slate-200">
-        <i class="fa-solid fa-sack-dollar text-[10px]"></i>
-        Unrealized gains
-      </span>
+        <!-- Key metrics -->
+        <div class="flex flex-col justify-between gap-4">
+          <!-- Total equity -->
+          <div>
+            <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+              Total equity
+            </p>
+            <p class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
+              $840,250.00
+            </p>
+            <p class="mt-1 text-[11px] text-[#6B7280]">
+              Across taxable and retirement US brokerage accounts.
+            </p>
+          </div>
+
+          <!-- Gain / loss -->
+          <div class="space-y-2">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF]">
+                Unrealized gain
+              </span>
+              <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 border border-emerald-100 px-3 py-1 text-[11px] font-semibold text-[#005F48]">
+                <i class="fa-solid fa-arrow-trend-up text-[10px]"></i>
+                <span class="font-serif tracking-tight">
+                  +$124,500.00
+                </span>
+                <span class="font-serif tracking-tight">
+                  (+17.4%)
+                </span>
+              </span>
+            </div>
+
+            <div class="flex items-center gap-2 text-[11px]">
+              <span class="text-[#6B7280]">
+                Today
+              </span>
+              <span class="font-serif tracking-tight text-[#CC5500]">
+                -$230.00
+              </span>
+              <span class="text-[#9CA3AF]">
+                Minor pullback after recent highs
+              </span>
+            </div>
+          </div>
+
+          <!-- Small hint -->
+          <p class="text-[11px] text-[#6B7280]">
+            Capital gains are unrealized until you sell. Taimic keeps track of cost basis highlights – your tax advisor
+            gives the final call on when and how to harvest.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Holdings table -->
+    <section class="bg-white border border-gray-100 rounded-xl shadow-sm">
+      <div class="px-6 pt-5 pb-3 flex items-center justify-between">
+        <div>
+          <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
+            Holdings
+          </p>
+          <h2 class="text-sm font-semibold text-[#002147]">
+            US equities &amp; ETFs
+          </h2>
+        </div>
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white text-[11px] font-semibold text-[#002147] px-3 py-1.5 hover:bg-[#F3F4F6]"
+        >
+          <i class="fa-solid fa-sliders text-[10px]"></i>
+          <span>Filter / group</span>
+        </button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-xs text-left border-collapse">
+          <thead>
+            <tr class="text-[11px] uppercase tracking-[0.14em] text-[#9CA3AF] border-t border-b border-gray-100">
+              <th class="py-3 px-6 font-medium">Symbol</th>
+              <th class="py-3 px-4 font-medium">Quantity</th>
+              <th class="py-3 px-4 font-medium">Price</th>
+              <th class="py-3 px-4 font-medium">Cost basis</th>
+              <th class="py-3 px-4 font-medium">Unrealized gain</th>
+              <th class="py-3 px-6 font-medium text-right">Market value</th>
+            </tr>
+          </thead>
+
+          <!-- ✅ UPDATED: give tbody an id so we can prepend new holdings (existing rows unchanged) -->
+          <tbody id="usHoldingsTbody" class="divide-y divide-gray-100">
+            <!-- AAPL -->
+            <tr class="hover:bg-[#F9FAFB] transition-colors">
+              <td class="py-4 px-6">
+                <div class="flex flex-col">
+                  <span class="text-[13px] font-semibold text-[#002147]">
+                    AAPL
+                  </span>
+                  <span class="text-[11px] text-[#6B7280]">
+                    Apple Inc.
+                  </span>
+                </div>
+              </td>
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#002147]">
+                  150.00
+                </span>
+              </td>
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#002147]">
+                  $220.50
+                </span>
+              </td>
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#6B7280]">
+                  $142.50
+                </span>
+              </td>
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#005F48]">
+                  +$11,700.00
+                </span>
+              </td>
+              <td class="py-4 px-6 align-top text-right">
+                <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                  $33,075.00
+                </span>
+              </td>
+            </tr>
+
+            <!-- VOO -->
+            <tr class="hover:bg-[#F9FAFB] transition-colors">
+              <td class="py-4 px-6">
+                <div class="flex flex-col">
+                  <span class="text-[13px] font-semibold text-[#002147]">
+                    VOO
+                  </span>
+                  <span class="text-[11px] text-[#6B7280]">
+                    Vanguard S&amp;P 500 ETF
+                  </span>
+                </div>
+              </td>
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#002147]">
+                  320.00
+                </span>
+              </td>
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#002147]">
+                  $420.10
+                </span>
+              </td>
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#6B7280]">
+                  $345.25
+                </span>
+              </td>
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#005F48]">
+                  +$24,000.00
+                </span>
+              </td>
+              <td class="py-4 px-6 align-top text-right">
+                <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                  $134,432.00
+                </span>
+              </td>
+            </tr>
+
+            <!-- MSFT -->
+            <tr class="hover:bg-[#F9FAFB] transition-colors">
+              <td class="py-4 px-6">
+                <div class="flex flex-col">
+                  <span class="text-[13px] font-semibold text-[#002147]">
+                    MSFT
+                  </span>
+                  <span class="text-[11px] text-[#6B7280]">
+                    Microsoft Corp.
+                  </span>
+                </div>
+              </td>
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#002147]">
+                  210.00
+                </span>
+              </td>
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#002147]">
+                  $390.80
+                </span>
+              </td>
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#6B7280]">
+                  $255.40
+                </span>
+              </td>
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#005F48]">
+                  +$28,448.00
+                </span>
+              </td>
+              <td class="py-4 px-6 align-top text-right">
+                <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                  $82,068.00
+                </span>
+              </td>
+            </tr>
+
+            <!-- TSLA (loss example) -->
+            <tr class="hover:bg-[#F9FAFB] transition-colors">
+              <td class="py-4 px-6">
+                <div class="flex flex-col">
+                  <span class="text-[13px] font-semibold text-[#002147]">
+                    TSLA
+                  </span>
+                  <span class="text-[11px] text-[#6B7280]">
+                    Tesla Inc.
+                  </span>
+                </div>
+              </td>
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#002147]">
+                  90.00
+                </span>
+              </td>
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#002147]">
+                  $190.20
+                </span>
+              </td>
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#6B7280]">
+                  $245.00
+                </span>
+              </td>
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#B91C1C]">
+                  -$4,932.00
+                </span>
+              </td>
+              <td class="py-4 px-6 align-top text-right">
+                <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
+                  $17,118.00
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="px-6 py-3 border-t border-gray-100 text-[11px] text-[#6B7280]">
+        Values are shown in USD. For tax planning, Taimic keeps cost basis estimates; always confirm exact lots with your broker before filing.
+      </div>
+    </section>
+  </div>
+
+  <!-- Add Holding Modal -->
+  <div id="holdingModal" class="fixed inset-0 z-[60] hidden" aria-hidden="true">
+    <div id="holdingBackdrop" class="absolute inset-0 bg-black/30"></div>
+
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+      <div class="w-full max-w-lg rounded-2xl bg-white shadow-xl border border-gray-100">
+        <div class="p-5 border-b border-gray-100 flex items-center justify-between">
+          <div>
+            <h3 class="text-lg font-semibold text-[#002147]">Add holding</h3>
+            <p class="text-xs text-gray-500">
+              Example: TSM, 1000 shares, cost 5.00
+            </p>
+          </div>
+          <button id="btnCloseModal" type="button" class="h-9 w-9 rounded-lg hover:bg-gray-50 text-gray-500" aria-label="Close">
+            ✕
+          </button>
+        </div>
+
+        <form id="holdingForm" class="p-5 space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Ticker</span>
+              <input
+                id="inpTicker"
+                class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2A4A]/20"
+                placeholder="TSM"
+                autocomplete="off"
+                required
+              />
+            </label>
+
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Quantity</span>
+              <input
+                id="inpQty"
+                type="number"
+                step="0.01"
+                min="0"
+                class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2A4A]/20"
+                placeholder="1000"
+                required
+              />
+            </label>
+
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Cost / share</span>
+              <input
+                id="inpCost"
+                type="number"
+                step="0.0001"
+                min="0"
+                class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2A4A]/20"
+                placeholder="5.00"
+                required
+              />
+            </label>
+          </div>
+
+          <div class="flex items-center justify-end gap-2 pt-2">
+            <button
+              id="btnCancel"
+              type="button"
+              class="rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="rounded-xl bg-[#0B2A4A] px-4 py-2 text-sm font-semibold text-white hover:opacity-95"
+            >
+              Save
+            </button>
+          </div>
+
+          <p class="text-[11px] text-gray-400">
+            Prices / market value / P&amp;L will auto-update after we connect the Cloudflare quotes backend.
+          </p>
+        </form>
+      </div>
     </div>
   </div>
 
-  <!-- Portfolio performance hero -->
-  <section class="bg-white border border-gray-100 rounded-xl shadow-sm px-6 py-5">
-    <div class="grid grid-cols-1 lg:grid-cols-[1.3fr,1fr] gap-6 items-stretch">
-      <!-- Area chart -->
-      <div class="flex flex-col justify-between">
-        <div class="flex items-center justify-between mb-3">
-          <div>
-            <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
-              Portfolio value
-            </p>
-            <p class="text-xs text-[#6B7280]">
-              Last 12 months · daily close
-            </p>
-          </div>
-          <div class="inline-flex rounded-full bg-[#F3F4F6] p-1 text-[11px]">
-            <button class="px-2.5 py-0.5 rounded-full bg-white text-[#002147] font-semibold shadow-sm">
-              1Y
-            </button>
-            <button class="px-2.5 py-0.5 rounded-full text-[#6B7280]">
-              6M
-            </button>
-            <button class="px-2.5 py-0.5 rounded-full text-[#6B7280]">
-              1M
-            </button>
-          </div>
-        </div>
-        <div class="h-40 rounded-lg bg-[#F5F7FA] border border-[#E5E7EB] px-3 py-2 flex items-center">
-          <!-- Smooth area chart using SVG -->
-          <svg viewBox="0 0 260 120" class="w-full h-full" aria-hidden="true">
-            <defs>
-              <linearGradient id="usEquityArea" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#005F48" stop-opacity="0.35" />
-                <stop offset="100%" stop-color="#005F48" stop-opacity="0.02" />
-              </linearGradient>
-            </defs>
-            <!-- baseline -->
-            <path d="M0 95 H260" stroke="#D1D5DB" stroke-width="1" fill="none" />
-            <!-- smooth area -->
-            <path
-              d="M0 95
-                 C 30 92, 50 88, 70 82
-                 C 90 76, 110 70, 130 66
-                 C 150 62, 170 54, 190 50
-                 C 210 46, 235 42, 260 38
-                 L 260 120 L 0 120 Z"
-              fill="url(#usEquityArea)"
-              stroke="none"
-            />
-            <!-- smooth line -->
-            <path
-              d="M0 95
-                 C 30 92, 50 88, 70 82
-                 C 90 76, 110 70, 130 66
-                 C 150 62, 170 54, 190 50
-                 C 210 46, 235 42, 260 38"
-              fill="none"
-              stroke="#005F48"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <!-- latest point -->
-            <circle cx="260" cy="38" r="4" fill="#005F48" />
-          </svg>
-        </div>
-      </div>
-
-      <!-- Key metrics -->
-      <div class="flex flex-col justify-between gap-4">
-        <!-- Total equity -->
-        <div>
-          <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
-            Total equity
-          </p>
-          <p class="text-2xl md:text-3xl font-semibold font-serif tracking-tight text-[#002147]">
-            $840,250.00
-          </p>
-          <p class="mt-1 text-[11px] text-[#6B7280]">
-            Across taxable and retirement US brokerage accounts.
-          </p>
-        </div>
-
-        <!-- Gain / loss -->
-        <div class="space-y-2">
-          <div class="flex flex-wrap items-center gap-2">
-            <span class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF]">
-              Unrealized gain
-            </span>
-            <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 border border-emerald-100 px-3 py-1 text-[11px] font-semibold text-[#005F48]">
-              <i class="fa-solid fa-arrow-trend-up text-[10px]"></i>
-              <!-- ✅ UPDATED: remove mono -->
-              <span class="font-serif tracking-tight">
-                +$124,500.00
-              </span>
-              <!-- ✅ UPDATED: remove mono -->
-              <span class="font-serif tracking-tight">
-                (+17.4%)
-              </span>
-            </span>
-          </div>
-
-          <div class="flex items-center gap-2 text-[11px]">
-            <span class="text-[#6B7280]">
-              Today
-            </span>
-            <!-- ✅ UPDATED: remove mono -->
-            <span class="font-serif tracking-tight text-[#CC5500]">
-              -$230.00
-            </span>
-            <span class="text-[#9CA3AF]">
-              Minor pullback after recent highs
-            </span>
-          </div>
-        </div>
-
-        <!-- Small hint -->
-        <p class="text-[11px] text-[#6B7280]">
-          Capital gains are unrealized until you sell. Taimic keeps track of cost basis highlights – your tax advisor
-          gives the final call on when and how to harvest.
-        </p>
-      </div>
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[70] hidden">
+    <div class="rounded-full bg-[#0B2A4A] text-white text-sm px-4 py-2 shadow-lg">
+      Saved. Quotes will update after backend is connected.
     </div>
-  </section>
+  </div>
 
-  <!-- Holdings table -->
-  <section class="bg-white border border-gray-100 rounded-xl shadow-sm">
-    <div class="px-6 pt-5 pb-3 flex items-center justify-between">
-      <div>
-        <p class="text-[11px] tracking-[0.18em] uppercase text-[#9CA3AF] mb-1">
-          Holdings
-        </p>
-        <h2 class="text-sm font-semibold text-[#002147]">
-          US equities &amp; ETFs
-        </h2>
-      </div>
-      <button
-        type="button"
-        class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white text-[11px] font-semibold text-[#002147] px-3 py-1.5 hover:bg-[#F3F4F6]"
-      >
-        <i class="fa-solid fa-sliders text-[10px]"></i>
-        <span>Filter / group</span>
-      </button>
-    </div>
+  <script>
+    (function () {
+      const STORAGE_KEY_US_STOCKS = "taimic_us_stocks_holdings_v1";
 
-    <div class="overflow-x-auto">
-      <table class="w-full text-xs text-left border-collapse">
-        <thead>
-          <tr class="text-[11px] uppercase tracking-[0.14em] text-[#9CA3AF] border-t border-b border-gray-100">
-            <th class="py-3 px-6 font-medium">Symbol</th>
-            <th class="py-3 px-4 font-medium">Quantity</th>
-            <th class="py-3 px-4 font-medium">Price</th>
-            <th class="py-3 px-4 font-medium">Cost basis</th>
-            <th class="py-3 px-4 font-medium">Unrealized gain</th>
-            <th class="py-3 px-6 font-medium text-right">Market value</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100">
-          <!-- AAPL -->
-          <tr class="hover:bg-[#F9FAFB] transition-colors">
-            <td class="py-4 px-6">
-              <div class="flex flex-col">
-                <span class="text-[13px] font-semibold text-[#002147]">
-                  AAPL
-                </span>
-                <span class="text-[11px] text-[#6B7280]">
-                  Apple Inc.
-                </span>
-              </div>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">
-                150.00
-              </span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">
-                $220.50
-              </span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#6B7280]">
-                $142.50
-              </span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#005F48]">
-                +$11,700.00
-              </span>
-            </td>
-            <td class="py-4 px-6 align-top text-right">
-              <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
-                $33,075.00
-              </span>
-            </td>
-          </tr>
+      const $ = (id) => document.getElementById(id);
 
-          <!-- VOO -->
-          <tr class="hover:bg-[#F9FAFB] transition-colors">
-            <td class="py-4 px-6">
-              <div class="flex flex-col">
-                <span class="text-[13px] font-semibold text-[#002147]">
-                  VOO
-                </span>
-                <span class="text-[11px] text-[#6B7280]">
-                  Vanguard S&amp;P 500 ETF
-                </span>
-              </div>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">
-                320.00
-              </span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">
-                $420.10
-              </span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#6B7280]">
-                $345.25
-              </span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#005F48]">
-                +$24,000.00
-              </span>
-            </td>
-            <td class="py-4 px-6 align-top text-right">
-              <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
-                $134,432.00
-              </span>
-            </td>
-          </tr>
+      function genId() {
+        if (window.crypto && typeof crypto.randomUUID === "function") return crypto.randomUUID();
+        return "id_" + Math.random().toString(16).slice(2) + "_" + Date.now();
+      }
 
-          <!-- MSFT -->
-          <tr class="hover:bg-[#F9FAFB] transition-colors">
-            <td class="py-4 px-6">
-              <div class="flex flex-col">
-                <span class="text-[13px] font-semibold text-[#002147]">
-                  MSFT
-                </span>
-                <span class="text-[11px] text-[#6B7280]">
-                  Microsoft Corp.
-                </span>
-              </div>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">
-                210.00
-              </span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">
-                $390.80
-              </span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#6B7280]">
-                $255.40
-              </span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#005F48]">
-                +$28,448.00
-              </span>
-            </td>
-            <td class="py-4 px-6 align-top text-right">
-              <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
-                $82,068.00
-              </span>
-            </td>
-          </tr>
+      function openModal() {
+        const modal = $("holdingModal");
+        if (!modal) return;
+        modal.classList.remove("hidden");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("overflow-hidden");
+        $("inpTicker")?.focus();
+      }
 
-          <!-- TSLA (loss example) -->
-          <tr class="hover:bg-[#F9FAFB] transition-colors">
-            <td class="py-4 px-6">
-              <div class="flex flex-col">
-                <span class="text-[13px] font-semibold text-[#002147]">
-                  TSLA
-                </span>
-                <span class="text-[11px] text-[#6B7280]">
-                  Tesla Inc.
-                </span>
-              </div>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">
-                90.00
-              </span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">
-                $190.20
-              </span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#6B7280]">
-                $245.00
-              </span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#B91C1C]">
-                -$4,932.00
-              </span>
-            </td>
-            <td class="py-4 px-6 align-top text-right">
-              <span class="font-mono tabular-nums text-[13px] font-semibold text-[#002147]">
-                $17,118.00
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      function closeModal() {
+        const modal = $("holdingModal");
+        if (!modal) return;
+        modal.classList.add("hidden");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("overflow-hidden");
+        $("holdingForm")?.reset();
+      }
 
-    <div class="px-6 py-3 border-t border-gray-100 text-[11px] text-[#6B7280]">
-      Values are shown in USD. For tax planning, Taimic keeps cost basis estimates; always confirm exact lots with your broker before filing.
-    </div>
-  </section>
-</div>
+      function showToast() {
+        const t = $("toast");
+        if (!t) return;
+        t.classList.remove("hidden");
+        setTimeout(() => t.classList.add("hidden"), 1600);
+      }
+
+      function loadHoldings() {
+        try {
+          return JSON.parse(localStorage.getItem(STORAGE_KEY_US_STOCKS) || "[]");
+        } catch {
+          return [];
+        }
+      }
+
+      function saveHoldings(list) {
+        localStorage.setItem(STORAGE_KEY_US_STOCKS, JSON.stringify(list));
+      }
+
+      function safeUpper(s) {
+        return String(s || "").trim().toUpperCase();
+      }
+
+      function fmtNum(n) {
+        const x = Number(n);
+        if (!Number.isFinite(x)) return "0.00";
+        return x.toFixed(2);
+      }
+
+      function fmtUsd(n) {
+        const x = Number(n);
+        if (!Number.isFinite(x)) return "$0.00";
+        return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(x);
+      }
+
+      // Pending row: price/gain/market value are "—" until backend quotes are wired
+      function prependPendingRow(h) {
+        const tbody = $("usHoldingsTbody");
+        if (!tbody) return;
+
+        const qty = Number(h.quantity || 0);
+        const cost = Number(h.costBasis || 0);
+
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-[#F9FAFB] transition-colors";
+        tr.setAttribute("data-holding-id", h.id);
+
+        tr.innerHTML = `
+          <td class="py-4 px-6">
+            <div class="flex flex-col">
+              <span class="text-[13px] font-semibold text-[#002147]">${h.ticker}</span>
+              <span class="text-[11px] text-[#6B7280]">${h.name || "—"}</span>
+            </div>
+          </td>
+          <td class="py-4 px-4 align-top">
+            <span class="font-mono tabular-nums text-[#002147]">${fmtNum(qty)}</span>
+          </td>
+          <td class="py-4 px-4 align-top">
+            <span class="font-mono tabular-nums text-gray-400">—</span>
+          </td>
+          <td class="py-4 px-4 align-top">
+            <span class="font-mono tabular-nums text-[#6B7280]">${fmtUsd(cost)}</span>
+          </td>
+          <td class="py-4 px-4 align-top">
+            <span class="font-mono tabular-nums text-gray-400">—</span>
+          </td>
+          <td class="py-4 px-6 align-top text-right">
+            <span class="font-mono tabular-nums text-[13px] font-semibold text-gray-400">—</span>
+          </td>
+        `;
+
+        tbody.prepend(tr);
+      }
+
+      function renderStoredHoldingsOnce() {
+        const holdings = loadHoldings();
+        if (!holdings.length) return;
+
+        // Prepend in reverse so the newest ends up on top
+        for (let i = holdings.length - 1; i >= 0; i--) {
+          prependPendingRow(holdings[i]);
+        }
+      }
+
+      // Wire up
+      $("btnAddHolding")?.addEventListener("click", openModal);
+      $("btnCloseModal")?.addEventListener("click", closeModal);
+      $("btnCancel")?.addEventListener("click", closeModal);
+      $("holdingBackdrop")?.addEventListener("click", closeModal);
+
+      document.addEventListener("keydown", (e) => {
+        const modal = $("holdingModal");
+        if (!modal || modal.classList.contains("hidden")) return;
+        if (e.key === "Escape") closeModal();
+      });
+
+      $("holdingForm")?.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const ticker = safeUpper($("inpTicker")?.value);
+        const quantity = Number($("inpQty")?.value);
+        const costBasis = Number($("inpCost")?.value);
+
+        if (!ticker) return;
+        if (!Number.isFinite(quantity) || quantity <= 0) return;
+        if (!Number.isFinite(costBasis) || costBasis < 0) return;
+
+        const holding = {
+          id: genId(),
+          ticker,
+          name: "", // later: fill via backend / symbol lookup
+          quantity,
+          costBasis,
+          createdAt: new Date().toISOString()
+        };
+
+        const list = loadHoldings();
+        list.push(holding);
+        saveHoldings(list);
+
+        closeModal();
+        prependPendingRow(holding);
+        showToast();
+      });
+
+      // Initial: render any stored holdings (pending rows)
+      renderStoredHoldingsOnce();
+    })();
+  </script>
+</body>
+</html>
