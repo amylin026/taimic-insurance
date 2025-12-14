@@ -19,18 +19,17 @@
     rel="stylesheet"
   />
 
-  <!-- React (CDN) -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
   <style>
     :root { color-scheme: light; }
-    body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
-    .font-serif { font-family: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    .font-serif {
+      font-family: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
+    }
     .tabular-nums { font-variant-numeric: tabular-nums; }
 
-    /* Keep your existing class hooks (so nothing “mysteriously breaks” later) */
+    /* Hooks (keep) */
     .family-heading { font-family: "Playfair Display", ui-serif, Georgia, serif; letter-spacing: -0.01em; }
     .family-card {
       background: #fff;
@@ -48,682 +47,800 @@
       font-weight: 700;
     }
 
-    /* Modal scroll lock helper */
+    /* Modal */
     .no-scroll { overflow: hidden; }
   </style>
 </head>
 
 <body class="bg-[#F5F7FA]">
-  <div id="root"></div>
+  <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+    <!-- Governance Header (The Hierarchy) -->
+    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
+      <div>
+        <p class="text-[11px] font-semibold tracking-[0.26em] text-slate-500 uppercase mb-2">
+          Family governance
+        </p>
 
-  <script type="text/babel">
-    const OXFORD = "#002147";
+        <h1 class="family-heading text-[28px] md:text-[34px] font-semibold leading-tight text-[#002147]">
+          Family Governance &amp; Access
+        </h1>
 
-    const Badge = ({ tone = "blue", children }) => {
-      const tones = {
-        gold: "bg-amber-50 text-amber-800 border-amber-200",
-        blue: "bg-blue-50 text-blue-800 border-blue-200",
-        gray: "bg-slate-100 text-slate-700 border-slate-200",
-        green: "bg-emerald-50 text-emerald-800 border-emerald-200",
-      };
-      return (
-        <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold tracking-wide ${tones[tone] || tones.blue}`}>
-          {children}
-        </span>
-      );
-    };
+        <p class="mt-3 text-xs md:text-sm text-slate-600 max-w-2xl">
+          Manage household members, tax residency statuses, and advisor permissions.
+          This defines <span class="font-semibold text-slate-700">who sees what</span> and
+          the <span class="font-semibold text-slate-700">tax identity</span> that drives cross-border logic.
+        </p>
 
-    const Pill = ({ icon, children }) => (
-      <span className="inline-flex items-center gap-2 rounded-full bg-white border border-slate-200 px-3 py-2 text-[11px] font-semibold text-slate-700 shadow-sm">
-        {icon ? <i className={`${icon} text-[11px]`} style={{ color: OXFORD }}></i> : null}
-        <span>{children}</span>
-      </span>
-    );
+        <!-- Summary Metrics (Horizontal Pills) -->
+        <div class="mt-4 flex flex-wrap items-center gap-2">
+          <span id="pill-members" class="inline-flex items-center gap-2 rounded-full bg-white border border-slate-200 px-3 py-2 text-[11px] font-semibold text-slate-700 shadow-sm">
+            <i class="fa-solid fa-users text-[11px] text-[#002147]"></i>
+            <span><span data-pill-members>3</span> Active Members</span>
+          </span>
 
-    const Select = ({ value, onChange, options, ariaLabel }) => (
-      <select
-        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        aria-label={ariaLabel}
+          <span id="pill-jurisdictions" class="inline-flex items-center gap-2 rounded-full bg-white border border-slate-200 px-3 py-2 text-[11px] font-semibold text-slate-700 shadow-sm">
+            <i class="fa-solid fa-flag text-[11px] text-[#002147]"></i>
+            <span><span data-pill-j-count>2</span> Tax Jurisdictions (<span data-pill-j-list>US/TW</span>)</span>
+          </span>
+
+          <span id="pill-advisors" class="inline-flex items-center gap-2 rounded-full bg-white border border-slate-200 px-3 py-2 text-[11px] font-semibold text-slate-700 shadow-sm">
+            <i class="fa-solid fa-briefcase text-[11px] text-[#002147]"></i>
+            <span><span data-pill-advisors>1</span> External Advisor</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-wrap items-center gap-3">
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-transparent text-[11px] font-semibold text-slate-700 px-4 py-2 hover:bg-white hover:border-slate-400"
+        >
+          <i class="fa-solid fa-file-export text-[10px]"></i>
+          <span>Export access matrix</span>
+        </button>
+
+        <button
+          id="btnInviteOpen"
+          type="button"
+          class="inline-flex items-center gap-2 rounded-full bg-[#002FA7] hover:bg-[#001a70] text-white text-[11px] font-semibold px-5 py-2 shadow-sm"
+        >
+          <i class="fa-solid fa-user-plus text-[10px]"></i>
+          <span>Invite member</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Member Cards (Core List) -->
+    <div class="space-y-3" id="memberList">
+
+      <!-- OWNER (Card Type A) -->
+      <div
+        class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+        data-member
+        data-type="owner"
+        data-active="true"
       >
-        {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
-    );
+        <div class="absolute left-0 top-0 h-full w-1.5 bg-amber-400"></div>
 
-    const StatusDot = ({ active = true }) => (
-      <span className="inline-flex items-center gap-2">
-        <span className={`h-2.5 w-2.5 rounded-full ${active ? "bg-emerald-500" : "bg-slate-300"}`}></span>
-        <span className="text-[11px] font-semibold text-slate-700">{active ? "Active" : "Inactive"}</span>
-      </span>
-    );
+        <div class="p-5 pl-6">
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <!-- Left -->
+            <div class="flex items-start gap-4 min-w-[260px]">
+              <div class="relative">
+                <div class="family-avatar w-11 h-11 text-[13px]">
+                  <span>AL</span>
+                </div>
+                <span data-status-dot class="absolute -right-0.5 -bottom-0.5 h-3.5 w-3.5 rounded-full border border-white bg-emerald-400"></span>
+              </div>
 
-    const MemberCard = ({
-      variant,
-      member,
-      onChangeRole,
-      onChangeResidency,
-      onChangePermission,
-      onChangeScope,
-    }) => {
-      const isOwner = variant === "owner";
-      const isAdvisor = variant === "advisor";
-
-      const leftAccent = isOwner ? "bg-amber-400" : isAdvisor ? "bg-slate-300" : "bg-transparent";
-      const cardBg = isAdvisor ? "bg-slate-50 border-slate-200" : "bg-white border-slate-200";
-      const roleBadge = isOwner ? <Badge tone="gold">OWNER · Family Administrator</Badge> : isAdvisor ? <Badge tone="gray">ADVISOR</Badge> : <Badge tone="blue">FAMILY</Badge>;
-
-      const residencyOptions = [
-        { value: "US_CITIZEN", label: "🇺🇸 US Tax Person (Citizen/Resident)" },
-        { value: "TW_NON_US", label: "🇹🇼 Non-US Tax Person (Taiwan)" },
-        { value: "NON_RESIDENT_ALIEN", label: "🇹🇼 Non-Resident Alien (No FBAR)" },
-      ];
-
-      const relationshipOptions = [
-        { value: "Spouse", label: "Spouse" },
-        { value: "Child", label: "Child" },
-        { value: "Parent", label: "Parent" },
-        { value: "Beneficiary", label: "Beneficiary" },
-      ];
-
-      const permissionOptions = [
-        { value: "FULL", label: "Full Access" },
-        { value: "VIEW_ONLY", label: "View Only" },
-        { value: "ASSET_SPECIFIC", label: "Asset Specific" },
-      ];
-
-      const scopeOptions = [
-        { value: "ALL_ASSETS", label: "All Assets" },
-        { value: "US_ONLY", label: "US Assets Only" },
-        { value: "TW_ONLY", label: "Taiwan Assets Only" },
-        { value: "REPORTS_ONLY", label: "Reports Only" },
-      ];
-
-      return (
-        <div className={`relative overflow-hidden rounded-2xl border ${cardBg} shadow-sm`}>
-          {/* Left indicator bar */}
-          <div className={`absolute left-0 top-0 h-full w-1.5 ${leftAccent}`}></div>
-
-          <div className="p-5 pl-6">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-              {/* Left: Avatar + Name */}
-              <div className="flex items-start gap-4 min-w-[260px]">
-                <div className="relative">
-                  <div className="family-avatar w-11 h-11 text-[13px]">
-                    <span>{member.initials}</span>
-                  </div>
-                  <span className={`absolute -right-0.5 -bottom-0.5 h-3.5 w-3.5 rounded-full border border-white ${member.active ? "bg-emerald-400" : "bg-slate-300"}`}></span>
+              <div class="leading-tight">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="text-[18px] font-semibold font-serif text-[#002147]">
+                    <span class="mr-1" data-flag>🇺🇸</span>
+                    <span data-name>Alex Lin</span>
+                  </span>
+                  <span class="inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold tracking-wide bg-amber-50 text-amber-800 border-amber-200">
+                    OWNER · Family Administrator
+                  </span>
                 </div>
 
-                <div className="leading-tight">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-[18px] font-semibold font-serif" style={{ color: OXFORD }}>
-                      {member.flag} {member.name}
-                    </span>
-                    {roleBadge}
-                  </div>
+                <div class="mt-1 text-[11px] text-slate-600">
+                  <span class="font-semibold text-slate-700">Tax Identity:</span>
+                  <span class="tabular-nums" data-tax-label> 🇺🇸 US Tax Person (Citizen/Resident)</span>
+                </div>
 
-                  <div className="mt-1 text-[11px] text-slate-600">
-                    <span className="font-semibold text-slate-700">Tax Identity:</span>{" "}
-                    <span className="tabular-nums">{member.residencyLabel}</span>
-                  </div>
+                <div class="mt-1 text-[10px] text-slate-500 max-w-[520px]">
+                  This person anchors the household’s cross-border tax logic and governance controls.
+                </div>
+              </div>
+            </div>
 
-                  <div className="mt-1 text-[10px] text-slate-500 max-w-[520px]">
-                    {isOwner
-                      ? "This person anchors the household’s cross-border tax logic and governance controls."
-                      : isAdvisor
-                        ? "Professional access is intentionally restricted to protect private family context."
-                        : "Residency setting informs the system’s compliance logic (e.g., FBAR/CRS applicability)."}
-                  </div>
+            <!-- Controls -->
+            <div class="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div class="space-y-1">
+                <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">Relationship</div>
+                <div class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] font-semibold text-slate-800 shadow-sm">
+                  Family Administrator
                 </div>
               </div>
 
-              {/* Middle / Right: Controls */}
-              <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                {/* Role / Relationship */}
-                <div className="space-y-1">
-                  <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">
-                    Relationship
-                  </div>
-
-                  {isOwner ? (
-                    <div className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] font-semibold text-slate-800 shadow-sm">
-                      Family Administrator
-                    </div>
-                  ) : isAdvisor ? (
-                    <div className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] font-semibold text-slate-800 shadow-sm">
-                      {member.advisorRole}
-                    </div>
-                  ) : (
-                    <Select
-                      value={member.role}
-                      onChange={onChangeRole}
-                      options={relationshipOptions}
-                      ariaLabel={`Relationship for ${member.name}`}
-                    />
-                  )}
-                </div>
-
-                {/* Tax Residency */}
-                <div className="space-y-1">
-                  <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">
-                    Tax Residency
-                  </div>
-
-                  <Select
-                    value={member.residency}
-                    onChange={onChangeResidency}
-                    options={residencyOptions}
-                    ariaLabel={`Tax residency for ${member.name}`}
-                  />
-                </div>
-
-                {/* Access Control */}
-                <div className="space-y-1">
-                  <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">
-                    Permissions
-                  </div>
-
-                  {isOwner ? (
-                    <div className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] font-semibold text-slate-800 shadow-sm">
-                      Full Access
-                    </div>
-                  ) : isAdvisor ? (
-                    <div className="flex items-center justify-between gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm">
-                      <div className="text-[12px] font-semibold text-slate-800">Reports Only</div>
-                      <button
-                        type="button"
-                        className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-transparent px-3 py-1.5 text-[11px] font-semibold text-slate-700 hover:bg-white hover:border-slate-400"
-                      >
-                        <i className="fa-solid fa-sliders text-[10px]"></i>
-                        <span>Manage Access</span>
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="space-y-2">
-                      <Select
-                        value={member.permission}
-                        onChange={onChangePermission}
-                        options={permissionOptions}
-                        ariaLabel={`Permissions for ${member.name}`}
-                      />
-
-                      {member.permission === "ASSET_SPECIFIC" ? (
-                        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-sm">
-                          <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500 px-1 pb-1">
-                            Scope
-                          </div>
-                          <Select
-                            value={member.scope}
-                            onChange={onChangeScope}
-                            options={scopeOptions}
-                            ariaLabel={`Asset scope for ${member.name}`}
-                          />
-                        </div>
-                      ) : null}
-                    </div>
-                  )}
-                </div>
+              <div class="space-y-1">
+                <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">Tax Residency</div>
+                <select
+                  class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+                  data-residency-select
+                >
+                  <option value="US_CITIZEN" selected>🇺🇸 US Tax Person (Citizen/Resident)</option>
+                  <option value="TW_NON_US">🇹🇼 Non-US Tax Person (Taiwan)</option>
+                  <option value="NON_RESIDENT_ALIEN">🇹🇼 Non-Resident Alien (No FBAR)</option>
+                </select>
               </div>
 
-              {/* Far right: Status */}
-              <div className="flex items-center justify-between lg:justify-end gap-3 lg:min-w-[130px]">
-                <StatusDot active={member.active} />
+              <div class="space-y-1">
+                <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">Permissions</div>
+                <div class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] font-semibold text-slate-800 shadow-sm">
+                  Full Access
+                </div>
               </div>
+            </div>
+
+            <!-- Status -->
+            <div class="flex items-center justify-between lg:justify-end gap-3 lg:min-w-[130px]">
+              <span class="inline-flex items-center gap-2">
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-500" data-active-dot></span>
+                <span class="text-[11px] font-semibold text-slate-700" data-active-text>Active</span>
+              </span>
             </div>
           </div>
         </div>
-      );
-    };
+      </div>
 
-    const Modal = ({ open, onClose, onSubmit }) => {
-      const [email, setEmail] = React.useState("");
-      const [relationship, setRelationship] = React.useState("Spouse");
-      const [usTaxPerson, setUsTaxPerson] = React.useState("yes");
+      <!-- FAMILY (Card Type B) -->
+      <div
+        class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+        data-member
+        data-type="family"
+        data-active="true"
+      >
+        <div class="absolute left-0 top-0 h-full w-1.5 bg-transparent"></div>
 
-      React.useEffect(() => {
-        const onKey = (e) => {
-          if (e.key === "Escape") onClose();
-        };
-        if (open) window.addEventListener("keydown", onKey);
-        return () => window.removeEventListener("keydown", onKey);
-      }, [open, onClose]);
-
-      React.useEffect(() => {
-        if (!open) return;
-        document.body.classList.add("no-scroll");
-        return () => document.body.classList.remove("no-scroll");
-      }, [open]);
-
-      if (!open) return null;
-
-      const relationshipOptions = [
-        { value: "Spouse", label: "Spouse" },
-        { value: "Child", label: "Child" },
-        { value: "Parent", label: "Parent" },
-        { value: "Advisor", label: "Advisor (CPA / Legal)" },
-      ];
-
-      const submit = () => {
-        onSubmit({ email, relationship, usTaxPerson });
-        setEmail("");
-        setRelationship("Spouse");
-        setUsTaxPerson("yes");
-        onClose();
-      };
-
-      return (
-        <div className="fixed inset-0 z-50">
-          <div className="absolute inset-0 bg-slate-900/30" onClick={onClose} aria-hidden="true"></div>
-
-          <div className="relative mx-auto mt-10 w-[92%] max-w-[640px]">
-            <div className="rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden">
-              <div className="px-6 py-5 border-b border-slate-100">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <div className="text-[11px] font-semibold tracking-[0.26em] uppercase text-slate-500">
-                      Invite flow
-                    </div>
-                    <div className="mt-1 text-[20px] font-serif font-semibold" style={{ color: OXFORD }}>
-                      Invite member
-                    </div>
-                    <p className="mt-2 text-[12px] text-slate-600">
-                      Configure identity upfront to prevent cross-border tax & permission headaches later.
-                    </p>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={onClose}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
-                    aria-label="Close"
-                  >
-                    <i className="fa-solid fa-xmark"></i>
-                  </button>
+        <div class="p-5 pl-6">
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <!-- Left -->
+            <div class="flex items-start gap-4 min-w-[260px]">
+              <div class="relative">
+                <div class="family-avatar w-11 h-11 text-[13px]">
+                  <span>SL</span>
                 </div>
+                <span data-status-dot class="absolute -right-0.5 -bottom-0.5 h-3.5 w-3.5 rounded-full border border-white bg-emerald-400"></span>
               </div>
 
-              <div className="px-6 py-5 space-y-4">
-                <div className="space-y-1">
-                  <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">
-                    Email
-                  </div>
-                  <input
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="name@example.com"
-                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
-                    type="email"
-                  />
+              <div class="leading-tight">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="text-[18px] font-semibold font-serif text-[#002147]">
+                    <span class="mr-1" data-flag>🇹🇼</span>
+                    <span data-name>Sophia Lin</span>
+                  </span>
+                  <span class="inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold tracking-wide bg-blue-50 text-blue-800 border-blue-200">
+                    FAMILY
+                  </span>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-1">
-                    <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">
-                      Relationship
-                    </div>
+                <div class="mt-1 text-[11px] text-slate-600">
+                  <span class="font-semibold text-slate-700">Tax Identity:</span>
+                  <span class="tabular-nums" data-tax-label> 🇹🇼 Non-Resident Alien (No FBAR)</span>
+                </div>
+
+                <div class="mt-1 text-[10px] text-slate-500 max-w-[520px]">
+                  Residency setting informs the system’s compliance logic (e.g., FBAR/CRS applicability).
+                </div>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div class="space-y-1">
+                <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">Relationship</div>
+                <select
+                  class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+                  data-role
+                >
+                  <option value="Spouse" selected>Spouse</option>
+                  <option value="Child">Child</option>
+                  <option value="Parent">Parent</option>
+                  <option value="Beneficiary">Beneficiary</option>
+                </select>
+              </div>
+
+              <div class="space-y-1">
+                <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">Tax Residency</div>
+                <select
+                  class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+                  data-residency-select
+                >
+                  <option value="US_CITIZEN">🇺🇸 US Tax Person (Citizen/Resident)</option>
+                  <option value="TW_NON_US">🇹🇼 Non-US Tax Person (Taiwan)</option>
+                  <option value="NON_RESIDENT_ALIEN" selected>🇹🇼 Non-Resident Alien (No FBAR)</option>
+                </select>
+              </div>
+
+              <div class="space-y-1">
+                <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">Permissions</div>
+
+                <div class="space-y-2">
+                  <select
+                    class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+                    data-permission
+                  >
+                    <option value="FULL">Full Access</option>
+                    <option value="VIEW_ONLY">View Only</option>
+                    <option value="ASSET_SPECIFIC" selected>Asset Specific</option>
+                  </select>
+
+                  <div class="rounded-xl border border-slate-200 bg-white p-2 shadow-sm" data-scope-wrap>
+                    <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500 px-1 pb-1">Scope</div>
                     <select
-                      className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
-                      value={relationship}
-                      onChange={(e) => setRelationship(e.target.value)}
-                      aria-label="Relationship"
+                      class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+                      data-scope
                     >
-                      {relationshipOptions.map((opt) => (
-                        <option key={opt.value} value={opt.value}>{opt.label}</option>
-                      ))}
+                      <option value="ALL_ASSETS">All Assets</option>
+                      <option value="US_ONLY" selected>US Assets Only</option>
+                      <option value="TW_ONLY">Taiwan Assets Only</option>
+                      <option value="REPORTS_ONLY">Reports Only</option>
+                    </select>
+                    <div class="mt-2 text-[10px] text-slate-500 px-1">
+                      Example: <span class="font-semibold text-slate-700" data-scope-example>View Only (US Assets)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Status -->
+            <div class="flex items-center justify-between lg:justify-end gap-3 lg:min-w-[130px]">
+              <span class="inline-flex items-center gap-2">
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-500" data-active-dot></span>
+                <span class="text-[11px] font-semibold text-slate-700" data-active-text>Active</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAMILY (Card Type B) -->
+      <div
+        class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+        data-member
+        data-type="family"
+        data-active="true"
+      >
+        <div class="absolute left-0 top-0 h-full w-1.5 bg-transparent"></div>
+
+        <div class="p-5 pl-6">
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <!-- Left -->
+            <div class="flex items-start gap-4 min-w-[260px]">
+              <div class="relative">
+                <div class="family-avatar w-11 h-11 text-[13px]">
+                  <span>BL</span>
+                </div>
+                <span data-status-dot class="absolute -right-0.5 -bottom-0.5 h-3.5 w-3.5 rounded-full border border-white bg-emerald-400"></span>
+              </div>
+
+              <div class="leading-tight">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="text-[18px] font-semibold font-serif text-[#002147]">
+                    <span class="mr-1" data-flag>🇹🇼</span>
+                    <span data-name>Ben Lin</span>
+                  </span>
+                  <span class="inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold tracking-wide bg-blue-50 text-blue-800 border-blue-200">
+                    FAMILY
+                  </span>
+                </div>
+
+                <div class="mt-1 text-[11px] text-slate-600">
+                  <span class="font-semibold text-slate-700">Tax Identity:</span>
+                  <span class="tabular-nums" data-tax-label> 🇹🇼 Non-US Tax Person (Taiwan)</span>
+                </div>
+
+                <div class="mt-1 text-[10px] text-slate-500 max-w-[520px]">
+                  Insight: if a family member is marked as Non-US, the system understands they may not file US-specific reports.
+                </div>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div class="space-y-1">
+                <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">Relationship</div>
+                <select
+                  class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+                  data-role
+                >
+                  <option value="Spouse">Spouse</option>
+                  <option value="Child" selected>Child</option>
+                  <option value="Parent">Parent</option>
+                  <option value="Beneficiary">Beneficiary</option>
+                </select>
+              </div>
+
+              <div class="space-y-1">
+                <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">Tax Residency</div>
+                <select
+                  class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+                  data-residency-select
+                >
+                  <option value="US_CITIZEN">🇺🇸 US Tax Person (Citizen/Resident)</option>
+                  <option value="TW_NON_US" selected>🇹🇼 Non-US Tax Person (Taiwan)</option>
+                  <option value="NON_RESIDENT_ALIEN">🇹🇼 Non-Resident Alien (No FBAR)</option>
+                </select>
+              </div>
+
+              <div class="space-y-1">
+                <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">Permissions</div>
+
+                <div class="space-y-2">
+                  <select
+                    class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+                    data-permission
+                  >
+                    <option value="FULL">Full Access</option>
+                    <option value="VIEW_ONLY" selected>View Only</option>
+                    <option value="ASSET_SPECIFIC">Asset Specific</option>
+                  </select>
+
+                  <div class="rounded-xl border border-slate-200 bg-white p-2 shadow-sm hidden" data-scope-wrap>
+                    <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500 px-1 pb-1">Scope</div>
+                    <select
+                      class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+                      data-scope
+                    >
+                      <option value="ALL_ASSETS" selected>All Assets</option>
+                      <option value="US_ONLY">US Assets Only</option>
+                      <option value="TW_ONLY">Taiwan Assets Only</option>
+                      <option value="REPORTS_ONLY">Reports Only</option>
                     </select>
                   </div>
+                </div>
+              </div>
+            </div>
 
-                  <div className="space-y-1">
-                    <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">
-                      Tax Residency (CRITICAL)
-                    </div>
+            <!-- Status -->
+            <div class="flex items-center justify-between lg:justify-end gap-3 lg:min-w-[130px]">
+              <span class="inline-flex items-center gap-2">
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-500" data-active-dot></span>
+                <span class="text-[11px] font-semibold text-slate-700" data-active-text>Active</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-                    <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-sm">
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="text-[12px] font-semibold text-slate-800">
-                          Is this person a US Tax Person?
-                        </div>
+    </div>
 
-                        <div className="inline-flex rounded-full border border-slate-200 bg-slate-50 p-1">
-                          <button
-                            type="button"
-                            onClick={() => setUsTaxPerson("yes")}
-                            className={`px-3 py-1 rounded-full text-[11px] font-semibold ${
-                              usTaxPerson === "yes" ? "bg-white shadow-sm text-slate-900" : "text-slate-600"
-                            }`}
-                          >
-                            Yes
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setUsTaxPerson("no")}
-                            className={`px-3 py-1 rounded-full text-[11px] font-semibold ${
-                              usTaxPerson === "no" ? "bg-white shadow-sm text-slate-900" : "text-slate-600"
-                            }`}
-                          >
-                            No
-                          </button>
-                        </div>
-                      </div>
+    <!-- Trusted Advisors Section -->
+    <div class="mt-10" id="advisorSection">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-4">
+        <div>
+          <p class="text-[11px] font-semibold tracking-[0.26em] text-slate-500 uppercase mb-2">Trusted advisors</p>
+          <h2 class="family-heading text-[20px] md:text-[22px] font-semibold text-[#002147]">
+            External Professionals (CPA / Legal)
+          </h2>
+          <p class="mt-2 text-xs text-slate-600 max-w-2xl">
+            Give professionals the numbers they need — without exposing private family context.
+          </p>
+        </div>
 
-                      <p className="mt-2 text-[10px] text-slate-500">
-                        Why: this choice determines AI compliance paths (FBAR/FACTA/CRS) before any assets are linked.
-                      </p>
-                    </div>
+        <div class="flex items-center gap-2">
+          <span class="inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold tracking-wide bg-slate-100 text-slate-700 border-slate-200">
+            ADVISOR ACCESS IS RESTRICTED
+          </span>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <!-- Advisor Card Type C -->
+        <div class="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm" data-advisor data-active="true">
+          <div class="absolute left-0 top-0 h-full w-1.5 bg-slate-300"></div>
+
+          <div class="p-5 pl-6">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+              <div class="flex items-start gap-4 min-w-[260px]">
+                <div class="relative">
+                  <div class="family-avatar w-11 h-11 text-[13px]">
+                    <span>JC</span>
+                  </div>
+                  <span data-status-dot class="absolute -right-0.5 -bottom-0.5 h-3.5 w-3.5 rounded-full border border-white bg-emerald-400"></span>
+                </div>
+
+                <div class="leading-tight">
+                  <div class="flex items-center gap-2 flex-wrap">
+                    <i class="fa-solid fa-briefcase text-[14px] text-[#002147]"></i>
+                    <span class="text-[18px] font-semibold font-serif text-[#002147]">Justin Chen, CPA</span>
+                    <span class="inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold tracking-wide bg-slate-100 text-slate-700 border-slate-200">
+                      ADVISOR · Tax Advisor
+                    </span>
+                  </div>
+
+                  <div class="mt-1 text-[11px] text-slate-600">
+                    <span class="font-semibold text-slate-700">Access level:</span>
+                    <span class="tabular-nums"> Reports Only (Restricted)</span>
+                  </div>
+
+                  <div class="mt-1 text-[10px] text-slate-500 max-w-[520px]">
+                    Why: CPAs need numbers for filings, but may not need family notes or private context.
                   </div>
                 </div>
               </div>
 
-              <div className="px-6 py-5 border-t border-slate-100 flex items-center justify-between gap-3">
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-transparent text-[11px] font-semibold text-slate-700 px-4 py-2 hover:bg-white hover:border-slate-400"
-                >
-                  <i className="fa-solid fa-ban text-[10px]"></i>
-                  <span>Cancel</span>
-                </button>
+              <div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="space-y-1">
+                  <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">Role</div>
+                  <div class="rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] font-semibold text-slate-800 shadow-sm">
+                    Tax Advisor
+                  </div>
+                </div>
 
-                <button
-                  type="button"
-                  onClick={submit}
-                  className="inline-flex items-center gap-2 rounded-full bg-[#002FA7] hover:bg-[#001a70] text-white text-[11px] font-semibold px-5 py-2 shadow-sm"
-                >
-                  <i className="fa-solid fa-paper-plane text-[10px]"></i>
-                  <span>Send invite</span>
-                </button>
+                <div class="space-y-1">
+                  <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">Permission</div>
+                  <div class="flex items-center justify-between gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm">
+                    <div class="text-[12px] font-semibold text-slate-800">Reports Only</div>
+                    <button
+                      type="button"
+                      class="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-transparent px-3 py-1.5 text-[11px] font-semibold text-slate-700 hover:bg-white hover:border-slate-400"
+                    >
+                      <i class="fa-solid fa-sliders text-[10px]"></i>
+                      <span>Manage Access</span>
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div className="mt-3 text-center text-[10px] text-slate-500">
-              Press <span className="font-mono">Esc</span> to close
+              <div class="flex items-center justify-between lg:justify-end gap-3 lg:min-w-[130px]">
+                <span class="inline-flex items-center gap-2">
+                  <span class="h-2.5 w-2.5 rounded-full bg-emerald-500" data-active-dot></span>
+                  <span class="text-[11px] font-semibold text-slate-700" data-active-text>Active</span>
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      );
-    };
 
-    const App = () => {
-      const [inviteOpen, setInviteOpen] = React.useState(false);
+      </div>
+    </div>
+  </div>
 
-      const [members, setMembers] = React.useState([
-        {
-          id: "owner",
-          variant: "owner",
-          initials: "AL",
-          flag: "🇺🇸",
-          name: "Alex Lin",
-          active: true,
-          residency: "US_CITIZEN",
-          residencyLabel: "🇺🇸 US Citizen",
-          role: "Owner",
-          permission: "FULL",
-          scope: "ALL_ASSETS",
-        },
-        {
-          id: "spouse",
-          variant: "family",
-          initials: "SL",
-          flag: "🇹🇼",
-          name: "Sophia Lin",
-          active: true,
-          residency: "NON_RESIDENT_ALIEN",
-          residencyLabel: "🇹🇼 Non-Resident Alien",
-          role: "Spouse",
-          permission: "ASSET_SPECIFIC",
-          scope: "US_ONLY",
-        },
-        {
-          id: "child",
-          variant: "family",
-          initials: "BL",
-          flag: "🇹🇼",
-          name: "Ben Lin",
-          active: true,
-          residency: "TW_NON_US",
-          residencyLabel: "🇹🇼 Non-US Tax Person (Taiwan)",
-          role: "Child",
-          permission: "VIEW_ONLY",
-          scope: "ALL_ASSETS",
-        },
-      ]);
+  <!-- Invite Member Modal -->
+  <div id="inviteModal" class="fixed inset-0 z-50 hidden" aria-hidden="true">
+    <div id="modalBackdrop" class="absolute inset-0 bg-slate-900/30"></div>
 
-      const [advisors] = React.useState([
-        {
-          id: "cpa",
-          variant: "advisor",
-          initials: "JC",
-          flag: "🇹🇼",
-          name: "Justin Chen, CPA",
-          active: true,
-          residency: "TW_NON_US",
-          residencyLabel: "🇹🇼 Professional (External)",
-          advisorRole: "Tax Advisor",
-        },
-      ]);
-
-      const updateMember = (id, patch) => {
-        setMembers((prev) =>
-          prev.map((m) => {
-            if (m.id !== id) return m;
-            const next = { ...m, ...patch };
-
-            // Keep residency label and flag in sync
-            const map = {
-              US_CITIZEN: { label: "🇺🇸 US Tax Person (Citizen/Resident)", flag: "🇺🇸" },
-              TW_NON_US: { label: "🇹🇼 Non-US Tax Person (Taiwan)", flag: "🇹🇼" },
-              NON_RESIDENT_ALIEN: { label: "🇹🇼 Non-Resident Alien (No FBAR)", flag: "🇹🇼" },
-            };
-            if (patch.residency && map[patch.residency]) {
-              next.residencyLabel = map[patch.residency].label;
-              next.flag = map[patch.residency].flag;
-            }
-
-            // If permission not asset-specific, keep scope tidy but harmless
-            if (patch.permission && patch.permission !== "ASSET_SPECIFIC") {
-              next.scope = "ALL_ASSETS";
-            }
-
-            return next;
-          })
-        );
-      };
-
-      const onInviteSubmit = (payload) => {
-        // Placeholder only — frontend flow demonstration
-        console.log("Invite payload:", payload);
-      };
-
-      const activeMembersCount = members.filter((m) => m.active).length;
-      const jurisdictions = Array.from(
-        new Set(
-          members
-            .map((m) => (m.residency === "US_CITIZEN" ? "US" : "TW"))
-        )
-      );
-      const advisorCount = advisors.length;
-
-      return (
-        <div className="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
-          {/* Governance Header (The Hierarchy) */}
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
+    <div class="relative mx-auto mt-10 w-[92%] max-w-[640px]">
+      <div class="rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden">
+        <div class="px-6 py-5 border-b border-slate-100">
+          <div class="flex items-start justify-between gap-4">
             <div>
-              <p className="text-[11px] font-semibold tracking-[0.26em] text-slate-500 uppercase mb-2">
-                Family governance
+              <div class="text-[11px] font-semibold tracking-[0.26em] uppercase text-slate-500">Invite flow</div>
+              <div class="mt-1 text-[20px] font-serif font-semibold text-[#002147]">Invite member</div>
+              <p class="mt-2 text-[12px] text-slate-600">
+                Configure identity upfront to prevent cross-border tax &amp; permission headaches later.
               </p>
-
-              <h1 className="family-heading text-[28px] md:text-[34px] font-semibold leading-tight" style={{ color: OXFORD }}>
-                Family Governance &amp; Access
-              </h1>
-
-              <p className="mt-3 text-xs md:text-sm text-slate-600 max-w-2xl">
-                Manage household members, tax residency statuses, and advisor permissions.
-                This defines <span className="font-semibold text-slate-700">who sees what</span> and
-                the <span className="font-semibold text-slate-700">tax identity</span> that drives cross-border logic.
-              </p>
-
-              {/* Summary Metrics (Horizontal Pills) */}
-              <div className="mt-4 flex flex-wrap items-center gap-2">
-                <Pill icon="fa-solid fa-users">
-                  {activeMembersCount} Active Members
-                </Pill>
-                <Pill icon="fa-solid fa-flag">
-                  {jurisdictions.length} Tax Jurisdictions ({jurisdictions.join("/")})
-                </Pill>
-                <Pill icon="fa-solid fa-briefcase">
-                  {advisorCount} External Advisor
-                </Pill>
-              </div>
             </div>
 
-            {/* Actions */}
-            <div className="flex flex-wrap items-center gap-3">
-              <button
-                type="button"
-                className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-transparent text-[11px] font-semibold text-slate-700 px-4 py-2 hover:bg-white hover:border-slate-400"
-              >
-                <i className="fa-solid fa-file-export text-[10px]"></i>
-                <span>Export access matrix</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setInviteOpen(true)}
-                className="inline-flex items-center gap-2 rounded-full bg-[#002FA7] hover:bg-[#001a70] text-white text-[11px] font-semibold px-5 py-2 shadow-sm"
-              >
-                <i className="fa-solid fa-user-plus text-[10px]"></i>
-                <span>Invite member</span>
-              </button>
-            </div>
+            <button
+              id="btnInviteClose"
+              type="button"
+              class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+              aria-label="Close"
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </button>
           </div>
+        </div>
 
-          {/* Member Cards (Core List) */}
-          <div className="space-y-3">
-            {/* Owner */}
-            <MemberCard
-              variant="owner"
-              member={members[0]}
-              onChangeRole={(val) => updateMember("owner", { role: val })}
-              onChangeResidency={(val) => updateMember("owner", { residency: val })}
-              onChangePermission={(val) => updateMember("owner", { permission: val })}
-              onChangeScope={(val) => updateMember("owner", { scope: val })}
+        <div class="px-6 py-5 space-y-4">
+          <div class="space-y-1">
+            <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">Email</div>
+            <input
+              id="inviteEmail"
+              placeholder="name@example.com"
+              class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+              type="email"
             />
-
-            {/* Family members */}
-            {members.slice(1).map((m) => (
-              <MemberCard
-                key={m.id}
-                variant="family"
-                member={m}
-                onChangeRole={(val) => updateMember(m.id, { role: val })}
-                onChangeResidency={(val) => updateMember(m.id, { residency: val })}
-                onChangePermission={(val) => updateMember(m.id, { permission: val })}
-                onChangeScope={(val) => updateMember(m.id, { scope: val })}
-              />
-            ))}
           </div>
 
-          {/* Trusted Advisors Section */}
-          <div className="mt-10">
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-4">
-              <div>
-                <p className="text-[11px] font-semibold tracking-[0.26em] text-slate-500 uppercase mb-2">
-                  Trusted advisors
-                </p>
-                <h2 className="family-heading text-[20px] md:text-[22px] font-semibold" style={{ color: OXFORD }}>
-                  External Professionals (CPA / Legal)
-                </h2>
-                <p className="mt-2 text-xs text-slate-600 max-w-2xl">
-                  Give professionals the numbers they need — without exposing private family context.
-                </p>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <Badge tone="gray">ADVISOR ACCESS IS RESTRICTED</Badge>
-              </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="space-y-1">
+              <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">Relationship</div>
+              <select
+                id="inviteRelationship"
+                class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+                aria-label="Relationship"
+              >
+                <option value="Spouse">Spouse</option>
+                <option value="Child">Child</option>
+                <option value="Parent">Parent</option>
+                <option value="Advisor">Advisor (CPA / Legal)</option>
+              </select>
             </div>
 
-            <div className="space-y-3">
-              {advisors.map((a) => (
-                <div key={a.id} className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm">
-                  <div className="absolute left-0 top-0 h-full w-1.5 bg-slate-300"></div>
+            <div class="space-y-1">
+              <div class="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">Tax Residency (CRITICAL)</div>
 
-                  <div className="p-5 pl-6">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-                      <div className="flex items-start gap-4 min-w-[260px]">
-                        <div className="relative">
-                          <div className="family-avatar w-11 h-11 text-[13px]">
-                            <span>{a.initials}</span>
-                          </div>
-                          <span className="absolute -right-0.5 -bottom-0.5 h-3.5 w-3.5 rounded-full border border-white bg-emerald-400"></span>
-                        </div>
+              <div class="rounded-xl border border-slate-200 bg-white p-2 shadow-sm">
+                <div class="flex items-center justify-between gap-2">
+                  <div class="text-[12px] font-semibold text-slate-800">Is this person a US Tax Person?</div>
 
-                        <div className="leading-tight">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <i className="fa-solid fa-briefcase text-[14px]" style={{ color: OXFORD }}></i>
-                            <span className="text-[18px] font-semibold font-serif" style={{ color: OXFORD }}>
-                              {a.name}
-                            </span>
-                            <Badge tone="gray">ADVISOR · {a.advisorRole}</Badge>
-                          </div>
-
-                          <div className="mt-1 text-[11px] text-slate-600">
-                            <span className="font-semibold text-slate-700">Access level:</span>{" "}
-                            <span className="tabular-nums">Reports Only (Restricted)</span>
-                          </div>
-
-                          <div className="mt-1 text-[10px] text-slate-500 max-w-[520px]">
-                            Why: CPAs need numbers for filings, but may not need personal notes, family context, or non-financial data.
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div className="space-y-1">
-                          <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">
-                            Role
-                          </div>
-                          <div className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] font-semibold text-slate-800 shadow-sm">
-                            Tax Advisor
-                          </div>
-                        </div>
-
-                        <div className="space-y-1">
-                          <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">
-                            Permission
-                          </div>
-                          <div className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] font-semibold text-slate-800 shadow-sm">
-                            Reports Only
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between lg:justify-end gap-3 lg:min-w-[130px]">
-                        <StatusDot active={true} />
-                      </div>
-                    </div>
+                  <div class="inline-flex rounded-full border border-slate-200 bg-slate-50 p-1" role="group" aria-label="US Tax Person toggle">
+                    <button
+                      id="usTaxYes"
+                      type="button"
+                      class="px-3 py-1 rounded-full text-[11px] font-semibold bg-white shadow-sm text-slate-900"
+                      data-us-tax="yes"
+                    >
+                      Yes
+                    </button>
+                    <button
+                      id="usTaxNo"
+                      type="button"
+                      class="px-3 py-1 rounded-full text-[11px] font-semibold text-slate-600"
+                      data-us-tax="no"
+                    >
+                      No
+                    </button>
                   </div>
                 </div>
-              ))}
+
+                <p class="mt-2 text-[10px] text-slate-500">
+                  Why: this choice determines AI compliance paths (FBAR/FACTA/CRS) before any assets are linked.
+                </p>
+              </div>
             </div>
           </div>
-
-          {/* Invite Member Modal */}
-          <Modal
-            open={inviteOpen}
-            onClose={() => setInviteOpen(false)}
-            onSubmit={onInviteSubmit}
-          />
         </div>
-      );
+
+        <div class="px-6 py-5 border-t border-slate-100 flex items-center justify-between gap-3">
+          <button
+            id="btnInviteCancel"
+            type="button"
+            class="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-transparent text-[11px] font-semibold text-slate-700 px-4 py-2 hover:bg-white hover:border-slate-400"
+          >
+            <i class="fa-solid fa-ban text-[10px]"></i>
+            <span>Cancel</span>
+          </button>
+
+          <button
+            id="btnInviteSend"
+            type="button"
+            class="inline-flex items-center gap-2 rounded-full bg-[#002FA7] hover:bg-[#001a70] text-white text-[11px] font-semibold px-5 py-2 shadow-sm"
+          >
+            <i class="fa-solid fa-paper-plane text-[10px]"></i>
+            <span>Send invite</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-3 text-center text-[10px] text-slate-500">
+        Press <span class="font-mono">Esc</span> to close
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Tax Identity maps (Flags + Labels + Jurisdiction) =====
+    const RESIDENCY_MAP = {
+      US_CITIZEN: {
+        flag: "🇺🇸",
+        label: "🇺🇸 US Tax Person (Citizen/Resident)",
+        jurisdiction: "US",
+      },
+      TW_NON_US: {
+        flag: "🇹🇼",
+        label: "🇹🇼 Non-US Tax Person (Taiwan)",
+        jurisdiction: "TW",
+      },
+      NON_RESIDENT_ALIEN: {
+        flag: "🇹🇼",
+        label: "🇹🇼 Non-Resident Alien (No FBAR)",
+        jurisdiction: "TW",
+      },
     };
 
-    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    const getEl = (sel, root = document) => root.querySelector(sel);
+    const getAll = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+    // ===== Modal logic =====
+    const modal = getEl("#inviteModal");
+    const openBtn = getEl("#btnInviteOpen");
+    const closeBtn = getEl("#btnInviteClose");
+    const cancelBtn = getEl("#btnInviteCancel");
+    const backdrop = getEl("#modalBackdrop");
+    const sendBtn = getEl("#btnInviteSend");
+
+    const usYes = getEl("#usTaxYes");
+    const usNo = getEl("#usTaxNo");
+
+    let usTaxPerson = "yes";
+
+    const openModal = () => {
+      modal.classList.remove("hidden");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("no-scroll");
+      getEl("#inviteEmail")?.focus();
+    };
+
+    const closeModal = () => {
+      modal.classList.add("hidden");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("no-scroll");
+    };
+
+    openBtn.addEventListener("click", openModal);
+    closeBtn.addEventListener("click", closeModal);
+    cancelBtn.addEventListener("click", closeModal);
+    backdrop.addEventListener("click", closeModal);
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !modal.classList.contains("hidden")) closeModal();
+    });
+
+    const setUsToggle = (val) => {
+      usTaxPerson = val;
+      if (val === "yes") {
+        usYes.classList.add("bg-white", "shadow-sm", "text-slate-900");
+        usYes.classList.remove("text-slate-600");
+        usNo.classList.remove("bg-white", "shadow-sm", "text-slate-900");
+        usNo.classList.add("text-slate-600");
+      } else {
+        usNo.classList.add("bg-white", "shadow-sm", "text-slate-900");
+        usNo.classList.remove("text-slate-600");
+        usYes.classList.remove("bg-white", "shadow-sm", "text-slate-900");
+        usYes.classList.add("text-slate-600");
+      }
+    };
+
+    usYes.addEventListener("click", () => setUsToggle("yes"));
+    usNo.addEventListener("click", () => setUsToggle("no"));
+
+    sendBtn.addEventListener("click", () => {
+      const email = getEl("#inviteEmail").value.trim();
+      const relationship = getEl("#inviteRelationship").value;
+
+      // Demo only: you can replace with real API call later
+      console.log("Invite payload:", { email, relationship, usTaxPerson });
+
+      // Simple UX feedback (non-blocking)
+      sendBtn.disabled = true;
+      const original = sendBtn.innerHTML;
+      sendBtn.innerHTML = '<i class="fa-solid fa-check text-[10px]"></i><span>Invite queued</span>';
+      setTimeout(() => {
+        sendBtn.disabled = false;
+        sendBtn.innerHTML = original;
+        closeModal();
+        getEl("#inviteEmail").value = "";
+        getEl("#inviteRelationship").value = "Spouse";
+        setUsToggle("yes");
+      }, 700);
+    });
+
+    // ===== Permissions scope toggle per member =====
+    function syncScopeVisibility(memberEl) {
+      const perm = getEl("[data-permission]", memberEl);
+      const wrap = getEl("[data-scope-wrap]", memberEl);
+      if (!perm || !wrap) return;
+
+      if (perm.value === "ASSET_SPECIFIC") {
+        wrap.classList.remove("hidden");
+      } else {
+        wrap.classList.add("hidden");
+      }
+    }
+
+    // ===== Residency -> update UI (flag + tax label + jurisdiction pills) =====
+    function applyResidency(memberEl, residencyKey) {
+      const map = RESIDENCY_MAP[residencyKey] || RESIDENCY_MAP.TW_NON_US;
+      const flagEl = getEl("[data-flag]", memberEl);
+      const taxLabelEl = getEl("[data-tax-label]", memberEl);
+
+      if (flagEl) flagEl.textContent = map.flag;
+      if (taxLabelEl) taxLabelEl.textContent = " " + map.label;
+
+      memberEl.setAttribute("data-residency", residencyKey);
+      memberEl.setAttribute("data-jurisdiction", map.jurisdiction);
+    }
+
+    function recalcHeaderPills() {
+      const members = getAll("[data-member]");
+      const advisors = getAll("[data-advisor]");
+
+      const activeMembers = members.filter(m => (m.getAttribute("data-active") || "true") === "true").length;
+
+      const jur = new Set();
+      members.forEach(m => {
+        const residency = getEl("[data-residency-select]", m)?.value || m.getAttribute("data-residency") || "TW_NON_US";
+        const map = RESIDENCY_MAP[residency] || RESIDENCY_MAP.TW_NON_US;
+        jur.add(map.jurisdiction);
+      });
+
+      const jurList = Array.from(jur);
+      const jurLabel = jurList.join("/");
+
+      getEl("[data-pill-members]") && (getEl("[data-pill-members]").textContent = String(activeMembers));
+      getEl("[data-pill-advisors]") && (getEl("[data-pill-advisors]").textContent = String(advisors.length));
+
+      const jCountEl = getEl("[data-pill-j-count]");
+      const jListEl = getEl("[data-pill-j-list]");
+      if (jCountEl) jCountEl.textContent = String(jurList.length);
+      if (jListEl) jListEl.textContent = jurLabel || "US/TW";
+    }
+
+    // Init all members
+    getAll("[data-member]").forEach((memberEl) => {
+      const residencySelect = getEl("[data-residency-select]", memberEl);
+      const permSelect = getEl("[data-permission]", memberEl);
+
+      // initial residency
+      const initialResidency = residencySelect ? residencySelect.value : "TW_NON_US";
+      applyResidency(memberEl, initialResidency);
+
+      // initial scope visibility
+      syncScopeVisibility(memberEl);
+
+      // listeners
+      if (permSelect) {
+        permSelect.addEventListener("change", () => {
+          syncScopeVisibility(memberEl);
+          // update example label if exists
+          const scopeExample = getEl("[data-scope-example]", memberEl);
+          const permText = permSelect.value === "VIEW_ONLY" ? "View Only" : permSelect.value === "FULL" ? "Full Access" : "Asset Specific";
+          const scopeSel = getEl("[data-scope]", memberEl);
+          if (scopeExample && scopeSel) {
+            const scopeName =
+              scopeSel.value === "US_ONLY" ? "US Assets" :
+              scopeSel.value === "TW_ONLY" ? "Taiwan Assets" :
+              scopeSel.value === "REPORTS_ONLY" ? "Reports" : "All Assets";
+            scopeExample.textContent = `${permText} (${scopeName})`;
+          }
+        });
+      }
+
+      const scopeSel = getEl("[data-scope]", memberEl);
+      if (scopeSel) {
+        scopeSel.addEventListener("change", () => {
+          const scopeExample = getEl("[data-scope-example]", memberEl);
+          const permSel = getEl("[data-permission]", memberEl);
+          if (!scopeExample || !permSel) return;
+
+          const permText = permSel.value === "VIEW_ONLY" ? "View Only" : permSel.value === "FULL" ? "Full Access" : "Asset Specific";
+          const scopeName =
+            scopeSel.value === "US_ONLY" ? "US Assets" :
+            scopeSel.value === "TW_ONLY" ? "Taiwan Assets" :
+            scopeSel.value === "REPORTS_ONLY" ? "Reports" : "All Assets";
+
+          scopeExample.textContent = `${permText} (${scopeName})`;
+        });
+      }
+
+      if (residencySelect) {
+        residencySelect.addEventListener("change", () => {
+          applyResidency(memberEl, residencySelect.value);
+          recalcHeaderPills();
+        });
+      }
+    });
+
+    // Initial pill calc
+    recalcHeaderPills();
   </script>
+
+  <!-- 小學生教學區：我改了什麼、為什麼 -->
+  <!--
+    1) 你說 React 版不能 work：多半是因為你用 file:// 開、或 Babel/React 被擋、或你貼上時被截斷。
+       這份改成「純 HTML + 原生 JS」，所以只要雙擊開檔就能跑，最穩。
+    2) 互動都有：
+       - Permissions 選 Asset Specific 才會顯示 Scope
+       - Tax Residency 下拉會同步更新：旗幟 + Tax Identity 文字 + Header 的 Jurisdictions pills
+       - Invite modal：可開/關、點背景關、Esc 關、US Tax Person toggle 可切
+  -->
 </body>
 </html>
