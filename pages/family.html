@@ -1,90 +1,729 @@
-<div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
-  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
-    <div>
-      <p class="text-[11px] font-semibold tracking-[0.26em] text-slate-500 uppercase mb-2">
-        Family governance
-      </p>
-      <h1 class="family-heading text-[26px] md:text-[32px] font-semibold text-slate-900 leading-tight">
-        Family members &amp; access
-      </h1>
-      <p class="mt-3 text-xs md:text-sm text-slate-600 max-w-xl">
-        Define who can see what inside your cross-border report. Start from the owner, then add spouse,
-        children and trusted advisors instead of sharing passwords.
-      </p>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Taimic – Family Members</title>
 
-    <div class="flex flex-wrap items-center gap-3">
-      <button
-        type="button"
-        class="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-transparent text-[11px] font-medium text-slate-700 px-3 py-2 hover:bg-white hover:border-slate-400"
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- React (CDN) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    :root { color-scheme: light; }
+    body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
+    .font-serif { font-family: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+
+    /* Keep your existing class hooks (so nothing “mysteriously breaks” later) */
+    .family-heading { font-family: "Playfair Display", ui-serif, Georgia, serif; letter-spacing: -0.01em; }
+    .family-card {
+      background: #fff;
+      border: 1px solid rgba(226,232,240,0.9);
+      border-radius: 16px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+    }
+    .family-avatar {
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(2, 33, 71, 0.08);
+      color: #002147;
+      border: 1px solid rgba(2, 33, 71, 0.12);
+      font-weight: 700;
+    }
+
+    /* Modal scroll lock helper */
+    .no-scroll { overflow: hidden; }
+  </style>
+</head>
+
+<body class="bg-[#F5F7FA]">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const OXFORD = "#002147";
+
+    const Badge = ({ tone = "blue", children }) => {
+      const tones = {
+        gold: "bg-amber-50 text-amber-800 border-amber-200",
+        blue: "bg-blue-50 text-blue-800 border-blue-200",
+        gray: "bg-slate-100 text-slate-700 border-slate-200",
+        green: "bg-emerald-50 text-emerald-800 border-emerald-200",
+      };
+      return (
+        <span className={`inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold tracking-wide ${tones[tone] || tones.blue}`}>
+          {children}
+        </span>
+      );
+    };
+
+    const Pill = ({ icon, children }) => (
+      <span className="inline-flex items-center gap-2 rounded-full bg-white border border-slate-200 px-3 py-2 text-[11px] font-semibold text-slate-700 shadow-sm">
+        {icon ? <i className={`${icon} text-[11px]`} style={{ color: OXFORD }}></i> : null}
+        <span>{children}</span>
+      </span>
+    );
+
+    const Select = ({ value, onChange, options, ariaLabel }) => (
+      <select
+        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        aria-label={ariaLabel}
       >
-        <i class="fa-solid fa-file-export text-[10px]"></i>
-        <span>Export access matrix</span>
-      </button>
-      <button
-        type="button"
-        class="inline-flex items-center gap-2 rounded-full bg-[#002FA7] hover:bg-[#001a70] text-white text-[11px] font-semibold px-4 py-2 shadow-sm"
-      >
-        <i class="fa-solid fa-user-plus text-[10px]"></i>
-        <span>Invite member</span>
-      </button>
-    </div>
-  </div>
+        {options.map((opt) => (
+          <option key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
+    );
 
-  <div class="space-y-4">
-    <section class="family-card px-5 py-4">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div class="flex flex-col md:flex-row md:items-center gap-4">
-          <div class="flex items-center gap-2 text-[11px]">
-            <span class="text-[11px] font-semibold text-slate-900 tracking-[0.16em] uppercase">
-              Members
-            </span>
-            <span class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[10px] text-slate-500">
-              3 active
-            </span>
-          </div>
+    const StatusDot = ({ active = true }) => (
+      <span className="inline-flex items-center gap-2">
+        <span className={`h-2.5 w-2.5 rounded-full ${active ? "bg-emerald-500" : "bg-slate-300"}`}></span>
+        <span className="text-[11px] font-semibold text-slate-700">{active ? "Active" : "Inactive"}</span>
+      </span>
+    );
 
-          <div class="flex items-center gap-4">
-            <div class="flex flex-col items-center gap-1">
-              <div class="relative">
-                <div class="family-avatar w-9 h-9 text-[12px]">
-                  <span>O</span>
+    const MemberCard = ({
+      variant,
+      member,
+      onChangeRole,
+      onChangeResidency,
+      onChangePermission,
+      onChangeScope,
+    }) => {
+      const isOwner = variant === "owner";
+      const isAdvisor = variant === "advisor";
+
+      const leftAccent = isOwner ? "bg-amber-400" : isAdvisor ? "bg-slate-300" : "bg-transparent";
+      const cardBg = isAdvisor ? "bg-slate-50 border-slate-200" : "bg-white border-slate-200";
+      const roleBadge = isOwner ? <Badge tone="gold">OWNER · Family Administrator</Badge> : isAdvisor ? <Badge tone="gray">ADVISOR</Badge> : <Badge tone="blue">FAMILY</Badge>;
+
+      const residencyOptions = [
+        { value: "US_CITIZEN", label: "🇺🇸 US Tax Person (Citizen/Resident)" },
+        { value: "TW_NON_US", label: "🇹🇼 Non-US Tax Person (Taiwan)" },
+        { value: "NON_RESIDENT_ALIEN", label: "🇹🇼 Non-Resident Alien (No FBAR)" },
+      ];
+
+      const relationshipOptions = [
+        { value: "Spouse", label: "Spouse" },
+        { value: "Child", label: "Child" },
+        { value: "Parent", label: "Parent" },
+        { value: "Beneficiary", label: "Beneficiary" },
+      ];
+
+      const permissionOptions = [
+        { value: "FULL", label: "Full Access" },
+        { value: "VIEW_ONLY", label: "View Only" },
+        { value: "ASSET_SPECIFIC", label: "Asset Specific" },
+      ];
+
+      const scopeOptions = [
+        { value: "ALL_ASSETS", label: "All Assets" },
+        { value: "US_ONLY", label: "US Assets Only" },
+        { value: "TW_ONLY", label: "Taiwan Assets Only" },
+        { value: "REPORTS_ONLY", label: "Reports Only" },
+      ];
+
+      return (
+        <div className={`relative overflow-hidden rounded-2xl border ${cardBg} shadow-sm`}>
+          {/* Left indicator bar */}
+          <div className={`absolute left-0 top-0 h-full w-1.5 ${leftAccent}`}></div>
+
+          <div className="p-5 pl-6">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+              {/* Left: Avatar + Name */}
+              <div className="flex items-start gap-4 min-w-[260px]">
+                <div className="relative">
+                  <div className="family-avatar w-11 h-11 text-[13px]">
+                    <span>{member.initials}</span>
+                  </div>
+                  <span className={`absolute -right-0.5 -bottom-0.5 h-3.5 w-3.5 rounded-full border border-white ${member.active ? "bg-emerald-400" : "bg-slate-300"}`}></span>
                 </div>
-                <span class="absolute -right-0.5 -bottom-0.5 w-3 h-3 rounded-full border border-white bg-emerald-400"></span>
-              </div>
-              <span class="text-[10px] text-slate-500">Owner</span>
-            </div>
 
-            <div class="flex flex-col items-center gap-1">
-              <div class="relative">
-                <div class="family-avatar w-9 h-9 text-[12px]">
-                  <span>S</span>
-                </div>
-                <span class="absolute -right-0.5 -bottom-0.5 w-3 h-3 rounded-full border border-white bg-emerald-400"></span>
-              </div>
-              <span class="text-[10px] text-slate-500">Spouse</span>
-            </div>
+                <div className="leading-tight">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-[18px] font-semibold font-serif" style={{ color: OXFORD }}>
+                      {member.flag} {member.name}
+                    </span>
+                    {roleBadge}
+                  </div>
 
-            <div class="flex flex-col items-center gap-1">
-              <div class="relative">
-                <div class="family-avatar w-9 h-9 text-[12px]">
-                  <span>B</span>
+                  <div className="mt-1 text-[11px] text-slate-600">
+                    <span className="font-semibold text-slate-700">Tax Identity:</span>{" "}
+                    <span className="tabular-nums">{member.residencyLabel}</span>
+                  </div>
+
+                  <div className="mt-1 text-[10px] text-slate-500 max-w-[520px]">
+                    {isOwner
+                      ? "This person anchors the household’s cross-border tax logic and governance controls."
+                      : isAdvisor
+                        ? "Professional access is intentionally restricted to protect private family context."
+                        : "Residency setting informs the system’s compliance logic (e.g., FBAR/CRS applicability)."}
+                  </div>
                 </div>
-                <span class="absolute -right-0.5 -bottom-0.5 w-3 h-3 rounded-full border border-white bg-emerald-400"></span>
               </div>
-              <span class="text-[10px] text-slate-500">Beneficiary</span>
+
+              {/* Middle / Right: Controls */}
+              <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {/* Role / Relationship */}
+                <div className="space-y-1">
+                  <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">
+                    Relationship
+                  </div>
+
+                  {isOwner ? (
+                    <div className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] font-semibold text-slate-800 shadow-sm">
+                      Family Administrator
+                    </div>
+                  ) : isAdvisor ? (
+                    <div className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] font-semibold text-slate-800 shadow-sm">
+                      {member.advisorRole}
+                    </div>
+                  ) : (
+                    <Select
+                      value={member.role}
+                      onChange={onChangeRole}
+                      options={relationshipOptions}
+                      ariaLabel={`Relationship for ${member.name}`}
+                    />
+                  )}
+                </div>
+
+                {/* Tax Residency */}
+                <div className="space-y-1">
+                  <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">
+                    Tax Residency
+                  </div>
+
+                  <Select
+                    value={member.residency}
+                    onChange={onChangeResidency}
+                    options={residencyOptions}
+                    ariaLabel={`Tax residency for ${member.name}`}
+                  />
+                </div>
+
+                {/* Access Control */}
+                <div className="space-y-1">
+                  <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">
+                    Permissions
+                  </div>
+
+                  {isOwner ? (
+                    <div className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] font-semibold text-slate-800 shadow-sm">
+                      Full Access
+                    </div>
+                  ) : isAdvisor ? (
+                    <div className="flex items-center justify-between gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm">
+                      <div className="text-[12px] font-semibold text-slate-800">Reports Only</div>
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-transparent px-3 py-1.5 text-[11px] font-semibold text-slate-700 hover:bg-white hover:border-slate-400"
+                      >
+                        <i className="fa-solid fa-sliders text-[10px]"></i>
+                        <span>Manage Access</span>
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <Select
+                        value={member.permission}
+                        onChange={onChangePermission}
+                        options={permissionOptions}
+                        ariaLabel={`Permissions for ${member.name}`}
+                      />
+
+                      {member.permission === "ASSET_SPECIFIC" ? (
+                        <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-sm">
+                          <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500 px-1 pb-1">
+                            Scope
+                          </div>
+                          <Select
+                            value={member.scope}
+                            onChange={onChangeScope}
+                            options={scopeOptions}
+                            ariaLabel={`Asset scope for ${member.name}`}
+                          />
+                        </div>
+                      ) : null}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Far right: Status */}
+              <div className="flex items-center justify-between lg:justify-end gap-3 lg:min-w-[130px]">
+                <StatusDot active={member.active} />
+              </div>
             </div>
           </div>
         </div>
+      );
+    };
 
-        <button
-          type="button"
-          class="inline-flex items-center gap-2 rounded-full bg-[#002FA7] hover:bg-[#001a70] text-white text-[11px] font-semibold px-4 py-2 shadow-sm"
-        >
-          <i class="fa-solid fa-user-plus text-[10px]"></i>
-          <span>Invite member</span>
-        </button>
-      </div>
-    </section>
-  </div>
-</div>
+    const Modal = ({ open, onClose, onSubmit }) => {
+      const [email, setEmail] = React.useState("");
+      const [relationship, setRelationship] = React.useState("Spouse");
+      const [usTaxPerson, setUsTaxPerson] = React.useState("yes");
+
+      React.useEffect(() => {
+        const onKey = (e) => {
+          if (e.key === "Escape") onClose();
+        };
+        if (open) window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+      }, [open, onClose]);
+
+      React.useEffect(() => {
+        if (!open) return;
+        document.body.classList.add("no-scroll");
+        return () => document.body.classList.remove("no-scroll");
+      }, [open]);
+
+      if (!open) return null;
+
+      const relationshipOptions = [
+        { value: "Spouse", label: "Spouse" },
+        { value: "Child", label: "Child" },
+        { value: "Parent", label: "Parent" },
+        { value: "Advisor", label: "Advisor (CPA / Legal)" },
+      ];
+
+      const submit = () => {
+        onSubmit({ email, relationship, usTaxPerson });
+        setEmail("");
+        setRelationship("Spouse");
+        setUsTaxPerson("yes");
+        onClose();
+      };
+
+      return (
+        <div className="fixed inset-0 z-50">
+          <div className="absolute inset-0 bg-slate-900/30" onClick={onClose} aria-hidden="true"></div>
+
+          <div className="relative mx-auto mt-10 w-[92%] max-w-[640px]">
+            <div className="rounded-2xl border border-slate-200 bg-white shadow-xl overflow-hidden">
+              <div className="px-6 py-5 border-b border-slate-100">
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <div className="text-[11px] font-semibold tracking-[0.26em] uppercase text-slate-500">
+                      Invite flow
+                    </div>
+                    <div className="mt-1 text-[20px] font-serif font-semibold" style={{ color: OXFORD }}>
+                      Invite member
+                    </div>
+                    <p className="mt-2 text-[12px] text-slate-600">
+                      Configure identity upfront to prevent cross-border tax & permission headaches later.
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                    aria-label="Close"
+                  >
+                    <i className="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div className="px-6 py-5 space-y-4">
+                <div className="space-y-1">
+                  <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">
+                    Email
+                  </div>
+                  <input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="name@example.com"
+                    className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+                    type="email"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">
+                      Relationship
+                    </div>
+                    <select
+                      className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-slate-200"
+                      value={relationship}
+                      onChange={(e) => setRelationship(e.target.value)}
+                      aria-label="Relationship"
+                    >
+                      {relationshipOptions.map((opt) => (
+                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="space-y-1">
+                    <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">
+                      Tax Residency (CRITICAL)
+                    </div>
+
+                    <div className="rounded-xl border border-slate-200 bg-white p-2 shadow-sm">
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="text-[12px] font-semibold text-slate-800">
+                          Is this person a US Tax Person?
+                        </div>
+
+                        <div className="inline-flex rounded-full border border-slate-200 bg-slate-50 p-1">
+                          <button
+                            type="button"
+                            onClick={() => setUsTaxPerson("yes")}
+                            className={`px-3 py-1 rounded-full text-[11px] font-semibold ${
+                              usTaxPerson === "yes" ? "bg-white shadow-sm text-slate-900" : "text-slate-600"
+                            }`}
+                          >
+                            Yes
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setUsTaxPerson("no")}
+                            className={`px-3 py-1 rounded-full text-[11px] font-semibold ${
+                              usTaxPerson === "no" ? "bg-white shadow-sm text-slate-900" : "text-slate-600"
+                            }`}
+                          >
+                            No
+                          </button>
+                        </div>
+                      </div>
+
+                      <p className="mt-2 text-[10px] text-slate-500">
+                        Why: this choice determines AI compliance paths (FBAR/FACTA/CRS) before any assets are linked.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="px-6 py-5 border-t border-slate-100 flex items-center justify-between gap-3">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-transparent text-[11px] font-semibold text-slate-700 px-4 py-2 hover:bg-white hover:border-slate-400"
+                >
+                  <i className="fa-solid fa-ban text-[10px]"></i>
+                  <span>Cancel</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={submit}
+                  className="inline-flex items-center gap-2 rounded-full bg-[#002FA7] hover:bg-[#001a70] text-white text-[11px] font-semibold px-5 py-2 shadow-sm"
+                >
+                  <i className="fa-solid fa-paper-plane text-[10px]"></i>
+                  <span>Send invite</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-3 text-center text-[10px] text-slate-500">
+              Press <span className="font-mono">Esc</span> to close
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const App = () => {
+      const [inviteOpen, setInviteOpen] = React.useState(false);
+
+      const [members, setMembers] = React.useState([
+        {
+          id: "owner",
+          variant: "owner",
+          initials: "AL",
+          flag: "🇺🇸",
+          name: "Alex Lin",
+          active: true,
+          residency: "US_CITIZEN",
+          residencyLabel: "🇺🇸 US Citizen",
+          role: "Owner",
+          permission: "FULL",
+          scope: "ALL_ASSETS",
+        },
+        {
+          id: "spouse",
+          variant: "family",
+          initials: "SL",
+          flag: "🇹🇼",
+          name: "Sophia Lin",
+          active: true,
+          residency: "NON_RESIDENT_ALIEN",
+          residencyLabel: "🇹🇼 Non-Resident Alien",
+          role: "Spouse",
+          permission: "ASSET_SPECIFIC",
+          scope: "US_ONLY",
+        },
+        {
+          id: "child",
+          variant: "family",
+          initials: "BL",
+          flag: "🇹🇼",
+          name: "Ben Lin",
+          active: true,
+          residency: "TW_NON_US",
+          residencyLabel: "🇹🇼 Non-US Tax Person (Taiwan)",
+          role: "Child",
+          permission: "VIEW_ONLY",
+          scope: "ALL_ASSETS",
+        },
+      ]);
+
+      const [advisors] = React.useState([
+        {
+          id: "cpa",
+          variant: "advisor",
+          initials: "JC",
+          flag: "🇹🇼",
+          name: "Justin Chen, CPA",
+          active: true,
+          residency: "TW_NON_US",
+          residencyLabel: "🇹🇼 Professional (External)",
+          advisorRole: "Tax Advisor",
+        },
+      ]);
+
+      const updateMember = (id, patch) => {
+        setMembers((prev) =>
+          prev.map((m) => {
+            if (m.id !== id) return m;
+            const next = { ...m, ...patch };
+
+            // Keep residency label and flag in sync
+            const map = {
+              US_CITIZEN: { label: "🇺🇸 US Tax Person (Citizen/Resident)", flag: "🇺🇸" },
+              TW_NON_US: { label: "🇹🇼 Non-US Tax Person (Taiwan)", flag: "🇹🇼" },
+              NON_RESIDENT_ALIEN: { label: "🇹🇼 Non-Resident Alien (No FBAR)", flag: "🇹🇼" },
+            };
+            if (patch.residency && map[patch.residency]) {
+              next.residencyLabel = map[patch.residency].label;
+              next.flag = map[patch.residency].flag;
+            }
+
+            // If permission not asset-specific, keep scope tidy but harmless
+            if (patch.permission && patch.permission !== "ASSET_SPECIFIC") {
+              next.scope = "ALL_ASSETS";
+            }
+
+            return next;
+          })
+        );
+      };
+
+      const onInviteSubmit = (payload) => {
+        // Placeholder only — frontend flow demonstration
+        console.log("Invite payload:", payload);
+      };
+
+      const activeMembersCount = members.filter((m) => m.active).length;
+      const jurisdictions = Array.from(
+        new Set(
+          members
+            .map((m) => (m.residency === "US_CITIZEN" ? "US" : "TW"))
+        )
+      );
+      const advisorCount = advisors.length;
+
+      return (
+        <div className="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+          {/* Governance Header (The Hierarchy) */}
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-8">
+            <div>
+              <p className="text-[11px] font-semibold tracking-[0.26em] text-slate-500 uppercase mb-2">
+                Family governance
+              </p>
+
+              <h1 className="family-heading text-[28px] md:text-[34px] font-semibold leading-tight" style={{ color: OXFORD }}>
+                Family Governance &amp; Access
+              </h1>
+
+              <p className="mt-3 text-xs md:text-sm text-slate-600 max-w-2xl">
+                Manage household members, tax residency statuses, and advisor permissions.
+                This defines <span className="font-semibold text-slate-700">who sees what</span> and
+                the <span className="font-semibold text-slate-700">tax identity</span> that drives cross-border logic.
+              </p>
+
+              {/* Summary Metrics (Horizontal Pills) */}
+              <div className="mt-4 flex flex-wrap items-center gap-2">
+                <Pill icon="fa-solid fa-users">
+                  {activeMembersCount} Active Members
+                </Pill>
+                <Pill icon="fa-solid fa-flag">
+                  {jurisdictions.length} Tax Jurisdictions ({jurisdictions.join("/")})
+                </Pill>
+                <Pill icon="fa-solid fa-briefcase">
+                  {advisorCount} External Advisor
+                </Pill>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-transparent text-[11px] font-semibold text-slate-700 px-4 py-2 hover:bg-white hover:border-slate-400"
+              >
+                <i className="fa-solid fa-file-export text-[10px]"></i>
+                <span>Export access matrix</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setInviteOpen(true)}
+                className="inline-flex items-center gap-2 rounded-full bg-[#002FA7] hover:bg-[#001a70] text-white text-[11px] font-semibold px-5 py-2 shadow-sm"
+              >
+                <i className="fa-solid fa-user-plus text-[10px]"></i>
+                <span>Invite member</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Member Cards (Core List) */}
+          <div className="space-y-3">
+            {/* Owner */}
+            <MemberCard
+              variant="owner"
+              member={members[0]}
+              onChangeRole={(val) => updateMember("owner", { role: val })}
+              onChangeResidency={(val) => updateMember("owner", { residency: val })}
+              onChangePermission={(val) => updateMember("owner", { permission: val })}
+              onChangeScope={(val) => updateMember("owner", { scope: val })}
+            />
+
+            {/* Family members */}
+            {members.slice(1).map((m) => (
+              <MemberCard
+                key={m.id}
+                variant="family"
+                member={m}
+                onChangeRole={(val) => updateMember(m.id, { role: val })}
+                onChangeResidency={(val) => updateMember(m.id, { residency: val })}
+                onChangePermission={(val) => updateMember(m.id, { permission: val })}
+                onChangeScope={(val) => updateMember(m.id, { scope: val })}
+              />
+            ))}
+          </div>
+
+          {/* Trusted Advisors Section */}
+          <div className="mt-10">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-4">
+              <div>
+                <p className="text-[11px] font-semibold tracking-[0.26em] text-slate-500 uppercase mb-2">
+                  Trusted advisors
+                </p>
+                <h2 className="family-heading text-[20px] md:text-[22px] font-semibold" style={{ color: OXFORD }}>
+                  External Professionals (CPA / Legal)
+                </h2>
+                <p className="mt-2 text-xs text-slate-600 max-w-2xl">
+                  Give professionals the numbers they need — without exposing private family context.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Badge tone="gray">ADVISOR ACCESS IS RESTRICTED</Badge>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              {advisors.map((a) => (
+                <div key={a.id} className="relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm">
+                  <div className="absolute left-0 top-0 h-full w-1.5 bg-slate-300"></div>
+
+                  <div className="p-5 pl-6">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                      <div className="flex items-start gap-4 min-w-[260px]">
+                        <div className="relative">
+                          <div className="family-avatar w-11 h-11 text-[13px]">
+                            <span>{a.initials}</span>
+                          </div>
+                          <span className="absolute -right-0.5 -bottom-0.5 h-3.5 w-3.5 rounded-full border border-white bg-emerald-400"></span>
+                        </div>
+
+                        <div className="leading-tight">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <i className="fa-solid fa-briefcase text-[14px]" style={{ color: OXFORD }}></i>
+                            <span className="text-[18px] font-semibold font-serif" style={{ color: OXFORD }}>
+                              {a.name}
+                            </span>
+                            <Badge tone="gray">ADVISOR · {a.advisorRole}</Badge>
+                          </div>
+
+                          <div className="mt-1 text-[11px] text-slate-600">
+                            <span className="font-semibold text-slate-700">Access level:</span>{" "}
+                            <span className="tabular-nums">Reports Only (Restricted)</span>
+                          </div>
+
+                          <div className="mt-1 text-[10px] text-slate-500 max-w-[520px]">
+                            Why: CPAs need numbers for filings, but may not need personal notes, family context, or non-financial data.
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div className="space-y-1">
+                          <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">
+                            Role
+                          </div>
+                          <div className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] font-semibold text-slate-800 shadow-sm">
+                            Tax Advisor
+                          </div>
+                        </div>
+
+                        <div className="space-y-1">
+                          <div className="text-[10px] font-semibold tracking-[0.22em] uppercase text-slate-500">
+                            Permission
+                          </div>
+                          <div className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-[12px] font-semibold text-slate-800 shadow-sm">
+                            Reports Only
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between lg:justify-end gap-3 lg:min-w-[130px]">
+                        <StatusDot active={true} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Invite Member Modal */}
+          <Modal
+            open={inviteOpen}
+            onClose={() => setInviteOpen(false)}
+            onSubmit={onInviteSubmit}
+          />
+        </div>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
