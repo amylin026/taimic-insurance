@@ -334,7 +334,7 @@
         <div class="p-5 border-b border-gray-100 flex items-center justify-between">
           <div>
             <h3 class="text-lg font-semibold text-[#002147]">Add holding</h3>
-            <p class="text-xs text-gray-500">Example: AAPL, 10 shares, cost 5.00</p>
+            <p class="text-xs text-gray-500">Cost basis is per share. Example: AAPL, 10 shares, cost 250.00</p>
           </div>
           <button id="usStocksHoldingClose" type="button" class="h-9 w-9 rounded-lg hover:bg-gray-50 text-gray-500" aria-label="Close">✕</button>
         </div>
@@ -353,7 +353,7 @@
 
             <label class="block">
               <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Cost / share</span>
-              <input id="usStocksHoldingCost" type="number" step="0.0001" min="0" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2A4A]/20" placeholder="5.00" required />
+              <input id="usStocksHoldingCost" type="number" step="0.0001" min="0" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2A4A]/20" placeholder="250.00" required />
             </label>
           </div>
 
@@ -376,7 +376,7 @@
 
   <script>
     (function () {
-      // ✅ You already use full workers.dev URL (no need to route under taimic.tech)
+      // ✅ Full workers.dev URL (no need to route under taimic.tech)
       const QUOTES_API_BASE = "https://taimic-quotes.amy20060226.workers.dev";
 
       const US_STOCKS_STORAGE_KEY = "taimic_us_stocks_holdings_v1";
@@ -420,6 +420,90 @@
 
       function saveHoldings(list) {
         localStorage.setItem(US_STOCKS_STORAGE_KEY, JSON.stringify(list));
+      }
+
+      // =========================
+      // Level-1 chart: no backend needed.
+      // Uses current totalMV to generate a classy "moving" curve.
+      // Works with either:
+      //  - ids: #usStocksChart + #usStocksLine/#usStocksArea/#usStocksDot
+      //  - or fallback: first svg + path order (baseline/area/line)
+      // =========================
+      function updateUsStocksChart(totalMV) {
+        const page = document.getElementById("page-us-stocks");
+        if (!page) return;
+
+        // Prefer explicit id, fallback to first svg inside the page
+        let svg = page.querySelector("#usStocksChart");
+        if (!svg) svg = page.querySelector("svg");
+        if (!svg) return;
+
+        // Prefer ids, fallback to path order
+        let line = svg.querySelector("#usStocksLine");
+        let area = svg.querySelector("#usStocksArea");
+        let dot = svg.querySelector("#usStocksDot");
+
+        if (!line || !area) {
+          const paths = svg.querySelectorAll("path");
+          // expected: [baseline, area, line]
+          if (paths.length >= 3) {
+            area = area || paths[1];
+            line = line || paths[2];
+          }
+        }
+        if (!line || !area) return;
+
+        const W = 260, H = 120;
+        const paddingTop = 18, paddingBottom = 20;
+        const n = 12;
+
+        const base = Math.max(1, Number(totalMV) || 1);
+
+        // Gentle uptrend + mild waves (looks "real" without being TradingView)
+        const values = [];
+        let v = base * 0.72;
+        for (let i = 0; i < n; i++) {
+          const drift = base * 0.02;
+          const noise = base * 0.006 * (Math.sin(i * 0.9) + Math.cos(i * 0.4));
+          v = Math.max(base * 0.35, v + drift + noise);
+          values.push(v);
+        }
+
+        const yMin = Math.min(...values);
+        const yMax = Math.max(...values);
+        const xStep = W / (n - 1);
+
+        const pts = values.map((val, i) => {
+          const t = (val - yMin) / (yMax - yMin || 1);
+          const x = i * xStep;
+          const y = paddingTop + (1 - t) * (H - paddingTop - paddingBottom);
+          return { x, y };
+        });
+
+        function smoothPath(points) {
+          if (points.length < 2) return "";
+          let d = `M${points[0].x.toFixed(2)} ${points[0].y.toFixed(2)}`;
+          for (let i = 1; i < points.length; i++) {
+            const p = points[i];
+            const prev = points[i - 1];
+            const cx = ((prev.x + p.x) / 2).toFixed(2);
+            d += ` Q ${cx} ${prev.y.toFixed(2)} ${p.x.toFixed(2)} ${p.y.toFixed(2)}`;
+          }
+          return d;
+        }
+
+        const dLine = smoothPath(pts);
+        const dArea = `${dLine} L ${W} ${H} L 0 ${H} Z`;
+
+        line.setAttribute("d", dLine);
+        area.setAttribute("d", dArea);
+
+        if (!dot) dot = svg.querySelector("circle");
+        if (dot) {
+          const last = pts[pts.length - 1];
+          dot.setAttribute("cx", last.x.toFixed(2));
+          dot.setAttribute("cy", last.y.toFixed(2));
+        }
       }
 
       // --------------------------
@@ -598,7 +682,6 @@
             close();
             toast("Saved. Updating…");
 
-            // Re-render + refresh quotes
             await refreshUsStocksQuotesAndRender();
           });
         }
@@ -665,6 +748,9 @@
         if (asOfEl) {
           asOfEl.textContent = asOf ? new Date(asOf).toLocaleString() : "—";
         }
+
+        // ✅ Level-1 chart update (no backend)
+        updateUsStocksChart(totalMV);
       }
 
       function renderTable(enriched) {
@@ -698,7 +784,7 @@
                 <div class="flex items-start justify-between gap-3">
                   <div class="flex flex-col">
                     <span class="text-[13px] font-semibold text-[#002147]">${h.sym}</span>
-                    <span class="text-[11px] text-[#6B7280]">${h.name ? h.name : ""}</span>
+                    <span class="text-[11px] text-[#6B7280]">${h.name ? h.name : "&nbsp;"}</span>
                   </div>
                   <button
                     type="button"
@@ -757,7 +843,6 @@
           quotes = await fetchQuotes(symbols);
         } catch (e) {
           console.warn("[Quotes] failed", e);
-          // render without prices
           quotes = {};
         }
 
@@ -785,14 +870,11 @@
           };
         });
 
-        // newest first
         enriched.sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""));
-
         renderTable(enriched);
       }
 
       function setupUsStocksDelegation() {
-        // Open modal
         document.addEventListener("click", (e) => {
           const btn = e.target.closest("#btnAddHolding");
           if (btn && btn.closest("#page-us-stocks")) {
@@ -800,7 +882,6 @@
             return;
           }
 
-          // Delete holding
           const del = e.target.closest(".btnDeleteHolding");
           if (del && del.closest("#page-us-stocks")) {
             const id = del.getAttribute("data-holding-id");
@@ -817,7 +898,6 @@
 
       function afterPartialLoad(pageKey) {
         if (pageKey === "us-stocks") {
-          // table + totals
           refreshUsStocksQuotesAndRender();
         }
       }
@@ -866,7 +946,6 @@
         setupDesktopSidebarToggle();
         setupUserMenu();
 
-        // ✅ US Stocks: modal + delete + render + quotes
         UsStocksModal.bindOnce();
         setupUsStocksDelegation();
 
