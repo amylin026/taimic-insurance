@@ -1,0 +1,371 @@
+<!-- pages/overview.html  (PARTIAL) -->
+<style>
+  /* Overview Privacy Mode (no JS, works inside partial) */
+  #overview-privacy:checked ~ .ov-scope .ov-privacy {
+    filter: blur(7px);
+    -webkit-filter: blur(7px);
+    user-select: none;
+  }
+  #overview-privacy:checked ~ .ov-scope .ov-eye-open { display: none; }
+  #overview-privacy:checked ~ .ov-scope .ov-eye-closed { display: inline-block; }
+  #overview-privacy:not(:checked) ~ .ov-scope .ov-eye-open { display: inline-block; }
+  #overview-privacy:not(:checked) ~ .ov-scope .ov-eye-closed { display: none; }
+</style>
+
+<div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
+  <!-- Privacy toggle (checkbox hack) -->
+  <input id="overview-privacy" type="checkbox" class="sr-only" />
+
+  <div class="ov-scope space-y-6">
+    <!-- 1) HERO: Global Net Worth -->
+    <section class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-7 md:p-10">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <p class="text-[11px] font-semibold tracking-[0.24em] uppercase text-[#9CA3AF]">
+            GLOBAL NET WORTH (USD)
+          </p>
+
+          <div class="mt-2 flex flex-wrap items-center gap-3">
+            <div
+              class="ov-privacy text-[40px] md:text-[56px] leading-none font-semibold tracking-tight text-[#002147]"
+              style="font-family:'Playfair Display', ui-serif, Georgia, 'Times New Roman', serif;"
+            >
+              $3,420,500.00
+            </div>
+
+            <span class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold border bg-amber-50 border-amber-200 text-amber-700">
+              <span class="ov-privacy">📉 -$1,200 due to TWD drop</span>
+            </span>
+          </div>
+
+          <p class="mt-3 text-xs md:text-sm text-[#4B5563] max-w-2xl">
+            Daily briefing: wealth visualization (dopamine) + risk monitoring (compliance).
+          </p>
+        </div>
+
+        <!-- Eye toggle (top-right) -->
+        <label
+          for="overview-privacy"
+          class="shrink-0 inline-flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 bg-white hover:bg-slate-50 shadow-sm transition cursor-pointer"
+          title="Privacy Mode"
+          aria-label="Privacy Mode"
+        >
+          <i class="ov-eye-open fa-regular fa-eye text-sm text-slate-600"></i>
+          <i class="ov-eye-closed fa-regular fa-eye-slash text-sm text-slate-600"></i>
+        </label>
+      </div>
+
+      <!-- Sparkline (SVG, subtle green gradient fill) -->
+      <div class="mt-6">
+        <div class="h-[76px] md:h-[88px] w-full">
+          <svg viewBox="0 0 1200 180" class="w-full h-full">
+            <defs>
+              <linearGradient id="ovSparkFill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1F6F43" stop-opacity="0.16"></stop>
+                <stop offset="100%" stop-color="#1F6F43" stop-opacity="0"></stop>
+              </linearGradient>
+            </defs>
+
+            <!-- area -->
+            <path
+              d="M0,120
+                 C60,110 90,140 120,118
+                 C160,92 210,110 240,98
+                 C280,86 310,102 360,90
+                 C420,74 450,88 480,78
+                 C540,54 590,70 620,58
+                 C680,38 720,60 760,46
+                 C820,28 860,44 900,34
+                 C960,20 1010,36 1040,24
+                 C1080,14 1120,28 1200,18
+                 L1200,180 L0,180 Z"
+              fill="url(#ovSparkFill)"
+            ></path>
+
+            <!-- line -->
+            <path
+              d="M0,120
+                 C60,110 90,140 120,118
+                 C160,92 210,110 240,98
+                 C280,86 310,102 360,90
+                 C420,74 450,88 480,78
+                 C540,54 590,70 620,58
+                 C680,38 720,60 760,46
+                 C820,28 860,44 900,34
+                 C960,20 1010,36 1040,24
+                 C1080,14 1120,28 1200,18"
+              fill="none"
+              stroke="#1F6F43"
+              stroke-width="3"
+              stroke-linecap="round"
+            ></path>
+          </svg>
+        </div>
+
+        <div class="mt-3 flex items-center justify-between text-[11px] text-slate-400">
+          <span class="uppercase tracking-[0.24em]">30D Trend</span>
+          <span class="uppercase tracking-[0.24em]">Privacy Mode blurs numbers for screenshots</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2) Peace of Mind Grid -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- Card 1: Compliance Health -->
+      <div class="bg-white rounded-xl border border-slate-200/70 shadow-sm p-5">
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <div class="w-9 h-9 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center">
+              <i class="fa-solid fa-shield-halved text-emerald-700 text-sm"></i>
+            </div>
+            <div>
+              <p class="text-[10px] font-semibold tracking-[0.24em] uppercase text-slate-400">
+                Compliance health
+              </p>
+              <p class="mt-1 text-sm font-semibold text-slate-900 inline-flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                All Systems Go
+              </p>
+            </div>
+          </div>
+        </div>
+        <p class="mt-3 text-xs text-[#4B5563]">
+          FBAR filing ready. No PFIC alerts.
+        </p>
+      </div>
+
+      <!-- Card 2: Geo-Allocation -->
+      <div class="bg-white rounded-xl border border-slate-200/70 shadow-sm p-5">
+        <p class="text-[10px] font-semibold tracking-[0.24em] uppercase text-slate-400">
+          Geo-allocation
+        </p>
+
+        <div class="mt-3">
+          <div class="h-3 w-full rounded-full bg-slate-100 overflow-hidden border border-slate-200 flex">
+            <div class="h-full" style="width:62%; background:#0B3B8C;"></div>
+            <div class="h-full" style="width:38%; background:#1F6F43;"></div>
+          </div>
+
+          <div class="mt-3 flex items-center justify-between text-xs">
+            <span class="inline-flex items-center gap-2 text-slate-700">
+              <span class="w-2.5 h-2.5 rounded-full" style="background:#0B3B8C;"></span>
+              🇺🇸 <span class="ov-privacy font-semibold">62%</span> US
+            </span>
+            <span class="inline-flex items-center gap-2 text-slate-700">
+              <span class="w-2.5 h-2.5 rounded-full" style="background:#1F6F43;"></span>
+              🇹🇼 <span class="ov-privacy font-semibold">38%</span> TW
+            </span>
+          </div>
+
+          <p class="mt-2 text-xs text-[#4B5563]">
+            Quick check: geopolitical exposure & concentration risk.
+          </p>
+        </div>
+      </div>
+
+      <!-- Card 3: Liquid Cash Runway -->
+      <div class="bg-white rounded-xl border border-slate-200/70 shadow-sm p-5">
+        <p class="text-[10px] font-semibold tracking-[0.24em] uppercase text-slate-400">
+          Liquid cash runway
+        </p>
+
+        <div class="mt-3">
+          <div
+            class="ov-privacy text-[24px] md:text-[26px] font-semibold tracking-tight text-[#002147]"
+            style="font-family:'Playfair Display', ui-serif, Georgia, 'Times New Roman', serif;"
+          >
+            $145,000 <span class="text-sm text-slate-500" style="font-family:Inter, ui-sans-serif;">Available</span>
+          </div>
+          <p class="mt-1 text-xs text-[#4B5563]">
+            Covering <span class="ov-privacy font-semibold text-slate-700">12</span> months of expenses.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3) Asset Class Matrix -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <!-- Left: Donut (CSS conic-gradient) -->
+      <div class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-6">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-[10px] font-semibold tracking-[0.24em] uppercase text-slate-400">
+              Asset breakdown
+            </p>
+            <h2 class="mt-1 text-[16px] font-semibold text-slate-900">
+              Portfolio composition
+            </h2>
+          </div>
+        </div>
+
+        <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+          <!-- Donut -->
+          <div class="relative w-full max-w-[260px] mx-auto aspect-square">
+            <div
+              class="absolute inset-0 rounded-full"
+              style="background:
+                conic-gradient(
+                  #0B3B8C 0 41%,
+                  #1F6F43 41% 70%,
+                  #64748B 70% 74%,
+                  #60A5FA 74% 92%,
+                  #F59E0B 92% 100%
+                );"
+            ></div>
+            <div class="absolute inset-[18%] rounded-full bg-white border border-slate-100"></div>
+
+            <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+              <p class="text-[10px] tracking-[0.24em] uppercase text-slate-400">Total</p>
+              <div
+                class="ov-privacy text-[18px] md:text-[20px] font-semibold text-[#002147]"
+                style="font-family:'Playfair Display', ui-serif, Georgia, 'Times New Roman', serif;"
+              >
+                $3,420,500.00
+              </div>
+            </div>
+          </div>
+
+          <!-- Legend -->
+          <div class="space-y-3">
+            <div class="flex items-center justify-between gap-3 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full" style="background:#0B3B8C;"></span>
+                <span class="text-slate-700">Real Estate</span>
+              </div>
+              <span class="ov-privacy text-slate-900 font-semibold">$1,400,000</span>
+            </div>
+
+            <div class="flex items-center justify-between gap-3 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full" style="background:#1F6F43;"></span>
+                <span class="text-slate-700">Stocks</span>
+              </div>
+              <span class="ov-privacy text-slate-900 font-semibold">$980,000</span>
+            </div>
+
+            <div class="flex items-center justify-between gap-3 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full" style="background:#64748B;"></span>
+                <span class="text-slate-700">Cash</span>
+              </div>
+              <span class="ov-privacy text-slate-900 font-semibold">$145,000</span>
+            </div>
+
+            <div class="flex items-center justify-between gap-3 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full" style="background:#60A5FA;"></span>
+                <span class="text-slate-700">Insurance</span>
+              </div>
+              <span class="ov-privacy text-slate-900 font-semibold">$620,000</span>
+            </div>
+
+            <div class="flex items-center justify-between gap-3 text-sm">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full" style="background:#F59E0B;"></span>
+                <span class="text-slate-700">Crypto</span>
+              </div>
+              <span class="ov-privacy text-slate-900 font-semibold">$275,500</span>
+            </div>
+
+            <p class="pt-2 text-xs text-[#4B5563]">
+              Thin donut for “Swiss Bank” clarity — readable at a glance.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Top Movers Feed -->
+      <div class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-6">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-[10px] font-semibold tracking-[0.24em] uppercase text-slate-400">
+              Top movers
+            </p>
+            <h2 class="mt-1 text-[16px] font-semibold text-slate-900">
+              What moved the needle today
+            </h2>
+          </div>
+          <span class="text-[11px] text-slate-400 uppercase tracking-[0.24em]">Today</span>
+        </div>
+
+        <div class="mt-5 space-y-3">
+          <!-- 1 -->
+          <div class="flex items-center justify-between gap-4 rounded-xl border border-slate-200/70 bg-white px-4 py-3">
+            <div class="min-w-0">
+              <p class="text-sm font-semibold text-slate-900 truncate">TSMC (2330.TW)</p>
+              <p class="mt-0.5 text-xs text-slate-500">Intraday change</p>
+            </div>
+            <div class="text-right shrink-0">
+              <div class="ov-privacy text-sm font-semibold text-emerald-700">+2.4%</div>
+              <div class="ov-privacy text-xs text-emerald-700/80">(+$4,200)</div>
+            </div>
+          </div>
+
+          <!-- 2 -->
+          <div class="flex items-center justify-between gap-4 rounded-xl border border-slate-200/70 bg-white px-4 py-3">
+            <div class="min-w-0">
+              <p class="text-sm font-semibold text-slate-900 truncate">NVIDIA (NVDA)</p>
+              <p class="mt-0.5 text-xs text-slate-500">Intraday change</p>
+            </div>
+            <div class="text-right shrink-0">
+              <div class="ov-privacy text-sm font-semibold text-rose-700">-1.1%</div>
+              <div class="ov-privacy text-xs text-rose-700/80">(-$1,100)</div>
+            </div>
+          </div>
+
+          <!-- 3 -->
+          <div class="flex items-center justify-between gap-4 rounded-xl border border-slate-200/70 bg-white px-4 py-3">
+            <div class="min-w-0">
+              <div class="flex items-center gap-2">
+                <p class="text-sm font-semibold text-slate-900 truncate">Forex Impact (TWD/USD)</p>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full border bg-slate-100 text-slate-700 border-slate-200">
+                  FX
+                </span>
+              </div>
+              <p class="mt-0.5 text-xs text-slate-500">Tracked separately from market</p>
+            </div>
+            <div class="text-right shrink-0">
+              <div class="ov-privacy text-sm font-semibold text-rose-700">-0.3%</div>
+              <div class="ov-privacy text-xs text-rose-700/80">(-$800)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5 p-4 rounded-xl border border-slate-200 bg-slate-50">
+          <p class="text-[10px] font-semibold tracking-[0.24em] uppercase text-slate-400">
+            Cross-border lens
+          </p>
+          <p class="mt-1 text-xs text-[#4B5563]">
+            FX impact is shown separately from market moves — the “Taimic Magic”.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4) AI Insight (Bottom Banner) -->
+    <section class="bg-blue-50 border border-blue-100 rounded-2xl p-5 md:p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-xl bg-white border border-blue-100 flex items-center justify-center">
+          <i class="fa-solid fa-wand-magic-sparkles text-blue-700 text-sm"></i>
+        </div>
+        <div>
+          <p class="text-[10px] font-semibold tracking-[0.24em] uppercase text-blue-700/70">
+            AI Insight
+          </p>
+          <p class="mt-1 text-sm text-[#1F2937]">
+            Insight: Your Taiwan insurance policy <span class="font-semibold">“Fubon Life”</span> is approaching its maturity date next month.
+            We recommend reviewing tax implications.
+          </p>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="inline-flex items-center justify-center gap-2 rounded-full bg-[#002147] text-white text-xs font-semibold px-4 py-2.5 shadow-sm hover:bg-[#001a70] transition self-start md:self-auto"
+      >
+        <span>View Suggestion</span>
+        <i class="fa-solid fa-arrow-right-long text-[11px]"></i>
+      </button>
+    </section>
+  </div>
+</div>
