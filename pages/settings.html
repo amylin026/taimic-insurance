@@ -1,0 +1,711 @@
+<div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+  <style>
+    /* ===== Settings vertical tabs (no JS; safe for innerHTML injection) ===== */
+    .settings-panel { display: none; }
+    #tab-profile:checked ~ .settings-layout #panel-profile { display: block; }
+    #tab-family:checked ~ .settings-layout #panel-family { display: block; }
+    #tab-connections:checked ~ .settings-layout #panel-connections { display: block; }
+    #tab-notifications:checked ~ .settings-layout #panel-notifications { display: block; }
+    #tab-security:checked ~ .settings-layout #panel-security { display: block; }
+    #tab-billing:checked ~ .settings-layout #panel-billing { display: block; }
+
+    .settings-tab {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      width: 100%;
+      padding: 0.65rem 0.75rem;
+      border-radius: 14px;
+      color: #64748b;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.12s ease, background 0.15s ease, color 0.15s ease;
+      position: relative;
+    }
+    .settings-tab:hover { color: #0f172a; transform: translateX(2px); }
+
+    /* Active tab styling + 3px brand line (Swiss) */
+    #tab-profile:checked ~ .settings-layout .settings-nav label[for="tab-profile"],
+    #tab-family:checked ~ .settings-layout .settings-nav label[for="tab-family"],
+    #tab-connections:checked ~ .settings-layout .settings-nav label[for="tab-connections"],
+    #tab-notifications:checked ~ .settings-layout .settings-nav label[for="tab-notifications"],
+    #tab-security:checked ~ .settings-layout .settings-nav label[for="tab-security"],
+    #tab-billing:checked ~ .settings-layout .settings-nav label[for="tab-billing"] {
+      background: rgba(255,255,255,0.92);
+      color: #0f172a;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+      font-weight: 600;
+    }
+
+    #tab-profile:checked ~ .settings-layout .settings-nav label[for="tab-profile"]::before,
+    #tab-family:checked ~ .settings-layout .settings-nav label[for="tab-family"]::before,
+    #tab-connections:checked ~ .settings-layout .settings-nav label[for="tab-connections"]::before,
+    #tab-notifications:checked ~ .settings-layout .settings-nav label[for="tab-notifications"]::before,
+    #tab-security:checked ~ .settings-layout .settings-nav label[for="tab-security"]::before,
+    #tab-billing:checked ~ .settings-layout .settings-nav label[for="tab-billing"]::before {
+      content: "";
+      position: absolute;
+      left: 0.55rem;
+      top: 0.55rem;
+      bottom: 0.55rem;
+      width: 3px;
+      border-radius: 9999px;
+      background: #002fa7;
+    }
+  </style>
+
+  <!-- Header -->
+  <div class="flex flex-col gap-2">
+    <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
+      Settings
+    </p>
+    <h1 class="text-[26px] md:text-[30px] font-semibold tracking-tight text-[#002147]" style="font-family:'Playfair Display', ui-serif, Georgia, serif;">
+      Mission Control
+    </h1>
+    <p class="text-sm text-[#4B5563] max-w-3xl">
+      Configure your cross-border financial identity. These settings determine how the AI interprets risk, compliance, and family access—clean, secure, and Family Office–ready.
+    </p>
+  </div>
+
+  <!-- Radios (hidden) -->
+  <input id="tab-profile" type="radio" name="settingsTab" class="hidden" checked />
+  <input id="tab-family" type="radio" name="settingsTab" class="hidden" />
+  <input id="tab-connections" type="radio" name="settingsTab" class="hidden" />
+  <input id="tab-notifications" type="radio" name="settingsTab" class="hidden" />
+  <input id="tab-security" type="radio" name="settingsTab" class="hidden" />
+  <input id="tab-billing" type="radio" name="settingsTab" class="hidden" />
+
+  <!-- Layout -->
+  <div class="settings-layout mt-6 grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-6">
+    <!-- Left: Vertical tabs -->
+    <aside class="settings-nav bg-white/60 backdrop-blur-xl border border-slate-200/70 rounded-2xl p-4">
+      <p class="text-[10px] tracking-[0.2em] text-slate-400 uppercase mb-3">
+        Configuration
+      </p>
+
+      <div class="space-y-1">
+        <label class="settings-tab" for="tab-profile">
+          <i class="fa-regular fa-id-card text-[13px] text-slate-400"></i>
+          <span>Profile &amp; Tax Identity</span>
+        </label>
+
+        <label class="settings-tab" for="tab-family">
+          <i class="fa-regular fa-user-group text-[13px] text-slate-400"></i>
+          <span>Family</span>
+        </label>
+
+        <label class="settings-tab" for="tab-connections">
+          <i class="fa-solid fa-link text-[13px] text-slate-400"></i>
+          <span>Connections</span>
+        </label>
+
+        <label class="settings-tab" for="tab-notifications">
+          <i class="fa-regular fa-bell text-[13px] text-slate-400"></i>
+          <span>Notifications</span>
+        </label>
+
+        <label class="settings-tab" for="tab-security">
+          <i class="fa-regular fa-shield-halved text-[13px] text-slate-400"></i>
+          <span>Security</span>
+        </label>
+
+        <label class="settings-tab" for="tab-billing">
+          <i class="fa-regular fa-credit-card text-[13px] text-slate-400"></i>
+          <span>Billing</span>
+        </label>
+      </div>
+
+      <div class="mt-4 pt-4 border-t border-gray-200">
+        <div class="flex items-start gap-2">
+          <i class="fa-solid fa-lock text-[12px] text-slate-400 mt-[2px]"></i>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            All settings are encrypted in transit. Changes affect portfolio analysis logic immediately.
+          </p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right: Panels -->
+    <section class="settings-panels space-y-6">
+      <!-- Panel: Profile -->
+      <div id="panel-profile" class="settings-panel space-y-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h2 class="text-[18px] font-semibold tracking-tight text-[#002147]" style="font-family:'Playfair Display', ui-serif, Georgia, serif;">
+                Tax Residency Status
+              </h2>
+              <p class="mt-1 text-sm text-[#4B5563]">
+                This determines compliance logic (FBAR / PFIC) and how the AI flags cross-border risks.
+              </p>
+            </div>
+            <span class="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.18em] uppercase text-slate-500">
+              Core logic
+            </span>
+          </div>
+
+          <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-[11px] font-semibold tracking-[0.2em] uppercase text-slate-400 mb-1">
+                Tax Residency
+              </label>
+              <select class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]">
+                <option>US Person (Citizen/Green Card)</option>
+                <option>Non-Resident Alien</option>
+                <option>Dual Resident</option>
+              </select>
+              <p class="mt-2 text-xs text-slate-500">
+                Affects thresholds, reporting obligations, and tax-efficient routing.
+              </p>
+            </div>
+
+            <div class="flex flex-col">
+              <label class="block text-[11px] font-semibold tracking-[0.2em] uppercase text-slate-400 mb-1">
+                File Jointly with Spouse?
+              </label>
+
+              <div class="flex items-center justify-between bg-[#F5F7FA] border border-slate-200 rounded-xl px-3 py-3">
+                <div class="text-sm text-slate-700">
+                  Joint filing status
+                </div>
+
+                <!-- Premium toggle -->
+                <label class="inline-flex items-center cursor-pointer">
+                  <input type="checkbox" class="sr-only peer" />
+                  <div class="relative w-11 h-6 rounded-full bg-slate-200 transition-colors peer-checked:bg-emerald-500">
+                    <span class="absolute left-0.5 top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform peer-checked:translate-x-5"></span>
+                  </div>
+                </label>
+              </div>
+
+              <p class="mt-2 text-xs text-slate-500">
+                Changes household aggregation logic for compliance and report outputs.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
+          <div>
+            <h2 class="text-[18px] font-semibold tracking-tight text-[#002147]" style="font-family:'Playfair Display', ui-serif, Georgia, serif;">
+              Global Currency Preferences
+            </h2>
+            <p class="mt-1 text-sm text-[#4B5563]">
+              Control base currency and FX sourcing for consistent net worth reporting.
+            </p>
+          </div>
+
+          <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-[11px] font-semibold tracking-[0.2em] uppercase text-slate-400 mb-1">
+                Base Currency
+              </label>
+              <select class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]">
+                <option selected>USD</option>
+                <option>TWD</option>
+                <option>EUR</option>
+                <option>JPY</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-semibold tracking-[0.2em] uppercase text-slate-400 mb-1">
+                FX Source
+              </label>
+              <select class="w-full bg-white border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]">
+                <option selected>Central Bank of Taiwan</option>
+                <option>Market Rate</option>
+              </select>
+              <p class="mt-2 text-xs text-slate-500">
+                “Central Bank” is stable; “Market Rate” is closer to live conversion for trading decisions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel: Family -->
+      <div id="panel-family" class="settings-panel space-y-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
+          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div>
+              <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">
+                Family Office
+              </p>
+              <h2 class="text-[18px] font-semibold tracking-tight text-[#002147]" style="font-family:'Playfair Display', ui-serif, Georgia, serif;">
+                Household Members
+              </h2>
+              <p class="mt-1 text-sm text-[#4B5563]">
+                Invite family or professionals. A read-only CPA seat is designed for high-trust workflows.
+              </p>
+            </div>
+
+            <button type="button" class="inline-flex items-center gap-2 rounded-full bg-[#002147] text-white text-xs font-semibold px-4 py-2 shadow-sm hover:bg-[#001a70] transition">
+              <i class="fa-solid fa-user-plus text-[11px]"></i>
+              <span>Invite member</span>
+            </button>
+          </div>
+
+          <div class="mt-5 border border-slate-200 rounded-2xl overflow-hidden bg-white">
+            <!-- Row -->
+            <div class="flex items-center justify-between gap-3 px-4 py-3 border-b border-gray-200">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-[#002147] text-white flex items-center justify-center text-xs font-bold tracking-[0.18em]">
+                  A
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-slate-900">You</div>
+                  <div class="text-xs text-slate-500">Owner · Admin</div>
+                </div>
+              </div>
+              <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.16em] uppercase bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                Full control
+              </span>
+            </div>
+
+            <div class="flex items-center justify-between gap-3 px-4 py-3 border-b border-gray-200">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs font-bold tracking-[0.18em]">
+                  S
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-slate-900">Spouse</div>
+                  <div class="text-xs text-slate-500">Member</div>
+                </div>
+              </div>
+              <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.16em] uppercase bg-blue-50 text-blue-700 border border-blue-200">
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                Full access
+              </span>
+            </div>
+
+            <div class="flex items-center justify-between gap-3 px-4 py-3">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-slate-200 text-slate-800 flex items-center justify-center text-[11px] font-bold tracking-[0.18em]">
+                  CPA
+                </div>
+                <div>
+                  <div class="text-sm font-semibold text-slate-900">Accountant / CPA</div>
+                  <div class="text-xs text-slate-500">Collaborator</div>
+                </div>
+              </div>
+              <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.16em] uppercase bg-slate-50 text-slate-700 border border-slate-200">
+                <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+                Restricted view
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
+          <h3 class="text-[16px] font-semibold text-[#002147]" style="font-family:'Playfair Display', ui-serif, Georgia, serif;">
+            Access Policy Notes
+          </h3>
+          <ul class="mt-3 space-y-2 text-sm text-[#4B5563] list-disc pl-5">
+            <li><span class="font-semibold text-slate-800">Owner</span> can invite/remove members and manage connections.</li>
+            <li><span class="font-semibold text-slate-800">Full access</span> can view and annotate reports.</li>
+            <li><span class="font-semibold text-slate-800">Restricted</span> can view compliance summaries without raw account detail.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Panel: Connections -->
+      <div id="panel-connections" class="settings-panel space-y-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
+          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div>
+              <h2 class="text-[18px] font-semibold tracking-tight text-[#002147]" style="font-family:'Playfair Display', ui-serif, Georgia, serif;">
+                Connected Accounts
+              </h2>
+              <p class="mt-1 text-sm text-[#4B5563]">
+                A centralized view of linked institutions across regions.
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button type="button" class="inline-flex items-center gap-2 rounded-full bg-white border border-slate-200 text-slate-800 text-xs font-semibold px-4 py-2 hover:bg-slate-50 transition">
+                <i class="fa-solid fa-gear text-[11px] text-slate-500"></i>
+                <span>Manage connections</span>
+              </button>
+              <button type="button" class="inline-flex items-center gap-2 rounded-full bg-[#002147] text-white text-xs font-semibold px-4 py-2 shadow-sm hover:bg-[#001a70] transition">
+                <i class="fa-solid fa-rotate text-[11px]"></i>
+                <span>Refresh all feeds</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <!-- US -->
+            <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
+              <div class="px-4 py-3 bg-[#F5F7FA] border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                  <div class="text-sm font-semibold text-slate-900">US Connections (Plaid)</div>
+                  <span class="text-[11px] font-semibold tracking-[0.16em] uppercase text-slate-500">2 linked</span>
+                </div>
+              </div>
+
+              <div class="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <i class="fa-regular fa-building-columns text-slate-400"></i>
+                  <div>
+                    <div class="text-sm font-semibold text-slate-900">Chase</div>
+                    <div class="text-xs text-slate-500">Last sync: 3 min ago</div>
+                  </div>
+                </div>
+                <span class="inline-flex items-center gap-2 text-xs text-emerald-700">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  Syncing
+                </span>
+              </div>
+
+              <div class="px-4 py-3 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <i class="fa-regular fa-building-columns text-slate-400"></i>
+                  <div>
+                    <div class="text-sm font-semibold text-slate-900">Amex</div>
+                    <div class="text-xs text-slate-500">Last sync: 11 min ago</div>
+                  </div>
+                </div>
+                <span class="inline-flex items-center gap-2 text-xs text-emerald-700">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  Syncing
+                </span>
+              </div>
+            </div>
+
+            <!-- Taiwan -->
+            <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
+              <div class="px-4 py-3 bg-[#F5F7FA] border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                  <div class="text-sm font-semibold text-slate-900">Taiwan Connections (Manual/API)</div>
+                  <span class="text-[11px] font-semibold tracking-[0.16em] uppercase text-slate-500">2 linked</span>
+                </div>
+              </div>
+
+              <div class="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <i class="fa-regular fa-building-columns text-slate-400"></i>
+                  <div>
+                    <div class="text-sm font-semibold text-slate-900">CTBC</div>
+                    <div class="text-xs text-slate-500">Manual refresh enabled</div>
+                  </div>
+                </div>
+                <span class="inline-flex items-center gap-2 text-xs text-emerald-700">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  Healthy
+                </span>
+              </div>
+
+              <div class="px-4 py-3 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <i class="fa-regular fa-building-columns text-slate-400"></i>
+                  <div>
+                    <div class="text-sm font-semibold text-slate-900">Cathay</div>
+                    <div class="text-xs text-slate-500">Manual refresh enabled</div>
+                  </div>
+                </div>
+                <span class="inline-flex items-center gap-2 text-xs text-emerald-700">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  Healthy
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
+          <h3 class="text-[16px] font-semibold text-[#002147]" style="font-family:'Playfair Display', ui-serif, Georgia, serif;">
+            Data Engine
+          </h3>
+          <p class="mt-2 text-sm text-[#4B5563]">
+            Connection health influences valuation freshness and alert accuracy. Keep “Refresh all feeds” for quarterly compliance checks.
+          </p>
+        </div>
+      </div>
+
+      <!-- Panel: Notifications -->
+      <div id="panel-notifications" class="settings-panel space-y-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
+          <h2 class="text-[18px] font-semibold tracking-tight text-[#002147]" style="font-family:'Playfair Display', ui-serif, Georgia, serif;">
+            Notifications &amp; Alerts
+          </h2>
+          <p class="mt-1 text-sm text-[#4B5563]">
+            Peace of mind: compliance-first alerts, plus clean weekly summaries.
+          </p>
+
+          <div class="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <!-- Compliance Alerts -->
+            <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
+              <div class="px-4 py-3 bg-[#F5F7FA] border-b border-gray-200">
+                <div class="text-sm font-semibold text-slate-900">Compliance Alerts</div>
+                <div class="text-xs text-slate-500">High priority</div>
+              </div>
+
+              <div class="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+                <div>
+                  <div class="text-sm font-semibold text-slate-900">FBAR Threshold Warning</div>
+                  <div class="text-xs text-slate-500">Default ON</div>
+                </div>
+                <label class="inline-flex items-center cursor-pointer">
+                  <input type="checkbox" class="sr-only peer" checked />
+                  <div class="relative w-11 h-6 rounded-full bg-slate-200 transition-colors peer-checked:bg-emerald-500">
+                    <span class="absolute left-0.5 top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform peer-checked:translate-x-5"></span>
+                  </div>
+                </label>
+              </div>
+
+              <div class="px-4 py-3 flex items-center justify-between">
+                <div>
+                  <div class="text-sm font-semibold text-slate-900">PFIC Detection</div>
+                  <div class="text-xs text-slate-500">Default ON</div>
+                </div>
+                <label class="inline-flex items-center cursor-pointer">
+                  <input type="checkbox" class="sr-only peer" checked />
+                  <div class="relative w-11 h-6 rounded-full bg-slate-200 transition-colors peer-checked:bg-emerald-500">
+                    <span class="absolute left-0.5 top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform peer-checked:translate-x-5"></span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Market Updates -->
+            <div class="border border-slate-200 rounded-2xl overflow-hidden bg-white">
+              <div class="px-4 py-3 bg-[#F5F7FA] border-b border-gray-200">
+                <div class="text-sm font-semibold text-slate-900">Market Updates</div>
+                <div class="text-xs text-slate-500">Optional</div>
+              </div>
+
+              <div class="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+                <div>
+                  <div class="text-sm font-semibold text-slate-900">Weekly Net Worth Report</div>
+                  <div class="text-xs text-slate-500">Email</div>
+                </div>
+                <label class="inline-flex items-center cursor-pointer">
+                  <input type="checkbox" class="sr-only peer" />
+                  <div class="relative w-11 h-6 rounded-full bg-slate-200 transition-colors peer-checked:bg-emerald-500">
+                    <span class="absolute left-0.5 top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform peer-checked:translate-x-5"></span>
+                  </div>
+                </label>
+              </div>
+
+              <div class="px-4 py-3 flex items-center justify-between">
+                <div>
+                  <div class="text-sm font-semibold text-slate-900">FX Significant Shifts (&gt;2%)</div>
+                  <div class="text-xs text-slate-500">USD/TWD volatility</div>
+                </div>
+                <label class="inline-flex items-center cursor-pointer">
+                  <input type="checkbox" class="sr-only peer" checked />
+                  <div class="relative w-11 h-6 rounded-full bg-slate-200 transition-colors peer-checked:bg-emerald-500">
+                    <span class="absolute left-0.5 top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform peer-checked:translate-x-5"></span>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel: Security -->
+      <div id="panel-security" class="settings-panel space-y-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h2 class="text-[18px] font-semibold tracking-tight text-[#002147]" style="font-family:'Playfair Display', ui-serif, Georgia, serif;">
+                  Account Security
+                </h2>
+                <p class="mt-1 text-sm text-[#4B5563]">
+                  Security posture and recent login activity.
+                </p>
+              </div>
+
+              <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold tracking-[0.16em] uppercase bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <i class="fa-solid fa-shield text-[11px]"></i>
+                Enabled
+              </span>
+            </div>
+
+            <div class="mt-5 space-y-3">
+              <div class="flex items-center justify-between border border-slate-200 rounded-xl px-3 py-3 bg-[#F5F7FA]">
+                <div class="text-sm text-slate-700">MFA Status</div>
+                <div class="text-sm font-semibold text-emerald-700">Enabled</div>
+              </div>
+
+              <div class="border border-slate-200 rounded-xl px-3 py-3">
+                <div class="text-[11px] font-semibold tracking-[0.2em] uppercase text-slate-400">
+                  Last login
+                </div>
+                <div class="mt-1 text-sm text-slate-800 font-semibold">
+                  Taipei, Taiwan <span class="text-slate-500 font-normal">(Mac OS)</span>
+                </div>
+                <div class="mt-1 text-xs text-slate-500">
+                  If this wasn’t you, reset password and revoke sessions.
+                </div>
+              </div>
+
+              <button type="button" class="w-full inline-flex items-center justify-center gap-2 rounded-full bg-white border border-slate-200 text-slate-800 text-xs font-semibold px-4 py-2 hover:bg-slate-50 transition">
+                <i class="fa-solid fa-key text-[11px] text-slate-500"></i>
+                <span>Manage MFA &amp; sessions</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
+            <h2 class="text-[18px] font-semibold tracking-tight text-[#002147]" style="font-family:'Playfair Display', ui-serif, Georgia, serif;">
+              Data Privacy
+            </h2>
+            <p class="mt-1 text-sm text-[#4B5563]">
+              Control retention and your right to erase data.
+            </p>
+
+            <div class="mt-5 space-y-3">
+              <div class="border border-slate-200 rounded-xl px-3 py-3 bg-[#F5F7FA]">
+                <div class="text-[11px] font-semibold tracking-[0.2em] uppercase text-slate-400">
+                  Storage model
+                </div>
+                <div class="mt-1 text-sm text-slate-800 font-semibold">
+                  Encrypted portfolio snapshots
+                </div>
+                <div class="mt-1 text-xs text-slate-500">
+                  Used for trend analysis and compliance audit trails.
+                </div>
+              </div>
+
+              <a href="#" class="text-xs text-slate-400 hover:text-slate-600 underline underline-offset-2">
+                Request data wipe
+              </a>
+
+              <div class="text-xs text-slate-500 leading-relaxed">
+                Data wipe is irreversible. You will lose portfolio history and stored documents.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel: Billing -->
+      <div id="panel-billing" class="settings-panel space-y-6">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
+          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div>
+              <h2 class="text-[18px] font-semibold tracking-tight text-[#002147]" style="font-family:'Playfair Display', ui-serif, Georgia, serif;">
+                Subscription &amp; Billing
+              </h2>
+              <p class="mt-1 text-sm text-[#4B5563]">
+                Clean billing controls for Household and professional collaboration.
+              </p>
+            </div>
+            <button type="button" class="inline-flex items-center gap-2 rounded-full bg-[#002147] text-white text-xs font-semibold px-4 py-2 shadow-sm hover:bg-[#001a70] transition">
+              <i class="fa-solid fa-receipt text-[11px]"></i>
+              <span>Manage plan</span>
+            </button>
+          </div>
+
+          <div class="mt-5 grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div class="border border-slate-200 rounded-2xl p-4 bg-white">
+              <div class="text-[11px] font-semibold tracking-[0.2em] uppercase text-slate-400">
+                Current plan
+              </div>
+              <div class="mt-2 text-lg font-semibold text-slate-900" style="font-family:'Playfair Display', ui-serif, Georgia, serif;">
+                Family Office Tier
+              </div>
+              <div class="mt-1 text-sm text-slate-500">
+                $20 / month
+              </div>
+            </div>
+
+            <div class="border border-slate-200 rounded-2xl p-4 bg-white">
+              <div class="text-[11px] font-semibold tracking-[0.2em] uppercase text-slate-400">
+                Payment method
+              </div>
+              <div class="mt-2 text-sm font-semibold text-slate-900">
+                **** 4242
+              </div>
+              <div class="mt-1 text-xs text-slate-500">
+                Auto-renew enabled
+              </div>
+            </div>
+
+            <div class="border border-slate-200 rounded-2xl p-4 bg-white">
+              <div class="text-[11px] font-semibold tracking-[0.2em] uppercase text-slate-400">
+                Next charge
+              </div>
+              <div class="mt-2 text-sm font-semibold text-slate-900">
+                Jan 14, 2026
+              </div>
+              <div class="mt-1 text-xs text-slate-500">
+                Invoice will be emailed
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-5">
+          <h3 class="text-[16px] font-semibold text-[#002147]" style="font-family:'Playfair Display', ui-serif, Georgia, serif;">
+            Billing History
+          </h3>
+
+          <div class="mt-4 overflow-hidden border border-slate-200 rounded-2xl bg-white">
+            <table class="w-full text-sm">
+              <thead class="bg-[#F5F7FA] border-b border-gray-200">
+                <tr class="text-left text-xs text-slate-500">
+                  <th class="px-4 py-3 font-semibold">Date</th>
+                  <th class="px-4 py-3 font-semibold">Invoice</th>
+                  <th class="px-4 py-3 font-semibold">Amount</th>
+                  <th class="px-4 py-3 font-semibold">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-gray-200">
+                  <td class="px-4 py-3 text-slate-700">Dec 14, 2025</td>
+                  <td class="px-4 py-3">
+                    <a href="#" class="text-slate-900 font-semibold hover:underline">INV-2025-12</a>
+                  </td>
+                  <td class="px-4 py-3 text-slate-700">$20.00</td>
+                  <td class="px-4 py-3">
+                    <span class="inline-flex items-center gap-2 text-xs text-emerald-700">
+                      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                      Paid
+                    </span>
+                  </td>
+                </tr>
+
+                <tr class="border-b border-gray-200">
+                  <td class="px-4 py-3 text-slate-700">Nov 14, 2025</td>
+                  <td class="px-4 py-3">
+                    <a href="#" class="text-slate-900 font-semibold hover:underline">INV-2025-11</a>
+                  </td>
+                  <td class="px-4 py-3 text-slate-700">$20.00</td>
+                  <td class="px-4 py-3">
+                    <span class="inline-flex items-center gap-2 text-xs text-emerald-700">
+                      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                      Paid
+                    </span>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="px-4 py-3 text-slate-700">Oct 14, 2025</td>
+                  <td class="px-4 py-3">
+                    <a href="#" class="text-slate-900 font-semibold hover:underline">INV-2025-10</a>
+                  </td>
+                  <td class="px-4 py-3 text-slate-700">$20.00</td>
+                  <td class="px-4 py-3">
+                    <span class="inline-flex items-center gap-2 text-xs text-emerald-700">
+                      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                      Paid
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="mt-3 text-xs text-slate-500">
+            For Family Office compliance archives, invoices are retained for 7 years.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
