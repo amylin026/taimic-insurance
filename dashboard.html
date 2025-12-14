@@ -5,7 +5,6 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- ✅ reduce font swap/jump (preconnect) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
@@ -21,7 +20,6 @@
 
   <style>
     .liquid {
-      /* ✅ Fix: keep blur (stable). url(#filter) inside backdrop-filter is not reliably supported */
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       background: rgba(255, 255, 255, 0.10);
@@ -34,7 +32,6 @@
       border: 1px solid rgba(255, 255, 255, 0.45);
     }
 
-    /* Sidebar：上半部是文字型連結 */
     .side-item {
       display: flex;
       align-items: center;
@@ -51,19 +48,8 @@
       cursor: pointer;
       transition: color 0.15s ease, transform 0.12s ease;
     }
-
-    .side-item:hover {
-      color: #0f172a;
-      transform: translateX(2px);
-    }
-
-    .side-item-active {
-      font-weight: 600;
-      color: #0f172a;
-      position: relative;
-    }
-
-    /* 瑞士風：左側 3px 品牌色直線當 active 標記 */
+    .side-item:hover { color: #0f172a; transform: translateX(2px); }
+    .side-item-active { font-weight: 600; color: #0f172a; position: relative; }
     .side-item-active::before {
       content: '';
       position: absolute;
@@ -72,14 +58,9 @@
       bottom: 0.2rem;
       width: 3px;
       border-radius: 9999px;
-      background-color: #002fa7; /* International Klein Blue */
+      background-color: #002fa7;
     }
-
-    /* 子選單（縮一格、字再小一點） */
-    .side-subitem {
-      padding-left: 1.25rem;
-      font-size: 0.78rem;
-    }
+    .side-subitem { padding-left: 1.25rem; font-size: 0.78rem; }
 
     .side-bottom-link {
       display: flex;
@@ -93,17 +74,9 @@
       cursor: pointer;
       transition: color 0.15s ease, transform 0.12s ease;
     }
+    .side-bottom-link i { font-size: 0.8rem; }
+    .side-bottom-link:hover { color: #0f172a; transform: translateX(2px); }
 
-    .side-bottom-link i {
-      font-size: 0.8rem;
-    }
-
-    .side-bottom-link:hover {
-      color: #0f172a;
-      transform: translateX(2px);
-    }
-
-    /* 三條線的樣式（疊起來） */
     .menu-toggle .bar {
       display: block;
       width: 18px;
@@ -111,147 +84,19 @@
       border-radius: 9999px;
       background-color: #64748b;
     }
+    .menu-toggle .bar + .bar { margin-top: 3px; }
+    .menu-toggle:hover .bar { background-color: #0f172a; }
 
-    /* 第二條、第三條往下排一點 */
-    .menu-toggle .bar + .bar {
-      margin-top: 3px;
-    }
-
-    .menu-toggle:hover .bar {
-      background-color: #0f172a;
-    }
-
-    /* md 以上才會真正把 sidebar 收掉（桌機三條線用） */
     @media (min-width: 768px) {
-      #sidebar.sidebar-collapsed {
-        display: none !important;
-      }
+      #sidebar.sidebar-collapsed { display: none !important; }
     }
 
-    #ai-notes-list {
-      max-height: 260px;
-      overflow-y: auto;
-    }
+    .family-page { background-color: #F9FAFB; }
 
-    /* ============= Family members page 專用樣式 ============= */
-    .family-page {
-      background-color: #F9FAFB;
-    }
-
-    .family-heading {
-      font-family: 'Merriweather', ui-serif, Georgia, 'Times New Roman', serif;
-      letter-spacing: 0.02em;
-    }
-
-    .family-card {
-      background-color: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05);
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .family-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
-    }
-
-    .family-avatar {
-      border-radius: 9999px;
-      background: #002147;
-      color: #f9fafb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .family-role-tag {
-      font-size: 0.62rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #6b7280;
-    }
-
-    .family-status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.2rem 0.7rem;
-      border-radius: 9999px;
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      border-width: 1px;
-      border-style: solid;
-    }
-
-    .family-status-dot {
-      width: 0.5rem;
-      height: 0.5rem;
-      border-radius: 9999px;
-    }
-
-    .family-status-full {
-      background-color: #ecfdf3;
-      border-color: rgba(34, 197, 94, 0.3);
-      color: #15803d;
-    }
-
-    .family-status-full .family-status-dot {
-      background-color: #22c55e;
-    }
-
-    .family-status-shared {
-      background-color: #eff6ff;
-      border-color: rgba(37, 99, 235, 0.3);
-      color: #1d4ed8;
-    }
-
-    .family-status-shared .family-status-dot {
-      background-color: #2563eb;
-    }
-
-    .family-status-limited {
-      background-color: #f9fafb;
-      border-color: #e5e7eb;
-      color: #4b5563;
-    }
-
-    .family-status-limited .family-status-dot {
-      background-color: #9ca3af;
-    }
-
-    .family-meta-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #9ca3af;
-    }
-
-    .family-meta-value {
-      font-size: 0.75rem;
-      color: #4b5563;
-    }
-
-    .family-divider {
-      height: 1px;
-      background: linear-gradient(to right, rgba(148, 163, 184, 0.28), rgba(148, 163, 184, 0.06));
-    }
-
-    /* ==========================================================
-       ✅ Insurance 字體統一（照 us-accounts 的標題/大數字 serif）
-       不改你的 partial 檔，載入後自動套用
-       ========================================================== */
     #page-us-insurance h1,
     #page-tw-insurance h1 {
       font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
     }
-
-    /* Insurance 頁面所有 mono/tabular 的數字 → 改成 serif（避免你不要的那種數字字體） */
     #page-us-insurance .font-mono,
     #page-tw-insurance .font-mono,
     #page-us-insurance .tabular-nums,
@@ -259,11 +104,6 @@
       font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
     }
 
-    /* ==========================================================
-       ✅ STOP the ugly font "jump" (FOUT):
-       Force KPI/number fonts to stable system serif inside pages.
-       This prevents swapping to/from Google Playfair during load.
-       ========================================================== */
     .dash-page .font-serif,
     .dash-page .ov-privacy,
     .dash-page [style*="Playfair Display"],
@@ -289,15 +129,9 @@
     <header class="bg-white border-b border-gray-200 fixed top-0 w-full z-40 shadow-sm h-[72px]">
       <div class="max-w-[1440px] mx-auto px-6 h-full flex justify-between items-center relative">
         <div class="flex items-center gap-3">
-          <button
-            id="sidebar-toggle-desktop"
-            type="button"
-            class="menu-toggle hidden md:flex flex-col items-center justify-center px-1 py-1"
-          >
+          <button id="sidebar-toggle-desktop" type="button" class="menu-toggle hidden md:flex flex-col items-center justify-center px-1 py-1">
             <span class="sr-only">Toggle sidebar</span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
           </button>
 
           <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='index.html'">
@@ -330,82 +164,46 @@
           <div class="hidden md:inline-flex items-center gap-3 rounded-full border border-[#E5E7EB] bg-[#F3F4F6] px-3 py-1.5">
             <div class="text-xs">
               <span class="mr-1">🇺🇸/🇹🇼</span>
-              <span class="font-mono tabular-nums font-semibold text-[#002147]">
-                32.50
-              </span>
+              <span class="font-mono tabular-nums font-semibold text-[#002147]">32.50</span>
             </div>
             <div class="flex items-center gap-1 text-[11px]">
               <span class="text-[#9CA3AF]">FX Today</span>
-              <span class="font-mono tabular-nums text-[#CC5500]">
-                −0.21%
-              </span>
+              <span class="font-mono tabular-nums text-[#CC5500]">−0.21%</span>
             </div>
           </div>
 
-          <button
-            type="button"
-            class="hidden md:inline-flex items-center gap-2 rounded-full bg-[#002147] text-white text-xs font-semibold px-4 py-2 shadow-sm hover:bg-[#001a70] transition"
-          >
+          <button type="button" class="hidden md:inline-flex items-center gap-2 rounded-full bg-[#002147] text-white text-xs font-semibold px-4 py-2 shadow-sm hover:bg-[#001a70] transition">
             <i class="fa-solid fa-file-export text-[11px]"></i>
             <span>Export full report (PDF)</span>
           </button>
 
           <div class="relative">
-            <button
-              id="dash-user-toggle"
-              type="button"
-              class="w-9 h-9 rounded-full bg-[#002147] text-white flex items-center justify-center text-sm font-semibold hover:bg-[#001a70] transition-colors"
-            >
+            <button id="dash-user-toggle" type="button" class="w-9 h-9 rounded-full bg-[#002147] text-white flex items-center justify-center text-sm font-semibold hover:bg-[#001a70] transition-colors">
               <span id="dash-user-initial">A</span>
             </button>
-            <div
-              id="dash-user-menu"
-              class="hidden absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-lg border border-slate-100 text-sm overflow-hidden z-50"
-            >
+            <div id="dash-user-menu" class="hidden absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-lg border border-slate-100 text-sm overflow-hidden z-50">
               <div class="px-4 py-3 border-b border-slate-100">
-                <p class="text-[10px] text-slate-500 uppercase tracking-[0.16em]">
-                  Signed in as
-                </p>
-                <p id="dash-user-email" class="text-xs font-semibold text-slate-800 truncate">
-                  you@gmail.com
-                </p>
+                <p class="text-[10px] text-slate-500 uppercase tracking-[0.16em]">Signed in as</p>
+                <p id="dash-user-email" class="text-xs font-semibold text-slate-800 truncate">you@gmail.com</p>
               </div>
-              <button
-                type="button"
-                onclick="handleLogout && handleLogout()"
-                class="w-full text-left px-4 py-2.5 flex items-center gap-2 text-slate-700 hover:bg-slate-50"
-              >
+              <button type="button" onclick="handleLogout && handleLogout()" class="w-full text-left px-4 py-2.5 flex items-center gap-2 text-slate-700 hover:bg-slate-50">
                 <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
                 <span>Logout</span>
               </button>
             </div>
           </div>
 
-          <button
-            id="sidebar-toggle-mobile"
-            type="button"
-            class="menu-toggle flex md:hidden flex-col items-center justify-center p-2 relative z-50"
-          >
+          <button id="sidebar-toggle-mobile" type="button" class="menu-toggle flex md:hidden flex-col items-center justify-center p-2 relative z-50">
             <span class="sr-only">Toggle navigation</span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
           </button>
         </div>
       </div>
     </header>
 
-    <div
-      id="mobile-menu"
-      class="md:hidden fixed top-[72px] left-0 right-0 bottom-0 z-30 bg-black/30 backdrop-blur-sm hidden"
-    >
-      <div
-        id="mobile-menu-panel"
-        class="absolute right-0 top-0 bottom-0 w-64 bg-white border-l border-slate-200 px-5 py-6 overflow-y-auto transform translate-x-full transition-transform duration-200"
-      >
-        <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase mb-4">
-          Navigation
-        </p>
+    <div id="mobile-menu" class="md:hidden fixed top-[72px] left-0 right-0 bottom-0 z-30 bg-black/30 backdrop-blur-sm hidden">
+      <div id="mobile-menu-panel" class="absolute right-0 top-0 bottom-0 w-64 bg-white border-l border-slate-200 px-5 py-6 overflow-y-auto transform translate-x-full transition-transform duration-200">
+        <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase mb-4">Navigation</p>
 
         <button class="side-item" type="button" onclick="mobileNavigate('overview')">Overview</button>
         <button class="side-item mt-2" type="button" onclick="mobileNavigate('family')">Family members</button>
@@ -437,18 +235,10 @@
     </div>
 
     <div class="flex flex-1 relative">
-      <aside
-        id="sidebar"
-        class="hidden md:flex flex-col w-64 px-5 py-6 border-r border-slate-200/70 bg-white/60 backdrop-blur-xl"
-      >
+      <aside id="sidebar" class="hidden md:flex flex-col w-64 px-5 py-6 border-r border-slate-200/70 bg-white/60 backdrop-blur-xl">
         <nav class="space-y-1">
-          <button class="side-item side-item-active" type="button" data-page="overview" onclick="switchDashboardPage('overview')">
-            <span>Overview</span>
-          </button>
-
-          <button class="side-item" type="button" data-page="family" onclick="switchDashboardPage('family')">
-            <span>Family members</span>
-          </button>
+          <button class="side-item side-item-active" type="button" data-page="overview" onclick="switchDashboardPage('overview')"><span>Overview</span></button>
+          <button class="side-item" type="button" data-page="family" onclick="switchDashboardPage('family')"><span>Family members</span></button>
 
           <button class="side-item" type="button" onclick="toggleSideSection('us')">
             <span class="flex items-center gap-1">
@@ -485,12 +275,8 @@
           </div>
 
           <div class="pt-4 mt-2 border-t border-slate-200/70 space-y-1">
-            <button class="side-bottom-link" type="button" data-page="help" onclick="switchDashboardPage('help')">
-              <i class="fa-regular fa-circle-question"></i><span>Help center</span>
-            </button>
-            <button class="side-bottom-link" type="button" data-page="settings" onclick="switchDashboardPage('settings')">
-              <i class="fa-solid fa-gear"></i><span>Settings</span>
-            </button>
+            <button class="side-bottom-link" type="button" data-page="help" onclick="switchDashboardPage('help')"><i class="fa-regular fa-circle-question"></i><span>Help center</span></button>
+            <button class="side-bottom-link" type="button" data-page="settings" onclick="switchDashboardPage('settings')"><i class="fa-solid fa-gear"></i><span>Settings</span></button>
           </div>
         </nav>
       </aside>
@@ -537,53 +323,9 @@
         </div>
       </div>
     </footer>
-
   </div>
 
-  <div id="modal-overlay" class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"></div>
-
-  <div id="auth-overlay" class="hidden fixed inset-0 bg-[#111827]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 relative">
-      <button type="button" onclick="closeAuthModal && closeAuthModal()"
-        class="absolute right-3 top-3 text-slate-400 hover:text-slate-600 text-sm">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-
-      <div class="flex justify-center mb-4">
-        <div class="inline-flex bg-slate-100 rounded-full p-1">
-          <button type="button" id="auth-tab-login" onclick="openAuthModal && openAuthModal('login')"
-            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full bg-white text-slate-900 shadow-sm">
-            Log in
-          </button>
-          <button type="button" id="auth-tab-register" onclick="openAuthModal && openAuthModal('register')"
-            class="flex-1 px-4 py-1.5 text-xs font-semibold rounded-full text-slate-500 hover:text-slate-900 hover:bg-slate-100">
-            Sign up
-          </button>
-        </div>
-      </div>
-
-      <h2 id="auth-title" class="text-lg font-semibold text-slate-900 mb-1 text-center">Login to Taimic</h2>
-      <div id="auth-message" class="text-sm h-5 text-center"></div>
-
-      <label class="block text-xs font-medium text-slate-700 mt-2 mb-1">Email</label>
-      <input id="auth-email" type="email"
-        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
-        placeholder="you@gmail.com" />
-
-      <label class="block text-xs font-medium text-slate-700 mt-3 mb-1">Password</label>
-      <input id="auth-password" type="password"
-        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-[#2563eb]"
-        placeholder="••••••••" />
-
-      <button id="auth-submit" type="button"
-        class="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-semibold py-2.5 shadow-sm transition">
-        <span id="auth-submit-text">Login</span>
-        <i class="fa-solid fa-arrow-right-long text-xs"></i>
-      </button>
-    </div>
-  </div>
-
-  <!-- ✅ US Stocks: Add Holding Modal (dashboard-level so it works with partial loading) -->
+  <!-- US Stocks Add Holding Modal (dashboard-level) -->
   <div id="usStocksHoldingModal" class="fixed inset-0 z-[60] hidden" aria-hidden="true">
     <div id="usStocksHoldingBackdrop" class="absolute inset-0 bg-black/30"></div>
 
@@ -592,108 +334,102 @@
         <div class="p-5 border-b border-gray-100 flex items-center justify-between">
           <div>
             <h3 class="text-lg font-semibold text-[#002147]">Add holding</h3>
-            <p class="text-xs text-gray-500">
-              Example: AAPL, 1000 shares, cost 5.00
-            </p>
+            <p class="text-xs text-gray-500">Example: AAPL, 10 shares, cost 5.00</p>
           </div>
-          <button id="usStocksHoldingClose" type="button" class="h-9 w-9 rounded-lg hover:bg-gray-50 text-gray-500" aria-label="Close">
-            ✕
-          </button>
+          <button id="usStocksHoldingClose" type="button" class="h-9 w-9 rounded-lg hover:bg-gray-50 text-gray-500" aria-label="Close">✕</button>
         </div>
 
         <form id="usStocksHoldingForm" class="p-5 space-y-4">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <label class="block">
               <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Ticker</span>
-              <input
-                id="usStocksHoldingTicker"
-                class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2A4A]/20"
-                placeholder="AAPL"
-                autocomplete="off"
-                required
-              />
+              <input id="usStocksHoldingTicker" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2A4A]/20" placeholder="AAPL" autocomplete="off" required />
             </label>
 
             <label class="block">
               <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Quantity</span>
-              <input
-                id="usStocksHoldingQty"
-                type="number"
-                step="0.01"
-                min="0"
-                class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2A4A]/20"
-                placeholder="1000"
-                required
-              />
+              <input id="usStocksHoldingQty" type="number" step="0.01" min="0" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2A4A]/20" placeholder="10" required />
             </label>
 
             <label class="block">
               <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Cost / share</span>
-              <input
-                id="usStocksHoldingCost"
-                type="number"
-                step="0.0001"
-                min="0"
-                class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2A4A]/20"
-                placeholder="5.00"
-                required
-              />
+              <input id="usStocksHoldingCost" type="number" step="0.0001" min="0" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2A4A]/20" placeholder="5.00" required />
             </label>
           </div>
 
           <div class="flex items-center justify-end gap-2 pt-2">
-            <button
-              id="usStocksHoldingCancel"
-              type="button"
-              class="rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              class="rounded-xl bg-[#0B2A4A] px-4 py-2 text-sm font-semibold text-white hover:opacity-95"
-            >
-              Save
-            </button>
+            <button id="usStocksHoldingCancel" type="button" class="rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">Cancel</button>
+            <button type="submit" class="rounded-xl bg-[#0B2A4A] px-4 py-2 text-sm font-semibold text-white hover:opacity-95">Save</button>
           </div>
 
-          <p class="text-[11px] text-gray-400">
-            Prices / market value / P&amp;L will auto-update from TwelveData via Cloudflare.
-          </p>
+          <p class="text-[11px] text-gray-400">Prices / market value / P&L auto-update from TwelveData via Cloudflare.</p>
         </form>
       </div>
     </div>
   </div>
 
   <div id="usStocksHoldingToast" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[70] hidden">
-    <div class="rounded-full bg-[#0B2A4A] text-white text-sm px-4 py-2 shadow-lg">
-      Saved. Updating quotes…
-    </div>
+    <div class="rounded-full bg-[#0B2A4A] text-white text-sm px-4 py-2 shadow-lg">Saved.</div>
   </div>
 
   <script src="main.js"></script>
-  <!-- ✅ REMOVED: include-partials.js（避免跟你自己的 loader 打架 / 覆蓋） -->
 
   <script>
     (function () {
-      // =========================
-      // ✅ Quotes endpoint (TwelveData via Cloudflare Worker)
-      // If you later route this under taimic.tech/api/quotes, change this to "/api/quotes"
-      // =========================
+      // ✅ You already use full workers.dev URL (no need to route under taimic.tech)
       const QUOTES_API_BASE = "https://taimic-quotes.amy20060226.workers.dev";
 
-      // =========================
-      // Mobile right drawer
-      // =========================
+      const US_STOCKS_STORAGE_KEY = "taimic_us_stocks_holdings_v1";
+      const $ = (id) => document.getElementById(id);
+
+      function withBust(url) {
+        const sep = url.includes('?') ? '&' : '?';
+        return `${url}${sep}t=${Date.now()}`;
+      }
+
+      function fmtUsd(n) {
+        const x = Number(n);
+        if (!Number.isFinite(x)) return "—";
+        return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(x);
+      }
+
+      function fmtNum(n) {
+        const x = Number(n);
+        if (!Number.isFinite(x)) return "0.00";
+        return x.toFixed(2);
+      }
+
+      function fmtPct(x) {
+        const v = x * 100;
+        return `${v >= 0 ? "+" : ""}${v.toFixed(2)}%`;
+      }
+
+      function safeUpper(s) {
+        return String(s || "").trim().toUpperCase();
+      }
+
+      function genId() {
+        if (window.crypto && typeof crypto.randomUUID === "function") return crypto.randomUUID();
+        return "id_" + Math.random().toString(16).slice(2) + "_" + Date.now();
+      }
+
+      function loadHoldings() {
+        try { return JSON.parse(localStorage.getItem(US_STOCKS_STORAGE_KEY) || "[]"); }
+        catch { return []; }
+      }
+
+      function saveHoldings(list) {
+        localStorage.setItem(US_STOCKS_STORAGE_KEY, JSON.stringify(list));
+      }
+
+      // --------------------------
+      // Mobile menu
+      // --------------------------
       function setupMobileMenu() {
         const toggle = document.getElementById('sidebar-toggle-mobile');
         const overlay = document.getElementById('mobile-menu');
         const panel = document.getElementById('mobile-menu-panel');
-
-        if (!toggle || !overlay || !panel) {
-          console.warn('Mobile menu elements missing', { toggle, overlay, panel });
-          return;
-        }
+        if (!toggle || !overlay || !panel) return;
 
         let prevBodyOverflow = '';
 
@@ -701,29 +437,23 @@
           prevBodyOverflow = document.body.style.overflow;
           document.body.style.overflow = 'hidden';
         }
-
         function unlockScroll() {
           document.body.style.overflow = prevBodyOverflow || '';
         }
-
         function openMenu() {
           overlay.classList.remove('hidden');
           lockScroll();
-          panel.offsetHeight; // reflow
+          panel.offsetHeight;
           panel.classList.remove('translate-x-full');
         }
-
         function closeMenu() {
           panel.classList.add('translate-x-full');
-
-          const transitionHandler = () => {
+          panel.addEventListener('transitionend', () => {
             if (panel.classList.contains('translate-x-full')) {
               overlay.classList.add('hidden');
               unlockScroll();
             }
-          };
-
-          panel.addEventListener('transitionend', transitionHandler, { once: true });
+          }, { once: true });
         }
 
         toggle.addEventListener('click', (e) => {
@@ -739,27 +469,18 @@
         window.__closeMobileMenu = closeMenu;
       }
 
-      // Mobile navigation
       window.mobileNavigate = function (pageKey) {
         switchDashboardPage(pageKey);
         if (window.__closeMobileMenu) window.__closeMobileMenu();
-        else {
-          const overlay = document.getElementById('mobile-menu');
-          if (overlay) overlay.classList.add('hidden');
-        }
       };
 
-      // Desktop sidebar collapse
       function setupDesktopSidebarToggle() {
         const btn = document.getElementById('sidebar-toggle-desktop');
         const sidebar = document.getElementById('sidebar');
         if (!btn || !sidebar) return;
-        btn.addEventListener('click', () => {
-          sidebar.classList.toggle('sidebar-collapsed');
-        });
+        btn.addEventListener('click', () => sidebar.classList.toggle('sidebar-collapsed'));
       }
 
-      // Left US/TW section expand/collapse
       window.toggleSideSection = function (key) {
         const body = document.getElementById('side-' + key + '-children');
         const chevron = document.getElementById('side-' + key + '-chevron');
@@ -776,344 +497,9 @@
         chevron.classList.add('rotate-90');
       }
 
-      // ✅ Always bust cache when loading partials
-      function withBust(url) {
-        const sep = url.includes('?') ? '&' : '?';
-        return `${url}${sep}t=${Date.now()}`;
-      }
-
-      // =========================
-      // ✅ US Stocks: Add Holding + Quotes refresh (dashboard-level, works with partial loading)
-      // =========================
-      const US_STOCKS_STORAGE_KEY = "taimic_us_stocks_holdings_v1";
-
-      function genId() {
-        if (window.crypto && typeof crypto.randomUUID === "function") return crypto.randomUUID();
-        return "id_" + Math.random().toString(16).slice(2) + "_" + Date.now();
-      }
-
-      function safeUpper(s) {
-        return String(s || "").trim().toUpperCase();
-      }
-
-      function loadHoldings() {
-        try { return JSON.parse(localStorage.getItem(US_STOCKS_STORAGE_KEY) || "[]"); }
-        catch { return []; }
-      }
-
-      function saveHoldings(list) {
-        localStorage.setItem(US_STOCKS_STORAGE_KEY, JSON.stringify(list));
-      }
-
-      function fmtNum(n) {
-        const x = Number(n);
-        if (!Number.isFinite(x)) return "0.00";
-        return x.toFixed(2);
-      }
-
-      function fmtUsd(n) {
-        const x = Number(n);
-        if (!Number.isFinite(x)) return "$0.00";
-        return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(x);
-      }
-
-      function fmtPct(x) {
-        const v = x * 100;
-        return `${v >= 0 ? "+" : ""}${v.toFixed(2)}%`;
-      }
-
-      const UsStocksUI = (function () {
-        const ids = {
-          modal: "usStocksHoldingModal",
-          backdrop: "usStocksHoldingBackdrop",
-          close: "usStocksHoldingClose",
-          cancel: "usStocksHoldingCancel",
-          form: "usStocksHoldingForm",
-          ticker: "usStocksHoldingTicker",
-          qty: "usStocksHoldingQty",
-          cost: "usStocksHoldingCost",
-          toast: "usStocksHoldingToast"
-        };
-
-        let prevBodyOverflow = "";
-
-        function $(id) { return document.getElementById(id); }
-
-        function open() {
-          const modal = $(ids.modal);
-          if (!modal) return;
-          modal.classList.remove("hidden");
-          modal.setAttribute("aria-hidden", "false");
-          prevBodyOverflow = document.body.style.overflow;
-          document.body.style.overflow = "hidden";
-          $(ids.ticker)?.focus();
-        }
-
-        function close() {
-          const modal = $(ids.modal);
-          if (!modal) return;
-          modal.classList.add("hidden");
-          modal.setAttribute("aria-hidden", "true");
-          document.body.style.overflow = prevBodyOverflow || "";
-          $(ids.form)?.reset();
-        }
-
-        function toast(text) {
-          const t = $(ids.toast);
-          if (!t) return;
-          const inner = t.querySelector("div");
-          if (inner && typeof text === "string") inner.textContent = text;
-          t.classList.remove("hidden");
-          setTimeout(() => t.classList.add("hidden"), 1400);
-        }
-
-        function ensureTbody() {
-          const page = document.getElementById("page-us-stocks");
-          if (!page) return null;
-
-          let tbody = page.querySelector("#usHoldingsTbody");
-          if (tbody) return tbody;
-
-          tbody = page.querySelector("table tbody");
-          if (tbody) tbody.id = "usHoldingsTbody";
-          return tbody || null;
-        }
-
-        function rowExists(tbody, holdingId) {
-          if (!tbody) return false;
-          return !!tbody.querySelector(`[data-holding-id="${holdingId}"]`);
-        }
-
-        function prependPendingRow(holding) {
-          const tbody = ensureTbody();
-          if (!tbody) return;
-          if (rowExists(tbody, holding.id)) return;
-
-          const qty = Number(holding.quantity || 0);
-          const cost = Number(holding.costBasis || 0);
-
-          const tr = document.createElement("tr");
-          tr.className = "hover:bg-[#F9FAFB] transition-colors";
-          tr.setAttribute("data-holding-id", holding.id);
-
-          tr.innerHTML = `
-            <td class="py-4 px-6">
-              <div class="flex flex-col">
-                <span class="text-[13px] font-semibold text-[#002147]">${holding.ticker}</span>
-                <span class="text-[11px] text-[#6B7280]">${holding.name || "—"}</span>
-              </div>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#002147]">${fmtNum(qty)}</span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-gray-400">—</span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-[#6B7280]">${fmtUsd(cost)}</span>
-            </td>
-            <td class="py-4 px-4 align-top">
-              <span class="font-mono tabular-nums text-gray-400">—</span>
-            </td>
-            <td class="py-4 px-6 align-top text-right">
-              <span class="font-mono tabular-nums text-[13px] font-semibold text-gray-400">—</span>
-            </td>
-          `;
-
-          tbody.prepend(tr);
-        }
-
-        function hydrateFromStorage() {
-          const tbody = ensureTbody();
-          if (!tbody) return;
-
-          const holdings = loadHoldings();
-          if (!holdings.length) return;
-
-          const ordered = holdings
-            .slice()
-            .sort((a, b) => (a.createdAt || "").localeCompare(b.createdAt || ""))
-            .reverse();
-
-          ordered.forEach((h) => prependPendingRow(h));
-        }
-
-        function bindModalEventsOnce() {
-          const backdrop = $(ids.backdrop);
-          const closeBtn = $(ids.close);
-          const cancelBtn = $(ids.cancel);
-          const form = $(ids.form);
-
-          if (backdrop) backdrop.addEventListener("click", close);
-          if (closeBtn) closeBtn.addEventListener("click", close);
-          if (cancelBtn) cancelBtn.addEventListener("click", close);
-
-          document.addEventListener("keydown", (e) => {
-            const modal = $(ids.modal);
-            if (!modal || modal.classList.contains("hidden")) return;
-            if (e.key === "Escape") close();
-          });
-
-          if (form) {
-            form.addEventListener("submit", async (e) => {
-              e.preventDefault();
-
-              const ticker = safeUpper($(ids.ticker)?.value);
-              const quantity = Number($(ids.qty)?.value);
-              const costBasis = Number($(ids.cost)?.value);
-
-              if (!ticker) return;
-              if (!Number.isFinite(quantity) || quantity <= 0) return;
-              if (!Number.isFinite(costBasis) || costBasis < 0) return;
-
-              const holding = {
-                id: genId(),
-                ticker,
-                name: "",
-                quantity,
-                costBasis,
-                createdAt: new Date().toISOString()
-              };
-
-              const list = loadHoldings();
-              list.push(holding);
-              saveHoldings(list);
-
-              close();
-              prependPendingRow(holding);
-              toast("Saved. Updating quotes…");
-
-              // ✅ after adding, refresh quotes and fill Price/MV/P&L
-              await refreshUsStocksQuotesAndUpdate();
-            });
-          }
-        }
-
-        return {
-          open,
-          close,
-          toast,
-          hydrateFromStorage,
-          bindModalEventsOnce,
-          ensureTbody
-        };
-      })();
-
-      // Event delegation: scripts inside partial may not run, so dashboard listens globally
-      function setupUsStocksDelegation() {
-        document.addEventListener("click", (e) => {
-          const btn = e.target.closest("#btnAddHolding");
-          if (!btn) return;
-
-          // only if the button sits inside the US stocks page container
-          const inUsStocks = btn.closest("#page-us-stocks");
-          if (!inUsStocks) return;
-
-          UsStocksUI.open();
-        });
-      }
-
-      async function refreshUsStocksQuotesAndUpdate() {
-        const page = document.getElementById("page-us-stocks");
-        if (!page || page.classList.contains("hidden")) return;
-
-        const tbody = page.querySelector("#usHoldingsTbody") || page.querySelector("table tbody");
-        if (!tbody) return;
-
-        const holdings = loadHoldings();
-        if (!holdings.length) return;
-
-        const symbols = [...new Set(holdings.map(h => safeUpper(h.ticker)).filter(Boolean))];
-        if (!symbols.length) return;
-
-        const endpoint = `${QUOTES_API_BASE}/api/quotes?symbols=${encodeURIComponent(symbols.join(","))}&t=${Date.now()}`;
-
-        let quotes = {};
-        try {
-          const res = await fetch(endpoint, { cache: "no-store" });
-          quotes = await res.json();
-        } catch (err) {
-          console.warn("[Quotes] fetch failed", err);
-          UsStocksUI.toast("Quotes fetch failed.");
-          return;
-        }
-
-        // Update only the rows we inserted (data-holding-id)
-        holdings.forEach((h) => {
-          const tr = tbody.querySelector(`[data-holding-id="${h.id}"]`);
-          if (!tr) return;
-
-          const sym = safeUpper(h.ticker);
-          const q = quotes[sym] || {};
-          const last = (q.price == null ? null : Number(q.price));
-          const qty = Number(h.quantity || 0);
-          const cost = Number(h.costBasis || 0);
-
-          const mv = last == null ? null : last * qty;
-          const costTotal = qty * cost;
-          const gain = (last == null ? null : mv - costTotal);
-          const ret = (last == null || costTotal <= 0) ? null : gain / costTotal;
-
-          const tds = tr.querySelectorAll("td");
-          if (tds.length < 6) return;
-
-          // Price cell
-          const priceSpan = tds[2].querySelector("span") || tds[2];
-          if (last == null) {
-            priceSpan.className = "font-mono tabular-nums text-gray-400";
-            priceSpan.textContent = "—";
-          } else {
-            priceSpan.className = "font-mono tabular-nums text-[#002147]";
-            priceSpan.textContent = fmtUsd(last);
-          }
-
-          // Gain cell (+ ret)
-          const gainTd = tds[4];
-          let mainGainSpan = gainTd.querySelector("span") || gainTd;
-
-          // remove old ret line
-          const oldRet = gainTd.querySelector(".taimic-ret");
-          if (oldRet) oldRet.remove();
-
-          if (gain == null) {
-            mainGainSpan.className = "font-mono tabular-nums text-gray-400";
-            mainGainSpan.textContent = "—";
-          } else {
-            const good = gain >= 0;
-            mainGainSpan.className = `font-mono tabular-nums ${good ? "text-[#005F48]" : "text-[#B91C1C]"}`;
-            mainGainSpan.textContent = `${good ? "+" : "−"}${fmtUsd(Math.abs(gain))}`;
-
-            if (ret != null) {
-              const retDiv = document.createElement("div");
-              retDiv.className = `taimic-ret mt-1 text-[11px] ${good ? "text-[#005F48]" : "text-[#B91C1C]"}`;
-              retDiv.textContent = fmtPct(ret);
-              gainTd.appendChild(retDiv);
-            }
-          }
-
-          // Market value cell
-          const mvSpan = tds[5].querySelector("span") || tds[5];
-          if (mv == null) {
-            mvSpan.className = "font-mono tabular-nums text-[13px] font-semibold text-gray-400";
-            mvSpan.textContent = "—";
-          } else {
-            mvSpan.className = "font-mono tabular-nums text-[13px] font-semibold text-[#002147]";
-            mvSpan.textContent = fmtUsd(mv);
-          }
-        });
-
-        UsStocksUI.toast("Quotes updated.");
-      }
-
-      function afterPartialLoad(pageKey, container) {
-        if (pageKey === "us-stocks") {
-          UsStocksUI.ensureTbody();
-          UsStocksUI.hydrateFromStorage();
-          // Fill prices for inserted rows
-          refreshUsStocksQuotesAndUpdate();
-        }
-      }
-
+      // --------------------------
+      // Partial loader
+      // --------------------------
       function loadPartialAlways(container, pageKey) {
         if (!container) return;
         const url = container.getAttribute('data-include');
@@ -1140,12 +526,308 @@
           });
       }
 
-      // Switch dashboard page
+      // --------------------------
+      // US Stocks modal
+      // --------------------------
+      const UsStocksModal = (function () {
+        let prevBodyOverflow = "";
+
+        function open() {
+          const modal = $("usStocksHoldingModal");
+          if (!modal) return;
+          modal.classList.remove("hidden");
+          modal.setAttribute("aria-hidden", "false");
+          prevBodyOverflow = document.body.style.overflow;
+          document.body.style.overflow = "hidden";
+          $("usStocksHoldingTicker")?.focus();
+        }
+
+        function close() {
+          const modal = $("usStocksHoldingModal");
+          if (!modal) return;
+          modal.classList.add("hidden");
+          modal.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = prevBodyOverflow || "";
+          $("usStocksHoldingForm")?.reset();
+        }
+
+        function toast(msg) {
+          const t = $("usStocksHoldingToast");
+          if (!t) return;
+          const inner = t.querySelector("div");
+          if (inner && msg) inner.textContent = msg;
+          t.classList.remove("hidden");
+          setTimeout(() => t.classList.add("hidden"), 1400);
+        }
+
+        function bindOnce() {
+          $("usStocksHoldingBackdrop")?.addEventListener("click", close);
+          $("usStocksHoldingClose")?.addEventListener("click", close);
+          $("usStocksHoldingCancel")?.addEventListener("click", close);
+
+          document.addEventListener("keydown", (e) => {
+            const modal = $("usStocksHoldingModal");
+            if (!modal || modal.classList.contains("hidden")) return;
+            if (e.key === "Escape") close();
+          });
+
+          $("usStocksHoldingForm")?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const ticker = safeUpper($("usStocksHoldingTicker")?.value);
+            const quantity = Number($("usStocksHoldingQty")?.value);
+            const costBasis = Number($("usStocksHoldingCost")?.value);
+
+            if (!ticker) return;
+            if (!Number.isFinite(quantity) || quantity <= 0) return;
+            if (!Number.isFinite(costBasis) || costBasis < 0) return;
+
+            const holding = {
+              id: genId(),
+              ticker,
+              name: "",
+              quantity,
+              costBasis,
+              createdAt: new Date().toISOString()
+            };
+
+            const list = loadHoldings();
+            list.push(holding);
+            saveHoldings(list);
+
+            close();
+            toast("Saved. Updating…");
+
+            // Re-render + refresh quotes
+            await refreshUsStocksQuotesAndRender();
+          });
+        }
+
+        return { open, close, toast, bindOnce };
+      })();
+
+      // --------------------------
+      // US Stocks render/update/delete
+      // --------------------------
+      async function fetchQuotes(symbols) {
+        const endpoint = `${QUOTES_API_BASE}/api/quotes?symbols=${encodeURIComponent(symbols.join(","))}&t=${Date.now()}`;
+        const res = await fetch(endpoint, { cache: "no-store" });
+        return await res.json();
+      }
+
+      function ensureTbody() {
+        const page = document.getElementById("page-us-stocks");
+        if (!page) return null;
+
+        let tbody = page.querySelector("#usHoldingsTbody");
+        if (tbody) return tbody;
+
+        tbody = page.querySelector("table tbody");
+        if (tbody) tbody.id = "usHoldingsTbody";
+        return tbody || null;
+      }
+
+      function renderEmptyState(tbody) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="6" class="px-6 py-8 text-sm text-gray-400">
+              No holdings yet. Click <span class="font-semibold text-[#0B2A4A]">Add Holding</span> to get started.
+            </td>
+          </tr>
+        `;
+      }
+
+      function updateHero(enriched) {
+        const page = document.getElementById("page-us-stocks");
+        if (!page) return;
+
+        const totalMV = enriched.reduce((s, h) => s + (Number.isFinite(h.mv) ? h.mv : 0), 0);
+        const totalCost = enriched.reduce((s, h) => s + (Number.isFinite(h.costTotal) ? h.costTotal : 0), 0);
+        const totalGain = totalMV - totalCost;
+        const pct = totalCost > 0 ? (totalGain / totalCost) : null;
+
+        const totalEl = page.querySelector("#usStocksTotalEquity");
+        if (totalEl) totalEl.textContent = fmtUsd(totalMV);
+
+        const gainValEl = page.querySelector("#usStocksUnrealizedGainVal");
+        const gainPctEl = page.querySelector("#usStocksUnrealizedGainPct");
+
+        if (gainValEl) {
+          const sign = totalGain >= 0 ? "+" : "−";
+          gainValEl.textContent = `${sign}${fmtUsd(Math.abs(totalGain))}`;
+        }
+        if (gainPctEl) {
+          gainPctEl.textContent = pct == null ? "(—)" : `(${fmtPct(pct)})`;
+        }
+
+        const asOf = enriched.find(x => x.asOf)?.asOf;
+        const asOfEl = page.querySelector("#usStocksAsOf");
+        if (asOfEl) {
+          asOfEl.textContent = asOf ? new Date(asOf).toLocaleString() : "—";
+        }
+      }
+
+      function renderTable(enriched) {
+        const page = document.getElementById("page-us-stocks");
+        if (!page || page.classList.contains("hidden")) return;
+
+        const tbody = ensureTbody();
+        if (!tbody) return;
+
+        if (!enriched.length) {
+          renderEmptyState(tbody);
+          updateHero([]);
+          return;
+        }
+
+        tbody.innerHTML = enriched.map(h => {
+          const gain = h.gain;
+          const gainOk = Number.isFinite(gain);
+          const good = gainOk ? gain >= 0 : null;
+
+          const gainColor = !gainOk ? "text-gray-400" : (good ? "text-[#005F48]" : "text-[#B91C1C]");
+          const mvText = Number.isFinite(h.mv) ? fmtUsd(h.mv) : "—";
+          const priceText = Number.isFinite(h.last) ? fmtUsd(h.last) : "—";
+
+          const gainText = !gainOk ? "—" : `${good ? "+" : "−"}${fmtUsd(Math.abs(gain))}`;
+          const pctText = (h.ret == null) ? "" : fmtPct(h.ret);
+
+          return `
+            <tr class="hover:bg-[#F9FAFB] transition-colors" data-holding-id="${h.id}">
+              <td class="py-4 px-6">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="flex flex-col">
+                    <span class="text-[13px] font-semibold text-[#002147]">${h.sym}</span>
+                    <span class="text-[11px] text-[#6B7280]">${h.name || "—"}</span>
+                  </div>
+                  <button
+                    type="button"
+                    class="btnDeleteHolding text-gray-300 hover:text-rose-600 transition-colors"
+                    title="Delete holding"
+                    data-holding-id="${h.id}"
+                  >
+                    <i class="fa-solid fa-trash-can text-[12px]"></i>
+                  </button>
+                </div>
+              </td>
+
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#002147]">${fmtNum(h.quantity)}</span>
+              </td>
+
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums ${Number.isFinite(h.last) ? "text-[#002147]" : "text-gray-400"}">${priceText}</span>
+              </td>
+
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums text-[#6B7280]">${fmtUsd(h.costBasis)}</span>
+              </td>
+
+              <td class="py-4 px-4 align-top">
+                <span class="font-mono tabular-nums ${gainColor}">${gainText}</span>
+                ${pctText ? `<div class="mt-1 text-[11px] ${gainColor}">${pctText}</div>` : ""}
+              </td>
+
+              <td class="py-4 px-6 align-top text-right">
+                <span class="font-mono tabular-nums text-[13px] font-semibold ${Number.isFinite(h.mv) ? "text-[#002147]" : "text-gray-400"}">${mvText}</span>
+              </td>
+            </tr>
+          `;
+        }).join("");
+
+        updateHero(enriched);
+      }
+
+      async function refreshUsStocksQuotesAndRender() {
+        const page = document.getElementById("page-us-stocks");
+        if (!page || page.classList.contains("hidden")) return;
+
+        const holdings = loadHoldings();
+
+        if (!holdings.length) {
+          const tbody = ensureTbody();
+          if (tbody) renderEmptyState(tbody);
+          updateHero([]);
+          return;
+        }
+
+        const symbols = [...new Set(holdings.map(h => safeUpper(h.ticker)).filter(Boolean))];
+        let quotes = {};
+        try {
+          quotes = await fetchQuotes(symbols);
+        } catch (e) {
+          console.warn("[Quotes] failed", e);
+          // render without prices
+          quotes = {};
+        }
+
+        const enriched = holdings.map(h => {
+          const sym = safeUpper(h.ticker);
+          const q = quotes[sym] || {};
+          const last = (q.price == null ? null : Number(q.price));
+          const qty = Number(h.quantity || 0);
+          const costBasis = Number(h.costBasis || 0);
+
+          const mv = (last == null ? null : last * qty);
+          const costTotal = qty * costBasis;
+          const gain = (mv == null ? null : mv - costTotal);
+          const ret = (gain == null || costTotal <= 0) ? null : (gain / costTotal);
+
+          return {
+            ...h,
+            sym,
+            last,
+            mv,
+            costTotal,
+            gain,
+            ret,
+            asOf: q.asOf || ""
+          };
+        });
+
+        // newest first
+        enriched.sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""));
+
+        renderTable(enriched);
+      }
+
+      function setupUsStocksDelegation() {
+        // Open modal
+        document.addEventListener("click", (e) => {
+          const btn = e.target.closest("#btnAddHolding");
+          if (btn && btn.closest("#page-us-stocks")) {
+            UsStocksModal.open();
+            return;
+          }
+
+          // Delete holding
+          const del = e.target.closest(".btnDeleteHolding");
+          if (del && del.closest("#page-us-stocks")) {
+            const id = del.getAttribute("data-holding-id");
+            if (!id) return;
+
+            const list = loadHoldings();
+            const next = list.filter(h => h.id !== id);
+            saveHoldings(next);
+
+            refreshUsStocksQuotesAndRender();
+          }
+        });
+      }
+
+      function afterPartialLoad(pageKey) {
+        if (pageKey === "us-stocks") {
+          // table + totals
+          refreshUsStocksQuotesAndRender();
+        }
+      }
+
+      // --------------------------
+      // Page switching
+      // --------------------------
       window.switchDashboardPage = function (pageKey) {
         let target = document.getElementById('page-' + pageKey);
-
         if (!target) {
-          console.warn('[Dashboard] Page not found:', pageKey, '→ fallback to overview');
           pageKey = 'overview';
           target = document.getElementById('page-overview');
         }
@@ -1153,22 +835,16 @@
         if (pageKey.startsWith('us-')) ensureSideSectionOpen('us');
         if (pageKey.startsWith('tw-')) ensureSideSectionOpen('tw');
 
-        const pages = document.querySelectorAll('.dash-page');
-        pages.forEach((page) => page.classList.add('hidden'));
+        document.querySelectorAll('.dash-page').forEach((p) => p.classList.add('hidden'));
 
         loadPartialAlways(target, pageKey);
-
         target.classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'auto' });
 
-        // Sidebar active state
-        const navButtons = document.querySelectorAll('[data-page]');
-        navButtons.forEach((btn) => btn.classList.remove('side-item-active'));
-        const activeButtons = document.querySelectorAll('[data-page="' + pageKey + '"]');
-        activeButtons.forEach((btn) => btn.classList.add('side-item-active'));
+        document.querySelectorAll('[data-page]').forEach((btn) => btn.classList.remove('side-item-active'));
+        document.querySelectorAll('[data-page="' + pageKey + '"]').forEach((btn) => btn.classList.add('side-item-active'));
       };
 
-      // Avatar menu
       function setupUserMenu() {
         const btn = document.getElementById('dash-user-toggle');
         const menu = document.getElementById('dash-user-menu');
@@ -1181,9 +857,7 @@
 
         document.addEventListener('click', (e) => {
           if (menu.classList.contains('hidden')) return;
-          if (!btn.contains(e.target) && !menu.contains(e.target)) {
-            menu.classList.add('hidden');
-          }
+          if (!btn.contains(e.target) && !menu.contains(e.target)) menu.classList.add('hidden');
         });
       }
 
@@ -1192,8 +866,8 @@
         setupDesktopSidebarToggle();
         setupUserMenu();
 
-        // ✅ US Stocks Add Holding wiring (once)
-        UsStocksUI.bindModalEventsOnce();
+        // ✅ US Stocks: modal + delete + render + quotes
+        UsStocksModal.bindOnce();
         setupUsStocksDelegation();
 
         switchDashboardPage('overview');
