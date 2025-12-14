@@ -698,7 +698,7 @@
                 <div class="flex items-start justify-between gap-3">
                   <div class="flex flex-col">
                     <span class="text-[13px] font-semibold text-[#002147]">${h.sym}</span>
-                    <span class="text-[11px] text-[#6B7280]">${h.name || "—"}</span>
+                    <span class="text-[11px] text-[#6B7280]">${h.name ? h.name : ""}</span>
                   </div>
                   <button
                     type="button"
