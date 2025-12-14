@@ -26,14 +26,17 @@
           </p>
 
           <div class="mt-2 flex flex-wrap items-center gap-3">
+            <!-- ✅ UPDATED: bindable net worth value -->
             <div
+              id="overviewNetWorth"
               class="ov-privacy text-[40px] md:text-[56px] leading-none font-semibold tracking-tight text-[#002147] font-serif"
             >
-              $3,420,500.00
+              —
             </div>
 
+            <!-- ✅ UPDATED: bindable FX note -->
             <span class="inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold border bg-amber-50 border-amber-200 text-amber-700">
-              <span class="ov-privacy font-serif tracking-tight">📉 -$1,200 due to TWD drop</span>
+              <span id="overviewFxNote" class="ov-privacy font-serif tracking-tight">—</span>
             </span>
           </div>
 
@@ -212,8 +215,13 @@
 
             <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
               <p class="text-[10px] tracking-[0.24em] uppercase text-slate-400">Total</p>
-              <div class="ov-privacy text-[18px] md:text-[20px] font-semibold text-[#002147] font-serif tracking-tight">
-                $3,420,500.00
+
+              <!-- ✅ UPDATED: bindable net worth (same as hero) -->
+              <div
+                id="overviewNetWorthDonut"
+                class="ov-privacy text-[18px] md:text-[20px] font-semibold text-[#002147] font-serif tracking-tight"
+              >
+                —
               </div>
             </div>
           </div>
@@ -233,7 +241,14 @@
                 <span class="w-2.5 h-2.5 rounded-full" style="background:#1F6F43;"></span>
                 <span class="text-slate-700">Stocks</span>
               </div>
-              <span class="ov-privacy text-slate-900 font-semibold font-serif tracking-tight">$980,000</span>
+
+              <!-- ✅ UPDATED: bindable stocks MV -->
+              <span
+                id="overviewStocksMV"
+                class="ov-privacy text-slate-900 font-semibold font-serif tracking-tight"
+              >
+                —
+              </span>
             </div>
 
             <div class="flex items-center justify-between gap-3 text-sm">
