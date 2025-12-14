@@ -62,15 +62,18 @@
         </div>
 
         <div class="h-40 rounded-lg bg-[#F5F7FA] border border-[#E5E7EB] px-3 py-2 flex items-center">
-          <svg viewBox="0 0 260 120" class="w-full h-full" aria-hidden="true">
+          <svg id="usStocksChart" viewBox="0 0 260 120" class="w-full h-full" aria-hidden="true">
             <defs>
               <linearGradient id="usEquityArea" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stop-color="#005F48" stop-opacity="0.35" />
                 <stop offset="100%" stop-color="#005F48" stop-opacity="0.02" />
               </linearGradient>
             </defs>
+
             <path d="M0 95 H260" stroke="#D1D5DB" stroke-width="1" fill="none" />
+
             <path
+              id="usStocksArea"
               d="M0 95
                  C 30 92, 50 88, 70 82
                  C 90 76, 110 70, 130 66
@@ -80,7 +83,9 @@
               fill="url(#usEquityArea)"
               stroke="none"
             />
+
             <path
+              id="usStocksLine"
               d="M0 95
                  C 30 92, 50 88, 70 82
                  C 90 76, 110 70, 130 66
@@ -92,7 +97,8 @@
               stroke-linecap="round"
               stroke-linejoin="round"
             />
-            <circle cx="260" cy="38" r="4" fill="#005F48" />
+
+            <circle id="usStocksDot" cx="260" cy="38" r="4" fill="#005F48" />
           </svg>
         </div>
       </div>
@@ -177,7 +183,6 @@
           </tr>
         </thead>
 
-        <!-- ✅ no more hardcoded rows -->
         <tbody id="usHoldingsTbody" class="divide-y divide-gray-100">
           <tr>
             <td colspan="6" class="px-6 py-8 text-sm text-gray-400">
