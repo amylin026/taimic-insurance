@@ -1,40 +1,424 @@
 <!-- pages/tax-packet.html -->
-<div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
-  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-    <div>
-      <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">Annual compliance</p>
-      <h1 class="text-[28px] md:text-[32px] font-semibold tracking-tight text-[#002147] font-serif">
-        Household Tax Packet
-      </h1>
-      <p class="mt-2 text-sm text-[#4B5563]">
-        One consolidated handoff bundle (TW + US) you can send to your CPA/EA.
-      </p>
+<div class="min-h-screen bg-[#F5F7FA]">
+  <div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10 space-y-6">
+
+    <!-- Sticky Missing Items -->
+    <div class="sticky top-4 z-20">
+      <div class="rounded-2xl border border-rose-200 bg-rose-50 shadow-sm p-4">
+        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-triangle-exclamation text-rose-700"></i>
+              <p class="text-sm font-semibold text-rose-900">
+                Missing items for accurate filing
+              </p>
+              <span class="inline-flex items-center rounded-full border border-rose-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-rose-900">
+                <span class="tracking-[0.18em] uppercase">Checklist</span>
+              </span>
+            </div>
+
+            <!-- ✅ keep this id for your JS renderer -->
+            <ul id="taxPacketMissingList" class="mt-3 list-disc pl-5 text-sm text-rose-900/80 space-y-1">
+              <!-- JS will populate; fallback demo lines (safe to leave empty) -->
+              <li>Cathay Bank (Taiwan) - December statement missing.</li>
+              <li>E.Sun Bank - June statement missing.</li>
+            </ul>
+          </div>
+
+          <div class="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              class="rounded-xl bg-[#0B2A4A] px-4 py-2 text-sm font-semibold text-white hover:opacity-95"
+              onclick="alert('Upload flow (demo)')"
+            >
+              Upload now
+            </button>
+
+            <button
+              type="button"
+              id="btnClearInsurance"
+              class="rounded-xl border border-rose-200 bg-white px-4 py-2 text-sm font-semibold text-rose-900 hover:bg-rose-100/40"
+              title="Clear demo data"
+            >
+              Clear demo data
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <button type="button" onclick="window.print()"
-      class="rounded-xl border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-[#0B2A4A] hover:bg-gray-50">
-      Print / Save as PDF
-    </button>
-  </div>
+    <!-- Control Header -->
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+      <div>
+        <p class="text-[11px] font-semibold tracking-[0.24em] text-slate-400 uppercase">Deliverable</p>
 
-  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-    <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">Section A</p>
-    <h2 class="mt-1 text-xl font-semibold text-[#002147]">US Insurance</h2>
-    <div id="taxPacketUSInsurance" class="mt-4 space-y-4"></div>
-  </div>
+        <h1 class="mt-1 text-[28px] md:text-[34px] font-semibold tracking-tight text-[#002147] font-serif">
+          Annual Tax Packet
+        </h1>
 
-  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-    <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">Section B</p>
-    <h2 class="mt-1 text-xl font-semibold text-[#002147]">Taiwan Insurance</h2>
-    <div id="taxPacketTWInsurance" class="mt-4 space-y-4"></div>
-  </div>
+        <div class="mt-3 flex flex-wrap items-center gap-2">
+          <!-- Tax Year selector -->
+          <label class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-600">
+            <i class="fa-regular fa-calendar text-slate-400"></i>
+            <span class="text-[10px] tracking-[0.22em] uppercase text-slate-400">Tax year</span>
+            <select
+              class="bg-transparent outline-none font-mono tabular-nums font-semibold text-[#002147]"
+              aria-label="Tax year"
+            >
+              <option selected>2024</option>
+              <option>2025</option>
+            </select>
+          </label>
 
-  <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-    <p class="text-[11px] font-semibold tracking-[0.24em] text-[#9CA3AF] uppercase">Checklist</p>
-    <h2 class="mt-1 text-xl font-semibold text-[#002147]">Missing info</h2>
-    <ul id="taxPacketMissingList" class="mt-3 list-disc pl-5 text-sm text-[#4B5563] space-y-1"></ul>
-    <p class="mt-3 text-[11px] text-gray-400">
-      Disclaimer: This is an organizational summary, not tax/legal advice.
+          <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs text-slate-600">
+            <i class="fa-solid fa-circle-info text-slate-400"></i>
+            <span class="text-[10px] tracking-[0.22em] uppercase text-slate-400">Source</span>
+            <span class="font-mono tabular-nums font-semibold text-[#002147]">manual input (demo)</span>
+          </span>
+
+          <span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs text-emerald-900">
+            <i class="fa-solid fa-shield-check"></i>
+            <span class="text-[10px] tracking-[0.22em] uppercase">Ready</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 rounded-xl bg-[#0B2A4A] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:opacity-95"
+          onclick="window.print()"
+        >
+          <i class="fa-solid fa-download text-[13px]"></i>
+          <span>Download Consolidated PDF</span>
+        </button>
+
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          onclick="(async()=>{const msg=`Taimic – Annual Tax Packet\\nTax Year: 2024\\n(secure link demo) https://taimic.tech/tax-packet`; try{await navigator.clipboard.writeText(msg); alert('Share message copied.');}catch(e){alert(msg);}})()"
+          title="Copy a secure link message"
+        >
+          <i class="fa-solid fa-link text-[13px] text-slate-500"></i>
+          <span>Share with CPA</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Two-Corridor Split -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+      <!-- Zone A: US Packet -->
+      <section class="rounded-3xl border border-blue-200/60 bg-blue-50/70 p-5">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <p class="text-[11px] font-semibold tracking-[0.24em] uppercase text-slate-400">Zone A · IRS focus</p>
+            <h2 class="mt-1 text-xl font-semibold text-[#002147]">🇺🇸 US Filing Data (IRS)</h2>
+            <p class="mt-2 text-sm text-slate-600">
+              Consolidated reports for US filing — built to reduce CPA back-and-forth.
+            </p>
+          </div>
+
+          <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[11px] text-slate-600">
+            <i class="fa-regular fa-file-lines text-slate-400"></i>
+            <span class="tracking-[0.16em] uppercase text-slate-400">Packet</span>
+            <span class="font-mono tabular-nums font-semibold text-[#002147]">CPA-ready</span>
+          </span>
+        </div>
+
+        <!-- Key Reports List -->
+        <div class="mt-4 space-y-3">
+          <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div class="flex items-start justify-between gap-4">
+              <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                  <i class="fa-regular fa-file-lines text-slate-400"></i>
+                  <h3 class="text-sm font-semibold text-[#002147]">FBAR / Form 114 Report</h3>
+                </div>
+                <p class="mt-2 text-sm text-slate-600">Max aggregate value per account (converted).</p>
+              </div>
+              <div class="flex flex-col items-end gap-2 shrink-0">
+                <span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-[11px] font-semibold text-emerald-900">
+                  <i class="fa-solid fa-circle-check"></i>
+                  <span class="tracking-[0.16em] uppercase">Ready</span>
+                </span>
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                  onclick="alert('Preview: FBAR (demo)')"
+                >
+                  <i class="fa-regular fa-eye"></i>
+                  Preview
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div class="flex items-start justify-between gap-4">
+              <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                  <i class="fa-regular fa-file-lines text-slate-400"></i>
+                  <h3 class="text-sm font-semibold text-[#002147]">PFIC Statement (Form 8621 Data)</h3>
+                </div>
+                <p class="mt-2 text-sm text-slate-600">
+                  Passive Foreign Investment Company analysis for Taiwan funds.
+                </p>
+              </div>
+              <div class="flex flex-col items-end gap-2 shrink-0">
+                <span class="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-[11px] font-semibold text-amber-900">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  <span class="tracking-[0.16em] uppercase">Review Needed</span>
+                </span>
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                  onclick="alert('Preview: PFIC (demo)')"
+                >
+                  <i class="fa-regular fa-eye"></i>
+                  Preview
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div class="flex items-start justify-between gap-4">
+              <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                  <i class="fa-regular fa-file-lines text-slate-400"></i>
+                  <h3 class="text-sm font-semibold text-[#002147]">Schedule B Data</h3>
+                </div>
+                <p class="mt-2 text-sm text-slate-600">Interest &amp; dividends from foreign accounts.</p>
+              </div>
+              <div class="flex flex-col items-end gap-2 shrink-0">
+                <span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-[11px] font-semibold text-emerald-900">
+                  <i class="fa-solid fa-circle-check"></i>
+                  <span class="tracking-[0.16em] uppercase">Ready</span>
+                </span>
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                  onclick="alert('Preview: Schedule B (demo)')"
+                >
+                  <i class="fa-regular fa-eye"></i>
+                  Preview
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ✅ Your dynamic aggregated output (from dashboard.js) -->
+        <div class="mt-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <div class="flex items-center justify-between gap-3">
+            <div>
+              <p class="text-[11px] font-semibold tracking-[0.24em] text-slate-400 uppercase">Auto-aggregated</p>
+              <h4 class="mt-1 text-sm font-semibold text-[#002147]">US Insurance (grouped by owner)</h4>
+            </div>
+            <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] text-slate-600">
+              <i class="fa-solid fa-layer-group text-slate-400"></i>
+              <span class="tracking-[0.16em] uppercase text-slate-400">Owners</span>
+            </span>
+          </div>
+
+          <!-- ✅ keep this id for your JS renderer -->
+          <div id="taxPacketUSInsurance" class="mt-4 space-y-4"></div>
+        </div>
+      </section>
+
+      <!-- Zone B: Taiwan Packet -->
+      <section class="rounded-3xl border border-emerald-200/60 bg-emerald-50/70 p-5">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <p class="text-[11px] font-semibold tracking-[0.24em] uppercase text-slate-400">Zone B · MOF focus</p>
+            <h2 class="mt-1 text-xl font-semibold text-[#002147]">🇹🇼 Taiwan Filing Data (MOF)</h2>
+            <p class="mt-2 text-sm text-slate-600">
+              Taiwan-side summaries (CFC/AMT) with clean, auditable outputs.
+            </p>
+          </div>
+
+          <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[11px] text-slate-600">
+            <i class="fa-regular fa-file-lines text-slate-400"></i>
+            <span class="tracking-[0.16em] uppercase text-slate-400">Packet</span>
+            <span class="font-mono tabular-nums font-semibold text-[#002147]">MOF-ready</span>
+          </span>
+        </div>
+
+        <div class="mt-4 space-y-3">
+          <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div class="flex items-start justify-between gap-4">
+              <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                  <i class="fa-regular fa-file-lines text-slate-400"></i>
+                  <h3 class="text-sm font-semibold text-[#002147]">Overseas Income (AMT)</h3>
+                </div>
+                <p class="mt-2 text-sm text-slate-600">US Income &gt; 1M TWD threshold check.</p>
+                <div class="mt-3 font-mono tabular-nums font-semibold text-[#002147]">NT$ 1,240,000</div>
+                <p class="mt-1 text-xs text-slate-500">Reportable</p>
+              </div>
+              <div class="flex flex-col items-end gap-2 shrink-0">
+                <span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-[11px] font-semibold text-emerald-900">
+                  <i class="fa-solid fa-circle-check"></i>
+                  <span class="tracking-[0.16em] uppercase">Ready</span>
+                </span>
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                  onclick="alert('Preview: AMT (demo)')"
+                >
+                  <i class="fa-regular fa-eye"></i>
+                  Preview
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div class="flex items-start justify-between gap-4">
+              <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                  <i class="fa-regular fa-file-lines text-slate-400"></i>
+                  <h3 class="text-sm font-semibold text-[#002147]">CFC (Controlled Foreign Company)</h3>
+                </div>
+                <p class="mt-2 text-sm text-slate-600">Holdings in low-tax jurisdictions.</p>
+                <div class="mt-3 font-mono tabular-nums font-semibold text-[#002147]">—</div>
+                <p class="mt-1 text-xs text-slate-500">Draft</p>
+              </div>
+              <div class="flex flex-col items-end gap-2 shrink-0">
+                <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-semibold text-slate-700">
+                  <i class="fa-regular fa-clock"></i>
+                  <span class="tracking-[0.16em] uppercase">Draft</span>
+                </span>
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                  onclick="alert('Preview: CFC (demo)')"
+                >
+                  <i class="fa-regular fa-eye"></i>
+                  Preview
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ✅ Your dynamic aggregated output (from dashboard.js) -->
+        <div class="mt-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <div class="flex items-center justify-between gap-3">
+            <div>
+              <p class="text-[11px] font-semibold tracking-[0.24em] text-slate-400 uppercase">Auto-aggregated</p>
+              <h4 class="mt-1 text-sm font-semibold text-[#002147]">Taiwan Insurance (grouped by owner)</h4>
+            </div>
+            <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] text-slate-600">
+              <i class="fa-solid fa-tag text-slate-400"></i>
+              <span class="tracking-[0.16em] uppercase text-slate-400">IRS buckets</span>
+            </span>
+          </div>
+
+          <!-- ✅ keep this id for your JS renderer -->
+          <div id="taxPacketTWInsurance" class="mt-4 space-y-4"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Evidence Locker -->
+    <div class="bg-white rounded-3xl border border-slate-200/70 shadow-sm overflow-hidden">
+      <div class="px-6 py-5 border-b border-slate-200/70 flex items-center justify-between gap-3">
+        <div>
+          <p class="text-[11px] font-semibold tracking-[0.24em] text-slate-400 uppercase">Evidence locker</p>
+          <h2 class="mt-1 text-lg font-semibold tracking-tight text-[#002147]">Supporting Documents</h2>
+        </div>
+
+        <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] text-slate-600">
+          <i class="fa-regular fa-folder-open text-slate-400"></i>
+          <span class="tracking-[0.16em] uppercase text-slate-400">Docs</span>
+          <span class="font-mono tabular-nums font-semibold text-[#002147]">3</span>
+        </span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead class="bg-slate-50">
+            <tr class="text-left text-xs text-slate-500">
+              <th class="px-6 py-3 font-medium tracking-wider uppercase">Document Name</th>
+              <th class="px-6 py-3 font-medium tracking-wider uppercase">Associated Asset</th>
+              <th class="px-6 py-3 font-medium tracking-wider uppercase">Date Uploaded</th>
+              <th class="px-6 py-3 font-medium tracking-wider uppercase text-right">Action</th>
+            </tr>
+          </thead>
+
+          <tbody class="divide-y divide-slate-200/70">
+            <tr class="hover:bg-slate-50/60 transition-colors">
+              <td class="px-6 py-4">
+                <div class="flex items-center gap-2">
+                  <i class="fa-regular fa-file-pdf text-slate-400"></i>
+                  <span class="font-medium text-slate-900">Fubon Life Policy 2024 Statement</span>
+                </div>
+              </td>
+              <td class="px-6 py-4 text-slate-700">Fubon Life - Whole Life</td>
+              <td class="px-6 py-4 font-mono tabular-nums text-slate-700">Jan 15, 2025</td>
+              <td class="px-6 py-4 text-right">
+                <button
+                  type="button"
+                  class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                  title="Download"
+                  onclick="alert('Download (demo)')"
+                >
+                  <i class="fa-solid fa-download"></i>
+                </button>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-slate-50/60 transition-colors">
+              <td class="px-6 py-4">
+                <div class="flex items-center gap-2">
+                  <i class="fa-regular fa-file-pdf text-slate-400"></i>
+                  <span class="font-medium text-slate-900">Cathay Bank (TW) - Dec Statement</span>
+                </div>
+              </td>
+              <td class="px-6 py-4 text-slate-700">Cathay Bank - Accounts</td>
+              <td class="px-6 py-4 font-mono tabular-nums text-slate-700">Dec 31, 2024</td>
+              <td class="px-6 py-4 text-right">
+                <button
+                  type="button"
+                  class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                  title="Download"
+                  onclick="alert('Download (demo)')"
+                >
+                  <i class="fa-solid fa-download"></i>
+                </button>
+              </td>
+            </tr>
+
+            <tr class="hover:bg-slate-50/60 transition-colors">
+              <td class="px-6 py-4">
+                <div class="flex items-center gap-2">
+                  <i class="fa-regular fa-file-pdf text-slate-400"></i>
+                  <span class="font-medium text-slate-900">E.Sun Bank - Jun Statement</span>
+                </div>
+              </td>
+              <td class="px-6 py-4 text-slate-700">E.Sun Bank - Accounts</td>
+              <td class="px-6 py-4 font-mono tabular-nums text-slate-700">Jun 30, 2024</td>
+              <td class="px-6 py-4 text-right">
+                <button
+                  type="button"
+                  class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                  title="Download"
+                  onclick="alert('Download (demo)')"
+                >
+                  <i class="fa-solid fa-download"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="text-[11px] text-slate-400">
+      Disclaimer: This page organizes information for filing; it is not tax/legal advice.
     </p>
   </div>
 </div>
