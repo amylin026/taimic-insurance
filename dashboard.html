@@ -310,7 +310,6 @@
         <div id="page-tw-crypto" class="dash-page hidden" data-include="pages/tw-crypto.html"></div>
         <div id="page-tw-insurance" class="dash-page hidden" data-include="pages/tw-insurance.html"></div>
 
-        <!-- ✅ NEW: Single integrated packet -->
         <div id="page-tax-packet" class="dash-page hidden" data-include="pages/tax-packet.html"></div>
 
         <div id="page-help" class="dash-page hidden" data-include="pages/help.html"></div>
@@ -380,7 +379,7 @@
     <div class="rounded-full bg-[#0B2A4A] text-white text-sm px-4 py-2 shadow-lg">Saved.</div>
   </div>
 
-  <!-- ✅ Insurance Add Policy Modal (dashboard-level) -->
+  <!-- Insurance Add Policy Modal (dashboard-level) -->
   <div id="insurancePolicyModal" class="fixed inset-0 z-[60] hidden" aria-hidden="true">
     <div id="insurancePolicyBackdrop" class="absolute inset-0 bg-black/30"></div>
 
@@ -497,20 +496,15 @@
 
   <script>
     (function () {
-      // ✅ Full workers.dev URL (no need to route under taimic.tech)
       const QUOTES_API_BASE = "https://taimic-quotes.amy20060226.workers.dev";
 
       const US_STOCKS_STORAGE_KEY = "taimic_us_stocks_holdings_v1";
       const $ = (id) => document.getElementById(id);
 
-      // ✅ Overview sample baseline (so Overview looks normal even before user adds holdings)
-      const OVERVIEW_BASE_NET_WORTH = 3420500; // sample
-      const OVERVIEW_BASE_STOCKS = 980000;     // sample "Stocks" slice in overview
+      const OVERVIEW_BASE_NET_WORTH = 3420500;
+      const OVERVIEW_BASE_STOCKS = 980000;
       const OVERVIEW_FX_NOTE_TEXT = "📉 -$1,200 due to TWD drop";
 
-      // =========================
-      // Insurance (Household) storage + packet
-      // =========================
       const INSURANCE_STORAGE_KEY = "taimic_household_insurance_v1";
 
       const FAMILY_MEMBERS = [
@@ -584,10 +578,6 @@
         return (String(a).toUpperCase() + String(b).toUpperCase()).slice(0, 2);
       }
 
-      // =========================
-      // Level-1 chart: no backend needed.
-      // Uses current totalMV to generate a classy "moving" curve.
-      // =========================
       function updateUsStocksChart(totalMV) {
         const page = document.getElementById("page-us-stocks");
         if (!page) return;
@@ -661,9 +651,6 @@
         }
       }
 
-      // --------------------------
-      // Mobile menu
-      // --------------------------
       function setupMobileMenu() {
         const toggle = document.getElementById('sidebar-toggle-mobile');
         const overlay = document.getElementById('mobile-menu');
@@ -736,9 +723,7 @@
         chevron.classList.add('rotate-90');
       }
 
-      // --------------------------
       // Partial loader (load once + anti-race)
-      // --------------------------
       const PARTIAL_TOKEN = new WeakMap();
 
       function loadPartialOnce(container, pageKey) {
@@ -746,12 +731,12 @@
         const url = container.getAttribute('data-include');
         if (!url) return;
 
-        // ✅ already loaded -> just run hooks
+        // ✅ already loaded -> render AFTER it becomes visible
         if (container.dataset.loaded === "1") {
-  // ✅ wait 1 frame so switchDashboardPage has time to unhide the target
-  requestAnimationFrame(() => afterPartialLoad(pageKey, container));
-  return;
-}
+          requestAnimationFrame(() => afterPartialLoad(pageKey, container));
+          return;
+        }
+
         const token = `${Date.now()}_${Math.random().toString(16).slice(2)}`;
         PARTIAL_TOKEN.set(container, token);
 
@@ -761,7 +746,7 @@
             return r.text();
           })
           .then((html) => {
-            if (PARTIAL_TOKEN.get(container) !== token) return; // stale response
+            if (PARTIAL_TOKEN.get(container) !== token) return;
             container.innerHTML = html;
             container.dataset.loaded = "1";
             afterPartialLoad(pageKey, container);
@@ -778,9 +763,6 @@
           });
       }
 
-      // --------------------------
-      // US Stocks modal
-      // --------------------------
       const UsStocksModal = (function () {
         let prevBodyOverflow = "";
 
@@ -857,9 +839,6 @@
         return { open, close, toast, bindOnce };
       })();
 
-      // =========================
-      // Insurance modal
-      // =========================
       const InsuranceModal = (function () {
         let prevBodyOverflow = "";
 
@@ -949,7 +928,6 @@
               const cashUsd = numFromText(document.getElementById("insuranceUsCashUsd")?.value);
               const dbUsd = numFromText(document.getElementById("insuranceDeathBenefitUsd")?.value);
               const premiumStatus = (document.getElementById("insurancePremiumStatus")?.value || "").trim();
-
               item = { ...base, cashUsd, deathBenefitUsd: dbUsd, premiumStatus };
             } else {
               const productName = (document.getElementById("insuranceProductName")?.value || "").trim();
@@ -957,7 +935,6 @@
               const cashUsd = numFromText(document.getElementById("insuranceCashUsd")?.value);
               const cashLocal = numFromText(document.getElementById("insuranceCashLocal")?.value);
               const incomeLocal = numFromText(document.getElementById("insuranceIncomeLocal")?.value);
-
               item = { ...base, productName, irsClass, cashUsd, cashLocal, incomeLocal };
             }
 
@@ -967,7 +944,6 @@
 
             close();
 
-            // refresh current view(s)
             renderUsInsuranceFromStorage();
             renderTwInsuranceFromStorage();
             renderTaxPacketFromStorage();
@@ -977,24 +953,17 @@
         return { open, close, bindOnce };
       })();
 
-      // --------------------------
-      // Quotes + helpers (shared)
-      // --------------------------
       async function fetchQuotes(symbols) {
         const endpoint = `${QUOTES_API_BASE}/api/quotes?symbols=${encodeURIComponent(symbols.join(","))}&t=${Date.now()}`;
         const res = await fetch(endpoint, { cache: "no-store" });
         return await res.json();
       }
 
-      // --------------------------
-      // Overview sync
-      // --------------------------
       async function refreshOverviewFromHoldings(stocksMVOverride = null, asOfOverride = "") {
         const page = document.getElementById("page-overview");
         if (!page) return;
 
         let stocksMV = stocksMVOverride;
-        let asOf = asOfOverride || "";
 
         if (!Number.isFinite(Number(stocksMV))) {
           const holdings = loadHoldings();
@@ -1017,12 +986,8 @@
           if (!symbols.length) return;
 
           let quotes = {};
-          try {
-            quotes = await fetchQuotes(symbols);
-          } catch (e) {
-            console.warn("[Overview] quotes fetch failed", e);
-            return;
-          }
+          try { quotes = await fetchQuotes(symbols); }
+          catch { return; }
 
           stocksMV = holdings.reduce((sum, h) => {
             const sym = safeUpper(h.ticker);
@@ -1031,8 +996,6 @@
             if (p == null || !Number.isFinite(qty)) return sum;
             return sum + Number(p) * qty;
           }, 0);
-
-          asOf = symbols.map(s => quotes?.[s]?.asOf).find(Boolean) || "";
         }
 
         const stocksMVNum = Number(stocksMV);
@@ -1049,9 +1012,6 @@
         if (fxEl) fxEl.textContent = OVERVIEW_FX_NOTE_TEXT;
       }
 
-      // --------------------------
-      // US Stocks render/update/delete
-      // --------------------------
       function ensureTbody() {
         const page = document.getElementById("page-us-stocks");
         if (!page) return null;
@@ -1097,16 +1057,8 @@
           gainPctEl.textContent = pct == null ? "(—)" : `(${fmtPct(pct)})`;
         }
 
-        const asOf = enriched.find(x => x.asOf)?.asOf || "";
-        const asOfEl = page.querySelector("#usStocksAsOf");
-        if (asOfEl) {
-          asOfEl.textContent = asOf ? new Date(asOf).toLocaleString() : "—";
-        }
-
         updateUsStocksChart(totalMV);
-
-        if (enriched.length) refreshOverviewFromHoldings(totalMV, asOf);
-        else refreshOverviewFromHoldings(null, "");
+        refreshOverviewFromHoldings(totalMV, "");
       }
 
       function renderTable(enriched) {
@@ -1142,12 +1094,7 @@
                     <span class="text-[13px] font-semibold text-[#002147]">${h.sym}</span>
                     <span class="text-[11px] text-[#6B7280]">${h.name ? h.name : "&nbsp;"}</span>
                   </div>
-                  <button
-                    type="button"
-                    class="btnDeleteHolding text-gray-300 hover:text-rose-600 transition-colors"
-                    title="Delete holding"
-                    data-holding-id="${h.id}"
-                  >
+                  <button type="button" class="btnDeleteHolding text-gray-300 hover:text-rose-600 transition-colors" title="Delete holding" data-holding-id="${h.id}">
                     <i class="fa-solid fa-trash-can text-[12px]"></i>
                   </button>
                 </div>
@@ -1195,12 +1142,8 @@
 
         const symbols = [...new Set(holdings.map(h => safeUpper(h.ticker)).filter(Boolean))];
         let quotes = {};
-        try {
-          quotes = await fetchQuotes(symbols);
-        } catch (e) {
-          console.warn("[Quotes] failed", e);
-          quotes = {};
-        }
+        try { quotes = await fetchQuotes(symbols); }
+        catch { quotes = {}; }
 
         const enriched = holdings.map(h => {
           const sym = safeUpper(h.ticker);
@@ -1243,9 +1186,7 @@
         });
       }
 
-      // --------------------------
-      // Insurance: ensure hooks exist in partials
-      // --------------------------
+      // --- Insurance hooks/render (same as your current logic) ---
       function ensureInsuranceHooks(country, container) {
         if (!container) return;
 
@@ -1312,7 +1253,7 @@
         if (!tbody) return;
 
         const list = loadInsurance().filter(x => x.country === "US");
-        if (!list.length) return; // keep sample rows
+        if (!list.length) return;
 
         tbody.innerHTML = list.map(p => {
           const code = initials2(p.carrier);
@@ -1369,7 +1310,7 @@
         if (!tbody) return;
 
         const list = loadInsurance().filter(x => x.country === "TW");
-        if (!list.length) return; // keep sample rows
+        if (!list.length) return;
 
         tbody.innerHTML = list.map(p => {
           const code = initials2(p.carrier);
@@ -1494,9 +1435,6 @@
           .map(x => `<li>${x}</li>`).join("");
       }
 
-      // --------------------------
-      // Delegation
-      // --------------------------
       function setupInsuranceDelegation() {
         document.addEventListener("click", (e) => {
           const usBtn = e.target.closest("#btnUsInsuranceAddPolicy");
@@ -1507,7 +1445,19 @@
         });
       }
 
-      // ✅ called after a partial is loaded into the page container
+      // ✅ Clear demo data from tax-packet page
+      function setupTaxPacketClearDelegation() {
+        document.addEventListener("click", (e) => {
+          const btn = e.target.closest("#btnClearInsurance");
+          if (!btn) return;
+
+          saveInsurance([]);
+          renderUsInsuranceFromStorage();
+          renderTwInsuranceFromStorage();
+          renderTaxPacketFromStorage();
+        });
+      }
+
       function afterPartialLoad(pageKey, container) {
         if (pageKey === "us-stocks") refreshUsStocksQuotesAndRender();
         if (pageKey === "overview") refreshOverviewFromHoldings(null, "");
@@ -1525,9 +1475,6 @@
         }
       }
 
-      // --------------------------
-      // Page switching
-      // --------------------------
       window.switchDashboardPage = function (pageKey) {
         let target = document.getElementById('page-' + pageKey);
         if (!target) {
@@ -1574,6 +1521,9 @@
 
         InsuranceModal.bindOnce();
         setupInsuranceDelegation();
+
+        // ✅ clear button in tax packet works even though tax packet is a partial
+        setupTaxPacketClearDelegation();
 
         switchDashboardPage('overview');
       }
