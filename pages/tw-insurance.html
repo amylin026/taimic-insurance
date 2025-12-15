@@ -1,4 +1,12 @@
-<div id="twInsuranceRoot" class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+<!-- pages/tw-insurance.html -->
+
+<div
+  id="twInsuranceRoot"
+  data-insurance-country="TW"
+  data-hide-country-select="true"
+  class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10"
+>
+  <!-- Page header -->
   <div class="flex flex-col gap-2">
     <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
       Taiwan assets &nbsp;›&nbsp; Insurance
@@ -22,7 +30,9 @@
     </div>
   </div>
 
+  <!-- Summary metrics -->
   <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+    <!-- 1) Total Surrender Value -->
     <div class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-5">
       <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
         Total Surrender Value (USD)
@@ -41,6 +51,7 @@
       </p>
     </div>
 
+    <!-- 2) Tax Risk Level -->
     <div class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-5">
       <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
         Tax Risk Level
@@ -58,6 +69,7 @@
       </p>
     </div>
 
+    <!-- 3) Est. Taxable Income -->
     <div class="bg-white rounded-2xl border border-slate-200/70 shadow-sm p-5">
       <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
         Est. Taxable Income
@@ -78,6 +90,7 @@
     </div>
   </div>
 
+  <!-- Policies table -->
   <div class="mt-8 bg-white rounded-2xl border border-slate-200/70 shadow-sm overflow-hidden">
     <div class="px-5 py-4 border-b border-slate-200/70 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
       <div>
@@ -101,6 +114,8 @@
         <div class="flex items-center gap-2">
           <button
             id="btnTwInsuranceAddPolicy"
+            data-insurance-country="TW"
+            data-hide-country-select="true"
             type="button"
             class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
             title="Add a policy (stored locally for now)"
@@ -131,55 +146,17 @@
             <th class="px-5 py-3 font-medium tracking-wider uppercase">IRS Classification</th>
             <th class="px-5 py-3 font-medium tracking-wider uppercase">Cash Value</th>
             <th class="px-5 py-3 font-medium tracking-wider uppercase">Income (Coupons)</th>
-            <th class="px-5 py-3 font-medium tracking-wider uppercase text-right"></th>
+            <!-- ✅ NEW: actions column for delete -->
+            <th class="px-5 py-3 font-medium tracking-wider uppercase text-right">Actions</th>
           </tr>
         </thead>
 
+        <!-- ✅ dashboard.html JS will render into this tbody -->
         <tbody id="twInsuranceTbody" class="divide-y divide-slate-200/70">
-          <tr class="hover:bg-slate-50/60 transition-colors" data-sample="1">
-            <td class="px-5 py-4">
-              <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-full bg-[#002147] text-white flex items-center justify-center text-[11px] font-semibold tracking-[0.12em]">
-                  CT
-                </div>
-                <div>
-                  <p class="font-medium text-slate-900">Cathay Life <span class="text-slate-500">/ 國泰</span></p>
-                  <p class="text-xs text-slate-500">Policy • ****-0921</p>
-                  <p class="text-[11px] text-slate-400 mt-1">Owner: <span class="font-semibold">Mom</span></p>
-                </div>
-              </div>
-            </td>
-
-            <td class="px-5 py-4">
-              <p class="font-['Noto_Sans_TC'] text-[13px] text-slate-700 leading-snug">
-                國泰人壽鑫富利外幣終身壽險（儲蓄險）
-              </p>
-            </td>
-
-            <td class="px-5 py-4">
-              <span class="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 text-blue-800 px-3 py-1.5 text-[12px] font-semibold">
-                Foreign Savings Acct
-              </span>
-            </td>
-
-            <td class="px-5 py-4">
-              <div class="font-mono tabular-nums font-semibold text-[#002147]">$85,000</div>
-              <div class="mt-1 text-xs text-slate-500">NT$ 2.7M</div>
-            </td>
-
-            <td class="px-5 py-4">
-              <div class="font-mono tabular-nums font-semibold text-slate-900">NT$ 30,000 / yr</div>
-              <div class="mt-1 text-xs text-slate-500">Taxable Interest</div>
-            </td>
-
-            <td class="px-5 py-4 text-right">
-              <button
-                type="button"
-                class="inline-flex items-center justify-center w-8 h-8 rounded-full text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors"
-                title="Delete Policy"
-              >
-                <i class="fa-solid fa-trash-can"></i>
-              </button>
+          <!-- Empty state (will be replaced once you add policies) -->
+          <tr>
+            <td colspan="6" class="px-5 py-8 text-sm text-slate-400">
+              No Taiwan policies yet. Click <span class="font-semibold text-[#0B2A4A]">Add policy</span> to get started.
             </td>
           </tr>
         </tbody>
@@ -192,4 +169,19 @@
       </p>
     </div>
   </div>
+
+  <!-- Optional: row actions template (JS can clone this into the Actions column) -->
+  <template id="twInsuranceRowActionsTemplate">
+    <div class="flex items-center justify-end gap-2">
+      <button
+        type="button"
+        data-action="delete-policy"
+        class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-[11px] font-semibold text-slate-700 hover:bg-slate-50"
+        title="Delete policy"
+      >
+        <i class="fa-solid fa-trash text-[11px]"></i>
+        <span class="hidden sm:inline">Delete</span>
+      </button>
+    </div>
+  </template>
 </div>
