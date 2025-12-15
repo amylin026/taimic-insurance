@@ -146,16 +146,13 @@
             <th class="px-5 py-3 font-medium tracking-wider uppercase">IRS Classification</th>
             <th class="px-5 py-3 font-medium tracking-wider uppercase">Cash Value</th>
             <th class="px-5 py-3 font-medium tracking-wider uppercase">Income (Coupons)</th>
-            <!-- ✅ NEW: actions column for delete -->
-            <th class="px-5 py-3 font-medium tracking-wider uppercase text-right">Actions</th>
           </tr>
         </thead>
 
-        <!-- ✅ dashboard.html JS will render into this tbody -->
+        <!-- dashboard.html JS will render rows into this tbody -->
         <tbody id="twInsuranceTbody" class="divide-y divide-slate-200/70">
-          <!-- Empty state (will be replaced once you add policies) -->
           <tr>
-            <td colspan="6" class="px-5 py-8 text-sm text-slate-400">
+            <td colspan="5" class="px-5 py-8 text-sm text-slate-400">
               No Taiwan policies yet. Click <span class="font-semibold text-[#0B2A4A]">Add policy</span> to get started.
             </td>
           </tr>
@@ -169,19 +166,4 @@
       </p>
     </div>
   </div>
-
-  <!-- Optional: row actions template (JS can clone this into the Actions column) -->
-  <template id="twInsuranceRowActionsTemplate">
-    <div class="flex items-center justify-end gap-2">
-      <button
-        type="button"
-        data-action="delete-policy"
-        class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-[11px] font-semibold text-slate-700 hover:bg-slate-50"
-        title="Delete policy"
-      >
-        <i class="fa-solid fa-trash text-[11px]"></i>
-        <span class="hidden sm:inline">Delete</span>
-      </button>
-    </div>
-  </template>
 </div>
