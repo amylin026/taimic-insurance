@@ -1,6 +1,6 @@
 <!-- pages/tw-insurance.html -->
 
-<div class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+<div id="twInsuranceRoot" class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
   <!-- Page header -->
   <div class="flex flex-col gap-2">
     <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
@@ -33,7 +33,7 @@
         Total Surrender Value (USD)
       </p>
 
-      <div class="mt-3 text-2xl md:text-3xl font-semibold tracking-tight text-[#002147] font-serif">
+      <div id="twInsuranceTotalSurrenderUsd" class="mt-3 text-2xl md:text-3xl font-semibold tracking-tight text-[#002147] font-serif">
         $210,000.00
       </div>
 
@@ -53,7 +53,7 @@
       </p>
 
       <div class="mt-3">
-        <span class="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 text-amber-900 px-3 py-1.5 text-sm font-semibold">
+        <span id="twInsuranceTaxRiskBadge" class="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 text-amber-900 px-3 py-1.5 text-sm font-semibold">
           <span class="w-2 h-2 rounded-full bg-amber-500"></span>
           <span>High Complexity</span>
         </span>
@@ -71,7 +71,8 @@
       </p>
 
       <div class="mt-3 text-2xl md:text-3xl font-semibold tracking-tight text-[#002147] font-serif">
-        $3,200 <span class="text-base text-slate-500 font-normal">/ yr</span>
+        <span id="twInsuranceEstTaxableIncomeUsd">$3,200</span>
+        <span class="text-base text-slate-500 font-normal">/ yr</span>
       </div>
 
       <p class="mt-2 text-xs text-slate-500">
@@ -96,12 +97,36 @@
         </h2>
       </div>
 
-      <div class="flex flex-wrap items-center gap-2 text-xs text-slate-500">
-        <span class="hidden md:inline">Key field:</span>
-        <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px]">
-          <i class="fa-solid fa-tag text-[11px] text-slate-400"></i>
-          <span class="tracking-[0.16em] uppercase">IRS Classification</span>
-        </span>
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="flex flex-wrap items-center gap-2 text-xs text-slate-500">
+          <span class="hidden md:inline">Key field:</span>
+          <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px]">
+            <i class="fa-solid fa-tag text-[11px] text-slate-400"></i>
+            <span class="tracking-[0.16em] uppercase">IRS Classification</span>
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button
+            id="btnTwInsuranceAddPolicy"
+            type="button"
+            class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+            title="Add a policy (stored locally for now)"
+          >
+            <i class="fa-solid fa-plus text-[11px]"></i>
+            <span>Add policy</span>
+          </button>
+
+          <button
+            type="button"
+            onclick="switchDashboardPage('tax-packet')"
+            class="inline-flex items-center gap-2 rounded-xl bg-[#0B2A4A] px-3 py-2 text-xs font-semibold text-white hover:opacity-95"
+            title="Preview in Household Tax Packet"
+          >
+            <i class="fa-solid fa-file-lines text-[11px]"></i>
+            <span>Tax Packet</span>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -117,9 +142,10 @@
           </tr>
         </thead>
 
-        <tbody class="divide-y divide-slate-200/70">
-          <!-- Row 1: Savings insurance -->
-          <tr class="hover:bg-slate-50/60 transition-colors">
+        <!-- ✅ add tbody id so dashboard.html JS can render rows -->
+        <tbody id="twInsuranceTbody" class="divide-y divide-slate-200/70">
+          <!-- Sample row (until you render from localStorage) -->
+          <tr class="hover:bg-slate-50/60 transition-colors" data-sample="1">
             <td class="px-5 py-4">
               <div class="flex items-center gap-3">
                 <div class="w-9 h-9 rounded-full bg-[#002147] text-white flex items-center justify-center text-[11px] font-semibold tracking-[0.12em]">
@@ -128,6 +154,7 @@
                 <div>
                   <p class="font-medium text-slate-900">Cathay Life <span class="text-slate-500">/ 國泰</span></p>
                   <p class="text-xs text-slate-500">Policy • ****-0921</p>
+                  <p class="text-[11px] text-slate-400 mt-1">Owner: <span class="font-semibold">Mom</span></p>
                 </div>
               </div>
             </td>
@@ -151,117 +178,6 @@
 
             <td class="px-5 py-4">
               <div class="font-mono tabular-nums font-semibold text-slate-900">NT$ 30,000 / yr</div>
-              <div class="mt-1 text-xs text-slate-500">Taxable Interest</div>
-            </td>
-          </tr>
-
-          <!-- Row 2: Investment-linked -->
-          <tr class="hover:bg-slate-50/60 transition-colors">
-            <td class="px-5 py-4">
-              <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-full bg-[#001a70] text-white flex items-center justify-center text-[11px] font-semibold tracking-[0.12em]">
-                  FB
-                </div>
-                <div>
-                  <p class="font-medium text-slate-900">Fubon <span class="text-slate-500">/ 富邦</span></p>
-                  <p class="text-xs text-slate-500">Policy • ****-4407</p>
-                </div>
-              </div>
-            </td>
-
-            <td class="px-5 py-4">
-              <p class="font-['Noto_Sans_TC'] text-[13px] text-slate-700 leading-snug">
-                富邦人壽美利高升外幣終身壽險（投資型）
-              </p>
-            </td>
-
-            <td class="px-5 py-4">
-              <span class="inline-flex items-center rounded-full border border-amber-200 bg-amber-50 text-amber-900 px-3 py-1.5 text-[12px] font-semibold">
-                ⚠️ PFIC Risk
-              </span>
-            </td>
-
-            <td class="px-5 py-4">
-              <div class="font-mono tabular-nums font-semibold text-[#002147]">$70,000</div>
-              <div class="mt-1 text-xs text-slate-500">NT$ 2.2M</div>
-            </td>
-
-            <td class="px-5 py-4">
-              <div class="font-mono tabular-nums font-semibold text-slate-900">NT$ 0 / yr</div>
-              <div class="mt-1 text-xs text-slate-500">Taxable Interest</div>
-            </td>
-          </tr>
-
-          <!-- Row 3: Savings insurance -->
-          <tr class="hover:bg-slate-50/60 transition-colors">
-            <td class="px-5 py-4">
-              <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-full bg-slate-900 text-white flex items-center justify-center text-[11px] font-semibold tracking-[0.12em]">
-                  NS
-                </div>
-                <div>
-                  <p class="font-medium text-slate-900">Nan Shan <span class="text-slate-500">/ 南山</span></p>
-                  <p class="text-xs text-slate-500">Policy • ****-1186</p>
-                </div>
-              </div>
-            </td>
-
-            <td class="px-5 py-4">
-              <p class="font-['Noto_Sans_TC'] text-[13px] text-slate-700 leading-snug">
-                南山人壽外幣增值終身保險（儲蓄險）
-              </p>
-            </td>
-
-            <td class="px-5 py-4">
-              <span class="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 text-blue-800 px-3 py-1.5 text-[12px] font-semibold">
-                Foreign Savings Acct
-              </span>
-            </td>
-
-            <td class="px-5 py-4">
-              <div class="font-mono tabular-nums font-semibold text-[#002147]">$55,000</div>
-              <div class="mt-1 text-xs text-slate-500">NT$ 1.8M</div>
-            </td>
-
-            <td class="px-5 py-4">
-              <div class="font-mono tabular-nums font-semibold text-slate-900">NT$ 18,000 / yr</div>
-              <div class="mt-1 text-xs text-slate-500">Taxable Interest</div>
-            </td>
-          </tr>
-
-          <!-- Row 4: Pure life -->
-          <tr class="hover:bg-slate-50/60 transition-colors">
-            <td class="px-5 py-4">
-              <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-full bg-green-700 text-white flex items-center justify-center text-[11px] font-semibold tracking-[0.12em]">
-                  SK
-                </div>
-                <div>
-                  <p class="font-medium text-slate-900">Shin Kong <span class="text-slate-500">/ 新光</span></p>
-                  <p class="text-xs text-slate-500">Policy • ****-0031</p>
-                </div>
-              </div>
-            </td>
-
-            <td class="px-5 py-4">
-              <p class="font-['Noto_Sans_TC'] text-[13px] text-slate-700 leading-snug">
-                新光人壽定期壽險
-              </p>
-            </td>
-
-            <td class="px-5 py-4">
-              <span class="inline-flex items-center rounded-full border border-green-200 bg-green-50 text-green-800 px-3 py-1.5 text-[12px] font-semibold">
-                Life Insurance
-              </span>
-            </td>
-
-            <td class="px-5 py-4">
-              <div class="font-mono tabular-nums font-semibold text-[#002147]">$0</div>
-              <div class="mt-1 text-xs text-slate-500">NT$ 0</div>
-            </td>
-
-            <td class="px-5 py-4">
-              <div class="font-mono tabular-nums font-semibold text-slate-900">NT$ 0 / yr</div>
               <div class="mt-1 text-xs text-slate-500">Taxable Interest</div>
             </td>
           </tr>
