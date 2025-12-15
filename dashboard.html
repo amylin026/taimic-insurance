@@ -748,10 +748,10 @@
 
         // ✅ already loaded -> just run hooks
         if (container.dataset.loaded === "1") {
-          afterPartialLoad(pageKey, container);
-          return;
-        }
-
+  // ✅ wait 1 frame so switchDashboardPage has time to unhide the target
+  requestAnimationFrame(() => afterPartialLoad(pageKey, container));
+  return;
+}
         const token = `${Date.now()}_${Math.random().toString(16).slice(2)}`;
         PARTIAL_TOKEN.set(container, token);
 
