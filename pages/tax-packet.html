@@ -17,11 +17,8 @@
               </span>
             </div>
 
-            <!-- ✅ keep this id for your JS renderer -->
-            <ul id="taxPacketMissingList" class="mt-3 list-disc pl-5 text-sm text-rose-900/80 space-y-1">
-              <!-- JS will populate; fallback demo lines (safe to leave empty) -->
-              
-            </ul>
+            <!-- ✅ JS will populate -->
+            <ul id="taxPacketMissingList" class="mt-3 list-disc pl-5 text-sm text-rose-900/80 space-y-1"></ul>
           </div>
 
           <div class="flex items-center gap-2 shrink-0">
@@ -126,91 +123,8 @@
           </span>
         </div>
 
-        <!-- Key Reports List -->
-        <div class="mt-4 space-y-3">
-          <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <div class="flex items-start justify-between gap-4">
-              <div class="min-w-0">
-                <div class="flex items-center gap-2">
-                  <i class="fa-regular fa-file-lines text-slate-400"></i>
-                  <h3 class="text-sm font-semibold text-[#002147]">FBAR / Form 114 Report</h3>
-                </div>
-                <p class="mt-2 text-sm text-slate-600">Max aggregate value per account (converted).</p>
-              </div>
-              <div class="flex flex-col items-end gap-2 shrink-0">
-                <span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-[11px] font-semibold text-emerald-900">
-                  <i class="fa-solid fa-circle-check"></i>
-                  <span class="tracking-[0.16em] uppercase">Ready</span>
-                </span>
-                <button
-                  type="button"
-                  class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
-                  onclick="alert('Preview: FBAR (demo)')"
-                >
-                  <i class="fa-regular fa-eye"></i>
-                  Preview
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <div class="flex items-start justify-between gap-4">
-              <div class="min-w-0">
-                <div class="flex items-center gap-2">
-                  <i class="fa-regular fa-file-lines text-slate-400"></i>
-                  <h3 class="text-sm font-semibold text-[#002147]">PFIC Statement (Form 8621 Data)</h3>
-                </div>
-                <p class="mt-2 text-sm text-slate-600">
-                  Passive Foreign Investment Company analysis for Taiwan funds.
-                </p>
-              </div>
-              <div class="flex flex-col items-end gap-2 shrink-0">
-                <span class="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-[11px] font-semibold text-amber-900">
-                  <i class="fa-solid fa-triangle-exclamation"></i>
-                  <span class="tracking-[0.16em] uppercase">Review Needed</span>
-                </span>
-                <button
-                  type="button"
-                  class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
-                  onclick="alert('Preview: PFIC (demo)')"
-                >
-                  <i class="fa-regular fa-eye"></i>
-                  Preview
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <div class="flex items-start justify-between gap-4">
-              <div class="min-w-0">
-                <div class="flex items-center gap-2">
-                  <i class="fa-regular fa-file-lines text-slate-400"></i>
-                  <h3 class="text-sm font-semibold text-[#002147]">Schedule B Data</h3>
-                </div>
-                <p class="mt-2 text-sm text-slate-600">Interest &amp; dividends from foreign accounts.</p>
-              </div>
-              <div class="flex flex-col items-end gap-2 shrink-0">
-                <span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-[11px] font-semibold text-emerald-900">
-                  <i class="fa-solid fa-circle-check"></i>
-                  <span class="tracking-[0.16em] uppercase">Ready</span>
-                </span>
-                <button
-                  type="button"
-                  class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
-                  onclick="alert('Preview: Schedule B (demo)')"
-                >
-                  <i class="fa-regular fa-eye"></i>
-                  Preview
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ✅ Your dynamic aggregated output (from dashboard.js) -->
-        <div class="mt-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <!-- ✅ MVP CORE FIRST: Auto-aggregated output -->
+        <div class="mt-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
           <div class="flex items-center justify-between gap-3">
             <div>
               <p class="text-[11px] font-semibold tracking-[0.24em] text-slate-400 uppercase">Auto-aggregated</p>
@@ -225,6 +139,96 @@
           <!-- ✅ keep this id for your JS renderer -->
           <div id="taxPacketUSInsurance" class="mt-4 space-y-4"></div>
         </div>
+
+        <!-- Reports (collapsed) -->
+        <details class="mt-4">
+          <summary class="cursor-pointer select-none rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#002147] flex items-center justify-between">
+            <span>Reports (preview only)</span>
+            <span class="text-xs text-slate-500">3</span>
+          </summary>
+
+          <div class="mt-3 space-y-3">
+            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+              <div class="flex items-start justify-between gap-4">
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2">
+                    <i class="fa-regular fa-file-lines text-slate-400"></i>
+                    <h3 class="text-sm font-semibold text-[#002147]">FBAR / Form 114 Report</h3>
+                  </div>
+                  <p class="mt-2 text-sm text-slate-600">Max aggregate value per account (converted).</p>
+                </div>
+                <div class="flex flex-col items-end gap-2 shrink-0">
+                  <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-semibold text-slate-700">
+                    <i class="fa-regular fa-circle-question"></i>
+                    <span class="tracking-[0.16em] uppercase">Demo</span>
+                  </span>
+                  <button
+                    type="button"
+                    class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                    onclick="alert('Preview: FBAR (demo)')"
+                  >
+                    <i class="fa-regular fa-eye"></i>
+                    Preview (demo)
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+              <div class="flex items-start justify-between gap-4">
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2">
+                    <i class="fa-regular fa-file-lines text-slate-400"></i>
+                    <h3 class="text-sm font-semibold text-[#002147]">PFIC Statement (Form 8621 Data)</h3>
+                  </div>
+                  <p class="mt-2 text-sm text-slate-600">
+                    Passive Foreign Investment Company analysis for Taiwan funds.
+                  </p>
+                </div>
+                <div class="flex flex-col items-end gap-2 shrink-0">
+                  <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-semibold text-slate-700">
+                    <i class="fa-regular fa-circle-question"></i>
+                    <span class="tracking-[0.16em] uppercase">Demo</span>
+                  </span>
+                  <button
+                    type="button"
+                    class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                    onclick="alert('Preview: PFIC (demo)')"
+                  >
+                    <i class="fa-regular fa-eye"></i>
+                    Preview (demo)
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+              <div class="flex items-start justify-between gap-4">
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2">
+                    <i class="fa-regular fa-file-lines text-slate-400"></i>
+                    <h3 class="text-sm font-semibold text-[#002147]">Schedule B Data</h3>
+                  </div>
+                  <p class="mt-2 text-sm text-slate-600">Interest &amp; dividends from foreign accounts.</p>
+                </div>
+                <div class="flex flex-col items-end gap-2 shrink-0">
+                  <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-semibold text-slate-700">
+                    <i class="fa-regular fa-circle-question"></i>
+                    <span class="tracking-[0.16em] uppercase">Demo</span>
+                  </span>
+                  <button
+                    type="button"
+                    class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                    onclick="alert('Preview: Schedule B (demo)')"
+                  >
+                    <i class="fa-regular fa-eye"></i>
+                    Preview (demo)
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
       </section>
 
       <!-- Zone B: Taiwan Packet -->
@@ -245,66 +249,8 @@
           </span>
         </div>
 
-        <div class="mt-4 space-y-3">
-          <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <div class="flex items-start justify-between gap-4">
-              <div class="min-w-0">
-                <div class="flex items-center gap-2">
-                  <i class="fa-regular fa-file-lines text-slate-400"></i>
-                  <h3 class="text-sm font-semibold text-[#002147]">Overseas Income (AMT)</h3>
-                </div>
-                <p class="mt-2 text-sm text-slate-600">US Income &gt; 1M TWD threshold check.</p>
-                <div class="mt-3 font-mono tabular-nums font-semibold text-[#002147]">—</div>
-                <p class="mt-1 text-xs text-slate-500">Awaiting inputs</p>
-              </div>
-              <div class="flex flex-col items-end gap-2 shrink-0">
-                <span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-[11px] font-semibold text-emerald-900">
-                  <i class="fa-solid fa-circle-check"></i>
-                  <span class="tracking-[0.16em] uppercase">Ready</span>
-                </span>
-                <button
-                  type="button"
-                  class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
-                  onclick="alert('Preview: AMT (demo)')"
-                >
-                  <i class="fa-regular fa-eye"></i>
-                  Preview
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-            <div class="flex items-start justify-between gap-4">
-              <div class="min-w-0">
-                <div class="flex items-center gap-2">
-                  <i class="fa-regular fa-file-lines text-slate-400"></i>
-                  <h3 class="text-sm font-semibold text-[#002147]">CFC (Controlled Foreign Company)</h3>
-                </div>
-                <p class="mt-2 text-sm text-slate-600">Holdings in low-tax jurisdictions.</p>
-                <div class="mt-3 font-mono tabular-nums font-semibold text-[#002147]">—</div>
-                <p class="mt-1 text-xs text-slate-500">Draft</p>
-              </div>
-              <div class="flex flex-col items-end gap-2 shrink-0">
-                <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-semibold text-slate-700">
-                  <i class="fa-regular fa-clock"></i>
-                  <span class="tracking-[0.16em] uppercase">Draft</span>
-                </span>
-                <button
-                  type="button"
-                  class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
-                  onclick="alert('Preview: CFC (demo)')"
-                >
-                  <i class="fa-regular fa-eye"></i>
-                  Preview
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- ✅ Your dynamic aggregated output (from dashboard.js) -->
-        <div class="mt-5 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <!-- ✅ MVP CORE FIRST: Auto-aggregated output -->
+        <div class="mt-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
           <div class="flex items-center justify-between gap-3">
             <div>
               <p class="text-[11px] font-semibold tracking-[0.24em] text-slate-400 uppercase">Auto-aggregated</p>
@@ -319,6 +265,72 @@
           <!-- ✅ keep this id for your JS renderer -->
           <div id="taxPacketTWInsurance" class="mt-4 space-y-4"></div>
         </div>
+
+        <!-- Reports (collapsed) -->
+        <details class="mt-4">
+          <summary class="cursor-pointer select-none rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-[#002147] flex items-center justify-between">
+            <span>Reports (preview only)</span>
+            <span class="text-xs text-slate-500">2</span>
+          </summary>
+
+          <div class="mt-3 space-y-3">
+            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+              <div class="flex items-start justify-between gap-4">
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2">
+                    <i class="fa-regular fa-file-lines text-slate-400"></i>
+                    <h3 class="text-sm font-semibold text-[#002147]">Overseas Income (AMT)</h3>
+                  </div>
+                  <p class="mt-2 text-sm text-slate-600">US Income &gt; 1M TWD threshold check.</p>
+                  <div class="mt-3 font-mono tabular-nums font-semibold text-[#002147]">—</div>
+                  <p class="mt-1 text-xs text-slate-500">Awaiting inputs</p>
+                </div>
+                <div class="flex flex-col items-end gap-2 shrink-0">
+                  <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-semibold text-slate-700">
+                    <i class="fa-regular fa-circle-question"></i>
+                    <span class="tracking-[0.16em] uppercase">Demo</span>
+                  </span>
+                  <button
+                    type="button"
+                    class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                    onclick="alert('Preview: AMT (demo)')"
+                  >
+                    <i class="fa-regular fa-eye"></i>
+                    Preview (demo)
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+              <div class="flex items-start justify-between gap-4">
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2">
+                    <i class="fa-regular fa-file-lines text-slate-400"></i>
+                    <h3 class="text-sm font-semibold text-[#002147]">CFC (Controlled Foreign Company)</h3>
+                  </div>
+                  <p class="mt-2 text-sm text-slate-600">Holdings in low-tax jurisdictions.</p>
+                  <div class="mt-3 font-mono tabular-nums font-semibold text-[#002147]">—</div>
+                  <p class="mt-1 text-xs text-slate-500">Draft</p>
+                </div>
+                <div class="flex flex-col items-end gap-2 shrink-0">
+                  <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] font-semibold text-slate-700">
+                    <i class="fa-regular fa-circle-question"></i>
+                    <span class="tracking-[0.16em] uppercase">Demo</span>
+                  </span>
+                  <button
+                    type="button"
+                    class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                    onclick="alert('Preview: CFC (demo)')"
+                  >
+                    <i class="fa-regular fa-eye"></i>
+                    Preview (demo)
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
       </section>
     </div>
 
@@ -348,13 +360,13 @@
             </tr>
           </thead>
 
-<tbody class="divide-y divide-slate-200/70">
-  <tr>
-    <td colspan="4" class="px-6 py-8 text-sm text-slate-400">
-      No documents yet. Upload statements to attach evidence.
-    </td>
-  </tr>
-</tbody>
+          <tbody class="divide-y divide-slate-200/70">
+            <tr>
+              <td colspan="4" class="px-6 py-8 text-sm text-slate-400">
+                No documents yet. Upload statements to attach evidence.
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
