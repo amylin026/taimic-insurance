@@ -1604,8 +1604,8 @@
 
         document.querySelectorAll('.dash-page').forEach((p) => p.classList.add('hidden'));
 
-        loadPartialOnce(target, pageKey);
         target.classList.remove('hidden');
+        loadPartialOnce(target, pageKey);
         window.scrollTo({ top: 0, behavior: 'auto' });
 
         document.querySelectorAll('[data-page]').forEach((btn) => btn.classList.remove('side-item-active'));
