@@ -229,6 +229,7 @@
         <button class="side-item side-subitem" type="button" onclick="mobileNavigate('tw-insurance')"><span>Insurance</span></button>
 
         <p class="mt-5 text-[10px] tracking-[0.2em] text-slate-400 uppercase">Other</p>
+        <button class="side-item" type="button" onclick="mobileNavigate('tax-packet')">Tax packet</button>
         <button class="side-item" type="button" onclick="mobileNavigate('help')">Help center</button>
         <button class="side-item" type="button" onclick="mobileNavigate('settings')">Settings</button>
       </div>
@@ -275,6 +276,10 @@
           </div>
 
           <div class="pt-4 mt-2 border-t border-slate-200/70 space-y-1">
+            <button class="side-bottom-link" type="button" data-page="tax-packet" onclick="switchDashboardPage('tax-packet')">
+              <i class="fa-regular fa-file-lines"></i><span>Tax packet</span>
+            </button>
+
             <button class="side-bottom-link" type="button" data-page="help" onclick="switchDashboardPage('help')"><i class="fa-regular fa-circle-question"></i><span>Help center</span></button>
             <button class="side-bottom-link" type="button" data-page="settings" onclick="switchDashboardPage('settings')"><i class="fa-solid fa-gear"></i><span>Settings</span></button>
           </div>
@@ -304,6 +309,9 @@
         <div id="page-tw-house" class="dash-page hidden" data-include="pages/tw-house.html"></div>
         <div id="page-tw-crypto" class="dash-page hidden" data-include="pages/tw-crypto.html"></div>
         <div id="page-tw-insurance" class="dash-page hidden" data-include="pages/tw-insurance.html"></div>
+
+        <!-- ✅ NEW: Single integrated packet -->
+        <div id="page-tax-packet" class="dash-page hidden" data-include="pages/tax-packet.html"></div>
 
         <div id="page-help" class="dash-page hidden" data-include="pages/help.html"></div>
         <div id="page-settings" class="dash-page hidden" data-include="pages/settings.html"></div>
@@ -372,6 +380,119 @@
     <div class="rounded-full bg-[#0B2A4A] text-white text-sm px-4 py-2 shadow-lg">Saved.</div>
   </div>
 
+  <!-- ✅ Insurance Add Policy Modal (dashboard-level) -->
+  <div id="insurancePolicyModal" class="fixed inset-0 z-[60] hidden" aria-hidden="true">
+    <div id="insurancePolicyBackdrop" class="absolute inset-0 bg-black/30"></div>
+
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+      <div class="w-full max-w-2xl rounded-2xl bg-white shadow-xl border border-gray-100">
+        <div class="p-5 border-b border-gray-100 flex items-center justify-between">
+          <div>
+            <h3 class="text-lg font-semibold text-[#002147]">Add policy</h3>
+            <p class="text-xs text-gray-500">Stored locally for now. We’ll wire backend later.</p>
+          </div>
+          <button id="insurancePolicyClose" type="button" class="h-9 w-9 rounded-lg hover:bg-gray-50 text-gray-500" aria-label="Close">✕</button>
+        </div>
+
+        <form id="insurancePolicyForm" class="p-5 space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Country</span>
+              <select id="insuranceCountry" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm">
+                <option value="US">US</option>
+                <option value="TW">TW</option>
+              </select>
+            </label>
+
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Owner</span>
+              <select id="insuranceOwner" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm" required></select>
+            </label>
+
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Policy last4</span>
+              <input id="insuranceLast4" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm" placeholder="4821" />
+            </label>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Carrier</span>
+              <input id="insuranceCarrier" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm" placeholder="MassMutual / 國泰" required />
+            </label>
+
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Type</span>
+              <select id="insuranceType" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm">
+                <option value="Whole Life">Whole Life</option>
+                <option value="Term Life">Term Life</option>
+                <option value="IUL">IUL</option>
+                <option value="Life Insurance">Life Insurance</option>
+                <option value="Savings">Savings</option>
+                <option value="Investment-linked">Investment-linked</option>
+              </select>
+            </label>
+          </div>
+
+          <!-- TW fields -->
+          <div id="insuranceTwFields" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <label class="block md:col-span-2">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Product name (original)</span>
+              <input id="insuranceProductName" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm" placeholder="國泰人壽..." />
+            </label>
+
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">IRS classification</span>
+              <input id="insuranceIrsClass" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm" placeholder="Foreign Savings Acct / PFIC Risk" />
+            </label>
+
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Cash value (USD)</span>
+              <input id="insuranceCashUsd" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm" placeholder="85000" />
+            </label>
+
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Cash value (local)</span>
+              <input id="insuranceCashLocal" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm" placeholder="2700000 (TWD)" />
+            </label>
+
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Income / coupons (local)</span>
+              <input id="insuranceIncomeLocal" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm" placeholder="30000 (TWD/yr)" />
+            </label>
+          </div>
+
+          <!-- US fields -->
+          <div id="insuranceUsFields" class="grid grid-cols-1 md:grid-cols-2 gap-3 hidden">
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Cash value (USD)</span>
+              <input id="insuranceUsCashUsd" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm" placeholder="124000" />
+            </label>
+
+            <label class="block">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Death benefit (USD)</span>
+              <input id="insuranceDeathBenefitUsd" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm" placeholder="2000000" />
+            </label>
+
+            <label class="block md:col-span-2">
+              <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Premium status</span>
+              <input id="insurancePremiumStatus" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm" placeholder="Paid Up / Due: Dec 20" />
+            </label>
+          </div>
+
+          <div class="flex items-center justify-end gap-2 pt-2">
+            <button id="insurancePolicyCancel" type="button" class="rounded-xl border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50">Cancel</button>
+            <button type="submit" class="rounded-xl bg-[#0B2A4A] px-4 py-2 text-sm font-semibold text-white hover:opacity-95">Save</button>
+          </div>
+
+          <p class="text-[11px] text-gray-400">
+            Tip: In the first MVP, “Owner” is the key that makes this a family product.
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script src="main.js"></script>
 
   <script>
@@ -386,6 +507,18 @@
       const OVERVIEW_BASE_NET_WORTH = 3420500; // sample
       const OVERVIEW_BASE_STOCKS = 980000;     // sample "Stocks" slice in overview
       const OVERVIEW_FX_NOTE_TEXT = "📉 -$1,200 due to TWD drop";
+
+      // =========================
+      // Insurance (Household) storage + packet
+      // =========================
+      const INSURANCE_STORAGE_KEY = "taimic_household_insurance_v1";
+
+      const FAMILY_MEMBERS = [
+        { id: "alex", name: "Alex" },
+        { id: "mom", name: "Mom" },
+        { id: "dad", name: "Dad" },
+        { id: "spouse", name: "Spouse" }
+      ];
 
       function withBust(url) {
         const sep = url.includes('?') ? '&' : '?';
@@ -425,6 +558,30 @@
 
       function saveHoldings(list) {
         localStorage.setItem(US_STOCKS_STORAGE_KEY, JSON.stringify(list));
+      }
+
+      function loadInsurance() {
+        try { return JSON.parse(localStorage.getItem(INSURANCE_STORAGE_KEY) || "[]"); }
+        catch { return []; }
+      }
+      function saveInsurance(list) {
+        localStorage.setItem(INSURANCE_STORAGE_KEY, JSON.stringify(list));
+      }
+
+      function numFromText(v) {
+        const s = String(v ?? "").replace(/[, ]/g, "");
+        const cleaned = s.replace(/[^0-9.\-]/g, "");
+        const n = Number(cleaned);
+        return Number.isFinite(n) ? n : null;
+      }
+
+      function initials2(text) {
+        const s = String(text || "").trim();
+        if (!s) return "—";
+        const parts = s.split(/\s+/);
+        const a = parts[0]?.[0] || s[0];
+        const b = (parts[1]?.[0] || s[1] || "").toUpperCase();
+        return (String(a).toUpperCase() + String(b).toUpperCase()).slice(0, 2);
       }
 
       // =========================
@@ -580,12 +737,23 @@
       }
 
       // --------------------------
-      // Partial loader
+      // Partial loader (load once + anti-race)
       // --------------------------
-      function loadPartialAlways(container, pageKey) {
+      const PARTIAL_TOKEN = new WeakMap();
+
+      function loadPartialOnce(container, pageKey) {
         if (!container) return;
         const url = container.getAttribute('data-include');
         if (!url) return;
+
+        // ✅ already loaded -> just run hooks
+        if (container.dataset.loaded === "1") {
+          afterPartialLoad(pageKey, container);
+          return;
+        }
+
+        const token = `${Date.now()}_${Math.random().toString(16).slice(2)}`;
+        PARTIAL_TOKEN.set(container, token);
 
         fetch(withBust(url), { cache: 'no-store' })
           .then((r) => {
@@ -593,7 +761,9 @@
             return r.text();
           })
           .then((html) => {
+            if (PARTIAL_TOKEN.get(container) !== token) return; // stale response
             container.innerHTML = html;
+            container.dataset.loaded = "1";
             afterPartialLoad(pageKey, container);
           })
           .catch((err) => {
@@ -687,6 +857,126 @@
         return { open, close, toast, bindOnce };
       })();
 
+      // =========================
+      // Insurance modal
+      // =========================
+      const InsuranceModal = (function () {
+        let prevBodyOverflow = "";
+
+        function setOwnerOptions() {
+          const sel = document.getElementById("insuranceOwner");
+          if (!sel) return;
+          sel.innerHTML = FAMILY_MEMBERS.map(m => `<option value="${m.id}">${m.name}</option>`).join("");
+        }
+
+        function setMode(country) {
+          const tw = document.getElementById("insuranceTwFields");
+          const us = document.getElementById("insuranceUsFields");
+          if (!tw || !us) return;
+          if (country === "US") { tw.classList.add("hidden"); us.classList.remove("hidden"); }
+          else { us.classList.add("hidden"); tw.classList.remove("hidden"); }
+        }
+
+        function open(country = "TW") {
+          const modal = document.getElementById("insurancePolicyModal");
+          if (!modal) return;
+
+          setOwnerOptions();
+
+          const c = document.getElementById("insuranceCountry");
+          if (c) c.value = country;
+
+          setMode(country);
+
+          modal.classList.remove("hidden");
+          modal.setAttribute("aria-hidden", "false");
+          prevBodyOverflow = document.body.style.overflow;
+          document.body.style.overflow = "hidden";
+
+          document.getElementById("insuranceCarrier")?.focus();
+        }
+
+        function close() {
+          const modal = document.getElementById("insurancePolicyModal");
+          if (!modal) return;
+          modal.classList.add("hidden");
+          modal.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = prevBodyOverflow || "";
+          document.getElementById("insurancePolicyForm")?.reset();
+        }
+
+        function bindOnce() {
+          document.getElementById("insurancePolicyBackdrop")?.addEventListener("click", close);
+          document.getElementById("insurancePolicyClose")?.addEventListener("click", close);
+          document.getElementById("insurancePolicyCancel")?.addEventListener("click", close);
+
+          document.getElementById("insuranceCountry")?.addEventListener("change", (e) => {
+            setMode(e.target.value);
+          });
+
+          document.addEventListener("keydown", (e) => {
+            const modal = document.getElementById("insurancePolicyModal");
+            if (!modal || modal.classList.contains("hidden")) return;
+            if (e.key === "Escape") close();
+          });
+
+          document.getElementById("insurancePolicyForm")?.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const country = document.getElementById("insuranceCountry")?.value || "TW";
+            const ownerId = document.getElementById("insuranceOwner")?.value || "alex";
+            const ownerName = FAMILY_MEMBERS.find(m => m.id === ownerId)?.name || "Owner";
+            const carrier = (document.getElementById("insuranceCarrier")?.value || "").trim();
+            if (!carrier) return;
+
+            const last4 = (document.getElementById("insuranceLast4")?.value || "").trim();
+            const type = document.getElementById("insuranceType")?.value || "";
+
+            const base = {
+              id: genId(),
+              country,
+              ownerId,
+              ownerName,
+              carrier,
+              last4,
+              type,
+              createdAt: new Date().toISOString()
+            };
+
+            let item = base;
+
+            if (country === "US") {
+              const cashUsd = numFromText(document.getElementById("insuranceUsCashUsd")?.value);
+              const dbUsd = numFromText(document.getElementById("insuranceDeathBenefitUsd")?.value);
+              const premiumStatus = (document.getElementById("insurancePremiumStatus")?.value || "").trim();
+
+              item = { ...base, cashUsd, deathBenefitUsd: dbUsd, premiumStatus };
+            } else {
+              const productName = (document.getElementById("insuranceProductName")?.value || "").trim();
+              const irsClass = (document.getElementById("insuranceIrsClass")?.value || "").trim();
+              const cashUsd = numFromText(document.getElementById("insuranceCashUsd")?.value);
+              const cashLocal = numFromText(document.getElementById("insuranceCashLocal")?.value);
+              const incomeLocal = numFromText(document.getElementById("insuranceIncomeLocal")?.value);
+
+              item = { ...base, productName, irsClass, cashUsd, cashLocal, incomeLocal };
+            }
+
+            const list = loadInsurance();
+            list.push(item);
+            saveInsurance(list);
+
+            close();
+
+            // refresh current view(s)
+            renderUsInsuranceFromStorage();
+            renderTwInsuranceFromStorage();
+            renderTaxPacketFromStorage();
+          });
+        }
+
+        return { open, close, bindOnce };
+      })();
+
       // --------------------------
       // Quotes + helpers (shared)
       // --------------------------
@@ -697,7 +987,7 @@
       }
 
       // --------------------------
-      // Overview sync (✅ this is the part that makes Overview change)
+      // Overview sync
       // --------------------------
       async function refreshOverviewFromHoldings(stocksMVOverride = null, asOfOverride = "") {
         const page = document.getElementById("page-overview");
@@ -706,11 +996,9 @@
         let stocksMV = stocksMVOverride;
         let asOf = asOfOverride || "";
 
-        // If caller didn't pass a value, compute from holdings + quotes
         if (!Number.isFinite(Number(stocksMV))) {
           const holdings = loadHoldings();
 
-          // No holdings yet -> show baseline sample numbers
           if (!holdings.length) {
             const netWorthEl = page.querySelector("#overviewNetWorth");
             const netWorthDonutEl = page.querySelector("#overviewNetWorthDonut");
@@ -817,12 +1105,8 @@
 
         updateUsStocksChart(totalMV);
 
-        // ✅ Sync Overview too (no extra backend)
-        if (enriched.length) {
-          refreshOverviewFromHoldings(totalMV, asOf);
-        } else {
-          refreshOverviewFromHoldings(null, "");
-        }
+        if (enriched.length) refreshOverviewFromHoldings(totalMV, asOf);
+        else refreshOverviewFromHoldings(null, "");
       }
 
       function renderTable(enriched) {
@@ -930,16 +1214,7 @@
           const gain = (mv == null ? null : mv - costTotal);
           const ret = (gain == null || costTotal <= 0) ? null : (gain / costTotal);
 
-          return {
-            ...h,
-            sym,
-            last,
-            mv,
-            costTotal,
-            gain,
-            ret,
-            asOf: q.asOf || ""
-          };
+          return { ...h, sym, last, mv, costTotal, gain, ret, asOf: q.asOf || "" };
         });
 
         enriched.sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || ""));
@@ -968,13 +1243,285 @@
         });
       }
 
-      // ✅ called after a partial is loaded into the page container
-      function afterPartialLoad(pageKey) {
-        if (pageKey === "us-stocks") {
-          refreshUsStocksQuotesAndRender();
+      // --------------------------
+      // Insurance: ensure hooks exist in partials
+      // --------------------------
+      function ensureInsuranceHooks(country, container) {
+        if (!container) return;
+
+        const table = container.querySelector("table");
+        const tbody = table?.querySelector("tbody");
+
+        if (country === "US" && tbody && !tbody.id) tbody.id = "usInsuranceTbody";
+        if (country === "TW" && tbody && !tbody.id) tbody.id = "twInsuranceTbody";
+
+        const policyCard = table?.closest("div.bg-white");
+        const headerBar = policyCard?.querySelector("div.px-5.py-4.border-b");
+        if (!headerBar) return;
+
+        const existingBtnId = (country === "US") ? "btnUsInsuranceAddPolicy" : "btnTwInsuranceAddPolicy";
+        if (headerBar.querySelector("#" + existingBtnId)) return;
+
+        const actions = document.createElement("div");
+        actions.className = "flex items-center gap-2";
+
+        const addBtn = document.createElement("button");
+        addBtn.type = "button";
+        addBtn.id = existingBtnId;
+        addBtn.className = "inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50";
+        addBtn.innerHTML = `<i class="fa-solid fa-plus text-[11px]"></i><span>Add policy</span>`;
+
+        const packetBtn = document.createElement("button");
+        packetBtn.type = "button";
+        packetBtn.id = (country === "US") ? "btnGoTaxPacketFromUsInsurance" : "btnGoTaxPacketFromTwInsurance";
+        packetBtn.className = "inline-flex items-center gap-2 rounded-xl bg-[#0B2A4A] px-3 py-2 text-xs font-semibold text-white hover:opacity-95";
+        packetBtn.innerHTML = `<i class="fa-solid fa-file-lines text-[11px]"></i><span>Tax Packet</span>`;
+        packetBtn.addEventListener("click", () => switchDashboardPage("tax-packet"));
+
+        actions.appendChild(addBtn);
+        actions.appendChild(packetBtn);
+
+        headerBar.appendChild(actions);
+      }
+
+      function ensureUsInsuranceTbody() {
+        const page = document.getElementById("page-us-insurance");
+        if (!page) return null;
+        let tbody = page.querySelector("#usInsuranceTbody");
+        if (tbody) return tbody;
+        tbody = page.querySelector("table tbody");
+        if (tbody) tbody.id = "usInsuranceTbody";
+        return tbody || null;
+      }
+
+      function ensureTwInsuranceTbody() {
+        const page = document.getElementById("page-tw-insurance");
+        if (!page) return null;
+        let tbody = page.querySelector("#twInsuranceTbody");
+        if (tbody) return tbody;
+        tbody = page.querySelector("table tbody");
+        if (tbody) tbody.id = "twInsuranceTbody";
+        return tbody || null;
+      }
+
+      function renderUsInsuranceFromStorage() {
+        const page = document.getElementById("page-us-insurance");
+        if (!page || page.classList.contains("hidden")) return;
+
+        const tbody = ensureUsInsuranceTbody();
+        if (!tbody) return;
+
+        const list = loadInsurance().filter(x => x.country === "US");
+        if (!list.length) return; // keep sample rows
+
+        tbody.innerHTML = list.map(p => {
+          const code = initials2(p.carrier);
+          const cash = p.cashUsd == null ? "—" : fmtUsd(p.cashUsd);
+          const db = p.deathBenefitUsd == null ? "—" : fmtUsd(p.deathBenefitUsd);
+          const typeBadge =
+            (p.type === "Whole Life" || p.type === "Term Life" || p.type === "IUL")
+              ? p.type
+              : (p.type || "Policy");
+
+          return `
+            <tr class="hover:bg-slate-50/60 transition-colors">
+              <td class="px-5 py-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-full bg-[#002147] text-white flex items-center justify-center text-[11px] font-semibold tracking-[0.12em]">
+                    ${code}
+                  </div>
+                  <div>
+                    <p class="font-medium text-slate-900">${p.carrier}</p>
+                    <p class="text-xs text-slate-500">Policy • ${p.last4 ? "****-" + p.last4 : "—"}</p>
+                    <p class="text-[11px] text-slate-400 mt-1">Owner: <span class="font-semibold">${p.ownerName}</span></p>
+                  </div>
+                </div>
+              </td>
+
+              <td class="px-5 py-4">
+                <span class="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 text-blue-800 px-2.5 py-1 text-[11px] font-semibold tracking-[0.14em] uppercase">
+                  ${typeBadge}
+                </span>
+              </td>
+
+              <td class="px-5 py-4">
+                <div class="font-mono tabular-nums font-semibold text-slate-900">${cash}</div>
+                <div class="mt-1 text-xs text-slate-500">—</div>
+              </td>
+
+              <td class="px-5 py-4">
+                <div class="font-mono tabular-nums font-semibold text-[#002147]">${db}</div>
+              </td>
+
+              <td class="px-5 py-4">
+                <span class="text-sm text-slate-600">${p.premiumStatus ? p.premiumStatus : "—"}</span>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      }
+
+      function renderTwInsuranceFromStorage() {
+        const page = document.getElementById("page-tw-insurance");
+        if (!page || page.classList.contains("hidden")) return;
+
+        const tbody = ensureTwInsuranceTbody();
+        if (!tbody) return;
+
+        const list = loadInsurance().filter(x => x.country === "TW");
+        if (!list.length) return; // keep sample rows
+
+        tbody.innerHTML = list.map(p => {
+          const code = initials2(p.carrier);
+          const cashUsd = p.cashUsd == null ? "—" : `$${Number(p.cashUsd).toLocaleString("en-US")}`;
+          const cashLocal = p.cashLocal == null ? "" : `NT$ ${Number(p.cashLocal).toLocaleString("en-US")}`;
+          const incomeLocal = p.incomeLocal == null ? "—" : `NT$ ${Number(p.incomeLocal).toLocaleString("en-US")} / yr`;
+
+          const cls = (p.irsClass || "").toLowerCase().includes("pfic") ? "amber" : "blue";
+          const badgeClass = cls === "amber"
+            ? "border-amber-200 bg-amber-50 text-amber-900"
+            : "border-blue-200 bg-blue-50 text-blue-800";
+
+          return `
+            <tr class="hover:bg-slate-50/60 transition-colors">
+              <td class="px-5 py-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-full bg-[#002147] text-white flex items-center justify-center text-[11px] font-semibold tracking-[0.12em]">
+                    ${code}
+                  </div>
+                  <div>
+                    <p class="font-medium text-slate-900">${p.carrier}</p>
+                    <p class="text-xs text-slate-500">Policy • ${p.last4 ? "****-" + p.last4 : "—"}</p>
+                    <p class="text-[11px] text-slate-400 mt-1">Owner: <span class="font-semibold">${p.ownerName}</span></p>
+                  </div>
+                </div>
+              </td>
+
+              <td class="px-5 py-4">
+                <p class="font-['Noto_Sans_TC'] text-[13px] text-slate-700 leading-snug">
+                  ${p.productName ? p.productName : "—"}
+                </p>
+              </td>
+
+              <td class="px-5 py-4">
+                <span class="inline-flex items-center rounded-full border ${badgeClass} px-3 py-1.5 text-[12px] font-semibold">
+                  ${p.irsClass ? p.irsClass : "—"}
+                </span>
+              </td>
+
+              <td class="px-5 py-4">
+                <div class="font-mono tabular-nums font-semibold text-[#002147]">${cashUsd}</div>
+                <div class="mt-1 text-xs text-slate-500">${cashLocal}</div>
+              </td>
+
+              <td class="px-5 py-4">
+                <div class="font-mono tabular-nums font-semibold text-slate-900">${incomeLocal}</div>
+                <div class="mt-1 text-xs text-slate-500">—</div>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      }
+
+      function renderTaxPacketFromStorage() {
+        const page = document.getElementById("page-tax-packet");
+        if (!page || page.classList.contains("hidden")) return;
+
+        const usBox = document.querySelector("#taxPacketUSInsurance");
+        const twBox = document.querySelector("#taxPacketTWInsurance");
+        const miss = document.querySelector("#taxPacketMissingList");
+        if (!usBox || !twBox || !miss) return;
+
+        const list = loadInsurance();
+        const byCountry = {
+          US: list.filter(x => x.country === "US"),
+          TW: list.filter(x => x.country === "TW")
+        };
+
+        function groupByOwner(items) {
+          const map = new Map();
+          for (const it of items) {
+            const k = it.ownerName || "Owner";
+            if (!map.has(k)) map.set(k, []);
+            map.get(k).push(it);
+          }
+          return [...map.entries()];
         }
-        if (pageKey === "overview") {
-          refreshOverviewFromHoldings(null, "");
+
+        function renderOwnerGroup(entries, country) {
+          if (!entries.length) return `<div class="text-sm text-gray-400">No items yet.</div>`;
+
+          return entries.map(([owner, items]) => {
+            const rows = items.map(it => {
+              const line1 = `${it.carrier}${it.last4 ? " • ****-" + it.last4 : ""}`;
+              const line2 = country === "US"
+                ? `Cash value: ${it.cashUsd == null ? "—" : fmtUsd(it.cashUsd)} • Death benefit: ${it.deathBenefitUsd == null ? "—" : fmtUsd(it.deathBenefitUsd)}`
+                : `Cash value: ${it.cashUsd == null ? "—" : "$" + Number(it.cashUsd).toLocaleString("en-US")} • IRS: ${it.irsClass || "—"}`;
+
+              return `
+                <div class="flex items-start justify-between gap-3 py-2 border-b border-gray-100 last:border-b-0">
+                  <div>
+                    <div class="text-sm font-semibold text-[#002147]">${line1}</div>
+                    <div class="text-xs text-gray-500 mt-1">${line2}</div>
+                    ${country === "TW" && it.productName ? `<div class="text-xs text-gray-500 mt-1">${it.productName}</div>` : ""}
+                  </div>
+                  <span class="text-xs text-gray-400">${it.type || ""}</span>
+                </div>
+              `;
+            }).join("");
+
+            return `
+              <div class="rounded-xl border border-gray-100 p-4">
+                <div class="text-[11px] tracking-[0.18em] uppercase text-gray-400">Owner</div>
+                <div class="text-base font-semibold text-[#002147]">${owner}</div>
+                <div class="mt-3">${rows}</div>
+              </div>
+            `;
+          }).join("");
+        }
+
+        usBox.innerHTML = renderOwnerGroup(groupByOwner(byCountry.US), "US");
+        twBox.innerHTML = renderOwnerGroup(groupByOwner(byCountry.TW), "TW");
+
+        const missing = [];
+        for (const it of list) {
+          if (!it.ownerId) missing.push(`${it.carrier}: missing owner`);
+          if (it.country === "TW" && !it.irsClass) missing.push(`${it.carrier}: missing IRS classification`);
+          if (it.country === "TW" && (it.cashUsd == null)) missing.push(`${it.carrier}: missing cash value (USD)`);
+          if (it.country === "US" && (it.cashUsd == null)) missing.push(`${it.carrier}: missing cash value (USD)`);
+        }
+        miss.innerHTML = (missing.length ? missing : ["No missing fields detected (demo)."])
+          .map(x => `<li>${x}</li>`).join("");
+      }
+
+      // --------------------------
+      // Delegation
+      // --------------------------
+      function setupInsuranceDelegation() {
+        document.addEventListener("click", (e) => {
+          const usBtn = e.target.closest("#btnUsInsuranceAddPolicy");
+          if (usBtn && usBtn.closest("#page-us-insurance")) { InsuranceModal.open("US"); return; }
+
+          const twBtn = e.target.closest("#btnTwInsuranceAddPolicy");
+          if (twBtn && twBtn.closest("#page-tw-insurance")) { InsuranceModal.open("TW"); return; }
+        });
+      }
+
+      // ✅ called after a partial is loaded into the page container
+      function afterPartialLoad(pageKey, container) {
+        if (pageKey === "us-stocks") refreshUsStocksQuotesAndRender();
+        if (pageKey === "overview") refreshOverviewFromHoldings(null, "");
+
+        if (pageKey === "us-insurance") {
+          ensureInsuranceHooks("US", container);
+          renderUsInsuranceFromStorage();
+        }
+        if (pageKey === "tw-insurance") {
+          ensureInsuranceHooks("TW", container);
+          renderTwInsuranceFromStorage();
+        }
+        if (pageKey === "tax-packet") {
+          renderTaxPacketFromStorage();
         }
       }
 
@@ -993,7 +1540,7 @@
 
         document.querySelectorAll('.dash-page').forEach((p) => p.classList.add('hidden'));
 
-        loadPartialAlways(target, pageKey);
+        loadPartialOnce(target, pageKey);
         target.classList.remove('hidden');
         window.scrollTo({ top: 0, behavior: 'auto' });
 
@@ -1024,6 +1571,9 @@
 
         UsStocksModal.bindOnce();
         setupUsStocksDelegation();
+
+        InsuranceModal.bindOnce();
+        setupInsuranceDelegation();
 
         switchDashboardPage('overview');
       }
