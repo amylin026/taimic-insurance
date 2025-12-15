@@ -110,6 +110,17 @@
     .dash-page [style*="Merriweather"] {
       font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
     }
+
+    /* ✅ DEMO banner */
+    .demo-banner {
+      position: sticky;
+      top: 72px; /* below fixed header */
+      z-index: 45;
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid #e5e7eb;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
   </style>
 </head>
 
@@ -172,23 +183,26 @@
             </div>
           </div>
 
-          <button type="button" class="hidden md:inline-flex items-center gap-2 rounded-full bg-[#002147] text-white text-xs font-semibold px-4 py-2 shadow-sm hover:bg-[#001a70] transition">
+          <!-- ✅ DEMO: keep button but route to tax packet -->
+          <button type="button" onclick="switchDashboardPage && switchDashboardPage('tax-packet')" class="hidden md:inline-flex items-center gap-2 rounded-full bg-[#002147] text-white text-xs font-semibold px-4 py-2 shadow-sm hover:bg-[#001a70] transition">
             <i class="fa-solid fa-file-export text-[11px]"></i>
-            <span>Export full report (PDF)</span>
+            <span>View Tax Packet (Demo)</span>
           </button>
 
           <div class="relative">
             <button id="dash-user-toggle" type="button" class="w-9 h-9 rounded-full bg-[#002147] text-white flex items-center justify-center text-sm font-semibold hover:bg-[#001a70] transition-colors">
-              <span id="dash-user-initial">A</span>
+              <span id="dash-user-initial">D</span>
             </button>
             <div id="dash-user-menu" class="hidden absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-lg border border-slate-100 text-sm overflow-hidden z-50">
               <div class="px-4 py-3 border-b border-slate-100">
-                <p class="text-[10px] text-slate-500 uppercase tracking-[0.16em]">Signed in as</p>
-                <p id="dash-user-email" class="text-xs font-semibold text-slate-800 truncate">you@gmail.com</p>
+                <p class="text-[10px] text-slate-500 uppercase tracking-[0.16em]">Demo user</p>
+                <p id="dash-user-email" class="text-xs font-semibold text-slate-800 truncate">demo@taimic.insurance</p>
               </div>
-              <button type="button" onclick="handleLogout && handleLogout()" class="w-full text-left px-4 py-2.5 flex items-center gap-2 text-slate-700 hover:bg-slate-50">
-                <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
-                <span>Logout</span>
+
+              <!-- ✅ DEMO: no logout -->
+              <button type="button" onclick="window.location.href='index.html'" class="w-full text-left px-4 py-2.5 flex items-center gap-2 text-slate-700 hover:bg-slate-50">
+                <i class="fa-solid fa-arrow-left text-xs"></i>
+                <span>Back to Home</span>
               </button>
             </div>
           </div>
@@ -200,6 +214,24 @@
         </div>
       </div>
     </header>
+
+    <!-- ✅ DEMO banner -->
+    <div class="demo-banner">
+      <div class="max-w-[1440px] mx-auto px-6 py-2 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+        <div class="text-xs text-slate-700">
+          <span class="font-semibold text-[#002147]">Demo Mode</span>
+          <span class="text-slate-500">— sample data only, no login required.</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="switchDashboardPage('tax-packet')" class="text-xs font-semibold rounded-full border border-slate-200 bg-white px-3 py-1.5 hover:bg-slate-50">
+            Open Tax Packet
+          </button>
+          <button type="button" onclick="window.__resetDemo && window.__resetDemo()" class="text-xs font-semibold rounded-full bg-[#0B2A4A] text-white px-3 py-1.5 hover:opacity-95">
+            Reset demo data
+          </button>
+        </div>
+      </div>
+    </div>
 
     <div id="mobile-menu" class="md:hidden fixed top-[72px] left-0 right-0 bottom-0 z-30 bg-black/30 backdrop-blur-sm hidden">
       <div id="mobile-menu-panel" class="absolute right-0 top-0 bottom-0 w-64 bg-white border-l border-slate-200 px-5 py-6 overflow-y-auto transform translate-x-full transition-transform duration-200">
@@ -369,7 +401,7 @@
             <button type="submit" class="rounded-xl bg-[#0B2A4A] px-4 py-2 text-sm font-semibold text-white hover:opacity-95">Save</button>
           </div>
 
-          <p class="text-[11px] text-gray-400">Prices / market value / P&L auto-update from TwelveData via Cloudflare.</p>
+          <p class="text-[11px] text-gray-400">Demo prices are mocked (no external API).</p>
         </form>
       </div>
     </div>
@@ -388,14 +420,13 @@
         <div class="p-5 border-b border-gray-100 flex items-center justify-between">
           <div>
             <h3 class="text-lg font-semibold text-[#002147]">Add policy</h3>
-            <p class="text-xs text-gray-500">Stored locally for now. We’ll wire backend later.</p>
+            <p class="text-xs text-gray-500">Stored locally (demo storage). You can delete anytime.</p>
           </div>
           <button id="insurancePolicyClose" type="button" class="h-9 w-9 rounded-lg hover:bg-gray-50 text-gray-500" aria-label="Close">✕</button>
         </div>
 
         <form id="insurancePolicyForm" class="p-5 space-y-4">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <!-- ✅ changed: add id so we can hide it when locked -->
             <label class="block" id="insuranceCountryLabel">
               <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Country</span>
               <select id="insuranceCountry" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm">
@@ -493,20 +524,25 @@
     </div>
   </div>
 
-  <script src="main.js"></script>
+  <!-- ✅ DEMO: IMPORTANT — do NOT load main.js here (it may enforce auth/redirect) -->
+  <!-- <script src="main.js"></script> -->
 
   <script>
     (function () {
+      /* ✅ DEMO FLAGS */
+      const IS_DEMO = true;
+
       const QUOTES_API_BASE = "https://taimic-quotes.amy20060226.workers.dev";
 
-      const US_STOCKS_STORAGE_KEY = "taimic_us_stocks_holdings_v1";
+      const US_STOCKS_STORAGE_KEY = IS_DEMO ? "taimic_us_stocks_holdings_demo_v1" : "taimic_us_stocks_holdings_v1";
+      const INSURANCE_STORAGE_KEY = IS_DEMO ? "taimic_household_insurance_demo_v1" : "taimic_household_insurance_v1";
+      const DEMO_SEEDED_KEY = "taimic_demo_seeded_v1";
+
       const $ = (id) => document.getElementById(id);
 
       const OVERVIEW_BASE_NET_WORTH = 3420500;
       const OVERVIEW_BASE_STOCKS = 980000;
       const OVERVIEW_FX_NOTE_TEXT = "📉 -$1,200 due to TWD drop";
-
-      const INSURANCE_STORAGE_KEY = "taimic_household_insurance_v1";
 
       const FAMILY_MEMBERS = [
         { id: "alex", name: "Alex" },
@@ -578,6 +614,56 @@
         const b = (parts[1]?.[0] || s[1] || "").toUpperCase();
         return (String(a).toUpperCase() + String(b).toUpperCase()).slice(0, 2);
       }
+
+      /* ✅ DEMO: seed + reset */
+      function seedDemoDataOnce() {
+        if (!IS_DEMO) return;
+        if (localStorage.getItem(DEMO_SEEDED_KEY) === "1") return;
+
+        localStorage.setItem(DEMO_SEEDED_KEY, "1");
+
+        saveHoldings([
+          { id: genId(), ticker: "AAPL", name: "Apple Inc.", quantity: 10, costBasis: 180.00, createdAt: new Date(Date.now() - 86400000 * 4).toISOString() },
+          { id: genId(), ticker: "MSFT", name: "Microsoft", quantity: 6, costBasis: 330.00, createdAt: new Date(Date.now() - 86400000 * 2).toISOString() },
+          { id: genId(), ticker: "VTI",  name: "Vanguard Total Stock", quantity: 12, costBasis: 245.00, createdAt: new Date(Date.now() - 86400000 * 1).toISOString() }
+        ]);
+
+        saveInsurance([
+          {
+            id: genId(), country: "US",
+            ownerId: "alex", ownerName: "Alex",
+            carrier: "MassMutual", last4: "4821",
+            type: "Whole Life",
+            cashUsd: 124000, deathBenefitUsd: 2000000,
+            premiumStatus: "Paid up",
+            createdAt: new Date(Date.now() - 86400000 * 3).toISOString()
+          },
+          {
+            id: genId(), country: "TW",
+            ownerId: "mom", ownerName: "Mom",
+            carrier: "國泰人壽", last4: "1190",
+            type: "Savings",
+            productName: "國泰XXX外幣保單",
+            irsClass: "PFIC Risk",
+            cashUsd: 85000, cashLocal: 2700000, incomeLocal: 30000,
+            createdAt: new Date(Date.now() - 86400000 * 5).toISOString()
+          }
+        ]);
+      }
+
+      window.__resetDemo = function () {
+        if (!IS_DEMO) return;
+        localStorage.removeItem(DEMO_SEEDED_KEY);
+        localStorage.removeItem(US_STOCKS_STORAGE_KEY);
+        localStorage.removeItem(INSURANCE_STORAGE_KEY);
+        seedDemoDataOnce();
+        // re-render current page
+        renderUsInsuranceFromStorage();
+        renderTwInsuranceFromStorage();
+        renderTaxPacketFromStorage();
+        refreshUsStocksQuotesAndRender();
+        refreshOverviewFromHoldings(null, "");
+      };
 
       function updateUsStocksChart(totalMV) {
         const page = document.getElementById("page-us-stocks");
@@ -732,7 +818,6 @@
         const url = container.getAttribute('data-include');
         if (!url) return;
 
-        // ✅ already loaded -> render AFTER it becomes visible
         if (container.dataset.loaded === "1") {
           requestAnimationFrame(() => afterPartialLoad(pageKey, container));
           return;
@@ -832,7 +917,6 @@
 
             close();
             toast("Saved. Updating…");
-
             await refreshUsStocksQuotesAndRender();
           });
         }
@@ -857,7 +941,6 @@
           else { us.classList.add("hidden"); tw.classList.remove("hidden"); }
         }
 
-        // ✅ NEW: lock/hide country selector (so US/TW pages won't ask again)
         function setCountryLockedUI(locked) {
           const c = document.getElementById("insuranceCountry");
           const label = document.getElementById("insuranceCountryLabel") || c?.closest("label");
@@ -865,7 +948,6 @@
           if (c) c.disabled = !!locked;
         }
 
-        // ✅ UPDATED: open supports either "US"/"TW" OR { country, lockCountry }
         function open(arg = "TW") {
           const modal = document.getElementById("insurancePolicyModal");
           if (!modal) return;
@@ -903,8 +985,6 @@
           modal.setAttribute("aria-hidden", "true");
           document.body.style.overflow = prevBodyOverflow || "";
           document.getElementById("insurancePolicyForm")?.reset();
-
-          // restore selector for next open (if needed)
           setCountryLockedUI(false);
         }
 
@@ -977,13 +1057,26 @@
         return { open, close, bindOnce };
       })();
 
+      /* ✅ DEMO: mock quotes in demo (no external calls) */
       async function fetchQuotes(symbols) {
+        if (IS_DEMO) {
+          const base = { AAPL: 243.12, MSFT: 412.55, VTI: 276.89, NVDA: 146.22 };
+          const now = new Date().toISOString();
+          const out = {};
+          for (const s of symbols) {
+            const sym = safeUpper(s);
+            const p = base[sym] ?? (120 + (sym.charCodeAt(0) % 40));
+            out[sym] = { price: p, asOf: "Demo • " + now.slice(0, 10) };
+          }
+          return out;
+        }
+
         const endpoint = `${QUOTES_API_BASE}/api/quotes?symbols=${encodeURIComponent(symbols.join(","))}&t=${Date.now()}`;
         const res = await fetch(endpoint, { cache: "no-store" });
         return await res.json();
       }
 
-      async function refreshOverviewFromHoldings(stocksMVOverride = null, asOfOverride = "") {
+      async function refreshOverviewFromHoldings(stocksMVOverride = null) {
         const page = document.getElementById("page-overview");
         if (!page) return;
 
@@ -1002,7 +1095,6 @@
             if (netWorthDonutEl) netWorthDonutEl.textContent = fmtUsd(OVERVIEW_BASE_NET_WORTH);
             if (stocksEl) stocksEl.textContent = fmtUsd(OVERVIEW_BASE_STOCKS);
             if (fxEl) fxEl.textContent = OVERVIEW_FX_NOTE_TEXT;
-
             return;
           }
 
@@ -1082,7 +1174,7 @@
         }
 
         updateUsStocksChart(totalMV);
-        refreshOverviewFromHoldings(totalMV, "");
+        refreshOverviewFromHoldings(totalMV);
       }
 
       function renderTable(enriched) {
@@ -1269,7 +1361,6 @@
         return tbody || null;
       }
 
-      // ✅ NEW: insurance empty state helper
       function renderInsuranceEmptyState(tbody, label, colCount) {
         tbody.innerHTML = `
           <tr>
@@ -1280,7 +1371,6 @@
         `;
       }
 
-      // ✅ NEW: delete policy helper
       function deleteInsurancePolicy(policyId) {
         if (!policyId) return;
         const list = loadInsurance();
@@ -1301,10 +1391,8 @@
 
         const list = loadInsurance().filter(x => x.country === "US");
 
-        // ✅ handle empty
         if (!list.length) {
           renderInsuranceEmptyState(tbody, "US", 5);
-          // optional: reset totals if ids exist
           const totalCashEl = page.querySelector("#usInsuranceTotalCashValue");
           const totalDbEl = page.querySelector("#usInsuranceTotalDeathBenefit");
           if (totalCashEl) totalCashEl.textContent = "$0.00";
@@ -1312,7 +1400,6 @@
           return;
         }
 
-        // update totals
         const totalCash = list.reduce((s, it) => s + (Number.isFinite(Number(it.cashUsd)) ? Number(it.cashUsd) : 0), 0);
         const totalDb = list.reduce((s, it) => s + (Number.isFinite(Number(it.deathBenefitUsd)) ? Number(it.deathBenefitUsd) : 0), 0);
 
@@ -1345,7 +1432,6 @@
                     </div>
                   </div>
 
-                  <!-- ✅ delete -->
                   <button
                     type="button"
                     class="btnDeleteInsurancePolicy text-gray-300 hover:text-rose-600 transition-colors"
@@ -1389,7 +1475,6 @@
 
         const list = loadInsurance().filter(x => x.country === "TW");
 
-        // ✅ handle empty
         if (!list.length) {
           renderInsuranceEmptyState(tbody, "Taiwan", 5);
           const totalEl = page.querySelector("#twInsuranceTotalSurrenderUsd");
@@ -1397,7 +1482,6 @@
           return;
         }
 
-        // update totals
         const totalSurrender = list.reduce((s, it) => s + (Number.isFinite(Number(it.cashUsd)) ? Number(it.cashUsd) : 0), 0);
         const totalEl = page.querySelector("#twInsuranceTotalSurrenderUsd");
         if (totalEl) totalEl.textContent = fmtUsd(totalSurrender);
@@ -1428,7 +1512,6 @@
                     </div>
                   </div>
 
-                  <!-- ✅ delete -->
                   <button
                     type="button"
                     class="btnDeleteInsurancePolicy text-gray-300 hover:text-rose-600 transition-colors"
@@ -1539,7 +1622,6 @@
 
       function setupInsuranceDelegation() {
         document.addEventListener("click", (e) => {
-          // ✅ open modal with country locked (no more choosing US/TW)
           const usBtn = e.target.closest("#btnUsInsuranceAddPolicy");
           if (usBtn && usBtn.closest("#page-us-insurance")) {
             InsuranceModal.open({ country: "US", lockCountry: true });
@@ -1552,7 +1634,6 @@
             return;
           }
 
-          // ✅ delete policy
           const delBtn = e.target.closest(".btnDeleteInsurancePolicy");
           if (delBtn) {
             const policyId = delBtn.getAttribute("data-policy-id");
@@ -1562,7 +1643,6 @@
         });
       }
 
-      // ✅ Clear demo data from tax-packet page
       function setupTaxPacketClearDelegation() {
         document.addEventListener("click", (e) => {
           const btn = e.target.closest("#btnClearInsurance");
@@ -1577,7 +1657,7 @@
 
       function afterPartialLoad(pageKey, container) {
         if (pageKey === "us-stocks") refreshUsStocksQuotesAndRender();
-        if (pageKey === "overview") refreshOverviewFromHoldings(null, "");
+        if (pageKey === "overview") refreshOverviewFromHoldings(null);
 
         if (pageKey === "us-insurance") {
           ensureInsuranceHooks("US", container);
@@ -1629,6 +1709,8 @@
       }
 
       function initDashboard() {
+        seedDemoDataOnce();
+
         setupMobileMenu();
         setupDesktopSidebarToggle();
         setupUserMenu();
@@ -1639,7 +1721,6 @@
         InsuranceModal.bindOnce();
         setupInsuranceDelegation();
 
-        // ✅ clear button in tax packet works even though tax packet is a partial
         setupTaxPacketClearDelegation();
 
         switchDashboardPage('overview');
