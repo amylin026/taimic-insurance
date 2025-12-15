@@ -1,6 +1,11 @@
 <!-- pages/us-insurance.html -->
 
-<div id="usInsuranceRoot" class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10">
+<div
+  id="usInsuranceRoot"
+  data-insurance-country="US"
+  data-hide-country-select="true"
+  class="max-w-[1200px] mx-auto px-6 py-8 lg:py-10"
+>
   <!-- Page header -->
   <div class="flex flex-col gap-2">
     <p class="text-[11px] tracking-[0.24em] text-slate-400 uppercase">
@@ -124,6 +129,8 @@
         <div class="flex items-center gap-2">
           <button
             id="btnUsInsuranceAddPolicy"
+            data-insurance-country="US"
+            data-hide-country-select="true"
             type="button"
             class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
             title="Add a policy (stored locally for now)"
@@ -154,7 +161,7 @@
             <th class="px-5 py-3 font-medium tracking-wider uppercase">Cash Value (Accumulation)</th>
             <th class="px-5 py-3 font-medium tracking-wider uppercase">Death Benefit</th>
             <th class="px-5 py-3 font-medium tracking-wider uppercase">Premium Status</th>
-            <!-- ✅ NEW: row actions (trash) -->
+            <!-- ✅ NEW: actions column for delete -->
             <th class="px-5 py-3 font-medium tracking-wider uppercase text-right">Actions</th>
           </tr>
         </thead>
@@ -177,4 +184,19 @@
       </p>
     </div>
   </div>
+
+  <!-- Optional: row actions template (JS can clone this into the Actions column) -->
+  <template id="usInsuranceRowActionsTemplate">
+    <div class="flex items-center justify-end gap-2">
+      <button
+        type="button"
+        data-action="delete-policy"
+        class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-[11px] font-semibold text-slate-700 hover:bg-slate-50"
+        title="Delete policy"
+      >
+        <i class="fa-solid fa-trash text-[11px]"></i>
+        <span class="hidden sm:inline">Delete</span>
+      </button>
+    </div>
+  </template>
 </div>
