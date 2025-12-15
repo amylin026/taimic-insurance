@@ -142,43 +142,12 @@
           </tr>
         </thead>
 
-        <!-- ✅ add tbody id so dashboard.html JS can render rows -->
+        <!-- ✅ dashboard.html JS will render into this tbody -->
         <tbody id="twInsuranceTbody" class="divide-y divide-slate-200/70">
-          <!-- Sample row (until you render from localStorage) -->
-          <tr class="hover:bg-slate-50/60 transition-colors" data-sample="1">
-            <td class="px-5 py-4">
-              <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-full bg-[#002147] text-white flex items-center justify-center text-[11px] font-semibold tracking-[0.12em]">
-                  CT
-                </div>
-                <div>
-                  <p class="font-medium text-slate-900">Cathay Life <span class="text-slate-500">/ 國泰</span></p>
-                  <p class="text-xs text-slate-500">Policy • ****-0921</p>
-                  <p class="text-[11px] text-slate-400 mt-1">Owner: <span class="font-semibold">Mom</span></p>
-                </div>
-              </div>
-            </td>
-
-            <td class="px-5 py-4">
-              <p class="font-['Noto_Sans_TC'] text-[13px] text-slate-700 leading-snug">
-                國泰人壽鑫富利外幣終身壽險（儲蓄險）
-              </p>
-            </td>
-
-            <td class="px-5 py-4">
-              <span class="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 text-blue-800 px-3 py-1.5 text-[12px] font-semibold">
-                Foreign Savings Acct
-              </span>
-            </td>
-
-            <td class="px-5 py-4">
-              <div class="font-mono tabular-nums font-semibold text-[#002147]">$85,000</div>
-              <div class="mt-1 text-xs text-slate-500">NT$ 2.7M</div>
-            </td>
-
-            <td class="px-5 py-4">
-              <div class="font-mono tabular-nums font-semibold text-slate-900">NT$ 30,000 / yr</div>
-              <div class="mt-1 text-xs text-slate-500">Taxable Interest</div>
+          <!-- Empty state (will be replaced once you add policies) -->
+          <tr>
+            <td colspan="5" class="px-5 py-8 text-sm text-slate-400">
+              No Taiwan policies yet. Click <span class="font-semibold text-[#0B2A4A]">Add policy</span> to get started.
             </td>
           </tr>
         </tbody>
