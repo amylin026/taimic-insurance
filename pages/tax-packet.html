@@ -17,8 +17,10 @@
               </span>
             </div>
 
-            <!-- ✅ JS will populate -->
-            <ul id="taxPacketMissingList" class="mt-3 list-disc pl-5 text-sm text-rose-900/80 space-y-1"></ul>
+            <!-- ✅ JS will populate; fallback line avoids "empty = broken" -->
+            <ul id="taxPacketMissingList" class="mt-3 list-disc pl-5 text-sm text-rose-900/80 space-y-1">
+              <li class="text-rose-900/60">No missing items detected (demo).</li>
+            </ul>
           </div>
 
           <div class="flex items-center gap-2 shrink-0">
@@ -34,9 +36,9 @@
               type="button"
               id="btnClearInsurance"
               class="rounded-xl border border-rose-200 bg-white px-4 py-2 text-sm font-semibold text-rose-900 hover:bg-rose-100/40"
-              title="Clear demo data"
+              title="Clear insurance data (demo)"
             >
-              Clear demo data
+              Clear insurance data
             </button>
           </div>
         </div>
@@ -72,9 +74,10 @@
             <span class="font-mono tabular-nums font-semibold text-[#002147]">manual input (demo)</span>
           </span>
 
-          <span class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs text-emerald-900">
-            <i class="fa-solid fa-shield-check"></i>
-            <span class="text-[10px] tracking-[0.22em] uppercase">Ready</span>
+          <!-- ✅ more honest than "Ready" for an MVP demo -->
+          <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs text-slate-700">
+            <i class="fa-regular fa-circle-question text-slate-500"></i>
+            <span class="text-[10px] tracking-[0.22em] uppercase">Demo</span>
           </span>
         </div>
       </div>
@@ -334,40 +337,37 @@
       </section>
     </div>
 
-    <!-- Evidence Locker -->
+    <!-- Evidence Locker (MVP placeholder) -->
     <div class="bg-white rounded-3xl border border-slate-200/70 shadow-sm overflow-hidden">
-      <div class="px-6 py-5 border-b border-slate-200/70 flex items-center justify-between gap-3">
+      <div class="px-6 py-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
         <div>
           <p class="text-[11px] font-semibold tracking-[0.24em] text-slate-400 uppercase">Evidence locker</p>
           <h2 class="mt-1 text-lg font-semibold tracking-tight text-[#002147]">Supporting Documents</h2>
+          <p class="mt-2 text-sm text-slate-600">
+            Optional — attach statements only when you’re ready to hand off to a CPA.
+          </p>
+          <p class="mt-1 text-[11px] text-slate-400">
+            (MVP: upload is a placeholder — no files are stored yet.)
+          </p>
         </div>
 
-        <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] text-slate-600">
-          <i class="fa-regular fa-folder-open text-slate-400"></i>
-          <span class="tracking-[0.16em] uppercase text-slate-400">Docs</span>
-          <span class="font-mono tabular-nums font-semibold text-[#002147]">0</span>
-        </span>
-      </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-[11px] text-slate-600">
+            <i class="fa-regular fa-folder-open text-slate-400"></i>
+            <span class="tracking-[0.16em] uppercase text-slate-400">Docs</span>
+            <span class="font-mono tabular-nums font-semibold text-[#002147]">0</span>
+          </span>
 
-      <div class="overflow-x-auto">
-        <table class="min-w-full text-sm">
-          <thead class="bg-slate-50">
-            <tr class="text-left text-xs text-slate-500">
-              <th class="px-6 py-3 font-medium tracking-wider uppercase">Document Name</th>
-              <th class="px-6 py-3 font-medium tracking-wider uppercase">Associated Asset</th>
-              <th class="px-6 py-3 font-medium tracking-wider uppercase">Date Uploaded</th>
-              <th class="px-6 py-3 font-medium tracking-wider uppercase text-right">Action</th>
-            </tr>
-          </thead>
-
-          <tbody class="divide-y divide-slate-200/70">
-            <tr>
-              <td colspan="4" class="px-6 py-8 text-sm text-slate-400">
-                No documents yet. Upload statements to attach evidence.
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+            onclick="alert('Upload (demo placeholder)')"
+            title="Upload documents (demo)"
+          >
+            <i class="fa-solid fa-arrow-up-from-bracket text-[13px] text-slate-500"></i>
+            <span>Upload</span>
+          </button>
+        </div>
       </div>
     </div>
 
