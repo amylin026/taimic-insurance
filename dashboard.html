@@ -395,7 +395,8 @@
 
         <form id="insurancePolicyForm" class="p-5 space-y-4">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <label class="block">
+            <!-- ✅ changed: add id so we can hide it when locked -->
+            <label class="block" id="insuranceCountryLabel">
               <span class="text-[11px] font-semibold tracking-[0.18em] uppercase text-[#9CA3AF]">Country</span>
               <select id="insuranceCountry" class="mt-1 w-full rounded-xl border border-gray-200 px-3 py-2 text-sm">
                 <option value="US">US</option>
@@ -856,16 +857,36 @@
           else { us.classList.add("hidden"); tw.classList.remove("hidden"); }
         }
 
-        function open(country = "TW") {
+        // ✅ NEW: lock/hide country selector (so US/TW pages won't ask again)
+        function setCountryLockedUI(locked) {
+          const c = document.getElementById("insuranceCountry");
+          const label = document.getElementById("insuranceCountryLabel") || c?.closest("label");
+          if (label) label.classList.toggle("hidden", !!locked);
+          if (c) c.disabled = !!locked;
+        }
+
+        // ✅ UPDATED: open supports either "US"/"TW" OR { country, lockCountry }
+        function open(arg = "TW") {
           const modal = document.getElementById("insurancePolicyModal");
           if (!modal) return;
 
           setOwnerOptions();
 
+          let country = "TW";
+          let lockCountry = false;
+
+          if (typeof arg === "string") {
+            country = arg || "TW";
+          } else if (arg && typeof arg === "object") {
+            country = arg.country || "TW";
+            lockCountry = !!arg.lockCountry;
+          }
+
           const c = document.getElementById("insuranceCountry");
           if (c) c.value = country;
 
           setMode(country);
+          setCountryLockedUI(lockCountry);
 
           modal.classList.remove("hidden");
           modal.setAttribute("aria-hidden", "false");
@@ -882,6 +903,9 @@
           modal.setAttribute("aria-hidden", "true");
           document.body.style.overflow = prevBodyOverflow || "";
           document.getElementById("insurancePolicyForm")?.reset();
+
+          // restore selector for next open (if needed)
+          setCountryLockedUI(false);
         }
 
         function bindOnce() {
@@ -1186,7 +1210,7 @@
         });
       }
 
-      // --- Insurance hooks/render (same as your current logic) ---
+      // --- Insurance hooks/render ---
       function ensureInsuranceHooks(country, container) {
         if (!container) return;
 
@@ -1245,6 +1269,29 @@
         return tbody || null;
       }
 
+      // ✅ NEW: insurance empty state helper
+      function renderInsuranceEmptyState(tbody, label, colCount) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="${colCount}" class="px-5 py-8 text-sm text-slate-400">
+              No ${label} policies yet. Click <span class="font-semibold text-[#0B2A4A]">Add policy</span> to get started.
+            </td>
+          </tr>
+        `;
+      }
+
+      // ✅ NEW: delete policy helper
+      function deleteInsurancePolicy(policyId) {
+        if (!policyId) return;
+        const list = loadInsurance();
+        const next = list.filter(p => p.id !== policyId);
+        saveInsurance(next);
+
+        renderUsInsuranceFromStorage();
+        renderTwInsuranceFromStorage();
+        renderTaxPacketFromStorage();
+      }
+
       function renderUsInsuranceFromStorage() {
         const page = document.getElementById("page-us-insurance");
         if (!page || page.classList.contains("hidden")) return;
@@ -1253,7 +1300,26 @@
         if (!tbody) return;
 
         const list = loadInsurance().filter(x => x.country === "US");
-        if (!list.length) return;
+
+        // ✅ handle empty
+        if (!list.length) {
+          renderInsuranceEmptyState(tbody, "US", 5);
+          // optional: reset totals if ids exist
+          const totalCashEl = page.querySelector("#usInsuranceTotalCashValue");
+          const totalDbEl = page.querySelector("#usInsuranceTotalDeathBenefit");
+          if (totalCashEl) totalCashEl.textContent = "$0.00";
+          if (totalDbEl) totalDbEl.textContent = "$0.00";
+          return;
+        }
+
+        // update totals
+        const totalCash = list.reduce((s, it) => s + (Number.isFinite(Number(it.cashUsd)) ? Number(it.cashUsd) : 0), 0);
+        const totalDb = list.reduce((s, it) => s + (Number.isFinite(Number(it.deathBenefitUsd)) ? Number(it.deathBenefitUsd) : 0), 0);
+
+        const totalCashEl = page.querySelector("#usInsuranceTotalCashValue");
+        const totalDbEl = page.querySelector("#usInsuranceTotalDeathBenefit");
+        if (totalCashEl) totalCashEl.textContent = fmtUsd(totalCash);
+        if (totalDbEl) totalDbEl.textContent = fmtUsd(totalDb);
 
         tbody.innerHTML = list.map(p => {
           const code = initials2(p.carrier);
@@ -1267,15 +1333,27 @@
           return `
             <tr class="hover:bg-slate-50/60 transition-colors">
               <td class="px-5 py-4">
-                <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-full bg-[#002147] text-white flex items-center justify-center text-[11px] font-semibold tracking-[0.12em]">
-                    ${code}
+                <div class="flex items-start justify-between gap-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-[#002147] text-white flex items-center justify-center text-[11px] font-semibold tracking-[0.12em]">
+                      ${code}
+                    </div>
+                    <div>
+                      <p class="font-medium text-slate-900">${p.carrier}</p>
+                      <p class="text-xs text-slate-500">Policy • ${p.last4 ? "****-" + p.last4 : "—"}</p>
+                      <p class="text-[11px] text-slate-400 mt-1">Owner: <span class="font-semibold">${p.ownerName}</span></p>
+                    </div>
                   </div>
-                  <div>
-                    <p class="font-medium text-slate-900">${p.carrier}</p>
-                    <p class="text-xs text-slate-500">Policy • ${p.last4 ? "****-" + p.last4 : "—"}</p>
-                    <p class="text-[11px] text-slate-400 mt-1">Owner: <span class="font-semibold">${p.ownerName}</span></p>
-                  </div>
+
+                  <!-- ✅ delete -->
+                  <button
+                    type="button"
+                    class="btnDeleteInsurancePolicy text-gray-300 hover:text-rose-600 transition-colors"
+                    title="Delete policy"
+                    data-policy-id="${p.id}"
+                  >
+                    <i class="fa-solid fa-trash-can text-[12px]"></i>
+                  </button>
                 </div>
               </td>
 
@@ -1310,7 +1388,19 @@
         if (!tbody) return;
 
         const list = loadInsurance().filter(x => x.country === "TW");
-        if (!list.length) return;
+
+        // ✅ handle empty
+        if (!list.length) {
+          renderInsuranceEmptyState(tbody, "Taiwan", 5);
+          const totalEl = page.querySelector("#twInsuranceTotalSurrenderUsd");
+          if (totalEl) totalEl.textContent = "$0.00";
+          return;
+        }
+
+        // update totals
+        const totalSurrender = list.reduce((s, it) => s + (Number.isFinite(Number(it.cashUsd)) ? Number(it.cashUsd) : 0), 0);
+        const totalEl = page.querySelector("#twInsuranceTotalSurrenderUsd");
+        if (totalEl) totalEl.textContent = fmtUsd(totalSurrender);
 
         tbody.innerHTML = list.map(p => {
           const code = initials2(p.carrier);
@@ -1326,15 +1416,27 @@
           return `
             <tr class="hover:bg-slate-50/60 transition-colors">
               <td class="px-5 py-4">
-                <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-full bg-[#002147] text-white flex items-center justify-center text-[11px] font-semibold tracking-[0.12em]">
-                    ${code}
+                <div class="flex items-start justify-between gap-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-[#002147] text-white flex items-center justify-center text-[11px] font-semibold tracking-[0.12em]">
+                      ${code}
+                    </div>
+                    <div>
+                      <p class="font-medium text-slate-900">${p.carrier}</p>
+                      <p class="text-xs text-slate-500">Policy • ${p.last4 ? "****-" + p.last4 : "—"}</p>
+                      <p class="text-[11px] text-slate-400 mt-1">Owner: <span class="font-semibold">${p.ownerName}</span></p>
+                    </div>
                   </div>
-                  <div>
-                    <p class="font-medium text-slate-900">${p.carrier}</p>
-                    <p class="text-xs text-slate-500">Policy • ${p.last4 ? "****-" + p.last4 : "—"}</p>
-                    <p class="text-[11px] text-slate-400 mt-1">Owner: <span class="font-semibold">${p.ownerName}</span></p>
-                  </div>
+
+                  <!-- ✅ delete -->
+                  <button
+                    type="button"
+                    class="btnDeleteInsurancePolicy text-gray-300 hover:text-rose-600 transition-colors"
+                    title="Delete policy"
+                    data-policy-id="${p.id}"
+                  >
+                    <i class="fa-solid fa-trash-can text-[12px]"></i>
+                  </button>
                 </div>
               </td>
 
@@ -1437,11 +1539,26 @@
 
       function setupInsuranceDelegation() {
         document.addEventListener("click", (e) => {
+          // ✅ open modal with country locked (no more choosing US/TW)
           const usBtn = e.target.closest("#btnUsInsuranceAddPolicy");
-          if (usBtn && usBtn.closest("#page-us-insurance")) { InsuranceModal.open("US"); return; }
+          if (usBtn && usBtn.closest("#page-us-insurance")) {
+            InsuranceModal.open({ country: "US", lockCountry: true });
+            return;
+          }
 
           const twBtn = e.target.closest("#btnTwInsuranceAddPolicy");
-          if (twBtn && twBtn.closest("#page-tw-insurance")) { InsuranceModal.open("TW"); return; }
+          if (twBtn && twBtn.closest("#page-tw-insurance")) {
+            InsuranceModal.open({ country: "TW", lockCountry: true });
+            return;
+          }
+
+          // ✅ delete policy
+          const delBtn = e.target.closest(".btnDeleteInsurancePolicy");
+          if (delBtn) {
+            const policyId = delBtn.getAttribute("data-policy-id");
+            deleteInsurancePolicy(policyId);
+            return;
+          }
         });
       }
 
